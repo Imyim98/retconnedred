@@ -326,8 +326,9 @@
 
 .include "sound/voicegroups/voicegroup601.inc" @ [Main] GBA Golden Sun
 .include "sound/voicegroups/voicegroup602.inc" @ GBA Golden Sun Drum
-.include "sound/voicegroups/voicegroup603.inc" @ GBA Digimon Battle Spirit
+.include "sound/voicegroups/voicegroup603.inc" @ [Main] GBA Digimon Battle Spirit
 .include "sound/voicegroups/voicegroup604.inc" @ GBA Digimon Battle Spirit Edits
+.include "sound/voicegroups/voicegroup605.inc" @ [Main] NDS FwPCMH mapping
 
 .include "sound/voicegroups/voicegroup701.inc" @ Modified voicegroup191 GBA Drum 1
 .include "sound/voicegroups/voicegroup702.inc" @ Modified voicegroup192 GBA Drum 2
