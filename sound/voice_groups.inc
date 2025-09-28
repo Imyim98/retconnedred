@@ -328,7 +328,14 @@
 .include "sound/voicegroups/voicegroup602.inc" @ GBA Golden Sun Drum
 .include "sound/voicegroups/voicegroup603.inc" @ [Main] GBA Digimon Battle Spirit
 .include "sound/voicegroups/voicegroup604.inc" @ GBA Digimon Battle Spirit Edits
-.include "sound/voicegroups/voicegroup605.inc" @ [Main] NDS FwPCMH mapping
+.include "sound/voicegroups/voicegroup605.inc" @ [Main] NDS 1 Futari wa Precure Max Heart mapping
+.include "sound/voicegroups/voicegroup606.inc" @ [Main] NDS 4 Precure 5 Go Go mapping | ADV
+.include "sound/voicegroups/voicegroup607.inc" @ [Main] NDS 4 Precure 5 Go Go mapping | BTL_01
+.include "sound/voicegroups/voicegroup608.inc" @ [Main] NDS 4 Precure 5 Go Go mapping | BTL_02
+.include "sound/voicegroups/voicegroup609.inc" @ [Main] NDS 4 Precure 5 Go Go mapping | BTL_03
+.include "sound/voicegroups/voicegroup610.inc" @ [Main] NDS 4 Precure 5 Go Go mapping | BTL_04
+.include "sound/voicegroups/voicegroup611.inc" @ [Main] NDS 4 Precure 5 Go Go mapping | BTL_05
+.include "sound/voicegroups/voicegroup612.inc" @ [Main] NDS 4 Precure 5 Go Go mapping | Temp
 
 .include "sound/voicegroups/voicegroup701.inc" @ Modified voicegroup191 GBA Drum 1
 .include "sound/voicegroups/voicegroup702.inc" @ Modified voicegroup192 GBA Drum 2
