@@ -336,6 +336,7 @@
 .include "sound/voicegroups/voicegroup610.inc" @ [Main] NDS 4 Precure 5 Go Go mapping | BTL_04
 .include "sound/voicegroups/voicegroup611.inc" @ [Main] NDS 4 Precure 5 Go Go mapping | BTL_05
 .include "sound/voicegroups/voicegroup612.inc" @ [Main] NDS 4 Precure 5 Go Go mapping | Temp
+.include "sound/voicegroups/voicegroup613.inc" @ Digimon World 3 mapping | Badlands
 
 .include "sound/voicegroups/voicegroup701.inc" @ Modified voicegroup191 GBA Drum 1
 .include "sound/voicegroups/voicegroup702.inc" @ Modified voicegroup192 GBA Drum 2

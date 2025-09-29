@@ -1381,7 +1381,7 @@ gSongTable::
 	song mus_pc_star_color_pendant, 0, 0
 	song mus_pc_star_color_pendant_no_intro, 0, 0
 	song mus_etc_kawaranaimono, 0, 0
-	song dummy_song_header, 0, 0
+	song mus_dgmn_world3_badlands, 0, 0
 	song dummy_song_header, 0, 0
 	song dummy_song_header, 0, 0
 	song dummy_song_header, 0, 0
