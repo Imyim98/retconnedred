@@ -275,7 +275,7 @@ static bool32 HandleEndTurnWeatherDamage(u32 battler)
     case BATTLE_WEATHER_EX_SHADOW_SKY:
         if (gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERGROUND
          && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERWATER
-         && GetBattlerHoldEffect(battler, TRUE) != HOLD_EFFECT_SAFETY_GOGGLES
+         && GetBattlerHoldEffect(battler) != HOLD_EFFECT_SAFETY_GOGGLES
          && !gBattleMons[battler].isShadow)
         {
             gBattleStruct->moveDamage[battler] = GetNonDynamaxMaxHP(battler) / 16;
@@ -305,7 +305,7 @@ static bool32 HandleEndTurnWeatherDamage(u32 battler)
     case BATTLE_WEATHER_EX_SHADOW_SKY_DEEP:
         if (gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERGROUND
          && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERWATER
-         && GetBattlerHoldEffect(battler, TRUE) != HOLD_EFFECT_SAFETY_GOGGLES
+         && GetBattlerHoldEffect(battler) != HOLD_EFFECT_SAFETY_GOGGLES
          && !gBattleMons[battler].isShadow)
         {
             gBattleStruct->moveDamage[battler] = GetNonDynamaxMaxHP(battler) / 8;

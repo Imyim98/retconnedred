@@ -5438,7 +5438,7 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, enum Ability ability, u32 spec
              && IsBattlerAlive(gBattlerAttacker)
              && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
              && IsBattlerTurnDamaged(gBattlerTarget)
-             && GetBattlerHoldEffect(gBattlerAttacker, TRUE) != HOLD_EFFECT_PROTECTIVE_PADS
+             && GetBattlerHoldEffect(gBattlerAttacker) != HOLD_EFFECT_PROTECTIVE_PADS
              && IsBattleMoveSpecial(move))
             {
                 gBattleStruct->moveDamage[gBattlerAttacker] = GetNonDynamaxMaxHP(gBattlerAttacker) / (B_ROUGH_SKIN_DMG >= GEN_4 ? 8 : 16);
@@ -5711,7 +5711,7 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, enum Ability ability, u32 spec
              && IsBattlerTurnDamaged(gBattlerTarget)
              && IsBattlerAlive(battler)
              && !CanBattlerAvoidContactEffects(gBattlerAttacker, gBattlerTarget, GetBattlerAbility(gBattlerAttacker), GetBattlerHoldEffect(gBattlerAttacker), move)
-             && !gBattleMons[gBattlerAttacker].volatiles.perishSong)
+             && !gBattleMons[gBattlerAttacker].volatiles.perishSong
 			 && GetBattlerAbility(gBattlerAttacker) != ABILITY_FANTASY_BREAKER)
             {
                 if (!gBattleMons[battler].volatiles.perishSong)
