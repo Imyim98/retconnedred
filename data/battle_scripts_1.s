@@ -9485,7 +9485,6 @@ BattleScript_ManaDisturptorInReverse:
 	goto BattleScript_ManaDisturptorLoopIncrement
 
 BattleScript_TryManaDisturptorHoldEffects:
-	itemstatchangeeffects BS_TARGET
 	jumpifnoholdeffect BS_TARGET, HOLD_EFFECT_ADRENALINE_ORB, BattleScript_TryManaDisturptorHoldEffectsRet
 	jumpifstat BS_TARGET, CMP_EQUAL, STAT_SPEED, 12, BattleScript_TryManaDisturptorHoldEffectsRet
 	setstatchanger STAT_SPEED, 1, FALSE
@@ -9669,7 +9668,6 @@ BattleScript_MisfortuneAuraInReverse:
 	goto BattleScript_MisfortuneAuraLoopIncrement
 
 BattleScript_TryMisfortuneAuraHoldEffects:
-	itemstatchangeeffects BS_TARGET
 	jumpifnoholdeffect BS_TARGET, HOLD_EFFECT_ADRENALINE_ORB, BattleScript_TryMisfortuneAuraHoldEffectsRet
 	jumpifstat BS_TARGET, CMP_EQUAL, STAT_ACC, 12, BattleScript_TryMisfortuneAuraHoldEffectsRet
 	setstatchanger STAT_ACC, 1, FALSE
