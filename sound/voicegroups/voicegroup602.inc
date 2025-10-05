@@ -34,24 +34,24 @@ voicegroup602::
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0 @ 31 | Square-1 | --
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0 @ 32 | Square-1 | --
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0 @ 33 | Square-1 | --
-	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0 @ 34 | Square-1 | --
-	voice_directsound 60, 64, DirectSoundWaveData_golden_sun_2_conga, 255, 0, 255, 165 @ 35 | Direct |
-	voice_directsound_no_resample 60, 64, DirectSoundWaveData_golden_sun_2_rnd_kick, 255, 0, 255, 216 @ 36 | Direct |
-	voice_directsound 60, 69, DirectSoundWaveData_golden_sun_2_rim, 255, 0, 255, 165 @ 37 | Direct |
-	voice_directsound_no_resample 60, 69, DirectSoundWaveData_golden_sun_2_snare, 255, 0, 255, 216 @ 38 | Direct |
-	voice_directsound_no_resample 60, 64, DirectSoundWaveData_golden_sun_2_handclap, 255, 0, 255, 216 @ 39 | Direct |
-	voice_directsound_no_resample 60, 69, DirectSoundWaveData_golden_sun_2_kick, 255, 0, 255, 216 @ 40 | Direct |
-	voice_directsound 50, 24, DirectSoundWaveData_golden_sun_2_tom, 128, 0, 255, 216 @ 41 | Direct |
-	voice_directsound_no_resample 60, 74, DirectSoundWaveData_golden_sun_2_ride_cymbal, 255, 0, 255, 216 @ 42 | Direct |
-	voice_directsound 55, 44, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 43 | Direct |
-	voice_directsound_no_resample 60, 64, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 44 | Direct |
-	voice_directsound_no_resample 60, 64, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 45 | Direct |
-	voice_directsound_no_resample 60, 74, DirectSoundWaveData_golden_sun_2_close_hihat, 255, 0, 255, 165 @ 46 | Direct |
-	voice_directsound_no_resample 60, 64, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 47 | Direct |
-	voice_directsound 65, 84, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 48 | Direct |
-	voice_directsound_no_resample 60, 74, DirectSoundWaveData_golden_sun_2_cymbal_crash, 255, 252, 0, 165 @ 49 | Direct |
-	voice_directsound 70, 104, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 50 | Direct |
-	voice_directsound_no_resample 60, 44, DirectSoundWaveData_golden_sun_2_open_hihat, 255, 249, 0, 165 @ 51 | Direct |
+	voice_keysplit_all voicegroup602 @ 34 | Direct |
+	voice_directsound 60, 0, DirectSoundWaveData_golden_sun_2_conga, 255, 0, 255, 165 @ 35 | Direct |
+	voice_directsound_no_resample 60, 0, DirectSoundWaveData_golden_sun_2_rnd_kick, 255, 0, 255, 216 @ 36 | Direct |
+	voice_directsound 60, 0, DirectSoundWaveData_golden_sun_2_rim, 255, 0, 255, 165 @ 37 | Direct |
+	voice_directsound_no_resample 60, 0, DirectSoundWaveData_golden_sun_2_snare, 255, 0, 255, 216 @ 38 | Direct |
+	voice_directsound_no_resample 60, 0, DirectSoundWaveData_golden_sun_2_handclap, 255, 0, 255, 216 @ 39 | Direct |
+	voice_directsound_no_resample 60, 0, DirectSoundWaveData_golden_sun_2_kick, 255, 0, 255, 216 @ 40 | Direct |
+	voice_directsound 50, 0, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 41 | Direct |
+	voice_directsound_no_resample 60, 0, DirectSoundWaveData_golden_sun_2_ride_cymbal, 128, 0, 255, 216 @ 42 | Direct |
+	voice_directsound 55, 0, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 43 | Direct |
+	voice_directsound_no_resample 60, 0, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 44 | Direct |
+	voice_directsound_no_resample 60, 0, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 45 | Direct |
+	voice_directsound_no_resample 60, 0, DirectSoundWaveData_golden_sun_2_close_hihat, 255, 0, 255, 165 @ 46 | Direct |
+	voice_directsound_no_resample 60, 0, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 47 | Direct |
+	voice_directsound 65, 0, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 48 | Direct |
+	voice_directsound_no_resample 60, 0, DirectSoundWaveData_golden_sun_2_cymbal_crash, 255, 252, 0, 165 @ 49 | Direct |
+	voice_directsound 70, 0, DirectSoundWaveData_golden_sun_2_tom, 255, 0, 255, 216 @ 50 | Direct |
+	voice_directsound_no_resample 60, 0, DirectSoundWaveData_golden_sun_2_open_hihat, 255, 249, 0, 165 @ 51 | Direct |
 	voice_square_1_alt 60, 0, 0, 2, 0, 4, 0, 4 @ 52 | Square-1 |
 	voice_square_1_alt 60, 0, 0, 2, 0, 4, 0, 2 @ 53 | Square-1 |
 	voice_square_1_alt 60, 0, 0, 2, 0, 4, 0, 0 @ 54 | Square-1 |
