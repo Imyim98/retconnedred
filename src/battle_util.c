@@ -2544,8 +2544,6 @@ static enum MoveCanceller CancellerPPDeduction(struct BattleContext *ctx)
      || GetMoveEffect(gCurrentMove) == EFFECT_EX_SHADOW_MOVE_RECOIL_CURRENT_HP)
         ppToDeduct = 0;
 
-    gProtectStructs[ctx->battlerAtk].notFirstStrike = TRUE;
-
     // For item Metronome, echoed voice
     if (ctx->currentMove != gLastResultingMoves[ctx->battlerAtk] || WasUnableToUseMove(ctx->battlerAtk))
         gBattleStruct->sameMoveTurns[ctx->battlerAtk] = 0;
@@ -13189,5 +13187,20 @@ void RemoveAbilityFlags(u32 battler)
         break;
     default:
        break;
+    }
+}
+
+bool32 IsAllowedToUseBag(void)
+{
+    switch(VarGet(B_VAR_NO_BAG_USE))
+    {
+    case NO_BAG_RESTRICTION:
+        return TRUE;
+    case NO_BAG_AGAINST_TRAINER: //True in wild battle; False in trainer battle
+        return (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER));
+    case NO_BAG_IN_BATTLE:
+        return FALSE;
+    default:
+        return TRUE; // Undefined Behavior
     }
 }

@@ -564,6 +564,7 @@ gSpecials::
 	def_special EnterCode
 	def_special GetCodeFeedback
 	def_special SetHiddenNature
+	def_special SetAbility
 	def_special GivePartyMonMarineRibbon
 	def_special GivePartyMonLandRibbon
 	def_special GivePartyMonSkyRibbon
