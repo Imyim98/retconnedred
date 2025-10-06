@@ -2,7 +2,7 @@
 
         .equ    mus_etc_jogja_istimewa_grp, voicegroup201
         .equ    mus_etc_jogja_istimewa_pri, 0
-        .equ    mus_etc_jogja_istimewa_mvl, 127
+        .equ    mus_etc_jogja_istimewa_mvl, 90
         .equ    mus_etc_jogja_istimewa_rev, reverb_set+50
         .equ    mus_etc_jogja_istimewa_key, 0
 

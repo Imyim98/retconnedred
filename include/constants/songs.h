@@ -776,7 +776,7 @@
 #define MUS_DGMN_BS_WILD_CHILD_BOUND_LOOP       829
 #define MUS_DGMN_BS_EVOLUTION_LOOP              830
 
-#define MUS_DUMMY_831                           831
+#define MUS_GS3_VS_MAGICIAN                     831
 #define MUS_DUMMY_832                           832
 #define MUS_DUMMY_833                           833
 #define MUS_DUMMY_834                           834
