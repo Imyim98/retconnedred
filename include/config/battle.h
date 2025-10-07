@@ -375,4 +375,8 @@
 #define B_POOL_RULE_MEGA_STONE_CLAUSE       FALSE    // Pick only 1 mon with mega stone
 #define B_POOL_RULE_Z_CRYSTAL_CLAUSE        FALSE    // Pick only 1 mon with Z-crystal
 
+// custom stuff
+#define B_INTRO_SLIDE_SPEED     (5) // Controls how fast the sliding into battle intro goes.
+#define B_INTRO_TERRAIN_SPEED  (24) // Controls how long the terrain slides until it goes down the screen.
+
 #endif // GUARD_CONFIG_BATTLE_H
