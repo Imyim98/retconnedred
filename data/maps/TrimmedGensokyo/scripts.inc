@@ -2,7 +2,7 @@ TrimmedGensokyo_MapScripts::
 	.byte 0
 
 TrimmedGensokyo_EventScript_Debug1::
-	end
+@	end
 	lock
 	faceplayer
 	additem ITEM_DYNAMAX_BAND
