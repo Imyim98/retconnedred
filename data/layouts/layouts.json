@@ -6514,8 +6514,8 @@
     {
       "id": "LAYOUT_STREAM_DIMENSIONAL_RIFT_FIRST_EVENT",
       "name": "Stream_DimensionalRift_FirstEvent_Layout",
-      "width": 20,
-      "height": 20,
+      "width": 40,
+      "height": 40,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_TrimmedGensokyo",
       "border_filepath": "data/layouts/Stream_DimensionalRift_FirstEvent/border.bin",
