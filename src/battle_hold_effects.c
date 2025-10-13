@@ -132,6 +132,15 @@ static enum ItemEffect TryTerrainSeeds(u32 battler, u32 item, ActivationTiming t
     case HOLD_EFFECT_PARAM_PSYCHIC_TERRAIN:
         effect = TryHandleSeed(battler, STATUS_FIELD_PSYCHIC_TERRAIN, STAT_SPDEF, item, timing);
         break;
+	case HOLD_EFFECT_PARAM_UBW:
+		effect = TryHandleSeed(battler, STATUS_FIELD_UBW, STAT_ATK, item, timing);
+		break;
+	case HOLD_EFFECT_PARAM_DARKNESS_TERRAIN:
+		effect = TryHandleSeed(battler, STATUS_FIELD_DARKNESS_TERRAIN, STAT_SPATK, item, timing);
+		break;
+	case HOLD_EFFECT_PARAM_MIASMA_TERRAIN:
+		effect = TryHandleSeed(battler, STATUS_FIELD_MIASMA_TERRAIN, STAT_ATK, item, timing);
+		break;
     }
 
     return effect;
@@ -264,7 +273,7 @@ static enum ItemEffect TryRockyHelmet(u32 battlerDef, u32 battlerAtk)
     if (IsBattlerTurnDamaged(battlerDef)
      && IsBattlerAlive(battlerAtk)
      && !CanBattlerAvoidContactEffects(battlerAtk, battlerDef, ability, GetBattlerHoldEffect(battlerAtk), gCurrentMove)
-     && !IsAbilityAndRecord(battlerAtk, ability, ABILITY_MAGIC_GUARD))
+     && !(IsAbilityAndRecord(battlerAtk, ability, ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(battlerAtk, ability, ABILITY_FANTASY_BREAKER)))
     {
         gBattleStruct->moveDamage[battlerAtk] = GetNonDynamaxMaxHP(battlerAtk) / 6;
         if (gBattleStruct->moveDamage[battlerAtk] == 0)
@@ -298,7 +307,7 @@ static enum ItemEffect TrySnowball(u32 battlerDef)
 
     if (IsBattlerAlive(battlerDef)
      && IsBattlerTurnDamaged(battlerDef)
-     && GetBattleMoveType(gCurrentMove) == TYPE_ICE)
+     && GetBattleMoveType(gCurrentMove) == TYPE_NEW_ICE)
     {
         BattleScriptCall(BattleScript_TargetItemStatRaise);
         SET_STATCHANGER(STAT_ATK, 1, FALSE);
@@ -314,7 +323,7 @@ static enum ItemEffect TryLuminousMoss(u32 battlerDef)
 
     if (IsBattlerAlive(battlerDef)
      && IsBattlerTurnDamaged(battlerDef)
-     && GetBattleMoveType(gCurrentMove) == TYPE_WATER)
+     && GetBattleMoveType(gCurrentMove) == TYPE_NEW_WATER)
     {
         BattleScriptCall(BattleScript_TargetItemStatRaise);
         SET_STATCHANGER(STAT_SPDEF, 1, FALSE);
@@ -330,7 +339,7 @@ static enum ItemEffect TryCellBattery(u32 battlerDef)
 
     if (IsBattlerAlive(battlerDef)
      && IsBattlerTurnDamaged(battlerDef)
-     && GetBattleMoveType(gCurrentMove) == TYPE_ELECTRIC)
+     && GetBattleMoveType(gCurrentMove) == TYPE_NEW_ELECTRIC)
     {
         BattleScriptCall(BattleScript_TargetItemStatRaise);
         SET_STATCHANGER(STAT_ATK, 1, FALSE);
@@ -346,7 +355,7 @@ static enum ItemEffect TryAbsorbBulb(u32 battlerDef)
 
     if (IsBattlerAlive(battlerDef)
      && IsBattlerTurnDamaged(battlerDef)
-     && GetBattleMoveType(gCurrentMove) == TYPE_WATER)
+     && GetBattleMoveType(gCurrentMove) == TYPE_NEW_WATER)
     {
         effect = ITEM_STATS_CHANGE;
         BattleScriptCall(BattleScript_TargetItemStatRaise);
@@ -364,7 +373,7 @@ static enum ItemEffect TryJabocaBerry(u32 battlerDef, u32 battlerAtk)
      && IsBattlerTurnDamaged(battlerDef)
      && !DoesSubstituteBlockMove(battlerAtk, battlerDef, gCurrentMove)
      && IsBattleMovePhysical(gCurrentMove)
-     && !IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_MAGIC_GUARD))
+     && !(IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_FANTASY_BREAKER)))
     {
         gBattleStruct->moveDamage[battlerAtk] = GetNonDynamaxMaxHP(battlerAtk) / 8;
         if (gBattleStruct->moveDamage[battlerAtk] == 0)
@@ -388,7 +397,7 @@ static enum ItemEffect TryRowapBerry(u32 battlerDef, u32 battlerAtk)
      && IsBattlerTurnDamaged(battlerDef)
      && !DoesSubstituteBlockMove(battlerAtk, battlerDef, gCurrentMove)
      && IsBattleMoveSpecial(gCurrentMove)
-     && !IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_MAGIC_GUARD))
+     && !(IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_FANTASY_BREAKER)))
     {
         gBattleStruct->moveDamage[battlerAtk] = GetNonDynamaxMaxHP(battlerAtk) / 8;
         if (gBattleStruct->moveDamage[battlerAtk] == 0)
@@ -577,7 +586,7 @@ static enum ItemEffect TryLifeOrb(u32 battlerAtk)
     if (IsBattlerAlive(battlerAtk)
      && !(gHitMarker & HITMARKER_UNABLE_TO_USE_MOVE)
      && (IsAnyTargetTurnDamaged(battlerAtk) || gBattleScripting.savedDmg > 0)
-     && !IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_MAGIC_GUARD)
+     && !(IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_FANTASY_BREAKER))
      && GetMoveEffect(gCurrentMove) != EFFECT_PAIN_SPLIT
      && !IsFutureSightAttackerInParty(battlerAtk, gBattlerTarget, gCurrentMove))
     {
@@ -617,7 +626,7 @@ static enum ItemEffect TryStickyBarbOnEndTurn(u32 battler)
 {
     enum ItemEffect effect = ITEM_NO_EFFECT;
 
-    if (!IsAbilityAndRecord(battler, GetBattlerAbility(battler), ABILITY_MAGIC_GUARD))
+    if (!(IsAbilityAndRecord(battler, GetBattlerAbility(battler), ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(battler, GetBattlerAbility(battler), ABILITY_FANTASY_BREAKER)))
     {
         gBattleStruct->moveDamage[battler] = GetNonDynamaxMaxHP(battler) / 8;
         if (gBattleStruct->moveDamage[battler] == 0)
@@ -683,7 +692,7 @@ static enum ItemEffect TryBlackSludge(u32 battler, enum HoldEffect holdEffect)
 {
     enum ItemEffect effect = ITEM_NO_EFFECT;
 
-    if (!IsAbilityAndRecord(battler, GetBattlerAbility(battler), ABILITY_MAGIC_GUARD))
+    if (!(IsAbilityAndRecord(battler, GetBattlerAbility(battler), ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(battler, GetBattlerAbility(battler), ABILITY_FANTASY_BREAKER)))
     {
         gBattleStruct->moveDamage[battler] = GetNonDynamaxMaxHP(battler) / 8;
         if (gBattleStruct->moveDamage[battler] == 0)
@@ -1197,7 +1206,7 @@ enum ItemEffect ItemBattleEffects(u32 itemBattler, u32 battler, enum HoldEffect 
         effect = TryLeftovers(itemBattler, holdEffect);
         break;
     case HOLD_EFFECT_BLACK_SLUDGE:
-        if (IS_BATTLER_OF_TYPE(itemBattler, TYPE_POISON))
+        if (IS_BATTLER_OF_TYPE(itemBattler, TYPE_NEW_MIASMA))
             effect = TryLeftovers(itemBattler, holdEffect);
         else
             effect = TryBlackSludge(itemBattler, holdEffect);
