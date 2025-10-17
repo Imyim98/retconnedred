@@ -2103,9 +2103,8 @@
 	.byte \id
 	.endm
 
-	.macro arenawaitmessage id:req
+	.macro arenawaitmessage
 	callnative BS_ArenaWaitMessage
-	.byte \id
 	.endm
 
 	.macro waitcry
