@@ -67,8 +67,8 @@ BattleScript_EffectTransformHitBeatingUp:
 	effectivenesssound
 	hitanimation BS_TARGET
 	waitstate
-	healthbarupdate BS_TARGET
-	datahpupdate BS_TARGET
+	healthbarupdate BS_TARGET, MOVE_DAMAGE_HP_UPDATE
+	datahpupdate BS_TARGET, MOVE_DAMAGE_HP_UPDATE
 	critmessage
 	waitmessage B_WAIT_TIME_LONG
 	resultmessage
@@ -119,9 +119,8 @@ BattleScript_EffectTransformHitDoTransformFirstYorigamiSistersCurseLoop:
 BattleScript_EffectTransformHitDoTransformFirstYorigamiSistersCurseEffect:
 	copybyte sBATTLER, gBattlerAttacker
 	cursetarget BattleScript_ButItFailed
-	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
-	healthbarupdate BS_ATTACKER
-	datahpupdate BS_ATTACKER
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	printstring STRINGID_YORIGAMICURSE
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_EffectTransformHitDoTransformFirstYorigamiSistersCurseIncrement:
@@ -164,7 +163,6 @@ BattleScript_EffectUltraInstinct::
 	jumpifstat BS_ATTACKER, CMP_EQUAL, STAT_SPEED, MAX_STAT_STAGE, BattleScript_ButItFailed
 BattleScript_UltraInstinctTryAcc:
     ishplessthanquarter BattleScript_ButItFailed
-	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
 	attackanimation
 	waitanimation
 	setstatchanger STAT_ACC, MAX_STAT_STAGE, FALSE
@@ -203,8 +201,8 @@ BattleScript_UltraInstinctTrySpeed:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_UltraInstinctEnd:
 @	bichalfword gMoveResultFlags, MOVE_RESULT_NO_EFFECT
-	healthbarupdate BS_ATTACKER
-	datahpupdate BS_ATTACKER
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectAstromancy::
@@ -6739,9 +6737,8 @@ BattleScript_LeechSeedOnAbilityPureWhiteActivates::
 	printstring STRINGID_LEECHSEEDHEALSABILITYPUREWHITE
 	waitmessage B_WAIT_TIME_LONG
 	statusanimation BS_ATTACKER
-	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
-	healthbarupdate BS_ATTACKER
-	datahpupdate BS_ATTACKER
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	end2
 
 BattleScript_ShichininMisakiActivates::
@@ -9206,12 +9203,11 @@ BattleScript_WinningCombination3Loop:
 BattleScript_WinningCombination3CurseEffect:
 	copybyte sBATTLER, gBattlerAttacker
 	cursetarget BattleScript_ButItFailed
-	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
 @	setbyte sB_ANIM_TURN, 0
 @	attackanimation
 @	waitanimation
-	healthbarupdate BS_ATTACKER
-	datahpupdate BS_ATTACKER
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	printstring STRINGID_YORIGAMICURSE
 	waitmessage B_WAIT_TIME_LONG
 	tryfaintmon BS_ATTACKER
@@ -9603,9 +9599,8 @@ BattleScript_TsubameGaeshiActivates::
 	waitanimation
 	restoretarget
 	restoreattacker
-	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
-	healthbarupdate BS_ATTACKER
-	datahpupdate BS_ATTACKER
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	tryfaintmon BS_ATTACKER
 	return
 
@@ -9628,7 +9623,6 @@ BattleScript_UltraMedicineAlreadyMiasmaTerrain:
 BattleScript_UltraMedicineAllStatsUpActivatesTryAcc:
 	call BattleScript_AbilityPopUpScripting
 	pause B_WAIT_TIME_SHORT
-	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
 	playanimation BS_SCRIPTING, B_ANIM_ULTRA_MEDICINE
 	waitanimation
 	setstatchanger STAT_ACC, MAX_STAT_STAGE, FALSE
@@ -9729,8 +9723,8 @@ BattleScript_EffectExShadowSky::
 
 BattleScript_ExShadowSkyHeal::
 	playanimation BS_ATTACKER, B_ANIM_SIMPLE_HEAL
-	healthbarupdate BS_ATTACKER
-	datahpupdate BS_ATTACKER
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	printstring STRINGID_RECOVEREDBYEXSHADOWSKY
 	waitmessage B_WAIT_TIME_LONG
 	end3

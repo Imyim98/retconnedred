@@ -3762,6 +3762,30 @@ bool32 TryFieldEffects(enum FieldEffectCases caseId)
                         &gFieldTimers.terrainTimer);
             isTerrain = TRUE;
             break;
+        case STARTING_STATUS_UBW:
+            effect = SetStartingFieldStatus(
+                        STATUS_FIELD_UBW,
+                        B_MSG_UBW_SET,
+                        0,
+                        &gFieldTimers.terrainTimer);
+            isTerrain = TRUE;
+            break;
+        case STARTING_STATUS_DARKNESS_TERRAIN:
+            effect = SetStartingFieldStatus(
+                        STATUS_FIELD_DARKNESS_TERRAIN,
+                        B_MSG_TERRAIN_SET_DARKNESS,
+                        0,
+                        &gFieldTimers.terrainTimer);
+            isTerrain = TRUE;
+            break;
+        case STARTING_STATUS_MIASMA_TERRAIN:
+            effect = SetStartingFieldStatus(
+                        STATUS_FIELD_MIASMA_TERRAIN,
+                        B_MSG_TERRAIN_SET_MIASMA,
+                        0,
+                        &gFieldTimers.terrainTimer);
+            isTerrain = TRUE;
+            break;
         case STARTING_STATUS_TRICK_ROOM:
             effect = SetStartingFieldStatus(
                         STATUS_FIELD_TRICK_ROOM,
@@ -4058,7 +4082,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             }
             break;
         case ABILITY_DOUBLE_HEROINES:
-            if (TryChangeBattleTerrain(battler, STATUS_FIELD_ELECTRIC_TERRAIN, &gFieldTimers.terrainTimer))
+            if (TryChangeBattleTerrain(battler, STATUS_FIELD_ELECTRIC_TERRAIN))
             {
                 BattleScriptPushCursorAndCallback(BattleScript_ElectricSurgeActivates);
                 effect++;
@@ -4333,6 +4357,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 effect++;
             }
             break;
+        case ABILITY_AUTUMN_GODDESSES:
         case ABILITY_ORICHALCUM_PULSE:
         case ABILITY_DROUGHT:
             if (TryChangeBattleWeather(battler, BATTLE_WEATHER_SUN, gLastUsedAbility))
@@ -4396,21 +4421,21 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             }
             break;
         case ABILITY_BLADE_WORKS:
-            if (TryChangeBattleTerrain(battler, STATUS_FIELD_UBW, &gFieldTimers.terrainTimer))
+            if (TryChangeBattleTerrain(battler, STATUS_FIELD_UBW))
             {
                 BattleScriptPushCursorAndCallback(BattleScript_UBWActivates);
                 effect++;
             }
             break;
         case ABILITY_DARKNESS_SURGE:
-            if (TryChangeBattleTerrain(battler, STATUS_FIELD_DARKNESS_TERRAIN, &gFieldTimers.terrainTimer))
+            if (TryChangeBattleTerrain(battler, STATUS_FIELD_DARKNESS_TERRAIN))
             {
                 BattleScriptPushCursorAndCallback(BattleScript_DarknessSurgeActivates);
                 effect++;
             }
             break;
         case ABILITY_MIASMA_SURGE:
-            if (TryChangeBattleTerrain(battler, STATUS_FIELD_MIASMA_TERRAIN, &gFieldTimers.terrainTimer))
+            if (TryChangeBattleTerrain(battler, STATUS_FIELD_MIASMA_TERRAIN))
             {
                 BattleScriptPushCursorAndCallback(BattleScript_MiasmaSurgeActivates);
                 effect++;
@@ -4481,7 +4506,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 gBattlerAttacker = battler;
                 gBattlerTarget = gBattlerAttacker;
 
-                if (TryChangeBattleTerrain(battler, STATUS_FIELD_MISTY_TERRAIN, &gFieldTimers.terrainTimer))
+                if (TryChangeBattleTerrain(battler, STATUS_FIELD_MISTY_TERRAIN))
                 {
                     BattleScriptPushCursorAndCallback(BattleScript_MistySurgeActivates);
                     effect++;
@@ -4631,7 +4656,6 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 gBattleMons[gBattlerAttacker].volatiles.substitute = TRUE;
                 gDisableStructs[gBattlerAttacker].substituteHP = gBattleMons[gBattlerAttacker].maxHP / 4;
                 gBattleMons[gBattlerAttacker].volatiles.wrapped = FALSE;
-                gHitMarker |= HITMARKER_IGNORE_SUBSTITUTE;
                 gSpecialStatuses[battler].switchInAbilityDone = TRUE;
                 BattleScriptPushCursorAndCallback(BattleScript_RideSummonActivates);
                 effect++;
@@ -8180,7 +8204,7 @@ static inline u32 CalcAttackStat(struct DamageContext *ctx)
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
         break;
     case ABILITY_AUTUMN_GODDESSES: // Aki Sisters
-        if (IsBattleMoveSpecial(move) && IsBattlerWeatherAffected(battlerAtk, B_WEATHER_SUN))
+        if ((ctx->weather & B_WEATHER_SUN) && HasWeatherEffect())
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
         break;
     case ABILITY_TRANSISTOR:
