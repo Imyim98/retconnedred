@@ -1214,6 +1214,7 @@ Script_RemoveTint::
 	.include "data/text/save.inc"
 	.include "data/text/birch_speech.inc"
 	.include "data/scripts/dexnav.inc"
+	.include "data/scripts/battle_frontier.inc"
 
 	.include "data/maps/SafariZone_SouthFirstConstruction/scripts.inc"
 
