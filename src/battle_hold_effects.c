@@ -131,13 +131,13 @@ static enum ItemEffect TryTerrainSeeds(u32 battler, u32 item, ActivationTiming t
         effect = TryHandleSeed(battler, STATUS_FIELD_PSYCHIC_TERRAIN, STAT_SPDEF, timing);
         break;
 	case HOLD_EFFECT_PARAM_UBW:
-		effect = TryHandleSeed(battler, STATUS_FIELD_UBW, STAT_ATK, item, timing);
+		effect = TryHandleSeed(battler, STATUS_FIELD_UBW, STAT_ATK, timing);
 		break;
 	case HOLD_EFFECT_PARAM_DARKNESS_TERRAIN:
-		effect = TryHandleSeed(battler, STATUS_FIELD_DARKNESS_TERRAIN, STAT_SPATK, item, timing);
+		effect = TryHandleSeed(battler, STATUS_FIELD_DARKNESS_TERRAIN, STAT_SPATK, timing);
 		break;
 	case HOLD_EFFECT_PARAM_MIASMA_TERRAIN:
-		effect = TryHandleSeed(battler, STATUS_FIELD_MIASMA_TERRAIN, STAT_ATK, item, timing);
+		effect = TryHandleSeed(battler, STATUS_FIELD_MIASMA_TERRAIN, STAT_ATK, timing);
 		break;
     }
 

@@ -5605,7 +5605,7 @@ static void Cmd_tryfaintmon(void)
                 gSideTimers[B_SIDE_OPPONENT].retaliateTimer = 2;
             }
 
-            if (gBattleMons[gBattlerTarget].volatiles.destinyBond)
+            if (gBattleMons[gBattlerTarget].volatiles.destinyBond && GetBattlerAbility(gBattlerTarget) != ABILITY_FANTASY_BREAKER)
                 gBattleStruct->tryDestinyBond = TRUE;
             if (gBattleMons[gBattlerTarget].volatiles.grudge)
                 gBattleStruct->tryGrudge = TRUE;
@@ -7473,7 +7473,8 @@ static void Cmd_moveend(void)
              && !IsBattlerAlive(gBattlerTarget)
              && IsBattlerAlive(gBattlerAttacker)
              && !(GetActiveGimmick(gBattlerAttacker) == GIMMICK_DYNAMAX)
-             && !IsBattlerAlly(gBattlerAttacker, gBattlerTarget))
+             && !IsBattlerAlly(gBattlerAttacker, gBattlerTarget)
+             && GetBattlerAbility(gBattlerTarget) != ABILITY_FANTASY_BREAKER)
             {
                 gBattleStruct->tryDestinyBond = FALSE;
                 gBattleStruct->passiveHpUpdate[gBattlerAttacker] = gBattleMons[gBattlerAttacker].hp;
