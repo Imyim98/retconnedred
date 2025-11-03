@@ -1,7 +1,8 @@
         .include "MPlayDef.s"
 
-        .equ    mus_fate_hakuno_fatal_battle_grp, voicegroup205
+        .equ    mus_fate_hakuno_fatal_battle_grp, voicegroup828
         .equ    mus_fate_hakuno_fatal_battle_pri, 0
+        .equ    mus_fate_hakuno_fatal_battle_mvl, 100
         .equ    mus_fate_hakuno_fatal_battle_rev, reverb_set+50
         .equ    mus_fate_hakuno_fatal_battle_key, 0
 
@@ -16,8 +17,8 @@ mus_fate_hakuno_fatal_battle_0:
 @ 000   ----------------------------------------
         .byte   TEMPO , 194/2
 @        .byte           BENDR , 12
-        .byte           VOL   , 120
-        .byte           VOICE , 32
+        .byte           VOL   , 120*mus_fate_hakuno_fatal_battle_mvl/mxv
+        .byte           VOICE , 38 @ Bass
 @        .byte   W72
         .byte   W24
 @ 001   ----------------------------------------
@@ -689,8 +690,8 @@ mus_fate_hakuno_fatal_battle_1:
         .byte   KEYSH , mus_fate_hakuno_fatal_battle_key+0
 @ 000   ----------------------------------------
 @        .byte           BENDR , 12
-        .byte           VOL   , 100
-        .byte           VOICE , 43
+        .byte           VOL   , 100*mus_fate_hakuno_fatal_battle_mvl/mxv
+        .byte           VOICE , 43 @ Dist. Guitar
 @        .byte   W72
         .byte           N12   , Fs3 , v075
         .byte   W12
@@ -1022,8 +1023,8 @@ mus_fate_hakuno_fatal_battle_2:
         .byte   KEYSH , mus_fate_hakuno_fatal_battle_key+0
 @ 000   ----------------------------------------
 @        .byte           BENDR , 12
-        .byte           VOL   , 100
-        .byte           VOICE , 43
+        .byte           VOL   , 100*mus_fate_hakuno_fatal_battle_mvl/mxv
+        .byte           VOICE , 43 @ Dist. Guitar
 @        .byte   W72
         .byte   W24
 @ 001   ----------------------------------------
@@ -1217,8 +1218,8 @@ mus_fate_hakuno_fatal_battle_3:
         .byte   KEYSH , mus_fate_hakuno_fatal_battle_key+0
 @ 000   ----------------------------------------
 @        .byte           BENDR , 12
-        .byte           VOL   , 100
-        .byte           VOICE , 125
+        .byte           VOL   , 100*mus_fate_hakuno_fatal_battle_mvl/mxv
+        .byte           VOICE , 124 @ Sawtooth
 @        .byte   W72
         .byte   W24
 @ 001   ----------------------------------------
@@ -1411,8 +1412,8 @@ mus_fate_hakuno_fatal_battle_4:
         .byte   KEYSH , mus_fate_hakuno_fatal_battle_key+0
 @ 000   ----------------------------------------
 @        .byte           BENDR , 12
-        .byte           VOL   , 100
-        .byte           VOICE , 48
+        .byte           VOL   , 100*mus_fate_hakuno_fatal_battle_mvl/mxv
+        .byte           VOICE , 48 @ Strings
 @        .byte   W72
         .byte           N96   , En5 , v100
         .byte   W24
@@ -1464,7 +1465,7 @@ mus_fate_hakuno_fatal_battle_4:
         .byte   W96
 @ 010   ----------------------------------------
 mus_fate_hakuno_fatal_battle_4_10:
-        .byte           VOICE , 48
+        .byte           VOICE , 48 @ Strings
         .byte           N48   , Bn3 , v100
         .byte   W48
         .byte                   Bn4
@@ -1491,8 +1492,8 @@ mus_fate_hakuno_fatal_battle_4_10:
         .byte   W96
 @ 017   ----------------------------------------
 mus_fate_hakuno_fatal_battle_4_LOOP:
-        .byte           VOL   , 120
-        .byte           VOICE , 51
+        .byte           VOL   , 120*mus_fate_hakuno_fatal_battle_mvl/mxv
+        .byte           VOICE , 52 @ Cello
         .byte           TIE   , Fn1 , v127
         .byte   W96
 @ 018   ----------------------------------------
@@ -1517,8 +1518,8 @@ mus_fate_hakuno_fatal_battle_4_LOOP:
         .byte           N48   , As1
         .byte   W96
 @ 025   ----------------------------------------
-        .byte           VOL   , 100
-        .byte           VOICE , 48
+        .byte           VOL   , 100*mus_fate_hakuno_fatal_battle_mvl/mxv
+        .byte           VOICE , 48 @ Strings
         .byte           N96   , Fn4 , v100
         .byte   W96
 @ 026   ----------------------------------------
@@ -1716,8 +1717,8 @@ mus_fate_hakuno_fatal_battle_5:
         .byte   KEYSH , mus_fate_hakuno_fatal_battle_key+0
 @ 000   ----------------------------------------
 @        .byte           BENDR , 12
-        .byte           VOL   , 100
-        .byte           VOICE , 48
+        .byte           VOL   , 100*mus_fate_hakuno_fatal_battle_mvl/mxv
+        .byte           VOICE , 48 @ Strings
 @        .byte   W72
         .byte   W24
 @ 001   ----------------------------------------
@@ -2039,8 +2040,8 @@ mus_fate_hakuno_fatal_battle_6:
         .byte   KEYSH , mus_fate_hakuno_fatal_battle_key+0
 @ 000   ----------------------------------------
 @        .byte           BENDR , 12
-        .byte           VOL   , 100
-        .byte           VOICE , 5
+        .byte           VOL   , 100*mus_fate_hakuno_fatal_battle_mvl/mxv
+        .byte           VOICE , 6 @ E.Piano
 @        .byte   W72
         .byte   W24
 @ 001   ----------------------------------------
@@ -2330,8 +2331,8 @@ mus_fate_hakuno_fatal_battle_7:
         .byte   KEYSH , mus_fate_hakuno_fatal_battle_key+0
 @ 000   ----------------------------------------
 @        .byte           BENDR , 12
-        .byte           VOL   , 100
-        .byte           VOICE , 2
+        .byte           VOL   , 100*mus_fate_hakuno_fatal_battle_mvl/mxv
+        .byte           VOICE , 16 @ Drum
 @        .byte   W72
         .byte   W24
 @ 001   ----------------------------------------

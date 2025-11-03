@@ -382,6 +382,7 @@
 .include "sound/voicegroups/voicegroup825.inc" @ THPP Zoku Gensokyo - Custom voicegroup165
 .include "sound/voicegroups/voicegroup826.inc" @ THPP Zoku Gensokyo - Custom voicegroup162
 .include "sound/voicegroups/voicegroup827.inc" @ Copy voicegroup201 but using power drum
+.include "sound/voicegroups/voicegroup828.inc" @ Vs Hakuno
 
 .include "sound/voicegroups/voicegroup900.inc" @ New Sound Effects
 .include "sound/voicegroups/voicegroup901.inc" @ CtC G Free
