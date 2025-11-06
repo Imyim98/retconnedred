@@ -1106,7 +1106,7 @@ void CreateEgg(struct Pokemon *mon, u16 species, bool8 setHotSpringsLocation)
     u8 metLevel;
     enum PokeBall ball;
     u8 language;
-    u8 metLocation;
+    metloc_u8_t metLocation;
     u8 isEgg;
     u8 cycle;
     
