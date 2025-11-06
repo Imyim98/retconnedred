@@ -4447,8 +4447,7 @@ void SetMoveEffect(u32 battler, u32 effectBattler, enum MoveEffect moveEffect, c
                 MOVE_EFFECT_SLEEP,
                 MOVE_EFFECT_TOXIC
             };
-            gBattleScripting.moveEffect = RandomElement(RNG_FIVE_ELEMENT, sFiveElementEffects);
-            SetMoveEffect(battler, effectBattler, primary, certain);
+            SetMoveEffect(battler, effectBattler, RandomElement(RNG_FIVE_ELEMENT, sFiveElementEffects), battleScript, effectFlags);
         }
         break;
     case MOVE_EFFECT_STRAWBERRY_CROSS:
@@ -4463,8 +4462,7 @@ void SetMoveEffect(u32 battler, u32 effectBattler, enum MoveEffect moveEffect, c
                 MOVE_EFFECT_BURN,
                 MOVE_EFFECT_FREEZE_OR_FROSTBITE
             };
-            gBattleScripting.moveEffect = RandomElement(RNG_STRAWBERRY_CROSS, sStrawberryCrossEffects);
-            SetMoveEffect(battler, effectBattler, primary, certain);
+            SetMoveEffect(battler, effectBattler, RandomElement(RNG_STRAWBERRY_CROSS, sStrawberryCrossEffects), battleScript, effectFlags);
         }
         break;
     case MOVE_EFFECT_WRAP:
@@ -18156,7 +18154,6 @@ void BS_TryGrimoireCall(void)
         gCalledMove = moveUsed;
     }
     gBattleStruct->categoryOverride = GetMoveCategory(moveUsed);
-    gHitMarker &= ~HITMARKER_ATTACKSTRING_PRINTED;
 
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
@@ -18589,7 +18586,6 @@ void BS_TransformDataExecutionDecade(void)
         }
     }
     gBattleStruct->categoryOverride = GetMoveCategory(moveUsed);
-    gHitMarker &= ~HITMARKER_ATTACKSTRING_PRINTED;
     
     gBattlescriptCurrInstr = cmd->nextInstr;
 }

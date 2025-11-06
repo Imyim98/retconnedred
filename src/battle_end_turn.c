@@ -1039,7 +1039,7 @@ static bool32 HandleEndTurnPerishSong(u32 battler)
     if (IsBattlerAlive(battler) && gBattleMons[battler].volatiles.perishSong && !IsAbilityAndRecord(battler, GetBattlerAbility(battler), ABILITY_FANTASY_BREAKER))
     {
         PREPARE_BYTE_NUMBER_BUFFER(gBattleTextBuff1, 1, gDisableStructs[battler].perishSongTimer);
-        if (gDisableStructs[battler].perishSongTimer == 0 && ability)
+        if (gDisableStructs[battler].perishSongTimer == 0)
         {
             gBattleMons[battler].volatiles.perishSong = FALSE;
             SetPassiveDamageAmount(battler, gBattleMons[battler].hp);
