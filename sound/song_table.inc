@@ -1996,6 +1996,7 @@ gSongTable::
 	song mus_thppzgsk_402A_master_spark, 0, 0
 	song mus_pkmn_mst_pokemon_center, 0, 0
 	song mus_pkmn_swsh_slumbering_weald, 0, 0
+	song mus_pkmn_za_vs_jacinthe, 0, 0
 
 	.align 2
 dummy_song_header:

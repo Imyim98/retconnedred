@@ -1981,8 +1981,9 @@
 #define MUS_THPPZGSK_402A_MASTER_SPARK 1992
 #define MUS_PKMN_MST_POKEMON_CENTER 1993
 #define MUS_PKMN_SWSH_SLUMBERING_WEALD 1994
+#define MUS_PKMN_ZA_VS_JACINTHE 1995
 
-#define END_MUS 		    MUS_PKMN_SWSH_SLUMBERING_WEALD
+#define END_MUS 		    MUS_PKMN_ZA_VS_JACINTHE
 
 #define MUS_ROUTE118                0x7FFF  // Map is split into 2 music sections. controlled by GetCurrLocationDefaultMusic().
 

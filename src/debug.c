@@ -5170,7 +5170,8 @@ static void DebugAction_DestroyFollowerNPC(u8 taskId)
     X(MUS_THPPZGSK_401A_PLASTIC_MIND) \
     X(MUS_THPPZGSK_402A_MASTER_SPARK) \
     X(MUS_PKMN_MST_POKEMON_CENTER) \
-    X(MUS_PKMN_SWSH_SLUMBERING_WEALD)
+    X(MUS_PKMN_SWSH_SLUMBERING_WEALD) \
+    X(MUS_PKMN_ZA_VS_JACINTHE)
 
 #define SOUND_LIST_SE               \
     X(SE_USE_ITEM)                  \
