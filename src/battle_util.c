@@ -4533,7 +4533,6 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
 
                         }
                         gCurrentMove = MOVE_DOOM_DESIRE;
-                        gSideStatuses[GetBattlerSide(gBattlerTarget)] |= SIDE_STATUS_FUTUREATTACK;
                         gWishFutureKnock.futureSightMove[gBattlerTarget] = gCurrentMove;
                         gWishFutureKnock.futureSightBattlerIndex[gBattlerTarget] = gBattlerAttacker;
                         gWishFutureKnock.futureSightPartyIndex[gBattlerTarget] = gBattlerPartyIndexes[gBattlerAttacker];
