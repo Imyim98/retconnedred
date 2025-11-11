@@ -7135,19 +7135,25 @@ u16 GetBattleBGM(void)
 
 void PlayBattleBGM(void)
 {
-    ResetMapMusic();
-    m4aMPlayAllStop();
-    PlayBGM(GetBattleBGM());
+    if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+    {
+        ResetMapMusic();
+        m4aMPlayAllStop();
+        PlayBGM(GetBattleBGM());
+    }
 }
 
 void PlayMapChosenOrBattleBGM(u16 songId)
 {
-    ResetMapMusic();
-    m4aMPlayAllStop();
-    if (songId)
-        PlayNewMapMusic(songId);
-    else
-        PlayNewMapMusic(GetBattleBGM());
+    if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+    {
+        ResetMapMusic();
+        m4aMPlayAllStop();
+        if (songId)
+            PlayNewMapMusic(songId);
+        else
+            PlayNewMapMusic(GetBattleBGM());
+    }
 }
 
 // Identical to PlayMapChosenOrBattleBGM, but uses a task instead
@@ -7166,10 +7172,13 @@ void CreateTask_PlayMapChosenOrBattleBGM(u16 songId)
 
 static void Task_PlayMapChosenOrBattleBGM(u8 taskId)
 {
-    if (gTasks[taskId].tSongId)
-        PlayNewMapMusic(gTasks[taskId].tSongId);
-    else
-        PlayNewMapMusic(GetBattleBGM());
+    if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+    {
+        if (gTasks[taskId].tSongId)
+            PlayNewMapMusic(gTasks[taskId].tSongId);
+        else
+            PlayNewMapMusic(GetBattleBGM());
+    }
     DestroyTask(taskId);
 }
 

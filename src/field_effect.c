@@ -39,6 +39,7 @@
 #include "constants/metatile_behaviors.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "overworld.h"
 
 #define subsprite_table(ptr) {.subsprites = ptr, .subspriteCount = (sizeof ptr) / (sizeof(struct Subsprite))}
 
@@ -3261,8 +3262,11 @@ u8 FldEff_UseSurf(void)
 {
     u8 taskId = CreateTask(Task_SurfFieldEffect, 0xff);
     gTasks[taskId].tMonId = gFieldEffectArguments[0];
-    Overworld_ClearSavedMusic();
-    Overworld_ChangeMusicTo(MUS_SURF);
+    if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+    {
+        Overworld_ClearSavedMusic();
+        Overworld_ChangeMusicTo(MUS_SURF);
+    }
     return FALSE;
 }
 

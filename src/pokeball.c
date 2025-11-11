@@ -15,6 +15,9 @@
 #include "data.h"
 #include "item.h"
 #include "constants/songs.h"
+#include "constants/flags.h"
+#include "event_data.h"
+#include "overworld.h"
 
 static void Task_DoPokeballSendOutAnim(u8 taskId);
 static inline void DoPokeballSendOutSoundEffect(u32 battler);
@@ -1164,8 +1167,11 @@ static void SpriteCB_BallThrow_CaptureMon(struct Sprite *sprite)
     else if (sprite->data[4] == 95)
     {
         gDoingBattleAnim = FALSE;
-        m4aMPlayAllStop();
-        PlaySE(MUS_EVOLVED);
+        if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+        {
+            m4aMPlayAllStop();
+            PlaySE(MUS_EVOLVED);
+        }
     }
     else if (sprite->data[4] == 315)
     {

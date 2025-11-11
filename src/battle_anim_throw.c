@@ -21,6 +21,8 @@
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/rgb.h"
+#include "event_data.h"
+#include "overworld.h"
 
 // iwram
 COMMON_DATA u32 gMonShrinkDuration = 0;
@@ -1535,8 +1537,11 @@ static void SpriteCB_Ball_Capture_Step(struct Sprite *sprite)
     {
         gDoingBattleAnim = FALSE;
         UpdateOamPriorityInAllHealthboxes(1, FALSE);
-        m4aMPlayAllStop();
-        PlaySE(MUS_RG_CAUGHT_INTRO);
+        if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+        {
+            m4aMPlayAllStop();
+            PlaySE(MUS_RG_CAUGHT_INTRO);
+        }
     }
     else if (sprite->sTimer == 315)
     {

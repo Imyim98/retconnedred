@@ -1590,7 +1590,11 @@ void PlayTrainerEncounterMusic(void)
         default:
             music = MUS_ENCOUNTER_SUSPICIOUS;
         }
-        PlayNewMapMusic(music);
+
+        if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+        {
+            PlayNewMapMusic(music);
+        }
     }
 }
 

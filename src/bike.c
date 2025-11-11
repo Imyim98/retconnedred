@@ -9,6 +9,7 @@
 #include "overworld.h"
 #include "sound.h"
 #include "constants/songs.h"
+#include "event_data.h"
 
 // this file's functions
 static void MovePlayerOnMachBike(u8, u16, u16);
@@ -999,15 +1000,21 @@ void GetOnOffBike(u8 transitionFlags)
     if (gPlayerAvatar.flags & (PLAYER_AVATAR_FLAG_MACH_BIKE | PLAYER_AVATAR_FLAG_ACRO_BIKE))
     {
         SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
-        Overworld_ClearSavedMusic();
-        Overworld_PlaySpecialMapMusic();
+        if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+        {
+            Overworld_ClearSavedMusic();
+            Overworld_PlaySpecialMapMusic();
+        }
     }
     else
     {
         EndORASDowsing();
         SetPlayerAvatarTransitionFlags(transitionFlags);
-        Overworld_SetSavedMusic(MUS_CYCLING);
-        Overworld_ChangeMusicTo(MUS_CYCLING);
+        if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+        {
+            Overworld_SetSavedMusic(MUS_CYCLING);
+            Overworld_ChangeMusicTo(MUS_CYCLING);
+        }
     }
 }
 

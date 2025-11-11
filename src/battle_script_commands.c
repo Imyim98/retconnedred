@@ -71,6 +71,7 @@
 #include "follower_npc.h"
 #include "load_save.h"
 #include "test/test_runner_battle.h"
+#include "overworld.h"
 
 // table to avoid ugly powing on gba (courtesy of doesnt)
 // this returns (i^2.5)/4
@@ -5981,7 +5982,8 @@ static void Cmd_getexp(void)
                     && !gBattleStruct->wildVictorySong)
                 {
                     BattleStopLowHpSound();
-                    PlayBGM(MUS_VICTORY_WILD);
+                    if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+                        PlayBGM(MUS_VICTORY_WILD);
                     gBattleStruct->wildVictorySong++;
                 }
 
@@ -15247,7 +15249,10 @@ static void Cmd_handleballthrow(void)
             BtlController_EmitBallThrowAnim(gBattlerAttacker, B_COMM_TO_CONTROLLER, BALL_3_SHAKES_SUCCESS);
             MarkBattlerForControllerExec(gBattlerAttacker);
             TryBattleFormChange(gBattlerTarget, FORM_CHANGE_END_BATTLE);
-            gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
+            if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+                gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
+            else
+                gBattlescriptCurrInstr = BattleScript_SuccessBallThrow_NoMusic;
             struct Pokemon *caughtMon = GetBattlerMon(gBattlerTarget);
             SetMonData(caughtMon, MON_DATA_POKEBALL, &ballId);
 
@@ -15316,7 +15321,10 @@ static void Cmd_handleballthrow(void)
                     gBattleSpritesDataPtr->animationData->criticalCaptureSuccess = TRUE;
                 }
                 TryBattleFormChange(gBattlerTarget, FORM_CHANGE_END_BATTLE);
-                gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
+                if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+                    gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
+                else
+                    gBattlescriptCurrInstr = BattleScript_SuccessBallThrow_NoMusic;
                 struct Pokemon *caughtMon = GetBattlerMon(gBattlerTarget);
                 SetMonData(caughtMon, MON_DATA_POKEBALL, &ballId);
 
