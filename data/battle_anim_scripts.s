@@ -31180,7 +31180,7 @@ gBattleAnimMove_Transform::
 	monbg ANIM_ATTACKER
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_MINIMIZE, SOUND_PAN_ATTACKER, 48
-	createvisualtask AnimTask_TransformMon, 2, 0, 1
+	createvisualtask AnimTask_TransformMon, 2, SPECIES_GFX_CHANGE_TRANSFORM
 	waitforvisualfinish
 	clearmonbg ANIM_ATTACKER
 	end
@@ -33773,14 +33773,14 @@ gBattleAnimGeneral_SimpleHeal::
 
 gBattleAnimGeneral_IllusionOff::
 	monbg ANIM_TARGET
-	createvisualtask AnimTask_TransformMon, 2, 1, 0
+	createvisualtask AnimTask_TransformMon, 2, SPECIES_GFX_CHANGE_ILLUSION_OFF
 	waitforvisualfinish
 	clearmonbg ANIM_TARGET
 	end
 
 gBattleAnimGeneral_FormChange::
 	monbg ANIM_ATTACKER
-	createvisualtask AnimTask_TransformMon, 2, 1, 0
+	createvisualtask AnimTask_TransformMon, 2, SPECIES_GFX_CHANGE_FORM_CHANGE
 	waitforvisualfinish
 	clearmonbg ANIM_ATTACKER
 	end
@@ -33812,7 +33812,7 @@ gBattleAnimGeneral_MegaEvolution::
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 0, 16, RGB_WHITEALPHA
 	waitforvisualfinish
 	createvisualtask SoundTask_PlayNormalCry, 0
-	createvisualtask AnimTask_HideSwapSprite, 2, 1, 0
+	createvisualtask AnimTask_HideSwapSprite, 2
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 16, 0, RGB_WHITEALPHA
 	createvisualtask AnimTask_HorizontalShake, 5, ANIM_TARGET, 5, 14
 	createsprite gMegaSymbolSpriteTemplate ANIM_ATTACKER, 3, 0, 0, ANIM_ATTACKER
@@ -33897,7 +33897,7 @@ gBattleAnimGeneral_TeraActivate::
 	createvisualtask AnimTask_SetOpponentShadowCallbacks, 2 @ Restore shadows hidden in the charge script
 	loadspritegfx ANIM_TAG_TERA_SYMBOL
 	loadspritegfx ANIM_TAG_SPARKLE_6
-	createvisualtask AnimTask_HideSwapSprite, 2, 1, 0
+	createvisualtask AnimTask_HideSwapSprite, 2
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 16, 0, RGB_WHITEALPHA
 	createvisualtask AnimTask_HorizontalShake, 5, ANIM_TARGET, 5, 14
 	createvisualtask SoundTask_PlayNormalCry, 0
@@ -34037,7 +34037,7 @@ General_PrimalReversion_Alpha:
 	delay 20
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 0, 16, RGB_WHITEALPHA
 	waitforvisualfinish
-	createvisualtask AnimTask_HideSwapSprite, 2, 1, 0
+	createvisualtask AnimTask_HideSwapSprite, 2
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 16, 0, RGB_WHITEALPHA
 	createvisualtask AnimTask_HorizontalShake, 5, ANIM_TARGET, 5, 14
 	createvisualtask SoundTask_PlayNormalCry, 0
@@ -34070,7 +34070,7 @@ General_PrimalReversion_Omega:
 	delay 20
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 0, 16, RGB_WHITEALPHA
 	waitforvisualfinish
-	createvisualtask AnimTask_HideSwapSprite, 2, 1, 0
+	createvisualtask AnimTask_HideSwapSprite, 2
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 16, 0, RGB_WHITEALPHA
 	createvisualtask AnimTask_HorizontalShake, 5, ANIM_TARGET, 5, 14
 	createvisualtask SoundTask_PlayNormalCry, 0
@@ -34110,7 +34110,7 @@ gBattleAnimGeneral_PowerConstruct::
 	delay 20
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 0, 16, RGB_WHITEALPHA
 	waitforvisualfinish
-	createvisualtask AnimTask_HideSwapSprite, 2, 1, 0
+	createvisualtask AnimTask_HideSwapSprite, 2
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 16, 0, RGB_WHITEALPHA
 	createvisualtask AnimTask_HorizontalShake, 5, ANIM_TARGET, 5, 14
 	createvisualtask SoundTask_PlayNormalCry, 0
@@ -34180,7 +34180,7 @@ gBattleAnimGeneral_UltraBurst::
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 0, 16, RGB_WHITEALPHA
 	createsprite gUltraBurstSymbolSpriteTemplate, ANIM_ATTACKER, 0x0, 0x0, 0x0, 0x0, 0x0
 	waitforvisualfinish
-	createvisualtask AnimTask_HideSwapSprite, 2, 1, 0
+	createvisualtask AnimTask_HideSwapSprite, 2
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 16, 0, RGB_WHITEALPHA
 	createvisualtask AnimTask_HorizontalShake, 5, ANIM_TARGET, 5, 14
 	createvisualtask SoundTask_PlayNormalCry, 0
