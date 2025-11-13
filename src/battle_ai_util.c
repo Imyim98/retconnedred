@@ -2173,7 +2173,7 @@ bool32 CanLowerStat(u32 battlerAtk, u32 battlerDef, struct AiLogicData *aiData, 
 
     if (!DoesBattlerIgnoreAbilityChecks(battlerAtk, abilityAtk, move))
     {
-        if (IS_BATTLER_OF_TYPE(battlerDef, TYPE_GRASS) && AI_IsAbilityOnSide(battlerDef, ABILITY_FLOWER_VEIL))
+        if (IS_BATTLER_OF_TYPE(battlerDef, TYPE_NEW_NATURE) && AI_IsAbilityOnSide(battlerDef, ABILITY_FLOWER_VEIL))
             return FALSE;
 
         switch (aiData->abilities[battlerDef])

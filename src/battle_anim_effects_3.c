@@ -2484,11 +2484,10 @@ void AnimTask_HideSwapSprite(u8 taskId)
     case 0:
         gTasks[taskId].data[11] = gSprites[spriteId].x; // Save battler position
         gSprites[spriteId].x = -64; // hide it from screen to avoid the blip/glitch effect when swapping the sprite.
-        gTasks[taskId].data[10] = gBattleAnimArgs[0];
         gTasks[taskId].data[0]++;
         break;
     case 1:
-        HandleSpeciesGfxDataChange(gBattleAnimAttacker, gBattleAnimTarget, gTasks[taskId].data[10], gBattleAnimArgs[1]);
+        HandleSpeciesGfxDataChange(gBattleAnimAttacker, gBattleAnimTarget, SPECIES_GFX_CHANGE_FORM_CHANGE);
         GetBgDataForTransform(&animBg, gBattleAnimAttacker);
 
         if (IsContest())
@@ -2598,7 +2597,6 @@ void AnimTask_TransformMon(u8 taskId)
                 SetAnimBgAttribute(2, BG_ANIM_MOSAIC, 1);
 
             gTasks[taskId].data[10] = gBattleAnimArgs[0];
-            gTasks[taskId].data[11] = gBattleAnimArgs[1];
             gTasks[taskId].data[0]++;
         }
         else
@@ -2610,7 +2608,6 @@ void AnimTask_TransformMon(u8 taskId)
                 SetAnimBgAttribute(2, BG_ANIM_MOSAIC, 1);
 
             gTasks[taskId].data[10] = gBattleAnimArgs[0];
-            gTasks[taskId].data[11] = gBattleAnimArgs[1];
             gTasks[taskId].data[0]++;
         }
         break;
@@ -2628,7 +2625,7 @@ void AnimTask_TransformMon(u8 taskId)
     case 2:
         if (gCurrentMove == MOVE_FLUFFICATION)
         {
-            HandleSpeciesGfxDataChange(gBattleAnimTarget, gBattleAnimTarget, gTasks[taskId].data[10], gTasks[taskId].data[11]);
+            HandleSpeciesGfxDataChange(gBattleAnimTarget, gBattleAnimTarget, gTasks[taskId].data[10]);
             GetBgDataForTransform(&animBg, gBattleAnimTarget);
 
             if (IsContest())
@@ -2675,7 +2672,7 @@ void AnimTask_TransformMon(u8 taskId)
         }
         else
         {
-            HandleSpeciesGfxDataChange(gBattleAnimAttacker, gBattleAnimTarget, gTasks[taskId].data[10], gTasks[taskId].data[11]);
+            HandleSpeciesGfxDataChange(gBattleAnimAttacker, gBattleAnimTarget, gTasks[taskId].data[10]);
             GetBgDataForTransform(&animBg, gBattleAnimAttacker);
 
             if (IsContest())
@@ -2747,7 +2744,7 @@ void AnimTask_TransformMon(u8 taskId)
             {
 				if (!IsOnPlayerSide(gBattleAnimTarget))
                 {
-                    if (gTasks[taskId].data[10] == 0)
+                    if (gTasks[taskId].data[10] == SPECIES_GFX_CHANGE_TRANSFORM)
                         SetBattlerShadowSpriteCallback(gBattleAnimTarget, gBattleSpritesDataPtr->battlerData[gBattleAnimTarget].transformSpecies);
                 }
             }
@@ -2764,7 +2761,7 @@ void AnimTask_TransformMon(u8 taskId)
             {
 				if (!IsOnPlayerSide(gBattleAnimAttacker))
                 {
-                    if (gTasks[taskId].data[10] == 0)
+                    if (gTasks[taskId].data[10] == SPECIES_GFX_CHANGE_TRANSFORM)
                         SetBattlerShadowSpriteCallback(gBattleAnimAttacker, gBattleSpritesDataPtr->battlerData[gBattleAnimAttacker].transformSpecies);
                 }
             }
