@@ -833,9 +833,9 @@ gSongTable::
 	song mus_dgmn_bs_wild_child_bound_loop, 0, 0
 	song mus_dgmn_bs_evolution_loop, 0, 0
 	song mus_gs3_vs_magician, 0, 0
-	song dummy_song_header, 0, 0
-	song dummy_song_header, 0, 0
-	song dummy_song_header, 0, 0
+	song mus_puyo_7ds_bgm07_battle1, 0, 0
+	song mus_puyo_fever2_crimson_wave, 0, 0
+	song mus_puyo_fever2_funderworld, 0, 0
 	song dummy_song_header, 0, 0
 	song dummy_song_header, 0, 0
 	song dummy_song_header, 0, 0

@@ -777,9 +777,9 @@
 #define MUS_DGMN_BS_EVOLUTION_LOOP              830
 
 #define MUS_GS3_VS_MAGICIAN                     831
-#define MUS_DUMMY_832                           832
-#define MUS_DUMMY_833                           833
-#define MUS_DUMMY_834                           834
+#define MUS_PUYO_7DS_BGM07_BATTLE1              832
+#define MUS_PUYO_FEVER2_CRIMSON_WAVE            833
+#define MUS_PUYO_FEVER2_FUNDERWORLD             834
 #define MUS_DUMMY_835                           835
 #define MUS_DUMMY_836                           836
 #define MUS_DUMMY_837                           837
