@@ -619,8 +619,9 @@
 #define B_ANIM_EX_SHADOW_SKY_CONTINUES  55
 #define B_ANIM_ULTRA_MEDICINE           56
 #define B_ANIM_RIDE_SUMMON              57
+#define B_ANIM_ULTRA_SEIGA              58
 
-#define LAST_B_ANIMS_GENERAL            B_ANIM_RIDE_SUMMON
+#define LAST_B_ANIMS_GENERAL            B_ANIM_ULTRA_SEIGA
 #define NUM_B_ANIMS_GENERAL             (LAST_B_ANIMS_GENERAL + 1)
 
 // special animations table (sBattleAnims_Special)

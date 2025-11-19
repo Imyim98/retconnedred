@@ -9665,6 +9665,26 @@ BattleScript_UltraMedicineV2AlreadyMiasmaTerrain:
 	waitmessage B_WAIT_TIME_LONG
 	end3
 
+BattleScript_UltraSeigaActivates::
+	call BattleScript_AbilityPopUpScripting
+	pause B_WAIT_TIME_SHORT
+	playanimation BS_SCRIPTING, B_ANIM_ULTRA_SEIGA
+@	waitanimation
+@	printstring STRINGID_PKMNSTATSHIGHTENED
+@	waitmessage B_WAIT_TIME_LONG
+	jumpifhalfword CMP_COMMON_BITS, gFieldStatuses, STATUS_FIELD_DARKNESS_TERRAIN, BattleScript_UltraSeigaActivatesAlreadyDarknessTerrain
+	setdarknessterrainfromability BattleScript_UltraSeigaActivatesAlreadyDarknessTerrain
+@	call BattleScript_AbilityPopUpScripting
+@	printstring STRINGID_MIASMACOVERINGTHEFIELD
+@	waitmessage B_WAIT_TIME_LONG
+	playanimation BS_SCRIPTING, B_ANIM_RESTORE_BG
+	call BattleScript_ActivateTerrainEffects
+BattleScript_UltraSeigaActivatesAlreadyDarknessTerrain:
+	waitanimation
+	printstring STRINGID_PKMNSTATSHIGHTENED
+	waitmessage B_WAIT_TIME_LONG
+	end3
+
 BattleScript_EffectSpAtkSpDefUp2::
 	attackcanceler
 BattleScript_EffectSpAtkSpDefUp2FromStatUp::

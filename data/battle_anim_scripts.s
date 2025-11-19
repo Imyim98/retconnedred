@@ -23196,6 +23196,36 @@ gBattleAnimGeneral_UltraMedicineBurstOut::
 	waitbgfadeout
 	end
 
+gBattleAnimGeneral_UltraSeigaBurstOut::
+	createvisualtask AnimTask_HorizontalShake, 5, ANIM_TARGET, 3, 60
+@	unloadspritegfx ANIM_TAG_LEAF @green
+@	unloadspritegfx ANIM_TAG_ELECTRIC_ORBS @charge
+	loadspritegfx ANIM_TAG_FIRE_PLUME @blast burn
+	loadspritegfx ANIM_TAG_EXPLOSION_2 @explode
+	loadspritegfx ANIM_TAG_STRAIGHT_BEAM
+	loadspritegfx ANIM_TAG_CIRCLE_OF_LIGHT
+	panse SE_M_SOLAR_BEAM, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 0x2, 0x0
+	monbg ANIM_TARGET
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_CIRCLE_OF_LIGHT, 0, 8, 8, RGB_CYAN
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_EXPLOSION_2, 0, 8, 8, RGB_CYAN
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_STRAIGHT_BEAM, 0, 8, 8, RGB_CYAN
+	createvisualtask AnimTask_BlendBattleAnimPal, 0xa, F_PAL_TARGET, 0x6, 0x0, 0x10, RGB_CYAN
+	call PhotonGeyserBeam
+	call LightThatBurnsTheSkyGeyser
+	call LightThatBurnsTheSkyBlast_1
+	call LightThatBurnsTheSkyGeyser
+	call LightThatBurnsTheSkyBlast_2
+	call LightThatBurnsTheSkyGeyser
+	createvisualtask AnimTask_BlendBattleAnimPal, 0x2, (F_PAL_BG | F_PAL_ALL_BUT_DEF), 0x4, 0x0, 0x10, RGB_CYAN
+	call LightThatBurnsTheSkyBlast_3
+	clearmonbg ANIM_TARGET
+	waitforvisualfinish
+	delay 0x10
+	createvisualtask AnimTask_BlendBattleAnimPal, 0x2, (F_PAL_BG | F_PAL_BATTLERS_2), 0x0, 0x10, 0x0, RGB_CYAN
+	restorebg
+	waitbgfadeout
+	end
+
 gBattleAnimMove_SpiritBomb::
     loadspritegfx ANIM_TAG_POSEIDON_FORCE
 	loadspritegfx ANIM_TAG_EXPLOSION

@@ -9521,10 +9521,10 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 
 #if P_FAMILY_CELEBI
 #if !P_GBA_STYLE_SPECIES_GFX
-    const u32 gMonFrontPic_Celebi[] = INCBIN_U32("graphics/pokemon/_add/th/medicine/ultra/anim_front.4bpp.smol");
-    const u16 gMonPalette_Celebi[] = INCBIN_U16("graphics/pokemon/_add/th/medicine/ultra/normal.gbapal");
-    const u32 gMonBackPic_Celebi[] = INCBIN_U32("graphics/pokemon/_add/th/medicine/ultra/back.4bpp.smol");
-    const u16 gMonShinyPalette_Celebi[] = INCBIN_U16("graphics/pokemon/_add/th/medicine/ultra/shiny.gbapal");
+    const u32 gMonFrontPic_Celebi[] = INCBIN_U32("graphics/pokemon/_add/th/seiga/normal/anim_front.4bpp.smol");
+    const u16 gMonPalette_Celebi[] = INCBIN_U16("graphics/pokemon/_add/th/seiga/normal/normal.gbapal");
+    const u32 gMonBackPic_Celebi[] = INCBIN_U32("graphics/pokemon/_add/th/seiga/normal/back.4bpp.smol");
+    const u16 gMonShinyPalette_Celebi[] = INCBIN_U16("graphics/pokemon/_add/th/seiga/normal/shiny.gbapal");
 #else
     const u32 gMonFrontPic_Celebi[] = INCBIN_U32("graphics/pokemon/celebi/anim_front_gba.4bpp.smol");
     const u16 gMonPalette_Celebi[] = INCBIN_U16("graphics/pokemon/celebi/normal_gba.gbapal");
@@ -9532,12 +9532,12 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u16 gMonShinyPalette_Celebi[] = INCBIN_U16("graphics/pokemon/celebi/shiny_gba.gbapal");
 #endif //P_GBA_STYLE_SPECIES_GFX
 #if !P_GBA_STYLE_SPECIES_ICONS
-    const u8 gMonIcon_Celebi[] = INCBIN_U8("graphics/pokemon/_add/th/medicine/ultra/icon.4bpp");
+    const u8 gMonIcon_Celebi[] = INCBIN_U8("graphics/pokemon/_add/th/seiga/normal/icon.4bpp");
 #else
     const u8 gMonIcon_Celebi[] = INCBIN_U8("graphics/pokemon/celebi/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
 #if P_FOOTPRINTS
-    const u8 gMonFootprint_Celebi[] = INCBIN_U8("graphics/pokemon/_add/th/medicine/ultra/footprint.1bpp");
+    const u8 gMonFootprint_Celebi[] = INCBIN_U8("graphics/pokemon/_add/th/seiga/normal/footprint.1bpp");
 #endif //P_FOOTPRINTS
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_Celebi[] = INCBIN_COMP("graphics/pokemon/celebi/overworld.4bpp");

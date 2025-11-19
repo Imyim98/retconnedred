@@ -2823,4 +2823,18 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .description = COMPOUND_STRING("Substitute on entry."),
         .aiRating = 8,
     },
+
+    [ABILITY_ULTRA_SEIGA] =
+    {
+        .name = _("Ultra Seiga"),
+        .description = COMPOUND_STRING("Seiga Nyan Nyan Burst Out."),
+        .aiRating = 10,
+        .cantBeCopied = TRUE,
+        .cantBeSwapped = TRUE,
+        .cantBeTraced = TRUE,
+        .cantBeSuppressed = TRUE,
+        .cantBeOverwritten = TRUE,
+        .failsOnImposter = TRUE,
+    },
+
 };

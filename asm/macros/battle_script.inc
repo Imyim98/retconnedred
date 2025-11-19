@@ -2493,6 +2493,11 @@
 	.4byte \failInstr
 	.endm
 
+	.macro setdarknessterrainfromability failInstr:req
+	callnative BS_SetDarknessTerrainFromAbility
+	.4byte \failInstr
+	.endm
+
 	.macro jumpifgenconfiglowerthan tag:req, gen:req, jumpInstr:req
 	callnative BS_JumpIfGenConfigLowerThan
 	.2byte \tag

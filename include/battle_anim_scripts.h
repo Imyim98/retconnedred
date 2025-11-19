@@ -1054,6 +1054,7 @@ extern const u8 gBattleAnimGeneral_CounterSlash[];
 extern const u8 gBattleAnimGeneral_ShadowSky[];
 extern const u8 gBattleAnimGeneral_UltraMedicineBurstOut[];
 extern const u8 gBattleAnimGeneral_RideSummonSubstitute[];
+extern const u8 gBattleAnimGeneral_UltraSeigaBurstOut[];
 
 // special animations
 extern const u8 gBattleAnimSpecial_LevelUp[];
