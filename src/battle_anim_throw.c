@@ -1540,7 +1540,7 @@ static void SpriteCB_Ball_Capture_Step(struct Sprite *sprite)
         if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
         {
             m4aMPlayAllStop();
-            PlaySE(MUS_RG_CAUGHT_INTRO);
+            PlaySE(MUS_PC_DS1FWPCMH_SEQ_BGM22);
         }
     }
     else if (sprite->sTimer == 315)

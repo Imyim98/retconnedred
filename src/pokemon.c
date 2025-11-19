@@ -7129,7 +7129,29 @@ u16 GetBattleBGM(void)
     }
     else
     {
-        return MUS_VS_WILD;
+        switch (gSpeciesInfo[GetMonData(&gEnemyParty[0], MON_DATA_SPECIES, NULL)].bodyColor)
+        {
+        case FRANCHISE_ORIGIN_POKEMON:      // BODY_COLOR_RED
+            return MUS_HG_VS_WILD;
+        case FRANCHISE_ORIGIN_MOEMON:       // BODY_COLOR_BLUE
+            return MUS_PKMN_GSC_VS_WILD1;
+        case FRANCHISE_ORIGIN_YUYUYUI:      // BODY_COLOR_YELLOW
+            return MUS_YYYI_BATTLE_04;
+        case FRANCHISE_ORIGIN_TOUHOU:       // BODY_COLOR_GREEN
+            return MUS_THPPZGSK_366A_DOLL_JUDGEMENT;
+        case FRANCHISE_ORIGIN_SEIHOU:       // BODY_COLOR_BLACK
+            return MUS_SH_VELVETMAIDEN;
+        case FRANCHISE_ORIGIN_KEY:          // BODY_COLOR_BROWN
+            return MUS_KEY_CLANNAD_TOKI_NO_KIZAMU_UTA;
+        case FRANCHISE_ORIGIN_BGHS:         // BODY_COLOR_PURPLE
+            return MUS_BGHS_BELIEVE;
+        case FRANCHISE_ORIGIN_PRECURE:      // BODY_COLOR_GRAY
+            return MUS_PC_ALLHENSHIN;
+        case FRANCHISE_ORIGIN_OTHER:        // BODY_COLOR_WHITE
+        case FRANCHISE_ORIGIN_UNIDENTIFIED: // BODY_COLOR_PINK
+        default:
+            return MUS_VS_WILD;
+        }
     }
 }
 

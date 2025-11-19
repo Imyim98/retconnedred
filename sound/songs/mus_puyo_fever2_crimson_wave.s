@@ -19,7 +19,7 @@ mus_puyo_fever2_crimson_wave_1:
 	.byte	KEYSH , mus_puyo_fever2_crimson_wave_key+0
 @ 000   ----------------------------------------
 	.byte	TEMPO , 180*mus_puyo_fever2_crimson_wave_tbs/2
-	.byte		VOICE , 4 @ Xylo
+	.byte		VOICE , 112 @ Xylo
 	.byte		VOL   , 65*mus_puyo_fever2_crimson_wave_mvl/mxv
 	.byte		PAN   , c_v-40
 	.byte		MOD   , 0
@@ -1570,7 +1570,7 @@ mus_puyo_fever2_crimson_wave_1_090:
 mus_puyo_fever2_crimson_wave_2:
 	.byte	KEYSH , mus_puyo_fever2_crimson_wave_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 80 @ Bass | GB-Square-1
+	.byte		VOICE , 92 @ Bass | GB-Square-1
 	.byte		VOL   , 100*mus_puyo_fever2_crimson_wave_mvl/mxv
 	.byte		PAN   , c_v+0
 	.byte		BENDR , 12
@@ -2399,7 +2399,7 @@ mus_puyo_fever2_crimson_wave_2_072:
 mus_puyo_fever2_crimson_wave_3:
 	.byte	KEYSH , mus_puyo_fever2_crimson_wave_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 99 @ Voice | GB-Wave
+	.byte		VOICE , 101 @ Voice | GB-Wave
 	.byte		VOL   , 70*mus_puyo_fever2_crimson_wave_mvl/mxv
 	.byte		PAN   , c_v-27
 	.byte		BENDR , 12
@@ -4065,7 +4065,7 @@ mus_puyo_fever2_crimson_wave_4_056:
 mus_puyo_fever2_crimson_wave_5:
 	.byte	KEYSH , mus_puyo_fever2_crimson_wave_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 126 @ Oeches Hit --> Noise
+	.byte		VOICE , 79 @ Oeches Hit --> Noise
 	.byte		VOL   , 112*mus_puyo_fever2_crimson_wave_mvl/mxv
 	.byte		PAN   , c_v-21
 	.byte		BENDR , 12
@@ -4709,7 +4709,7 @@ mus_puyo_fever2_crimson_wave_6_044:
 mus_puyo_fever2_crimson_wave_7:
 	.byte	KEYSH , mus_puyo_fever2_crimson_wave_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 43 @ Trinity Big Boned
+	.byte		VOICE , 57 @ Trinity Big Boned
 	.byte		VOL   , 90*mus_puyo_fever2_crimson_wave_mvl/mxv
 	.byte		PAN   , c_v-17
 	.byte		BENDR , 12
@@ -5693,7 +5693,7 @@ mus_puyo_fever2_crimson_wave_7_080:
 mus_puyo_fever2_crimson_wave_8:
 	.byte	KEYSH , mus_puyo_fever2_crimson_wave_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 0 @ Drum
+	.byte		VOICE , 120 @ Drum
 	.byte		BENDR , 12
 	.byte		VOL   , 100*mus_puyo_fever2_crimson_wave_mvl/mxv
 	.byte		N12   , Cn1 , v127
@@ -8044,7 +8044,7 @@ mus_puyo_fever2_crimson_wave_9_009:
 mus_puyo_fever2_crimson_wave_10:
 	.byte	KEYSH , mus_puyo_fever2_crimson_wave_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 84 @ GB-Square-2
+	.byte		VOICE , 80 @ GB-Square-2
 	.byte		VOL   , 61*mus_puyo_fever2_crimson_wave_mvl/mxv
 	.byte		PAN   , c_v+36
 	.byte		BENDR , 12

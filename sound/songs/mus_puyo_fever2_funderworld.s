@@ -19,7 +19,7 @@ mus_puyo_fever2_funderworld_1:
 	.byte	KEYSH , mus_puyo_fever2_funderworld_key+0
 @ 000   ----------------------------------------
 	.byte	TEMPO , 180*mus_puyo_fever2_funderworld_tbs/2
-	.byte		VOICE , 14 @ 79 @ Tubular Bells
+	.byte		VOICE , 113 @ 79 @ Tubular Bells --> HGSS Tubular Bell
 	.byte		VOL   , 127
 	.byte		PAN   , c_v+30
 	.byte		BENDR , 15
@@ -330,7 +330,7 @@ mus_puyo_fever2_funderworld_1_047:
 mus_puyo_fever2_funderworld_2:
 	.byte	KEYSH , mus_puyo_fever2_funderworld_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 38 @ 5 @ Bass
+	.byte		VOICE , 42 @ 5 @ Bass --> HGSS Synth Bass
 	.byte		VOL   , 90*mus_puyo_fever2_funderworld_mvl/mxv
 	.byte		PAN   , c_v+0
 	.byte		BENDR , 15
@@ -1133,7 +1133,7 @@ mus_puyo_fever2_funderworld_2_058:
 mus_puyo_fever2_funderworld_3:
 	.byte	KEYSH , mus_puyo_fever2_funderworld_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 82 @ 87 @ Xylophone --> Square-2
+	.byte		VOICE , 80 @ 87 @ Xylophone --> Square-2
 	.byte		VOL   , 75*mus_puyo_fever2_funderworld_mvl/mxv
 	.byte		PAN   , c_v+30
 	.byte		BENDR , 15
@@ -3455,7 +3455,7 @@ mus_puyo_fever2_funderworld_4_048:
 mus_puyo_fever2_funderworld_5:
 	.byte	KEYSH , mus_puyo_fever2_funderworld_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 54 @ 74 @ Voice
+	.byte		VOICE , 115 @ 74 @ Voice
 	.byte		VOL   , 65*mus_puyo_fever2_funderworld_mvl/mxv
 	.byte		PAN   , c_v+40
 	.byte		BENDR , 15
@@ -3554,7 +3554,7 @@ mus_puyo_fever2_funderworld_5_005:
 @ 009   ----------------------------------------
 mus_puyo_fever2_funderworld_5_009:
 	.byte	W03
-	.byte		VOICE , 16 @ 89 @ Church Organ
+	.byte		VOICE , 19 @ 89 @ Church Organ --> RSE
 	.byte	W24
 	.byte		N11   , En5 , v127
 	.byte	W36
@@ -3628,7 +3628,7 @@ mus_puyo_fever2_funderworld_5_016:
 	.byte	W09
 	.byte	PEND
 @ 017   ----------------------------------------
-	.byte		VOICE , 16 @ 89 @ Church Organ
+	.byte		VOICE , 19 @ 89 @ Church Organ --> RSE
 	.byte		N05   , An4 
 	.byte	W06
 	.byte		        Fs4 
@@ -3804,7 +3804,7 @@ mus_puyo_fever2_funderworld_5_019:
 	.byte	W36
 	.byte		N11   
 	.byte	W09
-	.byte		VOICE , 16 @ 89 @ Church Organ
+	.byte		VOICE , 19 @ 89 @ Church Organ --> RSE
 	.byte	W15
 	.byte		N11   
 	.byte	W09
@@ -3893,7 +3893,7 @@ mus_puyo_fever2_funderworld_5_019:
 	.byte		        Fs5 
 	.byte	W06
 @ 041   ----------------------------------------
-	.byte		VOICE , 54 @ 74 @ Voice
+	.byte		VOICE , 115 @ 74 @ Voice --> RF
 	.byte		N84   , En2 
 	.byte		N84   , Bn2 
 	.byte	W96
@@ -4213,7 +4213,7 @@ mus_puyo_fever2_funderworld_5_050:
 mus_puyo_fever2_funderworld_6:
 	.byte	KEYSH , mus_puyo_fever2_funderworld_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 48 @ 93 @ Brass --> Flute
+	.byte		VOICE , 49 @ 93 @ Brass --> Flute --> HGSS Strings
 	.byte		VOL   , 90*mus_puyo_fever2_funderworld_mvl/mxv
 	.byte		PAN   , c_v+0
 	.byte		BENDR , 15
@@ -4836,7 +4836,7 @@ mus_puyo_fever2_funderworld_6_045:
 mus_puyo_fever2_funderworld_7:
 	.byte	KEYSH , mus_puyo_fever2_funderworld_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 97 @ 87 @ Xylophone --> GB-Wave
+	.byte		VOICE , 101 @ 87 @ Xylophone --> GB-Wave
 	.byte		VOL   , 90*mus_puyo_fever2_funderworld_mvl/mxv
 	.byte		PAN   , c_v-30
 	.byte		BENDR , 15
@@ -5568,7 +5568,7 @@ mus_puyo_fever2_funderworld_7_048:
 @ 060   ----------------------------------------
 	.byte	W96
 @ 061   ----------------------------------------
-	.byte		VOICE , 83 @ 87 @ Xylophone --> GB-Wave
+	.byte		VOICE , 82 @ 87 @ Xylophone --> GB-Wave
 	.byte		N05   , Gs4 , v092
 	.byte	W06
 	.byte		        En4 
@@ -5756,7 +5756,7 @@ mus_puyo_fever2_funderworld_7_063:
 mus_puyo_fever2_funderworld_8:
 	.byte	KEYSH , mus_puyo_fever2_funderworld_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 0 @ Drum
+	.byte		VOICE , 120 @ Drum
 	.byte		VOL   , 110*mus_puyo_fever2_funderworld_mvl/mxv
 	.byte	W48
 	.byte		N05   , Cn1 , v127

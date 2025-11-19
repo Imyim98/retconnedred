@@ -11,8 +11,8 @@ voicegroup604::
 	voice_keysplit voicegroup255, KeySplitTable45                                                 @ 008 | EVO         | Direct | HGSS Strings
 	voice_keysplit voicegroup239, KeySplitTable38                                                 @ 009 | EVO         | Direct | HGSS Marimba
 	voice_keysplit voicegroup256, KeySplitTable46                                                 @ 010 | EVO         | Direct | HGSS Violin 
-	voice_directsound 60, 0, DirectSoundWaveData_sc88pro_synth_bass, 255, 252, 0, 146             @ 011 | EVO         | Direct | RSE Synth Bass
-	voice_noise_alt 60, 0, 0, 0, 2, 0, 1                                                          @ 012 | EVO         | GB-Noise
+	voice_keysplit voicegroup254, KeySplitTable44                                                 @ 011 | EVO         | Direct | HGSS Synth Bass
+	voice_keysplit_all voicegroup230                                                              @ 012 | EVO         | HGSS Drum
 	voice_square_2_alt 60, 0, 2, 0, 6, 1, 0                                                       @ 013 | 
 	voice_square_1_alt 60, 0, 0, 2, 0, 0, 11, 0                                                   @ 014 | 
 	voice_programmable_wave_alt 60, 0, ProgrammableWaveData_DgmnBS_37FB64, 0, 3, 7, 0             @ 015 | 

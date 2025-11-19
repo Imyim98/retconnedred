@@ -19,7 +19,7 @@ mus_puyo_7ds_bgm07_battle1_1:
 	.byte	KEYSH , mus_puyo_7ds_bgm07_battle1_key+0
 @ 000   ----------------------------------------
 	.byte	TEMPO , 154*mus_puyo_7ds_bgm07_battle1_tbs/2
-	.byte		VOICE , 33 @ 5 @ Unison Slap Bass
+	.byte		VOICE , 41 @ 5 @ Unison Slap Bass
 	.byte		VOL   , 100*mus_puyo_7ds_bgm07_battle1_mvl/mxv @ 127*mus_puyo_7ds_bgm07_battle1_mvl/mxv
 	.byte		PAN   , c_v-7
 	.byte		MOD   , 2 @ 48
@@ -949,7 +949,7 @@ mus_puyo_7ds_bgm07_battle1_1_064:
 mus_puyo_7ds_bgm07_battle1_2:
 	.byte	KEYSH , mus_puyo_7ds_bgm07_battle1_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 87 @ 70 @ Celesta? --> GB Wave
+	.byte		VOICE , 82 @ 70 @ Celesta? --> GB Wave
 	.byte		VOL   , 80*mus_puyo_7ds_bgm07_battle1_mvl/mxv
 	.byte		PAN   , c_v-34
 	.byte		MOD   , 2 @ 65
@@ -3064,7 +3064,7 @@ mus_puyo_7ds_bgm07_battle1_4_082:
 mus_puyo_7ds_bgm07_battle1_5:
 	.byte	KEYSH , mus_puyo_7ds_bgm07_battle1_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 56 @ 74 @ Organ/Choir
+	.byte		VOICE , 49 @ 74 @ Organ/Choir
 	.byte		VOL   , 70*mus_puyo_7ds_bgm07_battle1_mvl/mxv
 	.byte		PAN   , c_v+31
 	.byte		MOD   , 2 @ 45
@@ -3650,7 +3650,7 @@ mus_puyo_7ds_bgm07_battle1_5_030:
 mus_puyo_7ds_bgm07_battle1_6:
 	.byte	KEYSH , mus_puyo_7ds_bgm07_battle1_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 84 @ 50 @ GB Wave? --> Square-2
+	.byte		VOICE , 83 @ 50 @ GB Wave? --> Square-2
 	.byte		VOL   , 84*mus_puyo_7ds_bgm07_battle1_mvl/mxv
 	.byte		PAN   , c_v-21
 	.byte		MOD   , 2 @ 21
@@ -4137,7 +4137,7 @@ mus_puyo_7ds_bgm07_battle1_6_022:
 mus_puyo_7ds_bgm07_battle1_7:
 	.byte	KEYSH , mus_puyo_7ds_bgm07_battle1_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 38 @ 53 @ Synth Bass
+	.byte		VOICE , 40 @ 53 @ Synth Bass
 	.byte		VOL   , 80*mus_puyo_7ds_bgm07_battle1_mvl/mxv
 	.byte		PAN   , c_v-18
 	.byte		MOD   , 2 @ 60
@@ -5269,7 +5269,7 @@ mus_puyo_7ds_bgm07_battle1_8_008:
 mus_puyo_7ds_bgm07_battle1_9:
 	.byte	KEYSH , mus_puyo_7ds_bgm07_battle1_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 30 @ 96 @ Dist.Guitar OD.Guitar
+	.byte		VOICE , 43 @ 96 @ Dist.Guitar OD.Guitar
 	.byte		VOL   , 100*mus_puyo_7ds_bgm07_battle1_mvl/mxv
 	.byte		PAN   , c_v-14
 	.byte	W96
@@ -5894,7 +5894,7 @@ mus_puyo_7ds_bgm07_battle1_9_082:
 mus_puyo_7ds_bgm07_battle1_10:
 	.byte	KEYSH , mus_puyo_7ds_bgm07_battle1_key+0
 @ 000   ----------------------------------------
-	.byte		VOICE , 0 @ Drum
+	.byte		VOICE , 120 @ Drum
 	.byte		VOL   , 80*mus_puyo_7ds_bgm07_battle1_mvl/mxv @ 127*mus_puyo_7ds_bgm07_battle1_mvl/mxv
 	.byte		PAN   , c_v+0
 	.byte	W01

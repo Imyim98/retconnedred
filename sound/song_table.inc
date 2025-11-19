@@ -1068,7 +1068,7 @@ gSongTable::
 	song mus_pc_ds1fwpcmh_seq_bgm19, 0, 0
 	song mus_pc_ds1fwpcmh_seq_bgm20, 0, 0
 	song mus_pc_ds1fwpcmh_seq_bgm21, 0, 0
-	song mus_pc_ds1fwpcmh_seq_bgm22, 0, 0
+	song mus_pc_ds1fwpcmh_seq_bgm22, 2, 2
 	song mus_pc_ds2fwpcss_bgm_arts, 0, 0
 	song mus_pc_ds2fwpcss_bgm_arts_02, 0, 0
 	song mus_pc_ds2fwpcss_bgm_battle_01, 0, 0

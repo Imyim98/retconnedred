@@ -22,6 +22,7 @@ mus_pc_ds1fwpcmh_seq_bgm11_1:
 	.byte		VOICE , 55
 	.byte		VOL   , 115*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
 	.byte		PAN   , c_v+21
+	.byte		BENDR , 12
 	.byte		BEND  , c_v+0
 	.byte		N36   , Ds3 , v120
 	.byte	W36
@@ -54,8 +55,14 @@ mus_pc_ds1fwpcmh_seq_bgm11_1:
 	.byte	W24
 	.byte		        As2 
 	.byte	W12
+mus_pc_ds1fwpcmh_seq_bgm11_1_loop:
 	.byte	TEMPO , 172*mus_pc_ds1fwpcmh_seq_bgm11_tbs/2
-	.byte		        Cn3 
+	.byte		VOICE , 55
+	.byte		VOL   , 115*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
+	.byte		PAN   , c_v+21
+	.byte		BENDR , 12
+	.byte		BEND  , c_v+0
+	.byte		N12   , Cn3 , v100
 	.byte	W36
 @ 004   ----------------------------------------
 	.byte	W96
@@ -266,6 +273,9 @@ mus_pc_ds1fwpcmh_seq_bgm11_1_031:
 	.byte	W12
 	.byte		        Cn4 
 	.byte	W12
+	.byte	W12
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm11_1_loop
 	.byte	FINE
 
 @**************** Track 2 (Midi-Chn.2) ****************@
@@ -276,6 +286,7 @@ mus_pc_ds1fwpcmh_seq_bgm11_2:
 	.byte		VOICE , 39
 	.byte		VOL   , 120*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
 	.byte		PAN   , c_v+0
+	.byte		BENDR , 12
 	.byte		BEND  , c_v+0
 	.byte		N36   , Cn1 , v120
 	.byte	W36
@@ -307,7 +318,13 @@ mus_pc_ds1fwpcmh_seq_bgm11_2:
 	.byte	W24
 	.byte		N11   , As0 , v120
 	.byte	W12
-	.byte		N24   , Cn1 
+mus_pc_ds1fwpcmh_seq_bgm11_2_loop:
+	.byte		VOICE , 39
+	.byte		VOL   , 120*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
+	.byte		PAN   , c_v+0
+	.byte		BENDR , 12
+	.byte		BEND  , c_v+0
+	.byte		N24   , Cn1 , v120
 	.byte	W24
 	.byte		N12   
 	.byte	W12
@@ -776,6 +793,9 @@ mus_pc_ds1fwpcmh_seq_bgm11_2_031:
 	.byte	W12
 	.byte		        Cn1 
 	.byte	W12
+	.byte	W12
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm11_2_loop
 	.byte	FINE
 
 @**************** Track 3 (Midi-Chn.3) ****************@
@@ -786,6 +806,7 @@ mus_pc_ds1fwpcmh_seq_bgm11_3:
 	.byte		VOICE , 48
 	.byte		VOL   , 80*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
 	.byte		PAN   , c_v-39
+	.byte		BENDR , 12
 	.byte		BEND  , c_v+0
 	.byte	W96
 @ 001   ----------------------------------------
@@ -794,6 +815,12 @@ mus_pc_ds1fwpcmh_seq_bgm11_3:
 	.byte	W96
 @ 003   ----------------------------------------
 	.byte	W60
+mus_pc_ds1fwpcmh_seq_bgm11_3_loop:
+	.byte		VOICE , 48
+	.byte		VOL   , 80*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
+	.byte		PAN   , c_v-39
+	.byte		BENDR , 12
+	.byte		BEND  , c_v+0
 	.byte		N72   , Cn4 , v092
 	.byte	W36
 @ 004   ----------------------------------------
@@ -1045,6 +1072,9 @@ mus_pc_ds1fwpcmh_seq_bgm11_3_030:
 	.byte	W12
 	.byte		        Gn4 
 	.byte	W12
+	.byte	W12
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm11_3_loop
 	.byte	FINE
 
 @**************** Track 4 (Midi-Chn.4) ****************@
@@ -1055,6 +1085,7 @@ mus_pc_ds1fwpcmh_seq_bgm11_4:
 	.byte		VOICE , 81
 	.byte		VOL   , 125*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
 	.byte		PAN   , c_v+0
+	.byte		BENDR , 12
 	.byte		MOD   , 0
 	.byte		BEND  , c_v-32
 	.byte		N36   , Cn5 , v127
@@ -1102,7 +1133,14 @@ mus_pc_ds1fwpcmh_seq_bgm11_4:
 	.byte	W12
 	.byte		        Cn4 
 	.byte	W36
-	.byte		N24   
+mus_pc_ds1fwpcmh_seq_bgm11_4_loop:
+	.byte		VOICE , 81
+	.byte		VOL   , 125*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
+	.byte		PAN   , c_v+0
+	.byte		BENDR , 12
+	.byte		MOD   , 0
+	.byte		BEND  , c_v+0
+	.byte		N24   , Cn4 , v127
 	.byte	W24
 	.byte		N12   
 	.byte	W12
@@ -1432,7 +1470,7 @@ mus_pc_ds1fwpcmh_seq_bgm11_4_024:
 	.byte	W96
 @ 028   ----------------------------------------
 	.byte	W24
-	.byte		MOD   , 50
+	.byte		MOD   , 10
 	.byte	W24
 	.byte		EOT   
 	.byte		BEND  , c_v+0
@@ -1637,6 +1675,8 @@ mus_pc_ds1fwpcmh_seq_bgm11_4_024:
 	.byte	W12
 	.byte		N24   , Cn5 
 	.byte	W24
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm11_4_loop
 	.byte	FINE
 
 @**************** Track 5 (Midi-Chn.5) ****************@
@@ -1646,6 +1686,7 @@ mus_pc_ds1fwpcmh_seq_bgm11_5:
 @ 000   ----------------------------------------
 	.byte		VOICE , 81
 	.byte		VOL   , 95*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
+	.byte		BENDR , 12
 	.byte		PAN   , c_v+0
 	.byte	W96
 @ 001   ----------------------------------------
@@ -1653,7 +1694,14 @@ mus_pc_ds1fwpcmh_seq_bgm11_5:
 @ 002   ----------------------------------------
 	.byte	W96
 @ 003   ----------------------------------------
-	.byte	W96
+	.byte	W24
+	.byte	W36
+mus_pc_ds1fwpcmh_seq_bgm11_5_loop:
+	.byte		VOICE , 81
+	.byte		VOL   , 95*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
+	.byte		BENDR , 12
+	.byte		PAN   , c_v+0
+	.byte	W36
 @ 004   ----------------------------------------
 mus_pc_ds1fwpcmh_seq_bgm11_5_004:
 	.byte	W60
@@ -1810,6 +1858,9 @@ mus_pc_ds1fwpcmh_seq_bgm11_5_005:
 	.byte	W96
 @ 041   ----------------------------------------
 	.byte	W72
+	.byte	W12
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm11_5_loop
 	.byte	FINE
 
 @**************** Track 6 (Midi-Chn.6) ****************@
@@ -1820,6 +1871,7 @@ mus_pc_ds1fwpcmh_seq_bgm11_6:
 	.byte		VOICE , 65
 	.byte		VOL   , 90*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
 	.byte		PAN   , c_v+0
+	.byte		BENDR , 12
 	.byte		BEND  , c_v+0
 	.byte		N36   , Gn4 , v080
 	.byte		N36   , Ds5 , v120
@@ -1838,6 +1890,12 @@ mus_pc_ds1fwpcmh_seq_bgm11_6:
 	.byte	W96
 @ 003   ----------------------------------------
 	.byte	W60
+mus_pc_ds1fwpcmh_seq_bgm11_6_loop:
+	.byte		VOICE , 65
+	.byte		VOL   , 90*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
+	.byte		PAN   , c_v+0
+	.byte		BENDR , 12
+	.byte		BEND  , c_v+0
 	.byte		N24   , Gn4 , v080
 	.byte		N24   , Cn5 , v100
 	.byte	W24
@@ -2047,6 +2105,9 @@ mus_pc_ds1fwpcmh_seq_bgm11_6_030:
 	.byte	W96
 @ 041   ----------------------------------------
 	.byte	W72
+	.byte	W12
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm11_6_loop
 	.byte	FINE
 
 @**************** Track 7 (Midi-Chn.7) ****************@
@@ -2057,6 +2118,7 @@ mus_pc_ds1fwpcmh_seq_bgm11_7:
 	.byte		VOICE , 30
 	.byte		VOL   , 90*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
 	.byte		PAN   , c_v+16
+	.byte		BENDR , 12
 	.byte		BEND  , c_v+0
 	.byte		N36   , Cn2 , v120
 	.byte		N36   , Gn2 
@@ -2078,7 +2140,13 @@ mus_pc_ds1fwpcmh_seq_bgm11_7:
 	.byte		N12   , As1 
 	.byte		N12   , Fn2 
 	.byte	W12
-	.byte		N24   , Cn2 
+mus_pc_ds1fwpcmh_seq_bgm11_7_loop:
+	.byte		VOICE , 30
+	.byte		VOL   , 90*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
+	.byte		PAN   , c_v+16
+	.byte		BENDR , 12
+	.byte		BEND  , c_v+0
+	.byte		N24   , Cn2 , v120
 	.byte		N24   , Gn2 , v100
 	.byte	W24
 	.byte		N08   , Cn2 , v120
@@ -2582,6 +2650,9 @@ mus_pc_ds1fwpcmh_seq_bgm11_7_031:
 	.byte		        Cn2 , v100
 	.byte		N12   , Gn2 , v120
 	.byte	W12
+	.byte	W12
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm11_7_loop
 	.byte	FINE
 
 @**************** Track 8 (Midi-Chn.8) ****************@
@@ -2592,6 +2663,7 @@ mus_pc_ds1fwpcmh_seq_bgm11_8:
 	.byte		VOICE , 61
 	.byte		VOL   , 91*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
 	.byte		PAN   , c_v-29
+	.byte		BENDR , 12
 	.byte		BEND  , c_v+0
 	.byte		N36   , Ds4 , v120
 	.byte	W36
@@ -2606,6 +2678,12 @@ mus_pc_ds1fwpcmh_seq_bgm11_8:
 	.byte	W96
 @ 003   ----------------------------------------
 	.byte	W60
+mus_pc_ds1fwpcmh_seq_bgm11_8_loop:
+	.byte		VOICE , 61
+	.byte		VOL   , 91*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
+	.byte		PAN   , c_v-29
+	.byte		BENDR , 12
+	.byte		BEND  , c_v+0
 	.byte		N72   , En3 , v100
 	.byte	W36
 @ 004   ----------------------------------------
@@ -2848,6 +2926,9 @@ mus_pc_ds1fwpcmh_seq_bgm11_8_029:
 	.byte	W12
 	.byte		        Cn4 
 	.byte	W12
+	.byte	W12
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm11_8_loop
 	.byte	FINE
 
 @**************** Track 9 (Midi-Chn.9) ****************@
@@ -2858,6 +2939,7 @@ mus_pc_ds1fwpcmh_seq_bgm11_9:
 	.byte		VOICE , 14
 	.byte		VOL   , 100*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
 	.byte		PAN   , c_v+31
+	.byte		BENDR , 12
 	.byte		BEND  , c_v+0
 	.byte		N36   , Cn4 , v120
 	.byte	W36
@@ -2874,9 +2956,14 @@ mus_pc_ds1fwpcmh_seq_bgm11_9_003:
 	.byte	W48
 	.byte		N12   , As3 , v120
 	.byte	W12
-	.byte		N24   , Cn4 
+mus_pc_ds1fwpcmh_seq_bgm11_9_loop:
+	.byte		VOICE , 14
+	.byte		VOL   , 100*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
+	.byte		PAN   , c_v+31
+	.byte		BENDR , 12
+	.byte		BEND  , c_v+0
+	.byte		N24   , Cn4 , v120
 	.byte	W36
-	.byte	PEND
 @ 004   ----------------------------------------
 	.byte	W60
 	.byte		        Ds4 
@@ -2896,8 +2983,11 @@ mus_pc_ds1fwpcmh_seq_bgm11_9_006:
 	.byte	W36
 	.byte	PEND
 @ 007   ----------------------------------------
-	.byte	PATT
-	 .word	mus_pc_ds1fwpcmh_seq_bgm11_9_003
+	.byte	W48
+	.byte		N12   , As3 , v120
+	.byte	W12
+	.byte		N24   , Cn4 , v120
+	.byte	W36
 @ 008   ----------------------------------------
 	.byte	W60
 	.byte		N24   , Ds4 , v120
@@ -3004,6 +3094,9 @@ mus_pc_ds1fwpcmh_seq_bgm11_9_006:
 	.byte	W12
 	.byte		        Cn4 
 	.byte	W12
+	.byte	W12
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm11_9_loop
 	.byte	FINE
 
 @**************** Track 10 (Midi-Chn.11) ****************@
@@ -3014,6 +3107,7 @@ mus_pc_ds1fwpcmh_seq_bgm11_10:
 	.byte		VOICE , 127
 	.byte		VOL   , 120*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
 	.byte		PAN   , c_v+0
+	.byte		BENDR , 12
 	.byte		BEND  , c_v+0
 	.byte		N05   , Dn1 , v116
 	.byte		N24   , Cs2 , v092
@@ -3085,6 +3179,12 @@ mus_pc_ds1fwpcmh_seq_bgm11_10:
 	.byte		N05   , Dn1 , v116
 	.byte		N24   , Cs2 , v092
 	.byte	W12
+mus_pc_ds1fwpcmh_seq_bgm11_10_loop:
+	.byte		VOICE , 127
+	.byte		VOL   , 120*mus_pc_ds1fwpcmh_seq_bgm11_mvl/mxv
+	.byte		PAN   , c_v+0
+	.byte		BENDR , 12
+	.byte		BEND  , c_v+0
 	.byte		N04   , Cn1 , v127
 	.byte		N12   , As1 , v100
 	.byte	W24
@@ -3767,6 +3867,8 @@ mus_pc_ds1fwpcmh_seq_bgm11_10_031:
 	.byte		        En1 
 	.byte		N24   , Cs2 , v092
 	.byte	W24
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm11_10_loop
 	.byte	FINE
 
 @******************************************************@

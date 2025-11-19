@@ -3,7 +3,7 @@
 	.equ	mus_pc_ds1fwpcmh_seq_bgm20_grp, voicegroup605
 	.equ	mus_pc_ds1fwpcmh_seq_bgm20_pri, 0
 	.equ	mus_pc_ds1fwpcmh_seq_bgm20_rev, reverb_set+50
-	.equ	mus_pc_ds1fwpcmh_seq_bgm20_mvl, 100
+	.equ	mus_pc_ds1fwpcmh_seq_bgm20_mvl, 80
 	.equ	mus_pc_ds1fwpcmh_seq_bgm20_key, 0
 	.equ	mus_pc_ds1fwpcmh_seq_bgm20_tbs, 1
 	.equ	mus_pc_ds1fwpcmh_seq_bgm20_exg, 0
@@ -24,6 +24,7 @@ mus_pc_ds1fwpcmh_seq_bgm20_1:
 	.byte		PAN   , c_v+0
 	.byte	W32
 	.byte	W03
+mus_pc_ds1fwpcmh_seq_bgm20_1_loop:
 	.byte		VOL   , 127*mus_pc_ds1fwpcmh_seq_bgm20_mvl/mxv
 	.byte		N36   , Cn4 , v127
 	.byte	W01
@@ -3461,6 +3462,8 @@ mus_pc_ds1fwpcmh_seq_bgm20_1:
 	.byte	W01
 	.byte		        127*mus_pc_ds1fwpcmh_seq_bgm20_mvl/mxv
 	.byte	W01
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm20_1_loop
 	.byte	FINE
 
 @**************** Track 2 (Midi-Chn.2) ****************@
@@ -3473,6 +3476,7 @@ mus_pc_ds1fwpcmh_seq_bgm20_2:
 	.byte		PAN   , c_v+0
 	.byte	W32
 	.byte	W03
+mus_pc_ds1fwpcmh_seq_bgm20_2_loop:
 	.byte		N12   , Cn2 , v127
 	.byte	W24
 	.byte		        Cn2 , v124
@@ -3747,6 +3751,8 @@ mus_pc_ds1fwpcmh_seq_bgm20_2_017:
 @ 026   ----------------------------------------
 	.byte	W32
 	.byte	W03
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm20_2_loop
 	.byte	FINE
 
 @**************** Track 3 (Midi-Chn.3) ****************@
@@ -3759,6 +3765,7 @@ mus_pc_ds1fwpcmh_seq_bgm20_3:
 	.byte		PAN   , c_v-12
 	.byte	W32
 	.byte	W03
+mus_pc_ds1fwpcmh_seq_bgm20_3_loop:
 	.byte		VOL   , 127*mus_pc_ds1fwpcmh_seq_bgm20_mvl/mxv
 	.byte	W60
 	.byte	W01
@@ -4998,6 +5005,8 @@ mus_pc_ds1fwpcmh_seq_bgm20_3_005:
 @ 026   ----------------------------------------
 	.byte	W32
 	.byte	W03
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm20_3_loop
 	.byte	FINE
 
 @**************** Track 4 (Midi-Chn.4) ****************@
@@ -5010,6 +5019,7 @@ mus_pc_ds1fwpcmh_seq_bgm20_4:
 	.byte		PAN   , c_v+37
 	.byte	W32
 	.byte	W03
+mus_pc_ds1fwpcmh_seq_bgm20_4_loop:
 	.byte		N20   , Cn2 , v108
 	.byte		N30   , Gn2 , v104
 	.byte		N30   , Cn3 , v112
@@ -5495,6 +5505,8 @@ mus_pc_ds1fwpcmh_seq_bgm20_4_017:
 @ 026   ----------------------------------------
 	.byte	W32
 	.byte	W03
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm20_4_loop
 	.byte	FINE
 
 @**************** Track 5 (Midi-Chn.5) ****************@
@@ -5507,6 +5519,7 @@ mus_pc_ds1fwpcmh_seq_bgm20_5:
 	.byte		PAN   , c_v-29
 	.byte	W32
 	.byte	W03
+mus_pc_ds1fwpcmh_seq_bgm20_5_loop:
 	.byte		N13   , En3 , v112
 	.byte		N13   , Gn3 , v100
 	.byte		N12   , Cn4 , v092
@@ -5796,6 +5809,8 @@ mus_pc_ds1fwpcmh_seq_bgm20_5_005:
 @ 026   ----------------------------------------
 	.byte	W32
 	.byte	W03
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm20_5_loop
 	.byte	FINE
 
 @**************** Track 6 (Midi-Chn.6) ****************@
@@ -5806,7 +5821,11 @@ mus_pc_ds1fwpcmh_seq_bgm20_6:
 	.byte		VOICE , 61
 	.byte		VOL   , 127*mus_pc_ds1fwpcmh_seq_bgm20_mvl/mxv
 	.byte		PAN   , c_v+21
-	.byte	W96
+	.byte	W32
+	.byte	W03
+mus_pc_ds1fwpcmh_seq_bgm20_6_loop:
+	.byte	W01
+	.byte	W60
 @ 001   ----------------------------------------
 	.byte	W96
 @ 002   ----------------------------------------
@@ -6542,6 +6561,8 @@ mus_pc_ds1fwpcmh_seq_bgm20_6_017:
 	.byte	W01
 	.byte		        127*mus_pc_ds1fwpcmh_seq_bgm20_mvl/mxv
 	.byte	W01
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm20_6_loop
 	.byte	FINE
 
 @**************** Track 7 (Midi-Chn.7) ****************@
@@ -6564,6 +6585,7 @@ mus_pc_ds1fwpcmh_seq_bgm20_7:
 	.byte	W06
 	.byte		N12   , Cn1 , v116
 	.byte	W12
+mus_pc_ds1fwpcmh_seq_bgm20_7_loop:
 	.byte		N11   , Cn1 , v124
 	.byte		N05   , Fs1 , v112
 	.byte		N36   , Cs2 , v104
@@ -7339,6 +7361,8 @@ mus_pc_ds1fwpcmh_seq_bgm20_7_006:
 	.byte	W06
 	.byte		N12   , Cn1 , v124
 	.byte	W12
+	.byte	GOTO
+	.word	mus_pc_ds1fwpcmh_seq_bgm20_7_loop
 	.byte	FINE
 
 @******************************************************@

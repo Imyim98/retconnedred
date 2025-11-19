@@ -1,7 +1,7 @@
 	.align 2
 voicegroup607::
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0                                                             @ 000 | ---
-	voice_keysplit voicegroup257, KeySplitTable47                                                       @ 001 | HGSS Cello
+	voice_directsound 60, 0, DirectSoundWaveData_sc88pro_flute, 255, 127, 231, 127                      @ 073 | Direct | GBA Flute
 	voice_keysplit voicegroup269, KeySplitTable55                                                       @ 002 | HGSS Orchestral Hit
 	voice_directsound 60, 0, DirectSoundWaveData_thpprf_music_box, 255, 0, 255, 235                     @ 003 | RF Music Box
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0                                                             @ 004 | ---
