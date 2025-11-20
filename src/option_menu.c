@@ -16,6 +16,7 @@
 #include "gba/m4a_internal.h"
 #include "constants/rgb.h"
 #include "string_util.h"
+#include "event_data.h"
 
 #define tMenuSelection data[0]
 #define tTextSpeed data[1]
@@ -110,6 +111,13 @@ static const u8 gText_FrameTypeNumber[]    = _("{COLOR GREEN}{SHADOW LIGHT_GREEN
 static const u8 gText_ButtonTypeNormal[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}NORMAL");
 static const u8 gText_ButtonTypeLR[]       = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}LR");
 static const u8 gText_ButtonTypeLEqualsA[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}L=A");
+static const u8 gText_SmallDot[]           = _("·");
+static const u8 gText_LargeDot[]           = _("{EMOJI_CIRCLE}");
+static const u8 gText_PageNav[]            = _("{L_BUTTON}{R_BUTTON} PAGE");
+static const u8 gText_BattleSpeed1x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}1x");
+static const u8 gText_BattleSpeed2x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}2x");
+static const u8 gText_BattleSpeed3x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}3x");
+static const u8 gText_BattleSpeed4x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}4x");
 
 static const u16 sOptionMenuText_Pal[] = INCBIN_U16("graphics/interface/option_menu_text.gbapal");
 // note: this is only used in the Japanese release
@@ -128,8 +136,8 @@ static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
 
 static const u8 *const sOptionMenuItemsNames_Pg2[MENUITEM_COUNT_PG2] =
 {
-    [MENUITEM_BATTLESPEED]     = gText_BattleSpeed,
-    [MENUITEM_CANCEL_PG2]      = gText_OptionMenuCancel,
+    [MENUITEM_BATTLESPEED]     = COMPOUND_STRING("BATTLE SPEED"),
+    [MENUITEM_CANCEL_PG2]      = COMPOUND_STRING("CANCEL"),
 };
 
 static const struct WindowTemplate sOptionMenuWinTemplates[] =
