@@ -26,6 +26,7 @@
 #define tButtonMode data[5]
 #define tWindowFrameType data[6]
 #define tBattleSpeed data[7]
+#define tOverworldSpeed data[8]
 
 // Page 1
 enum
@@ -45,6 +46,7 @@ enum
 enum
 {
     MENUITEM_BATTLESPEED,
+    MENUITEM_OVERWORLDSPEED,
     MENUITEM_CANCEL_PG2,
     MENUITEM_COUNT_PG2,
 };
@@ -65,6 +67,7 @@ enum
 
 // Page 2
 #define YPOS_BATTLESPEED      (MENUITEM_BATTLESPEED * 16)
+#define YPOS_OVERWORLDSPEED   (MENUITEM_OVERWORLDSPEED * 16)
 
 #define PAGE_COUNT 2
 
@@ -89,6 +92,8 @@ static u8 ButtonMode_ProcessInput(u8 selection);
 static void ButtonMode_DrawChoices(u8 selection);
 static u8   BattleSpeed_ProcessInput(u8 selection);
 static void BattleSpeed_DrawChoices(u8 selection);
+static u8   OverworldSpeed_ProcessInput(u8 selection);
+static void OverworldSpeed_DrawChoices(u8 selection);
 static void DrawHeaderText(void);
 static void DrawOptionMenuTexts(void);
 static void DrawBgWindowFrames(void);
@@ -118,6 +123,10 @@ static const u8 gText_BattleSpeed1x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN
 static const u8 gText_BattleSpeed2x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}2x");
 static const u8 gText_BattleSpeed3x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}3x");
 static const u8 gText_BattleSpeed4x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}4x");
+static const u8 gText_OverworldSpeed1x[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}1x");
+static const u8 gText_OverworldSpeed2x[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}2x");
+static const u8 gText_OverworldSpeed3x[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}4x");
+static const u8 gText_OverworldSpeed4x[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}8x");
 
 static const u16 sOptionMenuText_Pal[] = INCBIN_U16("graphics/interface/option_menu_text.gbapal");
 // note: this is only used in the Japanese release
@@ -137,6 +146,7 @@ static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
 static const u8 *const sOptionMenuItemsNames_Pg2[MENUITEM_COUNT_PG2] =
 {
     [MENUITEM_BATTLESPEED]     = COMPOUND_STRING("BATTLE SPEED"),
+    [MENUITEM_OVERWORLDSPEED]  = COMPOUND_STRING("OW SPEED"),
     [MENUITEM_CANCEL_PG2]      = COMPOUND_STRING("CANCEL"),
 };
 
@@ -212,6 +222,7 @@ static void ReadAllCurrentSettings(u8 taskId)
     gTasks[taskId].tButtonMode = gSaveBlock2Ptr->optionsButtonMode;
     gTasks[taskId].tWindowFrameType = gSaveBlock2Ptr->optionsWindowFrameType;
     gTasks[taskId].tBattleSpeed = gSaveBlock2Ptr->optionsBattleSpeed;
+    gTasks[taskId].tOverworldSpeed = gSaveBlock2Ptr->optionsOverworldSpeed;
 }
 
 static void DrawOptionsPg1(u8 taskId)
@@ -231,6 +242,7 @@ static void DrawOptionsPg2(u8 taskId)
 {
     ReadAllCurrentSettings(taskId);
     BattleSpeed_DrawChoices(gTasks[taskId].tBattleSpeed);
+    OverworldSpeed_DrawChoices(gTasks[taskId].tOverworldSpeed);
     HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
     CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
 }
@@ -523,7 +535,14 @@ static void Task_OptionMenuProcessInput_Pg2(u8 taskId)
 
             if (previousOption != gTasks[taskId].tBattleSpeed)
                 BattleSpeed_DrawChoices(gTasks[taskId].tBattleSpeed);
-            break;   
+            break;  
+        case MENUITEM_OVERWORLDSPEED:
+            previousOption = gTasks[taskId].tOverworldSpeed;
+            gTasks[taskId].tOverworldSpeed = OverworldSpeed_ProcessInput(gTasks[taskId].tOverworldSpeed);
+
+            if (previousOption != gTasks[taskId].tOverworldSpeed)
+                OverworldSpeed_DrawChoices(gTasks[taskId].tOverworldSpeed);
+            break;  
         default:
             return;
         }
@@ -544,6 +563,7 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsButtonMode = gTasks[taskId].tButtonMode;
     gSaveBlock2Ptr->optionsWindowFrameType = gTasks[taskId].tWindowFrameType;
     gSaveBlock2Ptr->optionsBattleSpeed = gTasks[taskId].tBattleSpeed;
+    gSaveBlock2Ptr->optionsOverworldSpeed = gTasks[taskId].tOverworldSpeed;
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
@@ -618,6 +638,43 @@ static void BattleSpeed_DrawChoices(u8 selection)
     DrawOptionMenuChoice(gText_BattleSpeed2x, 104 + xSpacer, YPOS_BATTLESPEED, styles[1]);
     DrawOptionMenuChoice(gText_BattleSpeed3x, 104 + 2 * xSpacer, YPOS_BATTLESPEED, styles[2]);
     DrawOptionMenuChoice(gText_BattleSpeed4x, GetStringRightAlignXOffset(1, gText_BattleSpeed4x, 198), YPOS_BATTLESPEED, styles[3]);
+}
+
+static u8 OverworldSpeed_ProcessInput(u8 selection)
+{
+    if (JOY_NEW(DPAD_RIGHT))
+    {
+        if (++selection > 3)  // If the selection exceeds 3, wrap around to 0
+            selection = 0;
+            sArrowPressed = TRUE;
+    }
+    if (JOY_NEW(DPAD_LEFT))
+    {
+        if (--selection > 3)  // If the selection is negative, wrap around to 3
+            selection = 3;
+            sArrowPressed = TRUE;
+    }
+    // Update the battle speed variable based on the selection
+    VarSet(VAR_OVERWORLD_SPEED, selection);  // Set the overworld speed variable
+    return selection;
+}
+
+static void OverworldSpeed_DrawChoices(u8 selection)
+{
+    u8 styles[4];
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[2] = 0;
+    styles[3] = 0;
+    styles[selection] = 1;  // Highlight the selected option
+    int xSpacer;
+    xSpacer = (GetStringRightAlignXOffset(1, gText_BattleSpeed4x, 198) - 104) / 3;
+
+    // Draw each menu choice at the calculated positions
+    DrawOptionMenuChoice(gText_OverworldSpeed1x, 104, YPOS_OVERWORLDSPEED, styles[0]);
+    DrawOptionMenuChoice(gText_OverworldSpeed2x, 104 + xSpacer, YPOS_OVERWORLDSPEED, styles[1]);
+    DrawOptionMenuChoice(gText_OverworldSpeed3x, 104 + 2 * xSpacer, YPOS_OVERWORLDSPEED, styles[2]);
+    DrawOptionMenuChoice(gText_OverworldSpeed4x, GetStringRightAlignXOffset(1, gText_OverworldSpeed4x, 198), YPOS_OVERWORLDSPEED, styles[3]);
 }
 
 

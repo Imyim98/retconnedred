@@ -1738,6 +1738,33 @@ static void OverworldBasic(void)
     }
 }
 
+u8 OverworldSpeedup_AdditionalIterations(u16 speed, bool32 overworld)
+{
+    if (overworld
+        && VarGet(VAR_OVERWORLD_SPEED) != 0
+        && (JOY_HELD(L_BUTTON)
+        || (FlagGet(FLAG_PREVENT_OVERWORLD_SPEEDUP) && FLAG_PREVENT_OVERWORLD_SPEEDUP != 0)
+        // || FlagGet(FLAG_SYS_DEXNAV_SEARCH)        Other conditions when no speedup is wanted.
+        ))
+    {
+        return OPTIONS_OVERWORLD_SPEED_1X_EXTRA_ITERATIONS;
+    }
+
+    switch (speed)
+    {
+    case OPTIONS_OVERWORLD_SPEED_8X:
+        return OPTIONS_OVERWORLD_SPEED_8X_EXTRA_ITERATIONS;
+    case OPTIONS_OVERWORLD_SPEED_4X: 
+        return OPTIONS_OVERWORLD_SPEED_4X_EXTRA_ITERATIONS;
+    case OPTIONS_OVERWORLD_SPEED_2X:
+        return OPTIONS_OVERWORLD_SPEED_2X_EXTRA_ITERATIONS;
+    case OPTIONS_OVERWORLD_SPEED_1X:
+        return OPTIONS_OVERWORLD_SPEED_1X_EXTRA_ITERATIONS;
+    default:
+        return OPTIONS_OVERWORLD_SPEED_1X_EXTRA_ITERATIONS;
+    }
+}
+
 // This CB2 is used when starting
 void CB2_OverworldBasic(void)
 {
@@ -1747,9 +1774,18 @@ void CB2_OverworldBasic(void)
 void CB2_Overworld(void)
 {
     bool32 fading = (gPaletteFade.active != 0);
+    u8 loops;
     if (fading)
         SetVBlankCallback(NULL);
     OverworldBasic();
+
+    for (loops = 0; loops < OverworldSpeedup_AdditionalIterations(VarGet(VAR_OVERWORLD_SPEED), TRUE); loops++)
+    {
+        AnimateSprites();
+        CameraUpdate();
+        UpdateCameraPanning();
+    }
+
     if (fading)
     {
         SetFieldVBlankCallback();

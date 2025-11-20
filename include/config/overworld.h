@@ -146,4 +146,6 @@
 // Trainer Rematches
 #define OW_REMATCH_BADGE_COUNT      5 // Number of badges necessary before the match call or vs seeker features allow rematches
 
+#define OW_OVERWORLD_SPEED          VAR_OVERWORLD_SPEED
+
 #endif // GUARD_CONFIG_OVERWORLD_H
