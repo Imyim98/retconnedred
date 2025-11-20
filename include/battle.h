@@ -1275,4 +1275,11 @@ static inline void SetHealAmount(u32 battler, s32 value)
     gBattleStruct->passiveHpUpdate[battler] = -1 * value;
 }
 
+static inline void SetMoveDamageAmount(u32 battler, s32 value)
+{
+    if (value == 0)
+        value = 1;
+    gBattleStruct->moveDamage[battler] = value;
+}
+
 #endif // GUARD_BATTLE_H

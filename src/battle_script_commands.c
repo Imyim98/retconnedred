@@ -7264,10 +7264,12 @@ static bool32 HandleMoveEndMoveBlock(u32 moveEffect)
         }
         break;
     case EFFECT_EX_SHADOW_MOVE_HALF:
-        if (IsBattlerTurnDamaged(gBattlerTarget) && IsBattlerAlive(gBattlerAttacker))
+        if (IsBattlerTurnDamaged(gBattlerTarget) && IsBattlerAlive(gBattlerAttacker)
+         && !(gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_FAILED))
         {
-            gBattleStruct->moveDamage[gBattlerAttacker] = (GetNonDynamaxHP(gBattlerAttacker) + 1) / 2; // Half of Max HP Rounded UP
-            BattleScriptCall(BattleScript_MaxHp50Recoil);
+            s32 damage = (GetNonDynamaxHP(gBattlerAttacker) + 1) / 2; // Half of Max HP Rounded UP
+            SetMoveDamageAmount(gBattlerAttacker, damage);
+            BattleScriptCall(BattleScript_ExShadowHalfAttackerDamage);
             effect = TRUE;
         }
         break;

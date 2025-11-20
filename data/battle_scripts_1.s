@@ -9745,3 +9745,9 @@ BattleScript_RideSummonActivates::
 BattleScript_AutumnGoddessesHealingActivates::
 	call BattleScript_AbilityHpHeal
 	end3
+
+BattleScript_ExShadowHalfAttackerDamage::
+	healthbarupdate BS_ATTACKER, MOVE_DAMAGE_HP_UPDATE
+	datahpupdate BS_ATTACKER, MOVE_DAMAGE_HP_UPDATE
+	tryfaintmon BS_ATTACKER
+	return
