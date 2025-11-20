@@ -780,13 +780,15 @@
 #define MUS_PUYO_7DS_BGM07_BATTLE1              832
 #define MUS_PUYO_FEVER2_CRIMSON_WAVE            833
 #define MUS_PUYO_FEVER2_FUNDERWORLD             834
-#define MUS_DUMMY_835                           835
-#define MUS_DUMMY_836                           836
-#define MUS_DUMMY_837                           837
-#define MUS_DUMMY_838                           838
-#define MUS_DUMMY_839                           839
-#define MUS_DUMMY_840                           840
-#define MUS_DUMMY_841                           841
+
+#define MUS_ULTRA_000                           835
+#define MUS_ULTRA_001                           836
+#define MUS_ULTRA_002                           837
+#define MUS_ULTRA_004                           838
+#define MUS_ULTRA_005                           839
+#define MUS_ULTRA_006                           840
+#define MUS_ULTRA_007                           841
+
 #define MUS_DUMMY_842                           842
 #define MUS_DUMMY_843                           843
 #define MUS_DUMMY_844                           844

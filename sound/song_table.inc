@@ -836,13 +836,13 @@ gSongTable::
 	song mus_puyo_7ds_bgm07_battle1, 0, 0
 	song mus_puyo_fever2_crimson_wave, 0, 0
 	song mus_puyo_fever2_funderworld, 0, 0
-	song dummy_song_header, 0, 0
-	song dummy_song_header, 0, 0
-	song dummy_song_header, 0, 0
-	song dummy_song_header, 0, 0
-	song dummy_song_header, 0, 0
-	song dummy_song_header, 0, 0
-	song dummy_song_header, 0, 0
+	song mus_ultra_000, 0, 0
+	song mus_ultra_001, 0, 0
+	song mus_ultra_002, 0, 0
+	song mus_ultra_004, 0, 0
+	song mus_ultra_005, 0, 0
+	song mus_ultra_006, 0, 0
+	song mus_ultra_007, 0, 0
 	song dummy_song_header, 0, 0
 	song dummy_song_header, 0, 0
 	song dummy_song_header, 0, 0
