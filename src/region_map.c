@@ -319,7 +319,7 @@ static const mapsec_u8_t sMapSecIdsOffMap[] =
     MAPSEC_0XED,
     MAPSEC_0XEE,
     MAPSEC_0XEF,
-    MAPSEC_0XF0,
+    MAPSEC_MAGIC_WORLD,
     MAPSEC_ETC_TRIMMED_GENSOKYO,
     MAPSEC_0XF2,
     MAPSEC_0XF3,

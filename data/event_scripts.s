@@ -1642,3 +1642,15 @@ Script_RemoveTint::
 	.include "data/maps/Stream_DimensionalRift_FirstEvent/scripts.inc"
 
 	.include "data/maps/Stream_HallOfFame_FirstEvent/scripts.inc"
+
+	.include "data/maps/MagicWorld_North3/scripts.inc"
+
+	.include "data/maps/MagicWorld_North1/scripts.inc"
+
+	.include "data/maps/MagicWorld_North4/scripts.inc"
+
+	.include "data/maps/MagicWorld_South/scripts.inc"
+
+	.include "data/maps/MagicWorld_North2/scripts.inc"
+
+	.include "data/maps/MagicWorld_Center/scripts.inc"

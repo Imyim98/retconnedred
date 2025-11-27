@@ -838,7 +838,13 @@
     "AnotherWorldEcruteakCity",
     "AnotherWorldUnderworldMushroomBiome",
     "AnotherWorldViridianCity",
-    "ClassicKantoPalletTown"
+    "ClassicKantoPalletTown",
+    "MagicWorld_Center",
+    "MagicWorld_North1",
+    "MagicWorld_North2",
+    "MagicWorld_North3",
+    "MagicWorld_North4",
+    "MagicWorld_South"
   ],
   "gMapGroup_EventStream": [
     "SafariZone_SouthFirstConstruction",

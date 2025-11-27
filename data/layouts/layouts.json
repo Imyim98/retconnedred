@@ -6530,6 +6530,66 @@
       "secondary_tileset": "gTileset_CableClub",
       "border_filepath": "data/layouts/Stream_HallOfFame_FirstEvent/border.bin",
       "blockdata_filepath": "data/layouts/Stream_HallOfFame_FirstEvent/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_CENTER",
+      "name": "MagicWorld_Center_Layout",
+      "width": 30,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_CherryBlossom",
+      "border_filepath": "data/layouts/MagicWorld_Center/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_Center/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_NORTH2",
+      "name": "MagicWorld_North2_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/MagicWorld_North2/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_North2/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_SOUTH",
+      "name": "MagicWorld_South_Layout",
+      "width": 30,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/MagicWorld_South/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_South/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_NORTH1",
+      "name": "MagicWorld_North1_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_CherryBlossom",
+      "border_filepath": "data/layouts/MagicWorld_North1/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_North1/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_NORTH3",
+      "name": "MagicWorld_North3_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/MagicWorld_North3/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_North3/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_NORTH4",
+      "name": "MagicWorld_North4_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/MagicWorld_North4/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_North4/map.bin"
     }
   ]
 }
