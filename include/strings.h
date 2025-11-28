@@ -3524,5 +3524,6 @@ extern const u8 gText_DebugLocationTrimmedGensokyo[];
 extern const u8 gText_SpecialGiftMarkEmoji[];
 extern const u8 gText_AntiWorldMarkEmoji[];
 extern const u8 gText_ForestFront[];
+extern const u8 gText_PkmnBecameWeaker[];
 
 #endif // GUARD_STRINGS_H

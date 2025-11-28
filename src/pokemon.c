@@ -4565,12 +4565,29 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
 
                 if (param == 0) // Rare Candy
                 {
-                    dataUnsigned = gExperienceTables[gSpeciesInfo[GetMonData(mon, MON_DATA_SPECIES, NULL)].growthRate][GetMonData(mon, MON_DATA_LEVEL, NULL) + 1];
+                    if (GetMonData(mon, MON_DATA_SPECIES, NULL) == SPECIES_RAYQUAZA)
+                    {
+                        if (GetMonData(mon, MON_DATA_LEVEL, NULL) == 0)
+                        {
+                            dataUnsigned = 0;
+                        }
+                        else
+                        {
+                            dataUnsigned = gExperienceTables[gSpeciesInfo[GetMonData(mon, MON_DATA_SPECIES, NULL)].growthRate][GetMonData(mon, MON_DATA_LEVEL, NULL) - 1];
+                        }
+                    }
+                    else
+                    {
+                        dataUnsigned = gExperienceTables[gSpeciesInfo[GetMonData(mon, MON_DATA_SPECIES, NULL)].growthRate][GetMonData(mon, MON_DATA_LEVEL, NULL) + 1];
+                    }
                 }
                 else if (param - 1 < ARRAY_COUNT(sExpCandyExperienceTable)) // EXP Candies
                 {
                     u16 species = GetMonData(mon, MON_DATA_SPECIES, NULL);
-                    dataUnsigned = sExpCandyExperienceTable[param - 1] + GetMonData(mon, MON_DATA_EXP, NULL);
+                    if (GetMonData(mon, MON_DATA_SPECIES, NULL) == SPECIES_RAYQUAZA)
+                        dataUnsigned = GetMonData(mon, MON_DATA_EXP, NULL) - sExpCandyExperienceTable[param - 1];
+                    else
+                        dataUnsigned = sExpCandyExperienceTable[param - 1] + GetMonData(mon, MON_DATA_EXP, NULL);
 
                     if (B_RARE_CANDY_CAP && B_EXP_CAP_TYPE == EXP_CAP_HARD)
                     {

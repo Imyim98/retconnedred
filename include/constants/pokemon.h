@@ -263,6 +263,7 @@ enum GrowthRate
     GROWTH_MEDIUM_SLOW,
     GROWTH_FAST,
     GROWTH_SLOW,
+    GROWTH_UNIQUE_1,
 };
 
 // Body colors for Pokédex search

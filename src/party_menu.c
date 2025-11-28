@@ -5820,7 +5820,7 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
             PlaySE(SE_USE_ITEM);
             gPartyMenuUseExitCallback = FALSE;
             ConvertIntToDecimalStringN(gStringVar2, sExpCandyExperienceTable[holdEffectParam - 1], STR_CONV_MODE_LEFT_ALIGN, 6);
-            StringExpandPlaceholders(gStringVar4, gText_PkmnGainedExp);
+            StringExpandPlaceholders(gStringVar4, gText_PkmnBecameWeaker);
             DisplayPartyMenuMessage(gStringVar4, FALSE);
             ScheduleBgCopyTilemapToVram(2);
             gTasks[taskId].func = task;

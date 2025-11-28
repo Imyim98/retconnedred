@@ -2402,3 +2402,4 @@ const u8 gText_DebugLocationTrimmedGensokyo[] = _("{DYNAMIC 0}{DYNAMIC 2}{DYNAMI
 const u8 gText_SpecialGiftMarkEmoji[] = _("{COLOR}{LIGHT_BLUE}{SHADOW}{DYNAMIC_COLOR1}{EMOJI_SPIRAL}{COLOR}{WHITE}{SHADOW}{DARK_GRAY}");
 const u8 gText_AntiWorldMarkEmoji[] = _("{COLOR}{BLUE}{SHADOW}{DYNAMIC_COLOR2}{EMOJI_EVIL}{COLOR}{WHITE}{SHADOW}{DARK_GRAY}");
 const u8 gText_ForestFront[] = _("Forest Front");
+const u8 gText_PkmnBecameWeaker[] = _("{STR_VAR_1} became weaker!{PAUSE_UNTIL_PRESS}");
