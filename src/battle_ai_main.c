@@ -1449,7 +1449,7 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
             }
             break;
         case EFFECT_CHARGE:
-            if (gBattleMons[battlerAtk].volatiles.charge)
+            if (gBattleMons[battlerAtk].volatiles.chargeTimer > 0)
                 ADJUST_SCORE(-20);
             else if (!HasMoveWithType(battlerAtk, TYPE_NEW_ELECTRIC))
                 ADJUST_SCORE(-10);
