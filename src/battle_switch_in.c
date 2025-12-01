@@ -292,7 +292,7 @@ static bool32 TryHazardsOnSwitchIn(u32 battler, enum Ability ability, enum HoldE
     case HAZARDS_NONE:
         break;
     case HAZARDS_SPIKES:
-        if (!IsAbilityAndRecord(battler, ability, ABILITY_MAGIC_GUARD)
+        if (!(IsAbilityAndRecord(battler, ability, ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(battler, ability, ABILITY_FANTASY_BREAKER))
          && IsBattlerAffectedByHazards(battler, holdEffect, FALSE)
          && IsBattlerGrounded(battler, ability, holdEffect))
         {
@@ -347,7 +347,7 @@ static bool32 TryHazardsOnSwitchIn(u32 battler, enum Ability ability, enum HoldE
         }
         break;
     case HAZARDS_STEALTH_ROCK:
-        if (IsBattlerAffectedByHazards(battler, holdEffect, FALSE) && ability != ABILITY_MAGIC_GUARD)
+        if (IsBattlerAffectedByHazards(battler, holdEffect, FALSE) && !(ability == ABILITY_MAGIC_GUARD || ability == ABILITY_FANTASY_BREAKER))
         {
             gBattleStruct->passiveHpUpdate[battler] = GetStealthHazardDamage(TYPE_SIDE_HAZARD_POINTED_STONES, battler);
             if (gBattleStruct->passiveHpUpdate[battler] != 0)
@@ -358,7 +358,7 @@ static bool32 TryHazardsOnSwitchIn(u32 battler, enum Ability ability, enum HoldE
         }
         break;
     case HAZARDS_STEELSURGE:
-        if (IsBattlerAffectedByHazards(battler, holdEffect, FALSE) && ability != ABILITY_MAGIC_GUARD)
+        if (IsBattlerAffectedByHazards(battler, holdEffect, FALSE) && !(ability == ABILITY_MAGIC_GUARD || ability == ABILITY_FANTASY_BREAKER))
         {
             gBattleStruct->passiveHpUpdate[battler] = GetStealthHazardDamage(TYPE_SIDE_HAZARD_SHARP_STEEL, battler);
             if (gBattleStruct->passiveHpUpdate[battler] != 0)
