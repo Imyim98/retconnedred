@@ -4136,27 +4136,25 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             }
             break;
         case ABILITY_FANTASY_BREAKER:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger)
             {
                 gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SWITCHIN_FANTASY_BREAKER;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_SwitchInAbilityMsg);
+                BattleScriptCall(BattleScript_SwitchInAbilityMsg);
                 effect++;
             }
             break;
         case ABILITY_DOUBLE_HEROINES:
             if (TryChangeBattleTerrain(battler, STATUS_FIELD_ELECTRIC_TERRAIN))
             {
-                BattleScriptPushCursorAndCallback(BattleScript_ElectricSurgeActivates);
+                BattleScriptCall(BattleScript_ElectricSurgeActivates);
                 effect++;
             }
             break;
         case ABILITY_TIME_JACKER:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger)
             {
                 gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SWITCHIN_TIME_JACKER;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_SwitchInAbilityMsg);
+                BattleScriptCall(BattleScript_SwitchInAbilityMsg);
                 effect++;
             }
             break;
@@ -4444,21 +4442,21 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
         case ABILITY_BLADE_WORKS:
             if (TryChangeBattleTerrain(battler, STATUS_FIELD_UBW))
             {
-                BattleScriptPushCursorAndCallback(BattleScript_UBWActivates);
+                BattleScriptCall(BattleScript_UBWActivates);
                 effect++;
             }
             break;
         case ABILITY_DARKNESS_SURGE:
             if (TryChangeBattleTerrain(battler, STATUS_FIELD_DARKNESS_TERRAIN))
             {
-                BattleScriptPushCursorAndCallback(BattleScript_DarknessSurgeActivates);
+                BattleScriptCall(BattleScript_DarknessSurgeActivates);
                 effect++;
             }
             break;
         case ABILITY_MIASMA_SURGE:
             if (TryChangeBattleTerrain(battler, STATUS_FIELD_MIASMA_TERRAIN))
             {
-                BattleScriptPushCursorAndCallback(BattleScript_MiasmaSurgeActivates);
+                BattleScriptCall(BattleScript_MiasmaSurgeActivates);
                 effect++;
             }
             break;
@@ -4473,69 +4471,68 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             }
             break;
         case ABILITY_MANA_DISTURPTOR:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger && !IsOpposingSideEmpty(battler))
             {
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
                 SET_STATCHANGER(STAT_SPATK, 1, TRUE);
-                BattleScriptPushCursorAndCallback(BattleScript_ManaDisturptorActivates);
+                BattleScriptCall(BattleScript_ManaDisturptorActivates);
                 effect++;
             }
             break;
         case ABILITY_MISFORTUNE_AURA:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger && !IsOpposingSideEmpty(battler))
             {
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
                 SET_STATCHANGER(STAT_ACC, 2, TRUE);
-                BattleScriptPushCursorAndCallback(BattleScript_MisfortuneAuraActivates);
+                BattleScriptCall(BattleScript_MisfortuneAuraActivates);
                 effect++;
             }
             break;
         case ABILITY_DIMENSION_SEER:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger)
             {
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
                 gBattlerTarget = gBattlerAttacker;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_DimensionWallInitiate);
+                BattleScriptCall(BattleScript_DimensionWallInitiate);
                 effect++;
             }
         case ABILITY_HAKUREI_BARRIER:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger)
             {
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
                 gBattlerTarget = gBattlerAttacker;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_HakureiBarrierInitiate);
+                BattleScriptCall(BattleScript_HakureiBarrierInitiate);
                 effect++;
             }
         case ABILITY_FLORA_ELVIS:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger)
             {
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
                 gBattlerTarget = gBattlerAttacker;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_FloraElvisSafeguardActivates);
+                BattleScriptCall(BattleScript_FloraElvisSafeguardActivates);
                 effect++;
             }
         case ABILITY_ILLUSIONARY_GIRL:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger)
             {
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
                 gBattlerAttacker = battler;
                 gBattlerTarget = gBattlerAttacker;
 
                 if (TryChangeBattleTerrain(battler, STATUS_FIELD_MISTY_TERRAIN))
                 {
-                    BattleScriptPushCursorAndCallback(BattleScript_MistySurgeActivates);
+                    BattleScriptCall(BattleScript_MistySurgeActivates);
                     effect++;
                 }
                 if (gWishFutureKnock.wishCounter[gBattlerAttacker] == 0)
                 {
                     gWishFutureKnock.wishCounter[gBattlerAttacker] = 2;
                     gWishFutureKnock.wishPartyId[gBattlerAttacker] = gBattlerPartyIndexes[gBattlerAttacker];
-                    BattleScriptPushCursorAndCallback(BattleScript_DeusExMachinaWishInitiate);
+                    BattleScriptCall(BattleScript_DeusExMachinaWishInitiate);
                     effect++;
                 }
                 if (IsBattlerAlive(BATTLE_OPPOSITE(battler)))
@@ -4577,34 +4574,34 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
 
                         gBattlerAttacker = battler;
                         gBattlerTarget = gBattlerAttacker;
-                        BattleScriptPushCursorAndCallback(BattleScript_DeusExMachinaDoomDesireInitiate);
+                        BattleScriptCall(BattleScript_DeusExMachinaDoomDesireInitiate);
                         effect++;
                     }
                 }
             }
             break;
         case ABILITY_YORIGAMI_SISTERS:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger && !IsOpposingSideEmpty(battler))
             {
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_WinningCombination3Activates);
+                BattleScriptCall(BattleScript_WinningCombination3Activates);
                 effect++;
             }
             break;
         case ABILITY_POSTER_GIRL:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger && !IsOpposingSideEmpty(battler))
             {
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_PosterGirlActivates);
+                BattleScriptCall(BattleScript_PosterGirlActivates);
                 effect++;
             }
             break;
         case ABILITY_WORLD_END_GARDEN:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger && !IsOpposingSideEmpty(battler))
             {
-                gBattleScripting.savedBattler = gBattlerAttacker;
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
                 gBattlerTarget = GetOpposingSideBattler(gBattlerAttacker);
                 
@@ -4661,22 +4658,21 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
 
                 u8 attackerSide = GetBattlerSide(gBattlerAttacker);
 
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_WorldEndGardenActivates);
+                BattleScriptCall(BattleScript_WorldEndGardenActivates);
                 effect++;
             }
             break;
         case ABILITY_RIDE_SUMMON:
         case ABILITY_PUPPETEER:
-            if (!gSpecialStatuses[battler].switchInAbilityDone && !gBattleMons[battler].volatiles.substitute)
+            if (shouldAbilityTrigger && !gBattleMons[battler].volatiles.substitute)
             {
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
                 gBattlerTarget = battler;
                 gBattleMons[gBattlerAttacker].volatiles.substitute = TRUE;
                 gDisableStructs[gBattlerAttacker].substituteHP = gBattleMons[gBattlerAttacker].maxHP / 4;
                 gBattleMons[gBattlerAttacker].volatiles.wrapped = FALSE;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_RideSummonActivates);
+                BattleScriptCall(BattleScript_RideSummonActivates);
                 effect++;
             }
             break;
@@ -4720,60 +4716,57 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             }
             break;
         case ABILITY_GRIMOIRE_USER:
-            if (!gSpecialStatuses[battler].switchInAbilityDone && CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+            if (shouldAbilityTrigger && CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
             {
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
                 SET_STATCHANGER(STAT_SPATK, 1, FALSE);
-                BattleScriptPushCursorAndCallback(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
                 effect++;
             }
             break;
         case ABILITY_SKILLED_MAGICIAN:
         case ABILITY_KALEID_RUBY:
-            if (!gSpecialStatuses[battler].switchInAbilityDone && CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+            if (shouldAbilityTrigger && CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
             {
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
                 SET_STATCHANGER(STAT_SPATK, 1, FALSE);
-                BattleScriptPushCursorAndCallback(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
                 effect++;
             }
             break;
         case ABILITY_KALEID_SAPPHIRE:
-            if (!gSpecialStatuses[battler].switchInAbilityDone && CompareStat(battler, STAT_SPEED, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+            if (shouldAbilityTrigger && CompareStat(battler, STAT_SPEED, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
             {
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
                 SET_STATCHANGER(STAT_SPEED, 1, FALSE);
-                BattleScriptPushCursorAndCallback(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
                 effect++;
             }
             break;
         case ABILITY_ULTRA_MEDICINE:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger)
             {
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
                 gBattlerTarget = battler;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_UltraMedicineActivates);
+                BattleScriptCall(BattleScript_UltraMedicineActivates);
                 effect++;
             }
             break;
         case ABILITY_ULTRA_MEDICINE_V2:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger)
             {
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
                 gBattlerTarget = battler;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_UltraMedicineV2Activates);
+                BattleScriptCall(BattleScript_UltraMedicineV2Activates);
                 effect++;
             }
             break;
         case ABILITY_ULTRA_SEIGA:
-            if (!gSpecialStatuses[battler].switchInAbilityDone)
+            if (shouldAbilityTrigger)
             {
+                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
                 gBattlerTarget = battler;
-                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                BattleScriptPushCursorAndCallback(BattleScript_UltraSeigaActivates);
+                BattleScriptCall(BattleScript_UltraSeigaActivates);
                 effect++;
             }
             break;
