@@ -19,6 +19,7 @@ const struct Trainer gBattlePartners[DIFFICULTY_COUNT][PARTNER_COUNT] =
 };
 
 #define STEVEN_OTID 61226
+#define PARTNER2_OTID 12317
 
 void FillPartnerParty(u16 trainerId)
 {
@@ -62,6 +63,8 @@ void FillPartnerParty(u16 trainerId)
             }
             if (trainerId == TRAINER_PARTNER(PARTNER_STEVEN))
                 otID = STEVEN_OTID;
+            else if (trainerId == TRAINER_PARTNER(PARTNER_TRAINER2))
+                otID = PARTNER2_OTID;
             else
                 otID = ((firstIdPart % 72) * 1000) + ((secondIdPart % 23) * 10) + (thirdIdPart % 37) % 65536;
 
