@@ -844,7 +844,13 @@
     "MagicWorld_North2",
     "MagicWorld_North3",
     "MagicWorld_North4",
-    "MagicWorld_South"
+    "MagicWorld_South",
+    "MagicWorld_Center_Winter",
+    "MagicWorld_North1_Winter",
+    "MagicWorld_North2_Winter",
+    "MagicWorld_North3_Winter",
+    "MagicWorld_North4_Winter",
+    "MagicWorld_South_Winter"
   ],
   "gMapGroup_EventStream": [
     "SafariZone_SouthFirstConstruction",

@@ -1,6 +1,6 @@
         .include "MPlayDef.s"
 
-        .equ    mus_th_faith3_grp, voicegroup201
+        .equ    mus_th_faith3_grp, voicegroup827
         .equ    mus_th_faith3_pri, 0
         .equ    mus_th_faith3_mvl, 100
         .equ    mus_th_faith3_rev, reverb_set+50
@@ -4640,7 +4640,7 @@ mus_th_faith3_5_115:
 mus_th_faith3_6:
         .byte   KEYSH , mus_th_faith3_key+0
 @ 000   ----------------------------------------
-        .byte           VOICE , 120
+        .byte           VOICE , 117
         .byte           VOL   , 103*mus_th_faith3_mvl/mxv
         .byte           N23   , Cs1 , v080
         .byte   W24
@@ -5941,11 +5941,11 @@ mus_th_faith3:
         .word   mus_th_faith3_grp      
 
         .word   mus_th_faith3_0
+        .word   mus_th_faith3_6
         .word   mus_th_faith3_1
         .word   mus_th_faith3_2
         .word   mus_th_faith3_3
         .word   mus_th_faith3_4
         .word   mus_th_faith3_5
-        .word   mus_th_faith3_6
 
         .end

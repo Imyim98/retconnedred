@@ -1387,10 +1387,10 @@ gSongTable::
 	song mus_pc_star_color_pendant_no_intro, MUSIC_PLAYER_BGM, 0
 	song mus_etc_kawaranaimono, MUSIC_PLAYER_BGM, 0
 	song mus_dgmn_world3_badlands, MUSIC_PLAYER_BGM, 0
-	song dummy_song_header, MUSIC_PLAYER_BGM, 0
-	song dummy_song_header, MUSIC_PLAYER_BGM, 0
-	song dummy_song_header, MUSIC_PLAYER_BGM, 0
-	song dummy_song_header, MUSIC_PLAYER_BGM, 0
+	song mus_th_beloved_tomboyish_girl, MUSIC_PLAYER_BGM, 0
+	song mus_th_selection, MUSIC_PLAYER_BGM, 0
+	song mus_fate_bb_channel, MUSIC_PLAYER_BGM, 0
+	song mus_etc_beethoven_virus, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0

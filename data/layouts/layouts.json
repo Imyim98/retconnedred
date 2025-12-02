@@ -6557,7 +6557,7 @@
       "width": 30,
       "height": 30,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Petalburg",
+      "secondary_tileset": "gTileset_CherryBlossom",
       "border_filepath": "data/layouts/MagicWorld_South/border.bin",
       "blockdata_filepath": "data/layouts/MagicWorld_South/map.bin"
     },
@@ -6590,6 +6590,66 @@
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/MagicWorld_North4/border.bin",
       "blockdata_filepath": "data/layouts/MagicWorld_North4/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_SOUTH_WINTER",
+      "name": "MagicWorld_South_Winter_Layout",
+      "width": 30,
+      "height": 30,
+      "primary_tileset": "gTileset_GeneralSnow",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/MagicWorld_South_Winter/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_South_Winter/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_NORTH3_WINTER",
+      "name": "MagicWorld_North3_Winter_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_GeneralSnow",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/MagicWorld_North3_Winter/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_North3_Winter/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_NORTH2_WINTER",
+      "name": "MagicWorld_North2_Winter_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_GeneralSnow",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/MagicWorld_North2_Winter/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_North2_Winter/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_NORTH1_WINTER",
+      "name": "MagicWorld_North1_Winter_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_GeneralSnow",
+      "secondary_tileset": "gTileset_CherryBlossom",
+      "border_filepath": "data/layouts/MagicWorld_North1_Winter/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_North1_Winter/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_NORTH4_WINTER",
+      "name": "MagicWorld_North4_Winter_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_GeneralSnow",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/MagicWorld_North4_Winter/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_North4_Winter/map.bin"
+    },
+    {
+      "id": "LAYOUT_MAGIC_WORLD_CENTER_WINTER",
+      "name": "MagicWorld_Center_Winter_Layout",
+      "width": 30,
+      "height": 30,
+      "primary_tileset": "gTileset_GeneralSnow",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/MagicWorld_Center_Winter/border.bin",
+      "blockdata_filepath": "data/layouts/MagicWorld_Center_Winter/map.bin"
     }
   ]
 }

@@ -1655,3 +1655,15 @@ Script_RemoveTint::
 	.include "data/maps/MagicWorld_North2/scripts.inc"
 
 	.include "data/maps/MagicWorld_Center/scripts.inc"
+
+	.include "data/maps/MagicWorld_North4_Winter/scripts.inc"
+
+	.include "data/maps/MagicWorld_North3_Winter/scripts.inc"
+
+	.include "data/maps/MagicWorld_Center_Winter/scripts.inc"
+
+	.include "data/maps/MagicWorld_South_Winter/scripts.inc"
+
+	.include "data/maps/MagicWorld_North1_Winter/scripts.inc"
+
+	.include "data/maps/MagicWorld_North2_Winter/scripts.inc"
