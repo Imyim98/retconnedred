@@ -4599,13 +4599,14 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             }
             break;
         case ABILITY_WORLD_END_GARDEN:
-            if (shouldAbilityTrigger && !IsOpposingSideEmpty(battler))
+            if (shouldAbilityTrigger)
             {
                 SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
                 gBattlerTarget = GetOpposingSideBattler(gBattlerAttacker);
                 
                 u8 targetSide = GetBattlerSide(gBattlerTarget);
+                u8 attackerSide = GetBattlerSide(gBattlerAttacker);
                 
                 gSideStatuses[targetSide] &= ~SIDE_STATUS_REFLECT;
                 gSideTimers[targetSide].reflectTimer = 0;
@@ -4655,8 +4656,6 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                     PushHazardTypeToQueue(targetSide, HAZARDS_STEALTH_ROCK);
                 if (!IsHazardOnSide(targetSide, HAZARDS_STEELSURGE))
                     PushHazardTypeToQueue(targetSide, HAZARDS_STEELSURGE);
-
-                u8 attackerSide = GetBattlerSide(gBattlerAttacker);
 
                 BattleScriptCall(BattleScript_WorldEndGardenActivates);
                 effect++;
@@ -4743,9 +4742,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
         case ABILITY_ULTRA_MEDICINE:
             if (shouldAbilityTrigger)
             {
-                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
-                gBattlerTarget = battler;
                 BattleScriptCall(BattleScript_UltraMedicineActivates);
                 effect++;
             }
@@ -4753,9 +4750,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
         case ABILITY_ULTRA_MEDICINE_V2:
             if (shouldAbilityTrigger)
             {
-                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
-                gBattlerTarget = battler;
                 BattleScriptCall(BattleScript_UltraMedicineV2Activates);
                 effect++;
             }
@@ -4763,9 +4758,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
         case ABILITY_ULTRA_SEIGA:
             if (shouldAbilityTrigger)
             {
-                SaveBattlerAttacker(gBattlerAttacker);
                 gBattlerAttacker = battler;
-                gBattlerTarget = battler;
                 BattleScriptCall(BattleScript_UltraSeigaActivates);
                 effect++;
             }

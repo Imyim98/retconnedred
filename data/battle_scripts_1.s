@@ -7115,7 +7115,7 @@ BattleScript_UBWActivates::
 	waitmessage B_WAIT_TIME_LONG
 	playanimation BS_SCRIPTING, B_ANIM_RESTORE_BG
 	call BattleScript_ActivateTerrainEffects
-	end3
+	return
 
 BattleScript_DarknessSurgeActivates::
 	pause B_WAIT_TIME_SHORT
@@ -7124,7 +7124,7 @@ BattleScript_DarknessSurgeActivates::
 	waitmessage B_WAIT_TIME_LONG
 	playanimation BS_SCRIPTING, B_ANIM_RESTORE_BG
 	call BattleScript_ActivateTerrainEffects
-	end3
+	return
 
 BattleScript_MiasmaSurgeActivates::
 	pause B_WAIT_TIME_SHORT
@@ -7133,7 +7133,7 @@ BattleScript_MiasmaSurgeActivates::
 	waitmessage B_WAIT_TIME_LONG
 	playanimation BS_SCRIPTING, B_ANIM_RESTORE_BG
 	call BattleScript_ActivateTerrainEffects
-	end3
+	return
 
 BattleScript_BadDreamsActivates::
 	setbyte gBattlerTarget, 0
@@ -8979,7 +8979,7 @@ BattleScript_WinningCombination3End:
 	destroyabilitypopup
 	copybyte gBattlerTarget, sSAVED_BATTLER
 	pause B_WAIT_TIME_MED
-	end3
+	return
 
 BattleScript_ManaDisturptorActivates::
 	savetarget
@@ -9019,7 +9019,7 @@ BattleScript_ManaDisturptorLoopIncrement:
 	destroyabilitypopup
 	restoretarget
 	pause B_WAIT_TIME_MED
-	end3
+	return
 
 BattleScript_ManaDisturptorPrevented:
 	copybyte sBATTLER, gBattlerTarget
@@ -9070,7 +9070,7 @@ BattleScript_DeusExMachinaWishInitiate::
 	call BattleScript_AbilityPopUpTarget
 	printstring STRINGID_PKMNISWISHING
 	waitmessage B_WAIT_TIME_LONG
-	end3
+	return
 
 BattleScript_DeusExMachinaWishFailed::
 	end3
@@ -9079,7 +9079,7 @@ BattleScript_DeusExMachinaDoomDesireInitiate::
 	call BattleScript_AbilityPopUpTarget
 	printfromtable gFutureMoveUsedStringIds
 	waitmessage B_WAIT_TIME_LONG
-	end3
+	return
 
 BattleScript_DimensionWallInitiate::
 	call BattleScript_AbilityPopUpTarget
@@ -9088,7 +9088,7 @@ BattleScript_DimensionWallInitiate::
 	setreflect
 	setsafeguard
 	waitmessage B_WAIT_TIME_LONG
-	end3
+	return
 
 BattleScript_HakureiBarrierInitiate::
 	call BattleScript_AbilityPopUpTarget
@@ -9097,7 +9097,7 @@ BattleScript_HakureiBarrierInitiate::
 	setreflect
 	setsafeguard
 	waitmessage B_WAIT_TIME_LONG
-	end3
+	return
 
 BattleScript_GreatBloomingActivates::
 	call BattleScript_AbilityPopUpTarget
@@ -9106,7 +9106,7 @@ BattleScript_GreatBloomingActivates::
 	setreflect
 	setsafeguard
 	waitmessage B_WAIT_TIME_LONG
-	end3
+	return
 
 BattleScript_PosterGirlActivates::
 	savetarget
@@ -9120,8 +9120,6 @@ BattleScript_PosterGirlLoop:
 BattleScript_PosterGirlAttractEffect:
 	jumpifability BS_TARGET_SIDE, ABILITY_AROMA_VEIL, BattleScript_PosterGirlIncrement
 	tryinfatuating BattleScript_PosterGirlLoop
-@	attackanimation
-@	waitanimation
 	printstring STRINGID_PKMNFELLINLOVE
 	waitmessage B_WAIT_TIME_LONG
 	call BattleScript_TryDestinyKnotAttacker
@@ -9133,7 +9131,7 @@ BattleScript_PosterGirlEnd:
 	destroyabilitypopup
 	copybyte gBattlerTarget, sSAVED_BATTLER
 	pause B_WAIT_TIME_MED
-	end3
+	return
 
 BattleScript_WorldEndGardenActivates::
 	savetarget
@@ -9145,6 +9143,7 @@ BattleScript_WorldEndGardenLoop:
 	jumpifbyteequal gBattlerTarget, gBattlerAttacker, BattleScript_WorldEndGardenLoopIncrement
 	jumpiftargetally BattleScript_WorldEndGardenLoopIncrement
 	jumpifabsent BS_TARGET, BattleScript_WorldEndGardenLoopIncrement
+	jumpifvolatile BS_TARGET, VOLATILE_LEECH_SEED, BattleScript_WorldEndGardenLoopIncrement
 BattleScript_WorldEndGardenEffect:
 	setseeded
 	printfromtable gLeechSeedStringIds
@@ -9157,7 +9156,7 @@ BattleScript_WorldEndGardenEnd:
 	destroyabilitypopup
 	copybyte gBattlerTarget, sSAVED_BATTLER
 	pause B_WAIT_TIME_MED
-	end3
+	return
 
 BattleScript_MirrorWallActivates::
 	call BattleScript_AbilityPopUp
@@ -9202,7 +9201,7 @@ BattleScript_MisfortuneAuraLoopIncrement:
 	destroyabilitypopup
 	restoretarget
 	pause B_WAIT_TIME_MED
-	end3
+	return
 
 BattleScript_MisfortuneAuraPrevented:
 	copybyte sBATTLER, gBattlerTarget
@@ -9252,18 +9251,18 @@ BattleScript_FloraElvisAtkBoostActivates::
 	printstring STRINGID_PKMNRAISEDATTACK
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_FloraElvisAtkBoostActivatesEnd:
-	end3
+	return
 
 BattleScript_FloraElvisSafeguardActivates::
 	call BattleScript_AbilityPopUpTarget
 	printstring STRINGID_FLORAELVISSAFEGUARD
 	setsafeguard
 	waitmessage B_WAIT_TIME_LONG
-	end3
+	return
 
 BattleScript_LifeForceActivates::
 	call BattleScript_AbilityHpHeal
-	end3
+	return
 
 BattleScript_SpAtkSpDefDown::
 	setstatchanger STAT_SPATK, 1, TRUE
@@ -9414,7 +9413,7 @@ BattleScript_UltraMedicineAllStatsUpActivatesTrySpeed:
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_UltraMedicineAllStatsUpActivatesRet:
-	end3
+	return
 
 BattleScript_UltraMedicineV2Activates::
 	call BattleScript_AbilityPopUpScripting
@@ -9434,7 +9433,7 @@ BattleScript_UltraMedicineV2AlreadyMiasmaTerrain:
 	waitanimation
 	printstring STRINGID_PKMNSTATSHIGHTENED
 	waitmessage B_WAIT_TIME_LONG
-	end3
+	return
 
 BattleScript_UltraSeigaActivates::
 	call BattleScript_AbilityPopUpScripting
@@ -9454,7 +9453,7 @@ BattleScript_UltraSeigaActivatesAlreadyDarknessTerrain:
 	waitanimation
 	printstring STRINGID_PKMNSTATSHIGHTENED
 	waitmessage B_WAIT_TIME_LONG
-	end3
+	return
 
 BattleScript_EffectSpAtkSpDefUp2::
 	attackcanceler
@@ -9511,7 +9510,7 @@ BattleScript_RideSummonActivates::
 	setspritebehindsubstitute
 	printstring STRINGID_PKMNMADESUBSTITUTE
 	waitmessage B_WAIT_TIME_LONG
-	end3
+	return
 
 BattleScript_AutumnGoddessesHealingActivates::
 	call BattleScript_AbilityHpHeal
