@@ -2,7 +2,7 @@
 gCryTable::
 .if P_CRIES_ENABLED == TRUE
 .if P_FAMILY_BULBASAUR == TRUE
-	cry Cry_Bulbasaur
+	cry Cry_THCirnoAdvent
 	cry Cry_Ivysaur
 	cry Cry_Venusaur
 .if P_MEGA_EVOLUTIONS == TRUE
@@ -1075,7 +1075,7 @@ gCryTable::
 .endif @ P_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_RAYQUAZA
 .if P_FAMILY_JIRACHI == TRUE
-	cry Cry_Unown @ Cry_Jirachi
+	cry Cry_THYamameLine @ Cry_Jirachi
 .endif @ P_FAMILY_JIRACHI
 .if P_FAMILY_DEOXYS == TRUE
 	cry Cry_Unown @ Cry_Deoxys
@@ -2430,7 +2430,7 @@ gCryTable::
 gCryTable_Reverse::
 .if P_CRIES_ENABLED == TRUE
 .if P_FAMILY_BULBASAUR == TRUE
-	cry_reverse Cry_Bulbasaur
+	cry_reverse Cry_THCirnoAdvent
 	cry_reverse Cry_Ivysaur
 	cry_reverse Cry_Venusaur
 .if P_MEGA_EVOLUTIONS == TRUE
@@ -3503,7 +3503,7 @@ gCryTable_Reverse::
 .endif @ P_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_RAYQUAZA
 .if P_FAMILY_JIRACHI == TRUE
-	cry_reverse Cry_Unown @ Cry_Jirachi
+	cry_reverse Cry_THYamameLine @ Cry_Jirachi
 .endif @ P_FAMILY_JIRACHI
 .if P_FAMILY_DEOXYS == TRUE
 	cry_reverse Cry_Unown @ Cry_Deoxys

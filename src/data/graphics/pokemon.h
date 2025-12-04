@@ -20,10 +20,10 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 
 #if P_FAMILY_BULBASAUR
 #if !P_GBA_STYLE_SPECIES_GFX
-    const u32 gMonFrontPic_Bulbasaur[] = INCBIN_U32("graphics/pokemon/bulbasaur/anim_front.4bpp.smol");
-    const u16 gMonPalette_Bulbasaur[] = INCBIN_U16("graphics/pokemon/bulbasaur/normal.gbapal");
-    const u32 gMonBackPic_Bulbasaur[] = INCBIN_U32("graphics/pokemon/bulbasaur/back.4bpp.smol");
-    const u16 gMonShinyPalette_Bulbasaur[] = INCBIN_U16("graphics/pokemon/bulbasaur/shiny.gbapal");
+    const u32 gMonFrontPic_Bulbasaur[] = INCBIN_U32("graphics/pokemon/_add/th/cirno/advent/anim_front.4bpp.smol");
+    const u16 gMonPalette_Bulbasaur[] = INCBIN_U16("graphics/pokemon/_add/th/cirno/advent/normal.gbapal");
+    const u32 gMonBackPic_Bulbasaur[] = INCBIN_U32("graphics/pokemon/_add/th/cirno/advent/back.4bpp.smol");
+    const u16 gMonShinyPalette_Bulbasaur[] = INCBIN_U16("graphics/pokemon/_add/th/cirno/advent/shiny.gbapal");
 #else
     const u32 gMonFrontPic_Bulbasaur[] = INCBIN_U32("graphics/pokemon/bulbasaur/anim_front_gba.4bpp.smol");
     const u16 gMonPalette_Bulbasaur[] = INCBIN_U16("graphics/pokemon/bulbasaur/normal_gba.gbapal");
@@ -31,12 +31,12 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u16 gMonShinyPalette_Bulbasaur[] = INCBIN_U16("graphics/pokemon/bulbasaur/shiny_gba.gbapal");
 #endif //P_GBA_STYLE_SPECIES_GFX
 #if !P_GBA_STYLE_SPECIES_ICONS
-    const u8 gMonIcon_Bulbasaur[] = INCBIN_U8("graphics/pokemon/bulbasaur/icon.4bpp");
+    const u8 gMonIcon_Bulbasaur[] = INCBIN_U8("graphics/pokemon/_add/th/cirno/advent/icon.4bpp");
 #else
     const u8 gMonIcon_Bulbasaur[] = INCBIN_U8("graphics/pokemon/bulbasaur/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
 #if P_FOOTPRINTS
-    const u8 gMonFootprint_Bulbasaur[] = INCBIN_U8("graphics/pokemon/bulbasaur/footprint.1bpp");
+    const u8 gMonFootprint_Bulbasaur[] = INCBIN_U8("graphics/pokemon/_add/th/cirno/advent/footprint.1bpp");
 #endif //P_FOOTPRINTS
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_Bulbasaur[] = INCBIN_COMP("graphics/pokemon/bulbasaur/overworld.4bpp");
@@ -13910,10 +13910,10 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 
 #if P_FAMILY_JIRACHI
 #if !P_GBA_STYLE_SPECIES_GFX
-    const u32 gMonFrontPic_Jirachi[] = INCBIN_U32("graphics/pokemon/jirachi/anim_front.4bpp.smol");
-    const u16 gMonPalette_Jirachi[] = INCBIN_U16("graphics/pokemon/jirachi/normal.gbapal");
-    const u32 gMonBackPic_Jirachi[] = INCBIN_U32("graphics/pokemon/jirachi/back.4bpp.smol");
-    const u16 gMonShinyPalette_Jirachi[] = INCBIN_U16("graphics/pokemon/jirachi/shiny.gbapal");
+    const u32 gMonFrontPic_Jirachi[] = INCBIN_U32("graphics/pokemon/_add/etc/vt/hl/amelia/yamame_ame/anim_front.4bpp.smol");
+    const u16 gMonPalette_Jirachi[] = INCBIN_U16("graphics/pokemon/_add/etc/vt/hl/amelia/yamame_ame/normal.gbapal");
+    const u32 gMonBackPic_Jirachi[] = INCBIN_U32("graphics/pokemon/_add/etc/vt/hl/amelia/yamame_ame/back.4bpp.smol");
+    const u16 gMonShinyPalette_Jirachi[] = INCBIN_U16("graphics/pokemon/_add/etc/vt/hl/amelia/yamame_ame/shiny.gbapal");
 #else
     const u32 gMonFrontPic_Jirachi[] = INCBIN_U32("graphics/pokemon/jirachi/anim_front_gba.4bpp.smol");
     const u16 gMonPalette_Jirachi[] = INCBIN_U16("graphics/pokemon/jirachi/normal_gba.gbapal");
@@ -13921,12 +13921,12 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u16 gMonShinyPalette_Jirachi[] = INCBIN_U16("graphics/pokemon/jirachi/shiny_gba.gbapal");
 #endif //P_GBA_STYLE_SPECIES_GFX
 #if !P_GBA_STYLE_SPECIES_ICONS
-    const u8 gMonIcon_Jirachi[] = INCBIN_U8("graphics/pokemon/jirachi/icon.4bpp");
+    const u8 gMonIcon_Jirachi[] = INCBIN_U8("graphics/pokemon/_add/etc/vt/hl/amelia/yamame_ame/icon.4bpp");
 #else
     const u8 gMonIcon_Jirachi[] = INCBIN_U8("graphics/pokemon/jirachi/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
 #if P_FOOTPRINTS
-    const u8 gMonFootprint_Jirachi[] = INCBIN_U8("graphics/pokemon/jirachi/footprint.1bpp");
+    const u8 gMonFootprint_Jirachi[] = INCBIN_U8("graphics/pokemon/_add/etc/vt/hl/amelia/yamame_ame/footprint.1bpp");
 #endif //P_FOOTPRINTS
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_Jirachi[] = INCBIN_COMP("graphics/pokemon/jirachi/overworld.4bpp");

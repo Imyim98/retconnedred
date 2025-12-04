@@ -11724,6 +11724,75 @@
               }
             ]
           }
+        },
+        {
+          "map": "MAP_MAGIC_WORLD_NORTH3_WINTER",
+          "base_label": "gMagicWorld_North3_Winter",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 99,
+                "max_level": 99,
+                "species": "SPECIES_BULBASAUR"
+              }
+            ]
+          }
         }
       ]
     },

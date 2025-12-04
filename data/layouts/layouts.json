@@ -6647,7 +6647,7 @@
       "width": 30,
       "height": 30,
       "primary_tileset": "gTileset_GeneralSnow",
-      "secondary_tileset": "gTileset_Rustboro",
+      "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/MagicWorld_Center_Winter/border.bin",
       "blockdata_filepath": "data/layouts/MagicWorld_Center_Winter/map.bin"
     }
