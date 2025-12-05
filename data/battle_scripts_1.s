@@ -9130,7 +9130,7 @@ BattleScript_WorldEndGardenLoopIncrement:
 BattleScript_WorldEndGardenEnd:
 	copybyte sBATTLER, gBattlerAttacker
 	destroyabilitypopup
-	copybyte gBattlerTarget, sSAVED_BATTLER
+	restoretarget
 	pause B_WAIT_TIME_MED
 	return
 

@@ -4648,7 +4648,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             if (shouldAbilityTrigger)
             {
                 SaveBattlerAttacker(gBattlerAttacker);
-                gBattlerAttacker = battler;
+                gBattlerAttacker = gBattleScripting.battler = battler;
                 gBattlerTarget = GetOpposingSideBattler(gBattlerAttacker);
                 
                 u8 targetSide = GetBattlerSide(gBattlerTarget);
