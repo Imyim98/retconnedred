@@ -4621,7 +4621,7 @@ static void DebugAction_DestroyFollowerNPC(u8 taskId)
     X(MUS_TH_SELECTION) \
     X(MUS_FATE_BB_CHANNEL) \
     X(MUS_ETC_BEETHOVEN_VIRUS) \
-    X(MUS_DUMMY_1385) \
+    X(MUS_DGMN_WORLD3_SEABED) \
     X(MUS_DUMMY_1386) \
     X(MUS_DUMMY_1387) \
     X(MUS_DUMMY_1388) \
