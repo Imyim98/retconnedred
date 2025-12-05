@@ -69,7 +69,8 @@ enum {
 #endif
     OPTION_MOVE_ITEMS,
     OPTION_EXIT,
-    OPTIONS_COUNT
+    OPTIONS_COUNT,
+    OPTION_SELECT_MON
 };
 
 // IDs for messages to print with PrintMessage
@@ -161,6 +162,7 @@ enum {
     MENU_POKECENTER,
     MENU_MACHINE,
     MENU_SIMPLE,
+    MENU_SELECT,
 };
 #define MENU_WALLPAPER_SETS_START MENU_SCENERY_1
 #define MENU_WALLPAPERS_START MENU_FOREST
@@ -195,6 +197,7 @@ enum {
     INPUT_MULTIMOVE_UNABLE,
     INPUT_MULTIMOVE_MOVE_MONS,
     INPUT_MULTIMOVE_PLACE_MONS,
+    INPUT_SELECT_MON,
 };
 
 enum {
@@ -1969,7 +1972,10 @@ void EnterPokeStorage(u8 boxOption)
     sStorage = Alloc(sizeof(*sStorage));
     if (sStorage == NULL)
     {
-        SetMainCallback2(CB2_ExitPokeStorage);
+        if (boxOption == OPTION_SELECT_MON)
+            SetMainCallback2(CB2_ReturnToFieldContinueScript);
+        else
+            SetMainCallback2(CB2_ExitPokeStorage);
     }
     else
     {
@@ -1989,7 +1995,10 @@ static void CB2_ReturnToPokeStorage(void)
     sStorage = Alloc(sizeof(*sStorage));
     if (sStorage == NULL)
     {
-        SetMainCallback2(CB2_ExitPokeStorage);
+        if (sStorage->boxOption == OPTION_SELECT_MON)
+            SetMainCallback2(CB2_ReturnToFieldContinueScript);
+        else
+            SetMainCallback2(CB2_ExitPokeStorage);
     }
     else
     {
@@ -2245,7 +2254,7 @@ static void Task_PokeStorageMain(u8 taskId)
             sStorage->state = MSTATE_MOVE_CURSOR;
             break;
         case INPUT_SHOW_PARTY:
-            if (sStorage->boxOption != OPTION_MOVE_MONS && sStorage->boxOption != OPTION_MOVE_ITEMS)
+            if (sStorage->boxOption != OPTION_MOVE_MONS && sStorage->boxOption != OPTION_MOVE_ITEMS && sStorage->boxOption != OPTION_SELECT_MON)
             {
                 PrintMessage(MSG_WHICH_ONE_WILL_TAKE);
                 sStorage->state = MSTATE_WAIT_MSG;
@@ -2257,7 +2266,7 @@ static void Task_PokeStorageMain(u8 taskId)
             }
             break;
         case INPUT_HIDE_PARTY:
-            if (sStorage->boxOption == OPTION_MOVE_MONS)
+            if (sStorage->boxOption == OPTION_MOVE_MONS || sStorage->boxOption == OPTION_SELECT_MON)
             {
                 if (IsMonBeingMoved() && ItemIsMail(sStorage->displayMonItemId))
                     sStorage->state = MSTATE_ERROR_HAS_MAIL;
@@ -2678,6 +2687,24 @@ static void Task_OnSelectedMon(u8 taskId)
             break;
         case MENU_INFO:
             SetPokeStorageTask(Task_ShowItemInfo);
+            break;
+        case MENU_SELECT:
+            PlaySE(SE_SELECT);
+            if (sInPartyMenu)
+            {
+                gSpecialVar_Result = GetBoxMonData(&gPlayerParty[sCursorPosition].box, MON_DATA_SPECIES);
+                gSpecialVar_0x8005 = GetNumberOfRelearnableMoves(&gPlayerParty[sCursorPosition]);
+            }
+            else
+            {
+                gSpecialVar_Result = GetBoxMonDataAt(StorageGetCurrentBox(), sCursorPosition, MON_DATA_SPECIES);
+                gSpecialVar_MonBoxId = StorageGetCurrentBox();
+                gSpecialVar_0x8005 = GetNumberOfRelearnableMoves(&gPlayerParty[0]);
+            }
+            gSpecialVar_MonBoxPos = sCursorPosition;
+            gSpecialVar_0x8004 = sCursorPosition;
+            sStorage->screenChangeType = SCREEN_CHANGE_EXIT_BOX;
+            SetPokeStorageTask(Task_ChangeScreen);
             break;
         }
         break;
@@ -3639,6 +3666,8 @@ static void Task_OnCloseBoxPressed(u8 taskId)
         {
             UpdateBoxToSendMons();
             gPlayerPartyCount = CalculatePlayerPartyCount();
+            if (sStorage->boxOption == OPTION_SELECT_MON)
+                gSpecialVar_0x8004 = 0xFF;
             sStorage->screenChangeType = SCREEN_CHANGE_EXIT_BOX;
             SetPokeStorageTask(Task_ChangeScreen);
         }
@@ -3712,6 +3741,8 @@ static void Task_OnBPressed(u8 taskId)
         {
             UpdateBoxToSendMons();
             gPlayerPartyCount = CalculatePlayerPartyCount();
+            if (sStorage->boxOption == OPTION_SELECT_MON)
+                gSpecialVar_0x8004  = 0xFF;
             sStorage->screenChangeType = SCREEN_CHANGE_EXIT_BOX;
             SetPokeStorageTask(Task_ChangeScreen);
         }
@@ -3734,8 +3765,11 @@ static void Task_ChangeScreen(u8 taskId)
     {
     case SCREEN_CHANGE_EXIT_BOX:
     default:
+        if (sStorage->boxOption == OPTION_SELECT_MON)
+            SetMainCallback2(CB2_ReturnToFieldContinueScript);
+        else
+            SetMainCallback2(CB2_ExitPokeStorage);
         FreePokeStorageData();
-        SetMainCallback2(CB2_ExitPokeStorage);
         break;
     case SCREEN_CHANGE_SUMMARY_SCREEN:
         boxMons = sStorage->summaryMon.box;
@@ -7181,6 +7215,8 @@ static u8 InBoxInput_Normal(void)
                     return INPUT_GIVE_ITEM;
                 case MENU_SWITCH:
                     return INPUT_SWITCH_ITEMS;
+                case MENU_SELECT:
+                    return INPUT_SELECT_MON;
                 }
             }
             else
@@ -7462,6 +7498,8 @@ static u8 HandleInput_InParty(void)
                     return INPUT_GIVE_ITEM;
                 case MENU_SWITCH:
                     return INPUT_SWITCH_ITEMS;
+                case MENU_SELECT:
+                    return INPUT_SELECT_MON;
                 }
             }
         }
@@ -7719,6 +7757,12 @@ static bool8 SetMenuTexts_Mon(void)
                 return FALSE;
         }
         break;
+    case OPTION_SELECT_MON:
+        if (species != SPECIES_NONE)
+            SetMenuText(MENU_SELECT);
+        else
+            return FALSE;
+        break;
     case OPTION_MOVE_ITEMS:
     default:
         return FALSE;
@@ -7734,7 +7778,8 @@ static bool8 SetMenuTexts_Mon(void)
     }
 
     SetMenuText(MENU_MARK);
-    SetMenuText(MENU_RELEASE);
+    if (sStorage->boxOption != OPTION_SELECT_MON)
+        SetMenuText(MENU_RELEASE);
     SetMenuText(MENU_CANCEL);
     return TRUE;
 }
@@ -8034,6 +8079,7 @@ static const u8 *const sMenuTexts[] =
     [MENU_POKECENTER] = COMPOUND_STRING("POKéCENTER"),
     [MENU_MACHINE]    = COMPOUND_STRING("MACHINE"),
     [MENU_SIMPLE]     = COMPOUND_STRING("SIMPLE"),
+    [MENU_SELECT]     = COMPOUND_STRING("SELECT"),
 };
 
 static void SetMenuText(u8 textId)
@@ -10079,4 +10125,11 @@ void UpdateSpeciesSpritePSS(struct BoxPokemon *boxMon)
         }
     }
     sJustOpenedBag = FALSE;
+}
+
+// Used as a script special for showing a box mon to various npcs (e.g. in-game trades, move deleter)
+void ChooseBoxMon(void)
+{
+    gSpecialVar_MonBoxId = 0xFF;
+    EnterPokeStorage(OPTION_SELECT_MON);
 }
