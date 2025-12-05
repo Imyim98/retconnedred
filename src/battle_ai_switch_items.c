@@ -1689,7 +1689,7 @@ static s32 GetSwitchinWeatherImpact(void)
     if (HasWeatherEffect())
     {
         // Damage
-        if (holdEffect != HOLD_EFFECT_SAFETY_GOGGLES && !(ability == ABILITY_MAGIC_GUARD || ability == ABILITY_FANTASY_BREAKER) && ability != ABILITY_OVERCOAT)
+        if (holdEffect != HOLD_EFFECT_SAFETY_GOGGLES && !ability == ABILITY_MAGIC_GUARD && !ability == ABILITY_FANTASY_BREAKER && ability != ABILITY_OVERCOAT)
         {
             if ((gBattleWeather & B_WEATHER_HAIL)
              && (gAiLogicData->switchinCandidate.battleMon.types[0] != TYPE_NEW_ICE || gAiLogicData->switchinCandidate.battleMon.types[1] != TYPE_NEW_ICE)
@@ -1787,7 +1787,7 @@ static u32 GetSwitchinRecurringDamage(void)
     enum HoldEffect holdEffect = GetItemHoldEffect(gAiLogicData->switchinCandidate.battleMon.item);
 
     // Items
-    if (!(ability == ABILITY_MAGIC_GUARD || ability == ABILITY_FANTASY_BREAKER) && ability != ABILITY_KLUTZ)
+    if (!ability == ABILITY_MAGIC_GUARD && !ability == ABILITY_FANTASY_BREAKER && ability != ABILITY_KLUTZ)
     {
         if (holdEffect == HOLD_EFFECT_BLACK_SLUDGE && gAiLogicData->switchinCandidate.battleMon.types[0] != TYPE_NEW_MIASMA && gAiLogicData->switchinCandidate.battleMon.types[1] != TYPE_NEW_MIASMA)
         {

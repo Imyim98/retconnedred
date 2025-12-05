@@ -2383,7 +2383,7 @@ static enum MoveCanceler CancelerConfused(struct BattleContext *ctx)
 static enum MoveCanceler CancelerParalyzed(struct BattleContext *ctx)
 {
     if (gBattleMons[ctx->battlerAtk].status1 & STATUS1_PARALYSIS
-        && !(B_MAGIC_GUARD == GEN_4 && IsAbilityAndRecord(ctx->battlerAtk, ctx->abilities[ctx->battlerAtk], ABILITY_MAGIC_GUARD))
+        && !(B_MAGIC_GUARD == GEN_4 && (IsAbilityAndRecord(ctx->battlerAtk, ctx->abilities[ctx->battlerAtk], ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(ctx->battlerAtk, ctx->abilities[ctx->battlerAtk], ABILITY_FANTASY_BREAKER)))
         && !RandomPercentage(RNG_PARALYSIS, 75))
     {
         gProtectStructs[ctx->battlerAtk].nonVolatileStatusImmobility = TRUE;
@@ -2852,7 +2852,7 @@ static enum MoveCanceler CancelerPowderStatus(struct BattleContext *ctx)
 {
     if (TryActivatePowderStatus(ctx->currentMove))
     {
-        if (!IsAbilityAndRecord(ctx->battlerAtk, ctx->abilities[ctx->battlerAtk], ABILITY_MAGIC_GUARD))
+        if (!(IsAbilityAndRecord(ctx->battlerAtk, ctx->abilities[ctx->battlerAtk], ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(ctx->battlerAtk, ctx->abilities[ctx->battlerAtk], ABILITY_FANTASY_BREAKER)))
             SetPassiveDamageAmount(ctx->battlerAtk, GetNonDynamaxMaxHP(ctx->battlerAtk) / 4);
 
         // This might be incorrect

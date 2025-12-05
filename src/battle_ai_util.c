@@ -1226,6 +1226,7 @@ static bool32 AI_IsMoveEffectInMinus(u32 battlerAtk, u32 battlerDef, u32 move, s
     {
         if (AI_MoveMakesContact(abilityAtk, gAiLogicData->holdEffects[battlerAtk], move)
          && abilityAtk != ABILITY_MAGIC_GUARD
+         && abilityAtk != ABILITY_FANTASY_BREAKER
          && (gAiLogicData->holdEffects[battlerDef] == HOLD_EFFECT_ROCKY_HELMET || abilityDef == ABILITY_IRON_BARBS))
             return TRUE;
     }
@@ -6069,6 +6070,7 @@ s32 BattlerBenefitsFromAbilityScore(u32 battler, enum Ability ability, struct Ai
     case ABILITY_CLEAR_BODY:
     case ABILITY_GOOD_AS_GOLD:
     case ABILITY_MAGIC_GUARD:
+    case ABILITY_FANTASY_BREAKER:
     case ABILITY_MOODY:
     case ABILITY_PURIFYING_SALT:
     case ABILITY_SPEED_BOOST:

@@ -2763,6 +2763,7 @@ BattleScript_CantMakeAsleep::
 BattleScript_EffectAbsorbLiquidOoze::
 	call BattleScript_AbilityPopUpTarget
 	jumpifability BS_ATTACKER, ABILITY_MAGIC_GUARD, BattleScript_EffectAbsorbRet
+	jumpifability BS_ATTACKER, ABILITY_FANTASY_BREAKER, BattleScript_EffectAbsorbRet
 	goto BattleScript_EffectAbsorb
 
 BattleScript_EffectAbsorb::
@@ -5084,6 +5085,7 @@ BattleScript_LeechSeedTurnDrainLiquidOoze::
 	call BattleScript_AbilityPopUp
 	copybyte gBattlerAttacker, gBattlerTarget   @ needed to get liquid ooze message correct
 	jumpifability BS_TARGET, ABILITY_MAGIC_GUARD, BattleScript_LeechSeedTurnDrainHealBlockEnd2
+	jumpifability BS_TARGET, ABILITY_FANTASY_BREAKER, BattleScript_LeechSeedTurnDrainHealBlockEnd2
 	goto BattleScript_LeechSeedTurnDrainGainHp
 
 BattleScript_LeechSeedTurnDrainHealBlock::
