@@ -9753,7 +9753,7 @@ uq4_12_t CalcPartyMonTypeEffectivenessMultiplier(u16 move, u16 speciesDef, enum 
                                     || GetMoveEffect(move) == EFFECT_EX_SHADOW_MOVE_RECOIL
                                     || GetMoveEffect(move) == EFFECT_EX_SHADOW_MOVE_RECOIL_CURRENT_HP))
     {
-        struct DamageContext ctx = {0};
+        struct BattleContext ctx = {0};
         ctx.move = move;
         ctx.moveType = moveType;
         ctx.updateFlags = FALSE;
