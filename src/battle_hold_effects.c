@@ -531,7 +531,7 @@ static enum ItemEffect TryShellBell(u32 battlerAtk)
     enum ItemEffect effect = ITEM_NO_EFFECT;
 
     if (gBattleScripting.savedDmg > 0
-     && !(gHitMarker & HITMARKER_UNABLE_TO_USE_MOVE)
+     && !gBattleStruct->unableToUseMove
      && (IsAnyTargetTurnDamaged(battlerAtk) || gBattleScripting.savedDmg > 0)
      && !IsBattlerAtMaxHp(battlerAtk)
      && IsBattlerAlive(battlerAtk)
@@ -552,7 +552,7 @@ static enum ItemEffect TryLifeOrb(u32 battlerAtk)
     enum ItemEffect effect = ITEM_NO_EFFECT;
 
     if (IsBattlerAlive(battlerAtk)
-     && !(gHitMarker & HITMARKER_UNABLE_TO_USE_MOVE)
+     && !gBattleStruct->unableToUseMove
      && (IsAnyTargetTurnDamaged(battlerAtk) || gBattleScripting.savedDmg > 0)
      && !(IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_FANTASY_BREAKER))
      && GetMoveEffect(gCurrentMove) != EFFECT_PAIN_SPLIT
