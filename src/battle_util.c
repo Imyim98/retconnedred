@@ -5409,17 +5409,13 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
         case ABILITY_MIRROR_WALL:
             if (!(gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_NO_EFFECT)
              && IsBattlerAlive(gBattlerAttacker)
-             && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+             && !gBattleStruct->unableToUseMove
              && IsBattlerTurnDamaged(gBattlerTarget)
-             && GetBattlerHoldEffect(gBattlerAttacker) != HOLD_EFFECT_PROTECTIVE_PADS
              && IsBattleMoveSpecial(move))
             {
-                gBattleStruct->moveDamage[gBattlerAttacker] = GetNonDynamaxMaxHP(gBattlerAttacker) / (B_ROUGH_SKIN_DMG >= GEN_4 ? 8 : 16);
-                if (gBattleStruct->moveDamage[gBattlerAttacker] == 0)
-                    gBattleStruct->moveDamage[gBattlerAttacker] = 1;
+                SetPassiveDamageAmount(gBattlerAttacker, GetNonDynamaxMaxHP(gBattlerAttacker) / (B_ROUGH_SKIN_DMG >= GEN_4 ? 8 : 16));
                 PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
-                BattleScriptPushCursor();
-                gBattlescriptCurrInstr = BattleScript_MirrorWallActivates;
+                BattleScriptCall(BattleScript_MirrorWallActivates);
                 effect++;
             }
             break;
@@ -5427,7 +5423,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             if (IsBattlerAlive(gBattlerAttacker)
              && IsBattlerAlive(gBattlerTarget)
              && IsSlicingMove(move)
-             && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+             && !gBattleStruct->unableToUseMove
              && IsBattlerTurnDamaged(gBattlerTarget))
             {
                 SaveBattlerAttacker(gBattlerAttacker);
