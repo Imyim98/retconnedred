@@ -387,6 +387,11 @@
 .include "sound/voicegroups/voicegroup829.inc" @ Digimon World 3 - Seabed
 .include "sound/voicegroups/voicegroup830.inc" @ Digimon World 3 - Seabed - Drum
 
+.include "sound/voicegroups/voicegroup831.inc" @ Digimon World 1 - Bass and Orchestral Hit Split
+.include "sound/voicegroups/voicegroup832.inc" @ Digimon World 1 - Distortion Guitar and Guitar Fret Split
+.include "sound/voicegroups/voicegroup833.inc" @ Digimon World 1 - Vs Normal1, Vs. Normal2, Vs Event
+.include "sound/voicegroups/voicegroup834.inc" @ Digimon World 1 - Vs Mugendramon
+
 .include "sound/voicegroups/voicegroup900.inc" @ New Sound Effects
 .include "sound/voicegroups/voicegroup901.inc" @ CtC G Free
 

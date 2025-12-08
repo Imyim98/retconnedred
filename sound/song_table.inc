@@ -2002,6 +2002,10 @@ gSongTable::
 	song mus_pkmn_mst_pokemon_center, MUSIC_PLAYER_BGM, 0
 	song mus_pkmn_swsh_slumbering_weald, MUSIC_PLAYER_BGM, 0
 	song mus_pkmn_za_vs_jacinthe, MUSIC_PLAYER_BGM, 0
+	song mus_dgmn_world1_vs_normal1, MUSIC_PLAYER_BGM, 0
+	song mus_dgmn_world1_vs_normal2, MUSIC_PLAYER_BGM, 0
+	song mus_dgmn_world1_vs_event, MUSIC_PLAYER_BGM, 0
+	song mus_dgmn_world1_vs_mugendramon, MUSIC_PLAYER_BGM, 0
 
 	.align 2
 dummy_song_header:
