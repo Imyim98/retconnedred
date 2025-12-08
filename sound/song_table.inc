@@ -1392,9 +1392,9 @@ gSongTable::
 	song mus_fate_bb_channel, MUSIC_PLAYER_BGM, 0
 	song mus_etc_beethoven_virus, MUSIC_PLAYER_BGM, 0
 	song mus_dgmn_world3_seabed, MUSIC_PLAYER_BGM, 0
-	song dummy_song_header, MUSIC_PLAYER_BGM, 0
-	song dummy_song_header, MUSIC_PLAYER_BGM, 0
-	song dummy_song_header, MUSIC_PLAYER_BGM, 0
+	song mus_trc_revelation, MUSIC_PLAYER_BGM, 0
+	song mus_trc_storm_and_fire1, MUSIC_PLAYER_BGM, 0
+	song mus_trc_storm_and_fire2, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
