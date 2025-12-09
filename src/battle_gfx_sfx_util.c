@@ -929,34 +929,48 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
 
     if (gCurrentMove == MOVE_FLUFFICATION)
     {
-        position = B_POSITION_PLAYER_LEFT;
-        targetSpecies = gContestResources->moveAnim->targetSpecies;
-        personalityValue = gContestResources->moveAnim->personality;
-        isShiny = gContestResources->moveAnim->isShiny;
-
-        HandleLoadSpecialPokePic(FALSE,
-                                 gMonSpritesGfxPtr->spritesGfx[position],
-                                 targetSpecies,
-                                 gContestResources->moveAnim->targetPersonality);
-    }
-    else
-    {
-        position = GetBattlerPosition(battlerAtk);
-        if (changeType == SPECIES_GFX_CHANGE_TRANSFORM)
+        if (IsContest())
         {
-            // Get base form if its currently Gigantamax
-            if (IsGigantamaxed(battlerDef))
-                targetSpecies = GetBattlerPartyState(battlerDef)->changedSpecies;
-            else if (gBattleStruct->illusion[battlerDef].state == ILLUSION_ON)
-                targetSpecies = GetIllusionMonSpecies(battlerDef);
-            else
-                targetSpecies = gBattleMons[battlerDef].species;
+            position = B_POSITION_PLAYER_LEFT;
+            targetSpecies = gDisableStructs[gBattlerTarget].transformationDCDTemp;
+            personalityValue = gContestResources->moveAnim->personality;
+            isShiny = gContestResources->moveAnim->isShiny;
+
+            HandleLoadSpecialPokePic(FALSE,
+                                    gMonSpritesGfxPtr->spritesGfx[position],
+                                    targetSpecies,
+                                    gContestResources->moveAnim->targetPersonality);
         }
         else
         {
-            targetSpecies = gBattleMons[battlerDef].species;
+            position = GetBattlerPosition(battlerDef);
+            if (changeType == SPECIES_GFX_CHANGE_TRANSFORM)
+                targetSpecies = gDisableStructs[gBattlerTarget].transformationDCDTemp;
+            else
+                targetSpecies = gDisableStructs[gBattlerTarget].transformationDCDTemp;
+            gBattleSpritesDataPtr->battlerData[battlerDef].transformSpecies = targetSpecies;
+
+            if (changeType == SPECIES_GFX_CHANGE_TRANSFORM)
+            {
+                personalityValue = gDisableStructs[battlerDef].transformedMonPersonality;
+                isShiny = gDisableStructs[battlerDef].transformedMonShininess;
+            }
+            else
+            {
+                personalityValue = gBattleMons[battlerDef].personality;
+                isShiny = gBattleMons[battlerDef].isShiny;
+            }
+            HandleLoadSpecialPokePic(!IsOnPlayerSide(battlerDef),
+                                    gMonSpritesGfxPtr->spritesGfx[position],
+                                    targetSpecies,
+                                    personalityValue);
         }
-        gBattleSpritesDataPtr->battlerData[battlerDef].transformSpecies = targetSpecies;
+        src = gMonSpritesGfxPtr->spritesGfx[position];
+        dst = (void *)(OBJ_VRAM0 + gSprites[gBattlerSpriteIds[battlerAtk]].oam.tileNum * 32);
+        DmaCopy32(3, src, dst, MON_PIC_SIZE);
+        paletteOffset = OBJ_PLTT_ID(battlerDef);
+        paletteData = GetMonSpritePalFromSpeciesAndPersonality(targetSpecies, isShiny, personalityValue);
+        LoadPalette(paletteData, paletteOffset, PLTT_SIZE_4BPP);
 
         if (changeType == SPECIES_GFX_CHANGE_TRANSFORM)
         {
@@ -1001,8 +1015,16 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
         }
         else
         {
+            position = GetBattlerPosition(battlerAtk);
+            targetSpecies = gDisableStructs[gBattlerAttacker].transformationDCDTemp;
+            gBattleSpritesDataPtr->battlerData[battlerAtk].transformSpecies = targetSpecies;
             personalityValue = gBattleMons[battlerAtk].personality;
             isShiny = gBattleMons[battlerAtk].isShiny;
+
+            HandleLoadSpecialPokePic(!IsOnPlayerSide(battlerAtk),
+                                    gMonSpritesGfxPtr->spritesGfx[position],
+                                    targetSpecies,
+                                    personalityValue);
         }
         src = gMonSpritesGfxPtr->spritesGfx[position];
         dst = (void *)(OBJ_VRAM0 + gSprites[gBattlerSpriteIds[battlerAtk]].oam.tileNum * 32);
@@ -1063,7 +1085,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
         else
         {
             position = GetBattlerPosition(battlerAtk);
-            if (gBattleSpritesDataPtr->battlerData[battlerAtk].transformSpecies == SPECIES_NONE)
+            if (changeType == SPECIES_GFX_CHANGE_TRANSFORM)
             {
                 // Get base form if its currently Gigantamax
                 if (IsGigantamaxed(battlerDef))
@@ -1071,13 +1093,13 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
                 else if (gBattleStruct->illusion[battlerDef].state == ILLUSION_ON)
                     targetSpecies = GetIllusionMonSpecies(battlerDef);
                 else
-                    targetSpecies = GetMonData(monDef, MON_DATA_SPECIES);
-                gBattleSpritesDataPtr->battlerData[battlerAtk].transformSpecies = targetSpecies;
+                    targetSpecies = gBattleMons[battlerDef].species;
             }
             else
             {
-                targetSpecies = gBattleSpritesDataPtr->battlerData[battlerAtk].transformSpecies;
+                targetSpecies = gBattleMons[battlerAtk].species;
             }
+            gBattleSpritesDataPtr->battlerData[battlerAtk].transformSpecies = targetSpecies;
 
             if (changeType == SPECIES_GFX_CHANGE_TRANSFORM)
             {
