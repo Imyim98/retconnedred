@@ -3531,9 +3531,6 @@ void SwitchInClearSetData(u32 battler, struct Volatiles *volatilesCopy)
     gAiLogicData->ejectButtonSwitch = FALSE;
     gAiLogicData->ejectPackSwitch = FALSE;
 
-    // Reset G-Max Chi Strike boosts.
-    gBattleStruct->bonusCritStages[battler] = 0;
-
     // Clear selected party ID so Revival Blessing doesn't get confused.
     gSelectedMonPartyId = PARTY_SIZE;
 
@@ -4439,7 +4436,7 @@ static void HandleTurnActionSelectionState(void)
                         gBattleStruct->moveTarget[battler] = gBattleResources->bufferB[battler][3];
                         return;
                     }
-                    else if (GetGenConfig(GEN_CONFIG_ENCORE_TARGET) < GEN_5 && gDisableStructs[battler].encoredMove != MOVE_NONE)
+                    else if (GetConfig(CONFIG_ENCORE_TARGET) < GEN_5 && gDisableStructs[battler].encoredMove != MOVE_NONE)
                     {
                         gChosenMoveByBattler[battler] = gDisableStructs[battler].encoredMove;
                         gBattleStruct->chosenMovePositions[battler] = gDisableStructs[battler].encoredMovePos;
@@ -4986,8 +4983,8 @@ u32 GetBattlerTotalSpeedStat(u32 battler, enum Ability ability, enum HoldEffect 
         speed *= 2;
 
     // paralysis drop
-    if (gBattleMons[battler].status1 & STATUS1_PARALYSIS && !(ability == ABILITY_QUICK_FEET || ability == ABILITY_PURE_WHITE))
-        speed /= GetGenConfig(GEN_CONFIG_PARALYSIS_SPEED) >= GEN_7 ? 2 : 4;
+    if (gBattleMons[battler].status1 & STATUS1_PARALYSIS && ability != ABILITY_QUICK_FEET && ability != ABILITY_PURE_WHITE)
+        speed /= GetConfig(CONFIG_PARALYSIS_SPEED) >= GEN_7 ? 2 : 4;
 
     if (gSideStatuses[GetBattlerSide(battler)] & SIDE_STATUS_SWAMP)
         speed /= 4;
@@ -5030,7 +5027,7 @@ s32 GetBattleMovePriority(u32 battler, enum Ability ability, u32 move)
         priority = -8;
     }
     else if (ability == ABILITY_GALE_WINGS
-          && (GetGenConfig(GEN_CONFIG_GALE_WINGS) < GEN_7 || IsBattlerAtMaxHp(battler))
+          && (GetConfig(CONFIG_GALE_WINGS) < GEN_7 || IsBattlerAtMaxHp(battler))
           && GetMoveType(move) == TYPE_NEW_FLYING)
     {
         priority++;
@@ -5427,7 +5424,7 @@ static bool32 TryDoGimmicksBeforeMoves(void)
         }
     }
 
-    if (GetGenConfig(GEN_CONFIG_MEGA_EVO_TURN_ORDER) >= GEN_7)
+    if (GetConfig(CONFIG_MEGA_EVO_TURN_ORDER) >= GEN_7)
         TryChangeTurnOrder(); // This will just do nothing if no mon has mega evolved.
     return FALSE;
 }

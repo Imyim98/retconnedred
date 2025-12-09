@@ -616,11 +616,13 @@
 #define B_ANIM_TERA_ACTIVATE            51
 #define B_ANIM_SIMPLE_HEAL              52
 #define B_ANIM_POWER_CONSTRUCT          53
-#define B_ANIM_COUNTER_SLASH            54
-#define B_ANIM_EX_SHADOW_SKY_CONTINUES  55
-#define B_ANIM_ULTRA_MEDICINE           56
-#define B_ANIM_RIDE_SUMMON              57
-#define B_ANIM_ULTRA_SEIGA              58
+#define B_ANIM_SWAP_TO_SUBSTITUTE       54
+#define B_ANIM_SWAP_FROM_SUBSTITUTE     55
+#define B_ANIM_COUNTER_SLASH            56
+#define B_ANIM_EX_SHADOW_SKY_CONTINUES  57
+#define B_ANIM_ULTRA_MEDICINE           58
+#define B_ANIM_RIDE_SUMMON              59
+#define B_ANIM_ULTRA_SEIGA              60
 
 #define LAST_B_ANIMS_GENERAL            B_ANIM_ULTRA_SEIGA
 #define NUM_B_ANIMS_GENERAL             (LAST_B_ANIMS_GENERAL + 1)
