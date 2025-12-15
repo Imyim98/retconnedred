@@ -136,16 +136,16 @@ bool32 BattlerWillFaintFromWeather(u32 battler, enum Ability ability);
 bool32 BattlerWillFaintFromSecondaryDamage(u32 battler, enum Ability ability);
 bool32 ShouldTryOHKO(u32 battlerAtk, u32 battlerDef, enum Ability atkAbility, enum Ability defAbility, u32 move);
 bool32 ShouldUseRecoilMove(u32 battlerAtk, u32 battlerDef, u32 recoilDmg, u32 moveIndex);
-bool32 ShouldAbsorb(u32 battlerAtk, u32 battlerDef, u32 move, s32 damage);
+bool32 ShouldAbsorb(u32 battlerAtk, u32 battlerDef, u32 move);
 bool32 ShouldRecover(u32 battlerAtk, u32 battlerDef, u32 move, u32 healPercent);
 bool32 ShouldSetScreen(u32 battlerAtk, u32 battlerDef, enum BattleMoveEffects moveEffect);
 bool32 ShouldCureStatus(u32 battlerAtk, u32 battlerDef, struct AiLogicData *aiData);
 bool32 ShouldCureStatusWithItem(u32 battlerAtk, u32 battlerDef, struct AiLogicData *aiData);
-enum AIPivot ShouldPivot(u32 battlerAtk, u32 battlerDef, enum Ability defAbility, u32 move, u32 moveIndex);
+enum AIPivot ShouldPivot(u32 battlerAtk, u32 battlerDef, u32 move);
 bool32 IsRecycleEncouragedItem(u32 item);
 bool32 ShouldRestoreHpBerry(u32 battlerAtk, u32 item);
 bool32 IsStatBoostingBerry(u32 item);
-bool32 CanKnockOffItem(u32 battler, u32 item);
+bool32 CanKnockOffItem(u32 fromBattler, u32 battler, u32 item);
 bool32 IsAbilityOfRating(enum Ability ability, s8 rating);
 bool32 AI_IsAbilityOnSide(u32 battlerId, enum Ability ability);
 bool32 AI_MoveMakesContact(enum Ability ability, enum HoldEffect holdEffect, u32 move);
@@ -160,6 +160,7 @@ bool32 ShouldConsiderSelfSacrificeDamageEffect(u32 battlerAtk, u32 battlerDef, e
 
 // stat stage checks
 bool32 AnyStatIsRaised(u32 battlerId);
+bool32 AnyUsefulStatIsRaised(u32 battlerId);
 bool32 CanLowerStat(u32 battlerAtk, u32 battlerDef, struct AiLogicData *aiData, enum Stat stat);
 bool32 BattlerStatCanRise(u32 battler, enum Ability battlerAbility, enum Stat stat);
 bool32 AreBattlersStatsMaxed(u32 battler);

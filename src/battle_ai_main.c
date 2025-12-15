@@ -2238,10 +2238,6 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
               || DoesPartnerHaveSameMoveEffect(BATTLE_PARTNER(battlerAtk), battlerDef, move, aiData->partnerMove))
                 ADJUST_SCORE(-10);
             break;
-        case EFFECT_ABSORB:
-            if (aiData->abilities[battlerDef] == ABILITY_LIQUID_OOZE)
-                ADJUST_SCORE(-6);
-            break;
         case EFFECT_STRENGTH_SAP:
             if (aiData->abilities[battlerDef] == ABILITY_CONTRARY)
                 ADJUST_SCORE(-10);
@@ -2574,7 +2570,7 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
             break;
         case EFFECT_BESTOW:
             if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_NONE
-              || !CanBattlerGetOrLoseItem(battlerAtk, gBattleMons[battlerAtk].item))    // AI knows its own item
+              || !CanBattlerGetOrLoseItem(battlerAtk, battlerDef, gBattleMons[battlerAtk].item))    // AI knows its own item
                 ADJUST_SCORE(-10);
             break;
         case EFFECT_WISH:
@@ -2799,7 +2795,7 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
                 ADJUST_SCORE(-10);
             break;
         case EFFECT_FLING:
-            if (!CanFling(battlerAtk))
+            if (!CanFling(battlerAtk, battlerDef))
             {
                 ADJUST_SCORE(-10);
             }
@@ -4340,10 +4336,10 @@ static s32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move, stru
         IncreaseSleepScore(battlerAtk, battlerDef, move, &score);
         break;
     case EFFECT_ABSORB:
-        if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT && effectiveness >= UQ_4_12(1.0))
+    case EFFECT_DREAM_EATER:
+        if (ShouldAbsorb(battlerAtk, battlerDef, move))
             ADJUST_SCORE(DECENT_EFFECT);
         break;
-    case EFFECT_DREAM_EATER:
     case EFFECT_AQUA_RING:
         if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT)
             ADJUST_SCORE(DECENT_EFFECT);
@@ -4696,34 +4692,23 @@ static s32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move, stru
         if (IsConsideringZMove(battlerAtk, battlerDef, move))
             ADJUST_SCORE(BEST_EFFECT);
         break;
-    case EFFECT_TELEPORT: // Either remove or add better logic
-        if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER) || !IsOnPlayerSide(battlerAtk))
+    case EFFECT_TELEPORT:
+        if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER))
             break;
         //fallthrough
     case EFFECT_HIT_ESCAPE:
     case EFFECT_PARTING_SHOT:
     case EFFECT_CHILLY_RECEPTION:
-        if (!hasPartner)
+        switch (ShouldPivot(battlerAtk, battlerDef, move))
         {
-            switch (ShouldPivot(battlerAtk, battlerDef, aiData->abilities[battlerDef], move, movesetIndex))
-            {
-            case DONT_PIVOT:
-                ADJUST_SCORE(-10);    // technically should go in CheckBadMove, but this is easier/less computationally demanding
-                break;
-            case CAN_TRY_PIVOT:
-                break;
-            case SHOULD_PIVOT:
-                ADJUST_SCORE(BEST_EFFECT);
-                break;
-            }
-        }
-        else //Double Battle
-        {
-            if (CountUsablePartyMons(battlerAtk) == 0)
-                break; // Can't switch
-
-            //if (switchAbility == ABILITY_INTIMIDATE && PartyHasMoveCategory(battlerDef, DAMAGE_CATEGORY_PHYSICAL))
-                //ADJUST_SCORE(7);
+        case DONT_PIVOT:
+            ADJUST_SCORE(-5);    // technically should go in CheckBadMove, but this is easier/less computationally demanding
+            break;
+        case CAN_TRY_PIVOT:
+            break;
+        case SHOULD_PIVOT:
+            ADJUST_SCORE(BEST_EFFECT);
+            break;
         }
         break;
     case EFFECT_BATON_PASS:
@@ -5236,7 +5221,7 @@ static s32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move, stru
         }
         break;
     case EFFECT_CORROSIVE_GAS:
-        if (CanKnockOffItem(battlerDef, aiData->items[battlerDef]))
+        if (CanKnockOffItem(battlerDef, battlerAtk, aiData->items[battlerDef]))
         {
             switch (aiData->holdEffects[battlerDef])
             {
@@ -5822,7 +5807,7 @@ static s32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move, stru
             ADJUST_SCORE(DECENT_EFFECT);
         break;
     case EFFECT_KNOCK_OFF:
-        if (CanKnockOffItem(battlerDef, aiData->items[battlerDef]))
+        if (CanKnockOffItem(battlerDef, battlerAtk, aiData->items[battlerDef]))
         {
             switch (aiData->holdEffects[battlerDef])
             {
@@ -5851,8 +5836,8 @@ static s32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move, stru
 
             if (canSteal && aiData->items[battlerAtk] == ITEM_NONE
              && aiData->items[battlerDef] != ITEM_NONE
-             && CanBattlerGetOrLoseItem(battlerDef, aiData->items[battlerDef])
-             && CanBattlerGetOrLoseItem(battlerAtk, aiData->items[battlerDef])
+             && CanBattlerGetOrLoseItem(battlerDef, battlerAtk, aiData->items[battlerDef])
+             && CanBattlerGetOrLoseItem(battlerAtk, battlerDef, aiData->items[battlerDef])
              && !HasMoveWithEffect(battlerAtk, EFFECT_ACROBATICS)
              && aiData->abilities[battlerDef] != ABILITY_STICKY_HOLD)
             {
@@ -6927,7 +6912,10 @@ static s32 AI_PredictSwitch(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
         }
         break;
 
-    // Free setup (U-Turn etc. handled in Check Viability by ShouldPivot)
+    case EFFECT_TELEPORT:
+    case EFFECT_HIT_ESCAPE:
+    case EFFECT_PARTING_SHOT:
+    case EFFECT_CHILLY_RECEPTION:
     case EFFECT_BOLT_BEAK:
     case EFFECT_LIGHT_SCREEN:
     case EFFECT_REFLECT:

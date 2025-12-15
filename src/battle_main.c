@@ -4091,6 +4091,13 @@ static void TryDoEventsBeforeFirstTurn(void)
         BattleScriptPushCursorAndCallback(BattleScript_FirstTurnSwitchInEvents);
         gBattleStruct->eventState.beforeFristTurn++;
         break;
+    case FIRST_TURN_FAINTED_BATTLERS:
+        // Handle any Pokemon that fainted from starting hazards before transitioning to action selection
+        if (HandleFaintedMonActions())
+            return;
+        gBattleStruct->eventState.faintedAction = 0;
+        gBattleStruct->eventState.beforeFristTurn++;
+        break;
     case FIRST_TURN_EVENTS_END:
         for (i = 0; i < MAX_BATTLERS_COUNT; i++)
         {
@@ -5540,7 +5547,7 @@ static void CheckChangingTurnOrderEffects(void)
             battler = gBattlerAttacker = gBattleStruct->quickClawBattlerId;
             gBattleStruct->quickClawBattlerId++;
             if (gChosenActionByBattler[battler] == B_ACTION_USE_MOVE
-             && gChosenMoveByBattler[battler] != MOVE_FOCUS_PUNCH   // quick claw message doesn't need to activate here
+             && GetMoveEffect(gChosenMoveByBattler[battler]) != EFFECT_FOCUS_PUNCH   // quick claw message doesn't need to activate here
              && (gProtectStructs[battler].usedCustapBerry || gProtectStructs[battler].quickDraw)
              && !(gBattleMons[battler].status1 & STATUS1_SLEEP)
              && !(gDisableStructs[gBattlerAttacker].truantCounter)
