@@ -660,7 +660,7 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, u32 battler)
     // transform's pink color
     if (gBattleMons[battler].volatiles.transformed)
     {
-        if (gDisableStructs[gBattlerAttacker].flagMultiUnitTransform == 1)
+        if (gBattleMons[gBattlerAttacker].volatiles.flagMultiUnitTransform == 1)
         {
             CpuCopy32(&gPlttBufferFaded[paletteOffset], &gPlttBufferUnfaded[paletteOffset], PLTT_SIZEOF(16));
         }
@@ -933,7 +933,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
         if (IsContest())
         {
             position = B_POSITION_PLAYER_LEFT;
-            targetSpecies = gDisableStructs[gBattlerTarget].transformationDCDTemp;
+            targetSpecies = gBattleMons[gBattlerTarget].volatiles.transformationDCDTemp;
             personalityValue = gContestResources->moveAnim->personality;
             isShiny = gContestResources->moveAnim->isShiny;
 
@@ -946,15 +946,15 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
         {
             position = GetBattlerPosition(battlerDef);
             if (changeType == SPECIES_GFX_CHANGE_TRANSFORM)
-                targetSpecies = gDisableStructs[gBattlerTarget].transformationDCDTemp;
+                targetSpecies = gBattleMons[gBattlerTarget].volatiles.transformationDCDTemp;
             else
-                targetSpecies = gDisableStructs[gBattlerTarget].transformationDCDTemp;
+                targetSpecies = gBattleMons[gBattlerTarget].volatiles.transformationDCDTemp;
             gBattleSpritesDataPtr->battlerData[battlerDef].transformSpecies = targetSpecies;
 
             if (changeType == SPECIES_GFX_CHANGE_TRANSFORM)
             {
-                personalityValue = gDisableStructs[battlerDef].transformedMonPersonality;
-                isShiny = gDisableStructs[battlerDef].transformedMonShininess;
+                personalityValue = gBattleMons[battlerDef].volatiles.transformedMonPID;
+                isShiny = gBattleMons[battlerDef].volatiles.isTransformedMonShiny;
             }
             else
             {
@@ -1005,7 +1005,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
         if (IsContest())
         {
             position = B_POSITION_PLAYER_LEFT;
-            targetSpecies = gDisableStructs[gBattlerAttacker].transformationDCDTemp;
+            targetSpecies = gBattleMons[gBattlerAttacker].volatiles.transformationDCDTemp;
             personalityValue = gContestResources->moveAnim->personality;
             isShiny = gContestResources->moveAnim->isShiny;
 
@@ -1017,7 +1017,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
         else
         {
             position = GetBattlerPosition(battlerAtk);
-            targetSpecies = gDisableStructs[gBattlerAttacker].transformationDCDTemp;
+            targetSpecies = gBattleMons[gBattlerAttacker].volatiles.transformationDCDTemp;
             gBattleSpritesDataPtr->battlerData[battlerAtk].transformSpecies = targetSpecies;
             personalityValue = gBattleMons[battlerAtk].personality;
             isShiny = gBattleMons[battlerAtk].isShiny;
@@ -1039,7 +1039,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
 			if (gCurrentMove == MOVE_BEAT_UP_CALLING)
             {
                 CpuCopy32(&gPlttBufferFaded[paletteOffset], &gPlttBufferUnfaded[paletteOffset], PLTT_SIZEOF(16));
-                gDisableStructs[gBattlerAttacker].flagMultiUnitTransform = 1;
+                gBattleMons[gBattlerAttacker].volatiles.flagMultiUnitTransform = 1;
             }
             else
             {
@@ -1104,8 +1104,8 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
 
             if (changeType == SPECIES_GFX_CHANGE_TRANSFORM)
             {
-                personalityValue = gDisableStructs[battlerAtk].transformedMonPersonality;
-                isShiny = gDisableStructs[battlerAtk].transformedMonShininess;
+                personalityValue = gBattleMons[battlerAtk].volatiles.transformedMonPID;
+                isShiny = gBattleMons[battlerAtk].volatiles.isTransformedMonShiny;
             }
             else
             {

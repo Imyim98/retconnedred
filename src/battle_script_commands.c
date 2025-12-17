@@ -17864,7 +17864,7 @@ void BS_TransformDataExecutionDecade(void)
             if (gCurrentMove == MOVE_FLUFFICATION)
             {
                 speciesBuffer = SPECIES_MAGIKARP;
-                gDisableStructs[gBattlerTarget].transformationDCDTemp = speciesBuffer;
+                gBattleMons[gBattlerTarget].volatiles.transformationDCDTemp = speciesBuffer;
                 currentLevel = gBattleMons[gBattlerTarget].level;
                 
                 ivAtk = gBattleMons[gBattlerTarget].attackIV;
@@ -17886,12 +17886,12 @@ void BS_TransformDataExecutionDecade(void)
                 calcSpd = (((2 * baseSpd + ivSpd) * currentLevel) / 100) + 5;
 
                 gBattleMons[gBattlerTarget].volatiles.transformed = TRUE;
-                gDisableStructs[gBattlerTarget].disabledMove = MOVE_NONE;
-                gDisableStructs[gBattlerTarget].disableTimer = 0;
-                gDisableStructs[gBattlerTarget].transformedMonPersonality = gBattleMons[gBattlerTarget].personality;
-                gDisableStructs[gBattlerTarget].transformedMonShininess = gBattleMons[gBattlerTarget].isShiny;
-                gDisableStructs[gBattlerTarget].mimickedMoves = 0;
-                gDisableStructs[gBattlerTarget].usedMoves = 0;
+                gBattleMons[gBattlerTarget].volatiles.disabledMove = MOVE_NONE;
+                gBattleMons[gBattlerTarget].volatiles.disableTimer = 0;
+                gBattleMons[gBattlerTarget].volatiles.transformedMonPID = gBattleMons[gBattlerTarget].personality;
+                gBattleMons[gBattlerTarget].volatiles.isTransformedMonShiny = gBattleMons[gBattlerTarget].isShiny;
+                gBattleMons[gBattlerTarget].volatiles.mimickedMoves = 0;
+                gBattleMons[gBattlerTarget].volatiles.usedMoves = 0;
 
                 timesGotHit = GetBattlerPartyState(gBattlerTarget)->timesGotHit;
                 GetBattlerPartyState(gBattlerAttacker)->timesGotHit = timesGotHit;
@@ -17912,7 +17912,7 @@ void BS_TransformDataExecutionDecade(void)
                 gBattleMons[gBattlerTarget].types[0] = TYPE_NEW_NATURE;
                 gBattleMons[gBattlerTarget].types[1] = TYPE_NEW_ELECTRIC;
                 gBattleMons[gBattlerTarget].types[2] = TYPE_MYSTERY;
-                gDisableStructs[gBattlerTarget].overwrittenAbility = ABILITY_LIMBER;
+                gBattleMons[gBattlerTarget].volatiles.overwrittenAbility = ABILITY_LIMBER;
 
                 for (j = 0; i < MAX_MON_MOVES; j++)
                 {
@@ -17931,12 +17931,12 @@ void BS_TransformDataExecutionDecade(void)
             else
             {
                 gBattleMons[gBattlerAttacker].volatiles.transformed = TRUE;
-                gDisableStructs[gBattlerAttacker].disabledMove = MOVE_NONE;
-                gDisableStructs[gBattlerAttacker].disableTimer = 0;
-                gDisableStructs[gBattlerAttacker].transformedMonPersonality = gBattleMons[gBattlerAttacker].personality;
-                gDisableStructs[gBattlerAttacker].transformedMonShininess = gBattleMons[gBattlerAttacker].isShiny;
-                gDisableStructs[gBattlerAttacker].mimickedMoves = 0;
-                gDisableStructs[gBattlerAttacker].usedMoves = 0;
+                gBattleMons[gBattlerAttacker].volatiles.disabledMove = MOVE_NONE;
+                gBattleMons[gBattlerAttacker].volatiles.disableTimer = 0;
+                gBattleMons[gBattlerAttacker].volatiles.transformedMonPID = gBattleMons[gBattlerAttacker].personality;
+                gBattleMons[gBattlerAttacker].volatiles.isTransformedMonShiny = gBattleMons[gBattlerAttacker].isShiny;
+                gBattleMons[gBattlerAttacker].volatiles.mimickedMoves = 0;
+                gBattleMons[gBattlerAttacker].volatiles.usedMoves = 0;
 
                 timesGotHit = GetBattlerPartyState(gBattlerTarget)->timesGotHit;
                 GetBattlerPartyState(gBattlerAttacker)->timesGotHit = timesGotHit;
@@ -18135,7 +18135,7 @@ void BS_TransformDataExecutionDecade(void)
                 }
 
                 gCalledMove = gBattleMons[gBattlerAttacker].moves[0];
-                gDisableStructs[gBattlerAttacker].transformationDCDTemp = speciesBuffer;
+                gBattleMons[gBattlerAttacker].volatiles.transformationDCDTemp = speciesBuffer;
                 currentLevel = gBattleMons[gBattlerAttacker].level;
                 baseAtk = gSpeciesInfo[speciesBuffer].baseAttack;
                 baseDef = gSpeciesInfo[speciesBuffer].baseDefense;
@@ -18163,7 +18163,7 @@ void BS_TransformDataExecutionDecade(void)
                 gBattleMons[gBattlerAttacker].types[1] = gSpeciesInfo[speciesBuffer].types[1];
                 gBattleMons[gBattlerAttacker].types[2] = TYPE_MYSTERY;
                 gBattleMons[gBattlerAttacker].ability = GetAbilityBySpecies(speciesBuffer, gBattleMons[gBattlerAttacker].abilityNum);
-                gDisableStructs[gBattlerAttacker].overwrittenAbility = GetAbilityBySpecies(speciesBuffer, gBattleMons[gBattlerAttacker].abilityNum);
+                gBattleMons[gBattlerAttacker].volatiles.overwrittenAbility = GetAbilityBySpecies(speciesBuffer, gBattleMons[gBattlerAttacker].abilityNum);
                 
                 for (j = 0; j < MAX_MON_MOVES; j++)
                 {
@@ -18204,12 +18204,12 @@ void BS_TransformDataExecutionCallingMultiUnit(void)
     gBattlerTarget = gBattlerAttacker;
 
     gBattleMons[gBattlerAttacker].volatiles.transformed = TRUE;
-    gDisableStructs[gBattlerAttacker].disabledMove = MOVE_NONE;
-    gDisableStructs[gBattlerAttacker].disableTimer = 0;
-    gDisableStructs[gBattlerAttacker].transformedMonPersonality = gBattleMons[gBattlerAttacker].personality;
-    gDisableStructs[gBattlerAttacker].transformedMonShininess = gBattleMons[gBattlerAttacker].isShiny;
-    gDisableStructs[gBattlerAttacker].mimickedMoves = 0;
-    gDisableStructs[gBattlerAttacker].usedMoves = 0;
+    gBattleMons[gBattlerAttacker].volatiles.disabledMove = MOVE_NONE;
+    gBattleMons[gBattlerAttacker].volatiles.disableTimer = 0;
+    gBattleMons[gBattlerAttacker].volatiles.transformedMonPID = gBattleMons[gBattlerAttacker].personality;
+    gBattleMons[gBattlerAttacker].volatiles.isTransformedMonShiny = gBattleMons[gBattlerAttacker].isShiny;
+    gBattleMons[gBattlerAttacker].volatiles.mimickedMoves = 0;
+    gBattleMons[gBattlerAttacker].volatiles.usedMoves = 0;
 
     timesGotHit = GetBattlerPartyState(gBattlerTarget)->timesGotHit;
     GetBattlerPartyState(gBattlerAttacker)->timesGotHit = timesGotHit;
@@ -18224,7 +18224,7 @@ void BS_TransformDataExecutionCallingMultiUnit(void)
         speciesBuffer = SPECIES_DIANCIE_MEGA;
 
     PREPARE_SPECIES_BUFFER(gBattleTextBuff1, speciesBuffer)
-    gDisableStructs[gBattlerAttacker].transformationDCDTemp = speciesBuffer;
+    gBattleMons[gBattlerAttacker].volatiles.transformationDCDTemp = speciesBuffer;
     currentLevel = gBattleMons[gBattlerAttacker].level;
     baseAtk = gSpeciesInfo[speciesBuffer].baseAttack;
     baseDef = gSpeciesInfo[speciesBuffer].baseDefense;
@@ -18252,7 +18252,7 @@ void BS_TransformDataExecutionCallingMultiUnit(void)
     gBattleMons[gBattlerAttacker].types[1] = gSpeciesInfo[speciesBuffer].types[1];
     gBattleMons[gBattlerAttacker].types[2] = TYPE_MYSTERY;
     gBattleMons[gBattlerAttacker].ability = GetAbilityBySpecies(speciesBuffer, gBattleMons[gBattlerAttacker].abilityNum);
-    gDisableStructs[gBattlerAttacker].overwrittenAbility = GetAbilityBySpecies(speciesBuffer, gBattleMons[gBattlerAttacker].abilityNum);
+    gBattleMons[gBattlerAttacker].volatiles.overwrittenAbility = GetAbilityBySpecies(speciesBuffer, gBattleMons[gBattlerAttacker].abilityNum);
 
     // update AI knowledge
     RecordAllMoves(gBattlerAttacker);

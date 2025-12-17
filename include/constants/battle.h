@@ -267,6 +267,8 @@ enum VolatileFlags
     F(VOLATILE_FLASH_FIRE_BOOSTED,          flashFireBoosted,              (u32, 1)) \
     F(VOLATILE_BOOSTER_ENERGY_ACTIVATED,    boosterEnergyActivated,        (u32, 1)) \
     F(VOLATILE_OVERWRITTEN_ABILITY,         overwrittenAbility,            (u32, ABILITIES_COUNT)) \
+    F(VOLATILE_TRANSFORMATION_DCD_TEMP,     transformationDCDTemp,         (u32, 0xFFFF)) \
+    F(VOLATILE_FLAG_MULTI_UNIT_TRANSFORM,   flagMultiUnitTransform,        (u32, 0xFFFF)) \
     F(VOLATILE_ROOST_ACTIVE,                roostActive,                   (u32, 1)) \
     F(VOLATILE_UNBURDEN_ACTIVE,             unburdenActive,                (u32, 1)) \
     F(VOLATILE_NEUTRALIZING_GAS,            neutralizingGas,               (u32, 1)) \

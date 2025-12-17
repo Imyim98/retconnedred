@@ -4867,7 +4867,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 gBattlerAttacker = battler;
                 gBattlerTarget = battler;
                 gBattleMons[gBattlerAttacker].volatiles.substitute = TRUE;
-                gDisableStructs[gBattlerAttacker].substituteHP = gBattleMons[gBattlerAttacker].maxHP / 4;
+                gBattleMons[gBattlerAttacker].volatiles.substituteHP = gBattleMons[gBattlerAttacker].maxHP / 4;
                 gBattleMons[gBattlerAttacker].volatiles.wrapped = FALSE;
                 BattleScriptCall(BattleScript_RideSummonActivates);
                 effect++;
@@ -5237,7 +5237,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 }
                 break;
             case ABILITY_FLORA_ELVIS:
-                if (CompareStat(battler, STAT_ATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility) && gDisableStructs[battler].isFirstTurn != 2)
+                if (CompareStat(battler, STAT_ATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility) && gBattleStruct->battlerState[battler].isFirstTurn != 2)
                 {
                     SET_STATCHANGER(STAT_ATK, 1, FALSE);
                     BattleScriptPushCursorAndCallback(BattleScript_FloraElvisAtkBoostActivates);
@@ -5246,7 +5246,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 }
                 break;
             case ABILITY_SHICHININ_MISAKI:
-                if (CompareStat(battler, STAT_EVASION, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility) && gDisableStructs[battler].isFirstTurn != 2)
+                if (CompareStat(battler, STAT_EVASION, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility) && gBattleStruct->battlerState[battler].isFirstTurn != 2)
                 {
                     SET_STATCHANGER(STAT_EVASION, 1, FALSE);
                     BattleScriptPushCursorAndCallback(BattleScript_ShichininMisakiActivates);
