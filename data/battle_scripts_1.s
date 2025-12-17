@@ -883,7 +883,7 @@ BattleScript_SkyDropFlyingType:
 	waitmessage B_WAIT_TIME_LONG
 	makevisible BS_ATTACKER
 	jumpifvolatile BS_TARGET, VOLATILE_CONFUSION, BattleScript_SkyDropFlyingAlreadyConfused
-	jumpifvolatile BS_TARGET, VOLATILE_LOCK_CONFUSE, BattleScript_SkyDropFlyingConfuseLock
+	jumpifvolatile BS_TARGET, VOLATILE_RAMPAGE_TURNS, BattleScript_SkyDropFlyingConfuseLock
 	goto BattleScript_MoveEnd
 BattleScript_SkyDropChangedTarget:
 	pause B_WAIT_TIME_SHORT
@@ -896,7 +896,7 @@ BattleScript_SkyDropChangedTarget:
 BattleScript_SkyDropFlyingConfuseLock:
 	seteffectprimary BS_ATTACKER, BS_TARGET, MOVE_EFFECT_CONFUSION
 BattleScript_SkyDropFlyingAlreadyConfused:
-	clearvolatile BS_TARGET, VOLATILE_LOCK_CONFUSE
+	clearvolatile BS_TARGET, VOLATILE_RAMPAGE_TURNS
 	jumpifvolatile BS_TARGET, VOLATILE_CONFUSION, BattleScript_MoveEnd
 	setbyte BS_ATTACKER, BS_TARGET
 	goto BattleScript_ThrashConfuses
@@ -5917,7 +5917,9 @@ BattleScript_MoveEffectClearSmog::
 
 BattleScript_FocusPunchSetUp::
 	flushtextbox
+	call BattleScript_SwapFromSubstitute
 	playanimation BS_ATTACKER, B_ANIM_FOCUS_PUNCH_SETUP
+	call BattleScript_SwapToSubstitute
 	printstring STRINGID_PKMNTIGHTENINGFOCUS
 	waitmessage B_WAIT_TIME_LONG
 	end3
