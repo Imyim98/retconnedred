@@ -526,9 +526,11 @@ void AnimRockBlastRock(struct Sprite *sprite);
 
 // battle_anim_dark.c
 void AnimClawSlash(struct Sprite *sprite);
+void AnimClawSlashReverse(struct Sprite *sprite);
 void AnimTearDrop(struct Sprite *sprite);
 void AnimBite(struct Sprite *sprite);
 extern const union AnimCmd *const gAnims_ClawSlash[];
+extern const union AnimCmd *const gAnims_ClawSlashReverse[];
 extern const union AffineAnimCmd *const gAffineAnims_TearDrop[];
 
 // battle_anim_bug.c

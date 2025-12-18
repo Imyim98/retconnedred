@@ -23223,6 +23223,62 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_TaxCollection,
     },
 
+    [MOVE_SCREEN_DIVIDE] =
+    {
+        .name = COMPOUND_STRING("Screen Divide"),
+        .description = COMPOUND_STRING(
+            "Slashes using energy blade that\n"
+            "cuts walls. High crit-ratio."),
+        .effect = EFFECT_BRICK_BREAK,
+        .power = 70,
+        .type = TYPE_NEW_ILLUSION,
+        .accuracy = 100,
+        .criticalHitStage = 2,
+        .pp = 20,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_FLINCH,
+            .chance = 30,
+        }),
+        .makesContact = TRUE,
+        .slicingMove = TRUE,
+        .contestEffect = CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL,
+        .contestCategory = CONTEST_CATEGORY_COOL,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SCRATCH, COMBO_STARTER_SWORDS_DANCE},
+        .battleAnimScript = gBattleAnimMove_ScreenDivide,
+    },
+
+    [MOVE_CROSS_DIVIDE] =
+    {
+        .name = COMPOUND_STRING("Cross Divide"),
+        .description = COMPOUND_STRING(
+            "Cross-slash the enemies. Has\n"
+            "a high critical-hit ratio."),
+        .effect = EFFECT_HIT,
+        .power = 100,
+        .type = TYPE_NEW_ILLUSION,
+        .accuracy = 100,
+        .criticalHitStage = 2,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_FLINCH,
+            .chance = 30,
+        }),
+        .makesContact = TRUE,
+        .slicingMove = TRUE,
+        .contestEffect = CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL,
+        .contestCategory = CONTEST_CATEGORY_COOL,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SCRATCH, COMBO_STARTER_SWORDS_DANCE},
+        .battleAnimScript = gBattleAnimMove_CrossDivide,
+    },
+
 // ============= Start Classing Moves ===================
 
     [MOVE_CLASSIC_POUND] =

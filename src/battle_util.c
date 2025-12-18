@@ -4697,6 +4697,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 BattleScriptCall(BattleScript_DimensionWallInitiate);
                 effect++;
             }
+            break;
         case ABILITY_HAKUREI_BARRIER:
             if (shouldAbilityTrigger)
             {
@@ -4706,6 +4707,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 BattleScriptCall(BattleScript_HakureiBarrierInitiate);
                 effect++;
             }
+            break;
         case ABILITY_FLORA_ELVIS:
             if (shouldAbilityTrigger)
             {
@@ -4715,6 +4717,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 BattleScriptCall(BattleScript_FloraElvisSafeguardActivates);
                 effect++;
             }
+            break;
         case ABILITY_ILLUSIONARY_GIRL:
             if (shouldAbilityTrigger)
             {

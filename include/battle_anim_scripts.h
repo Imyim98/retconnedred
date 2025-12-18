@@ -885,6 +885,8 @@ extern const u8 gBattleAnimMove_OmegaBlaster[];
 extern const u8 gBattleAnimMove_SuperSpiritBomb[];
 extern const u8 gBattleAnimMove_BeatUpCalling[];
 extern const u8 gBattleAnimMove_TaxCollection[];
+extern const u8 gBattleAnimMove_ScreenDivide[];
+extern const u8 gBattleAnimMove_CrossDivide[];
 extern const u8 gBattleAnimMove_ClassicHyperBeam[];
 extern const u8 gBattleAnimMove_ClassicFlamethrower[];
 extern const u8 gBattleAnimMove_ClassicThunderbolt[];

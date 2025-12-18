@@ -6160,6 +6160,16 @@ const struct SpriteTemplate gBitterBladeImpactTemplate =
     .callback = AnimClawSlash
 };
 
+const struct SpriteTemplate gBitterBladeImpactReverseTemplate =
+{
+    .tileTag = ANIM_TAG_CLAW_SLASH_REVERSE,
+    .paletteTag = ANIM_TAG_POISON_BUBBLE,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gAnims_ClawSlashReverse,
+    .callback = AnimClawSlashReverse
+};
+
+
 //dimension kick
 const struct SpriteTemplate gDimensionKickWall1Template =
 {

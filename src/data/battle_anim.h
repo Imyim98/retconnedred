@@ -1488,6 +1488,7 @@ const struct CompressedSpriteSheet gBattleAnimPicTable[] =
     {gBattleAnimSpriteGfx_ClassicLightning2, 0x0800, ANIM_TAG_CLASSIC_LIGHTNING_2},
     {gBattleAnimSpriteGfx_ClassicExplosion, 0x0800, ANIM_TAG_CLASSIC_EXPLOSION},
     {gBattleAnimSpriteGfx_ClassicAmnesia, 0x0200, ANIM_TAG_CLASSIC_AMNESIA},
+    {gBattleAnimSpriteGfx_ClawSlashReverse, 0x0A00, ANIM_TAG_CLAW_SLASH_REVERSE},
 };
 
 const struct SpritePalette gBattleAnimPaletteTable[] =
@@ -1977,6 +1978,7 @@ const struct SpritePalette gBattleAnimPaletteTable[] =
     {gBattleAnimSpritePal_ClassicLightning2, ANIM_TAG_LIGHTNING_2},
     {gBattleAnimSpritePal_ClassicExplosion, ANIM_TAG_CLASSIC_EXPLOSION},
     {gBattleAnimSpritePal_ClassicAmnesia, ANIM_TAG_CLASSIC_AMNESIA},
+    {gBattleAnimSpritePal_PoisonBubble, ANIM_TAG_POISON_BUBBLE},
 };
 
 const struct BattleAnimBackground gBattleAnimBackgroundTable[] =

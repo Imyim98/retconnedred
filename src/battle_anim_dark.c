@@ -139,6 +139,32 @@ const struct SpriteTemplate gTearDropSpriteTemplate =
     .callback = AnimTearDrop,
 };
 
+static const union AnimCmd sAnim_ClawSlashReverse_0[] =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_FRAME(48, 4),
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_ClawSlashReverse_1[] =
+{
+    ANIMCMD_FRAME(0, 4, .hFlip = FALSE),
+    ANIMCMD_FRAME(16, 4, .hFlip = FALSE),
+    ANIMCMD_FRAME(32, 4, .hFlip = FALSE),
+    ANIMCMD_FRAME(48, 4, .hFlip = FALSE),
+    ANIMCMD_FRAME(64, 4, .hFlip = FALSE),
+    ANIMCMD_END,
+};
+
+const union AnimCmd *const gAnims_ClawSlashReverse[] =
+{
+    sAnim_ClawSlashReverse_0,
+    sAnim_ClawSlashReverse_1,
+};
+
 static const union AnimCmd sAnim_ClawSlash_0[] =
 {
     ANIMCMD_FRAME(0, 4),
@@ -881,6 +907,15 @@ void AnimTask_MementoHandleBg(u8 taskId)
 
 // Animates a deep slash from a claw. Used by Metal Claw, Dragon Claw, and Crush Claw
 void AnimClawSlash(struct Sprite *sprite)
+{
+    sprite->x += gBattleAnimArgs[0];
+    sprite->y += gBattleAnimArgs[1];
+    StartSpriteAnim(sprite, gBattleAnimArgs[2]);
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+}
+
+void AnimClawSlashReverse(struct Sprite *sprite)
 {
     sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];

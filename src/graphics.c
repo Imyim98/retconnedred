@@ -2176,3 +2176,4 @@ const u32 gBattleAnimSpriteGfx_ClassicExplosion[] = INCBIN_U32("graphics/battle_
 const u16 gBattleAnimSpritePal_ClassicExplosion[] = INCBIN_U16("graphics/battle_anims/sprites/classic_explosion.gbapal");
 const u32 gBattleAnimSpriteGfx_ClassicAmnesia[] = INCBIN_U32("graphics/battle_anims/sprites/classic_amnesia.4bpp.smol");
 const u16 gBattleAnimSpritePal_ClassicAmnesia[] = INCBIN_U16("graphics/battle_anims/sprites/classic_amnesia.gbapal");
+const u32 gBattleAnimSpriteGfx_ClawSlashReverse[] = INCBIN_U32("graphics/battle_anims/sprites/claw_slash_reverse.4bpp.smol");
