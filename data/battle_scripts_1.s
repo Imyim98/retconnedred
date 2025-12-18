@@ -9119,6 +9119,7 @@ BattleScript_HakureiBarrierInitiate::
 	setreflect
 	setsafeguard
 	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
 	return
 
 BattleScript_GreatBloomingActivates::
@@ -9273,13 +9274,14 @@ BattleScript_FloraElvisAtkBoostActivates::
 	printstring STRINGID_PKMNRAISEDATTACK
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_FloraElvisAtkBoostActivatesEnd:
-	return
+	end2
 
 BattleScript_FloraElvisSafeguardActivates::
 	call BattleScript_AbilityPopUpTarget
 	printstring STRINGID_FLORAELVISSAFEGUARD
 	setsafeguard
 	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
 	return
 
 BattleScript_LifeForceActivates::

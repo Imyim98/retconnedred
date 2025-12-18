@@ -17810,7 +17810,7 @@ void BS_TransformDataExecutionDecade(void)
 
     u32 i = 0;
     s32 j = 0;
-    u16 moveUsed = MOVE_NONE;
+    u16 moveUsed = MOVE_UNAVAILABLE;
     u16 highestDamage = 0;
     s32 calcDamage;
 
