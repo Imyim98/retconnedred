@@ -181,7 +181,7 @@ extern const struct BattleMoveEffect gBattleMoveEffects[];
 
 static inline u32 SanitizeMoveId(u32 moveId)
 {
-    assertf(moveId < MOVES_COUNT_ALL, "invalid move: %d", moveId)
+    assertf(moveId < MOVE_UNAVAILABLE, "invalid move: %d", moveId)
     {
         return MOVE_NONE;
     }
@@ -630,7 +630,7 @@ static inline u32 GetMoveNonVolatileStatus(u32 move)
 static inline u32 GetMoveDamagePercentage(u32 move)
 {
     move = SanitizeMoveId(move);
-    assertf(gMovesInfo[move].effect == EFFECT_FIXED_PERCENT_DAMAGE, "not a percentage-damage move: %S", gMovesInfo[move].name);
+    assertf(gMovesInfo[move].effect == EFFECT_FIXED_PERCENT_DAMAGE || gMovesInfo[move].effect == EFFECT_EX_SHADOW_MOVE_HALF, "not a percentage-damage move: %S", gMovesInfo[move].name);
     return gMovesInfo[move].argument.damagePercentage;
 }
 

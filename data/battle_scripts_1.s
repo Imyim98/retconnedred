@@ -59,7 +59,7 @@ BattleScript_EffectTransformHit::
 	jumpifspecies SPECIES_LATIOS, BattleScript_EffectTransformHitDoTransformFirstReiMari
 	jumpifspecies SPECIES_LATIAS, BattleScript_EffectTransformHitDoTransformFirstYorigamiSisters
 BattleScript_EffectTransformHitBeatingUp:
-	critcalc
+@	critcalc
 	damagecalc
 	adjustdamage
 	playmoveanimation MOVE_CLOSE_COMBAT
@@ -9223,6 +9223,7 @@ BattleScript_MisfortuneAuraLoopIncrement:
 	copybyte sBATTLER, gBattlerAttacker
 	destroyabilitypopup
 	restoretarget
+	restoreattacker
 	pause B_WAIT_TIME_MED
 	return
 
