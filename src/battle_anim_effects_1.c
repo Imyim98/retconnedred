@@ -5276,7 +5276,7 @@ void AnimNeedleArmSpike(struct Sprite *sprite)
     {
         if (gBattleAnimArgs[0] == 0)
         {
-            if (GetMoveTarget(gAnimMoveIndex) == MOVE_TARGET_BOTH)
+            if (GetMoveTarget(gAnimMoveIndex) == TARGET_BOTH)
             {
                 SetAverageBattlerPositions(gBattleAnimAttacker, TRUE, &a, &b);
             }
@@ -5288,7 +5288,7 @@ void AnimNeedleArmSpike(struct Sprite *sprite)
         }
         else
         {
-            if (GetMoveTarget(gAnimMoveIndex) == MOVE_TARGET_BOTH)
+            if (GetMoveTarget(gAnimMoveIndex) == TARGET_BOTH)
             {
                 SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &a, &b);
             }
