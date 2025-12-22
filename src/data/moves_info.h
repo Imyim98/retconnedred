@@ -1905,7 +1905,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Retaliates any physical hit\n"
             "with double the power."),
-        .effect = EFFECT_COUNTER,
+        .effect = EFFECT_REFLECT_DAMAGE,
         .power = 1,
         .type = TYPE_NEW_DREAM,
         .accuracy = 100,
@@ -1914,6 +1914,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .priority = -5,
         .category = DAMAGE_CATEGORY_PHYSICAL,
         .makesContact = TRUE,
+        .argument = {
+            .reflectDamage.damagePercent = 200,
+            .reflectDamage.damageCategories = 1u << DAMAGE_CATEGORY_PHYSICAL,
+        },
         .ignoresProtect = B_UPDATED_MOVE_FLAGS < GEN_5,
         .ignoresKingsRock = (B_UPDATED_MOVE_FLAGS == GEN_3 || B_UPDATED_MOVE_FLAGS == GEN_4),
         .meFirstBanned = TRUE,
@@ -6544,7 +6548,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Counters the foe's special\n"
             "attack at double the power."),
-        .effect = EFFECT_MIRROR_COAT,
+        .effect = EFFECT_REFLECT_DAMAGE,
         .power = 1,
         .type = TYPE_NEW_HEART,
         .accuracy = 100,
@@ -6552,6 +6556,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .target = TARGET_DEPENDS,
         .priority = -5,
         .category = DAMAGE_CATEGORY_SPECIAL,
+        .argument = {
+            .reflectDamage.damagePercent = 200,
+            .reflectDamage.damageCategories = 1u << DAMAGE_CATEGORY_SPECIAL,
+        },
         .ignoresProtect = B_UPDATED_MOVE_FLAGS < GEN_5,
         .mirrorMoveBanned = B_UPDATED_MOVE_FLAGS >= GEN_4,
         .meFirstBanned = TRUE,
@@ -9795,7 +9803,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Retaliates any hit with\n"
             "greater power."),
-        .effect = EFFECT_METAL_BURST,
+        .effect = EFFECT_REFLECT_DAMAGE,
         .power = 1,
         .type = TYPE_NEW_DIVINE,
         .accuracy = 100,
@@ -9803,6 +9811,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .target = TARGET_DEPENDS,
         .priority = 0,
         .category = DAMAGE_CATEGORY_PHYSICAL,
+        .argument = {
+            .reflectDamage.damagePercent = 150,
+            .reflectDamage.damageCategories = 1u << DAMAGE_CATEGORY_PHYSICAL | 1u << DAMAGE_CATEGORY_SPECIAL,
+        },
         .ignoresProtect = B_UPDATED_MOVE_FLAGS < GEN_5,
         .meFirstBanned = TRUE,
         .contestEffect = CONTEST_EFFECT_BETTER_IF_LAST,
@@ -12075,7 +12087,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("Lunar Dance"),
         .description = sHealingWishDescription,
-        .effect = EFFECT_HEALING_WISH,
+        .effect = EFFECT_LUNAR_DANCE,
         .power = 0,
         .type = TYPE_NEW_REASON,
         .accuracy = 0,
@@ -20749,7 +20761,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Retaliates strongly against\n"
             "who last hurt the user."),
-        .effect = EFFECT_METAL_BURST,
+        .effect = EFFECT_REFLECT_DAMAGE,
         .power = 1,
         .type = TYPE_NEW_DARK,
         .accuracy = 100,
@@ -20757,6 +20769,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .target = TARGET_DEPENDS,
         .priority = 0,
         .category = DAMAGE_CATEGORY_PHYSICAL,
+        .argument = {
+            .reflectDamage.damagePercent = 150,
+            .reflectDamage.damageCategories = 1u << DAMAGE_CATEGORY_PHYSICAL | 1u << DAMAGE_CATEGORY_SPECIAL,
+        },
         .makesContact = TRUE,
         .meFirstBanned = TRUE,
         .metronomeBanned = TRUE,
