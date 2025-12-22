@@ -374,6 +374,7 @@ enum __attribute__((packed)) BattleMoveEffects
     EFFECT_EX_SHADOW_MOVE_RECOIL, // Shadow Rush
     EFFECT_EX_SHADOW_MOVE_RECOIL_CURRENT_HP, // Shadow End
     EFFECT_EX_SHADOW_MOVE_SKY, // Shadow Sky
+    EFFECT_KIRIFUDA,
     NUM_BATTLE_MOVE_EFFECTS,
 };
 

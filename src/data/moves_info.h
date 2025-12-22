@@ -9985,7 +9985,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "The move type is based\n"
             "on the user's type."),
-        .effect = EFFECT_REVELATION_DANCE,  // to do add effect photon geyser
+        .effect = EFFECT_KIRIFUDA,  // to do add effect photon geyser
         .power = 180,
         .type = TYPE_NEW_ILLUSION,
         .accuracy = 0,
@@ -25002,7 +25002,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Retaliates any physical hit\n"
             "with double the power."),
-        .effect = EFFECT_COUNTER,
+        .effect = EFFECT_REFLECT_DAMAGE,
         .power = 1,
         .type = TYPE_NEW_DREAM,
         .accuracy = 100,
@@ -25011,6 +25011,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .priority = -5,
         .category = DAMAGE_CATEGORY_PHYSICAL,
         .makesContact = TRUE,
+        .argument = {
+            .reflectDamage.damagePercent = 200,
+            .reflectDamage.damageCategories = 1u << DAMAGE_CATEGORY_PHYSICAL,
+        },
         .ignoresKingsRock = TRUE,
         .meFirstBanned = TRUE,
         .metronomeBanned = TRUE,
@@ -29512,7 +29516,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Counters the foe's special\n"
             "attack at double the power."),
-        .effect = EFFECT_MIRROR_COAT,
+        .effect = EFFECT_REFLECT_DAMAGE,
         .power = 1,
         .type = TYPE_NEW_REASON,
         .accuracy = 100,
@@ -29520,6 +29524,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .target = TARGET_DEPENDS,
         .priority = -5,
         .category = DAMAGE_CATEGORY_SPECIAL,
+        .argument = {
+            .reflectDamage.damagePercent = 200,
+            .reflectDamage.damageCategories = 1u << DAMAGE_CATEGORY_SPECIAL,
+        },
         .mirrorMoveBanned = TRUE,
         .meFirstBanned = TRUE,
         .metronomeBanned = TRUE,

@@ -6053,6 +6053,7 @@ enum Type TrySetAteType(u32 move, u32 battlerAtk, enum Ability attackerAbility)
     case EFFECT_NATURAL_GIFT:
     case EFFECT_CHANGE_TYPE_ON_ITEM:
     case EFFECT_REVELATION_DANCE:
+    case EFFECT_KIRIFUDA:
     case EFFECT_TERRAIN_PULSE:
         return ateType;
     default:
@@ -6219,6 +6220,7 @@ enum Type GetDynamicMoveType(struct Pokemon *mon, u32 move, u32 battler, enum Mo
             return GetItemSecondaryId(heldItem);
         break;
     case EFFECT_REVELATION_DANCE:
+    case EFFECT_KIRIFUDA:
         if (gimmick != GIMMICK_Z_MOVE)
         {
             enum Type teraType;

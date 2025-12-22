@@ -10856,6 +10856,7 @@ void SetDynamicMoveCategory(u32 battlerAtk, u32 battlerDef, u32 move)
     switch (GetMoveEffect(move))
     {
     case EFFECT_PHOTON_GEYSER:
+    case EFFECT_KIRIFUDA:
     case EFFECT_TRANSFORM_AND_HIT_WITH_ARG_CONDITION:
         gBattleStruct->swapDamageCategory = (GetCategoryBasedOnStats(battlerAtk) == DAMAGE_CATEGORY_PHYSICAL);
         break;
