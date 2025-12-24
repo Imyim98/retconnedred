@@ -22710,7 +22710,7 @@ gBattleAnimMove_ChooseGaiaForceDarkness:
 	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
 	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, -16, -15, 1, 0
 	delay 6
-	createsprite gExplosionSpriteTemplate, ANIM_TARGET, 4, 16, -5, 1, 0
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, 16, -5, 1, 0
 	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
 	delay 6
 	createvisualtask AnimTask_BlendBattleAnimPal, 3, F_PAL_BG, 1, 14, 0, RGB(25, 0, 31)
@@ -23107,6 +23107,151 @@ CrossDivideShatteredWall:
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 0, F_PAL_BG, 3, 12, 0, RGB_GREEN
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
 	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+gBattleAnimMove_GreySword::
+	loadspritegfx ANIM_TAG_CLAW_SLASH
+	loadspritegfx ANIM_TAG_POISON_BUBBLE
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	loadspritegfx ANIM_TAG_SPARK_2
+	loadspritegfx ANIM_TAG_FOCUS_ENERGY
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_BlendBattleAnimPal, 3, F_PAL_BG, 1, 0, 8, RGB_RED
+	delay 4
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	call EndureEffect
+	delay 8
+	call EndureEffect
+	delay 8
+	call EndureEffect
+	waitforvisualfinish
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_POISON_BUBBLE, 0, 8, 8, RGB_RED
+	createsprite gBitterBladeImpactTemplate ANIM_TARGET, 1, 0x0, 0xa, 0x0, 0xFF00, 0xA
+	delay 2
+	createvisualtask AnimTask_ShakeMon, 0x2, 0x1, 0x0, 0x3, 0xa, 0x1
+	waitforvisualfinish
+	delay 5
+	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
+	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
+	call FireSpreadEffect
+	delay 7
+	call ElectricityEffect_OnTargets
+	delay 7
+	createvisualtask AnimTask_BlendBattleAnimPal, 3, F_PAL_BG, 1, 8, 0, RGB_RED
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	delay 1
+	end
+
+gBattleAnimMove_GaruruCannon::
+	loadspritegfx ANIM_TAG_IMPACT_2
+	loadspritegfx ANIM_TAG_LEER
+	loadspritegfx ANIM_TAG_EXPLOSION_PURPLE
+	monbg ANIM_ATK_PARTNER
+	splitbgprio ANIM_ATTACKER
+	setalpha 12, 8
+	call SetAuraSphereBG
+	createvisualtask AnimTask_BlendBattleAnimPal, 3, F_PAL_BG, 1, 0, 8, RGB_CYAN
+	playsewithpan SE_M_SKY_UPPERCUT, 0
+	delay 60
+	createsprite gAuraSphereBlast, ANIM_TARGET, 3, 0
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
+	delay 16
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 8, 0, 16, 1
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_EXPLOSION_PURPLE, 0, 8, 8, RGB_CYAN
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, 6, 5, 1, 0
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, -16, -15, 1, 0
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, 16, -5, 1, 0
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, -12, 18, 1, 0
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, 0, 5, 1, 0
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, 6, 5, 1, 0
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, -16, -15, 1, 0
+	delay 6
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, 16, -5, 1, 0
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	delay 6
+	waitforvisualfinish
+	call UnsetHighSpeedBg
+	createvisualtask AnimTask_BlendBattleAnimPal, 3, F_PAL_BG, 1, 8, 0, RGB_CYAN
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	delay 1
+	end
+
+gBattleAnimMove_DoubleTorrent::
+	loadspritegfx ANIM_TAG_METEOR
+	loadspritegfx ANIM_TAG_FOCUS_ENERGY
+	loadspritegfx ANIM_TAG_EXPLOSION
+	loadspritegfx ANIM_TAG_EXPLOSION_PURPLE
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_foes ANIM_TARGET
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	call EndureEffect
+	delay 8
+	call EndureEffect
+	delay 8
+	createvisualtask AnimTask_BlendBattleAnimPal, 3, F_PAL_BG, 1, 0, 14, RGB_RED
+	call EndureEffect
+	waitforvisualfinish
+	delay 3
+	createsprite gSuperpowerFireballSpriteTemplate, ANIM_TARGET, 3, ANIM_ATTACKER
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
+	delay 16
+	call SpiritBombExplode
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 8, 0, 16, 1
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_BlendBattleAnimPal, 3, F_PAL_BG, 1, 0, 14, RGB_CYAN
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_METEOR, 0, 8, 8, RGB_BLUE
+	createsprite gSuperpowerFireballSpriteTemplate, ANIM_TARGET, 3, ANIM_ATTACKER
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
+	delay 16
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 8, 0, 16, 1
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_EXPLOSION_PURPLE, 0, 8, 8, RGB_BLUE
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, 6, 5, 1, 0
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, -16, -15, 1, 0
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, 16, -5, 1, 0
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, -12, 18, 1, 0
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, 0, 5, 1, 0
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, 6, 5, 1, 0
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, -16, -15, 1, 0
+	delay 6
+	createsprite gExplosionPurpleSpriteTemplate, ANIM_TARGET, 4, 16, -5, 1, 0
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	delay 6
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 3, F_PAL_BG, 1, 14, 0, RGB_CYAN
 	clearmonbg ANIM_DEF_PARTNER
 	blendoff
 	end

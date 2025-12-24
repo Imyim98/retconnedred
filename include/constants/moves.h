@@ -992,7 +992,98 @@
 #define MOVE_SCREEN_DIVIDE            (MOVE_END_OFFICIAL + 80)
 #define MOVE_CROSS_DIVIDE             (MOVE_END_OFFICIAL + 81)
 
-#define MOVE_ADDED_MODERN_END       MOVE_CROSS_DIVIDE
+#define MOVE_BABY_FLAME               (MOVE_END_OFFICIAL + 82) // Agumon
+#define MOVE_MEGA_FLAME               (MOVE_END_OFFICIAL + 83) // Greymon
+#define MOVE_GIGA_DESTROYER           (MOVE_END_OFFICIAL + 84) // MetalGreymon
+#define MOVE_GROUND_ZERO              (MOVE_END_OFFICIAL + 85) // SkullGreymon
+#define MOVE_GREAT_TORNADO            (MOVE_END_OFFICIAL + 86) // WarGreymon
+#define MOVE_MUGEN_CANNON             (MOVE_END_OFFICIAL + 87) // Mugendramon
+#define MOVE_PETIT_FIRE               (MOVE_END_OFFICIAL + 88) // Gabumon
+#define MOVE_FOX_FIRE                 (MOVE_END_OFFICIAL + 89) // Garurumon
+#define MOVE_KAISER_NAIL              (MOVE_END_OFFICIAL + 90) // WereGarurumon
+#define MOVE_COCYTUS_BREATH           (MOVE_END_OFFICIAL + 91) // MetalGarurumon
+#define MOVE_GRACE_CROSS_FREEZER      (MOVE_END_OFFICIAL + 92) // MetalGarurumon
+#define MOVE_GREY_SWORD               (MOVE_END_OFFICIAL + 93) // Omegamon
+#define MOVE_GARURU_CANNON            (MOVE_END_OFFICIAL + 94) // Omegamon
+#define MOVE_DOUBLE_TORRENT           (MOVE_END_OFFICIAL + 95) // Omegamon
+/*
+#define MOVE_PETIT_THUNDER            (MOVE_END_OFFICIAL + 96) // Tentomon
+#define MOVE_MEGA_BLASTER             (MOVE_END_OFFICIAL + 97) // Kabuterimon
+#define MOVE_HORN_BUSTER              (MOVE_END_OFFICIAL + 98) // AtlurKabuterimon
+#define MOVE_GIGA_SCISSOR_CLAW        (MOVE_END_OFFICIAL + 99) // HerculesKabuterimon
+#define MOVE_POISON_IVY               (MOVE_END_OFFICIAL + 100) // Palmon
+#define MOVE_PRICKLY_BANG_BANG        (MOVE_END_OFFICIAL + 101) // Togemon
+#define MOVE_FLOWER_CANNON            (MOVE_END_OFFICIAL + 101) // Lilimon
+#define MOVE_ROSES_RAPIER             (MOVE_END_OFFICIAL + 102) // Rosemon
+#define MOVE_FORBIDDEN_TEMPTATION     (MOVE_END_OFFICIAL + 103) // Rosemon
+#define MOVE_TURBO_PECKER             (MOVE_END_OFFICIAL + 104) // Piyomon
+#define MOVE_METEOR_WING              (MOVE_END_OFFICIAL + 105) // Birdramon
+#define MOVE_SHADOW_WING              (MOVE_END_OFFICIAL + 106) // Garudamon
+#define MOVE_STARLIGHT_EXPLOSION      (MOVE_END_OFFICIAL + 107) // Hououmon
+#define MOVE_CRIMSON_FLARE            (MOVE_END_OFFICIAL + 108) // Hououmon
+#define MOVE_MARCHING_FISHES          (MOVE_END_OFFICIAL + 109) // Gomamon
+#define MOVE_HARPOON_VULCAN           (MOVE_END_OFFICIAL + 110) // Ikkakumon
+#define MOVE_HAMMER_SPARK             (MOVE_END_OFFICIAL + 111) // Zudomon
+#define MOVE_VIKING_FLARE             (MOVE_END_OFFICIAL + 112) // Vikemon
+#define MOVE_MJOLLNIR_HAMMER          (MOVE_END_OFFICIAL + 113) // Vikemon
+#define MOVE_AIR_SHOT                 (MOVE_END_OFFICIAL + 114) // Patamon
+#define MOVE_SHOOTING_STAR            (MOVE_END_OFFICIAL + 115) // Pegasmon
+#define MOVE_HEAVENS_KNUCKLE          (MOVE_END_OFFICIAL + 116) // Angemon
+#define MOVE_HEAVENS_GATE             (MOVE_END_OFFICIAL + 117) // HolyAngemon
+#define MOVE_EXCALIBUR                (MOVE_END_OFFICIAL + 118) // HolyAngemon
+#define MOVE_SEVEN_HEAVENS            (MOVE_END_OFFICIAL + 119) // Seraphimon
+#define MOVE_ASCENSION_HALLOW         (MOVE_END_OFFICIAL + 120) // Seraphimon
+#define MOVE_PUPPY_HOWLING            (MOVE_END_OFFICIAL + 121) // Plotmon
+#define MOVE_ROSETTA_STONE            (MOVE_END_OFFICIAL + 122) // Nefertimon
+#define MOVE_NEKO_PUNCH               (MOVE_END_OFFICIAL + 123) // Tailmon
+#define MOVE_HOLY_ARROW               (MOVE_END_OFFICIAL + 124) // Angewomon
+#define MOVE_HEAVENS_CHARM            (MOVE_END_OFFICIAL + 125) // Angewomon
+#define MOVE_EDENS_JAVELIN            (MOVE_END_OFFICIAL + 126) // Ophanimon
+#define MOVE_APOCALYPSE               (MOVE_END_OFFICIAL + 127) // Ophanimon
+#define MOVE_VEEMON_HEAD              (MOVE_END_OFFICIAL + 128) // V-mon
+#define MOVE_KNUCKLE_FIRE             (MOVE_END_OFFICIAL + 129) // Fladramon
+#define MOVE_LIGHTNING_BLADE          (MOVE_END_OFFICIAL + 130) // Lightdramon
+#define MOVE_PLASMA_SHOOT             (MOVE_END_OFFICIAL + 131) // Magnamon
+#define MOVE_EXTREME_JIHAD            (MOVE_END_OFFICIAL + 132) // Magnamon
+#define MOVE_X_LASER                  (MOVE_END_OFFICIAL + 133) // XV-mon
+#define MOVE_DESPERADO_BLASTER        (MOVE_END_OFFICIAL + 134) // Paildramon
+#define MOVE_MEGA_DEATH               (MOVE_END_OFFICIAL + 135) // Imperialdramon
+#define MOVE_SPLENDOR_BLADE           (MOVE_END_OFFICIAL + 136) // Imperialdramon
+#define MOVE_GIGA_DEATH               (MOVE_END_OFFICIAL + 137) // Imperialdramon
+#define MOVE_POSITRON_LASER           (MOVE_END_OFFICIAL + 138) // Imperialdramon
+#define MOVE_OMEGA_BLADE              (MOVE_END_OFFICIAL + 139) // Imperialdramon
+#define MOVE_STIKY_NET                (MOVE_END_OFFICIAL + 140) // Wormmon
+#define MOVE_SPIKING_FINISH           (MOVE_END_OFFICIAL + 141) // Stingmon
+#define MOVE_ROLLING_STONE            (MOVE_END_OFFICIAL + 142) // Armadimon
+#define MOVE_GOLD_RUSH                (MOVE_END_OFFICIAL + 143) // Digmon
+#define MOVE_OXYGEN_HOMING            (MOVE_END_OFFICIAL + 144) // Submarimon
+#define MOVE_TAIL_HAMMER              (MOVE_END_OFFICIAL + 145) // Ankylomon
+#define MOVE_ARAMITAMA                (MOVE_END_OFFICIAL + 146) // Shakkoumon
+#define MOVE_FEATHER_SLASH            (MOVE_END_OFFICIAL + 147) // Hawkmon
+#define MOVE_MACH_IMPULSE             (MOVE_END_OFFICIAL + 148) // Holsemon
+#define MOVE_KUSANAGI                 (MOVE_END_OFFICIAL + 149) // Shurimon
+#define MOVE_GLIDE_HORN               (MOVE_END_OFFICIAL + 150) // Aquilamon
+#define MOVE_TOP_GUN                  (MOVE_END_OFFICIAL + 151) // Silphymon
+#define MOVE_FENRIR_SWORD             (MOVE_END_OFFICIAL + 152) // Valkyrimon
+#define MOVE_AURVANDILS_ARROW         (MOVE_END_OFFICIAL + 153) // Valkyrimon
+#define MOVE_PICO_DART                (MOVE_END_OFFICIAL + 154) // PicoDevimon
+#define MOVE_DEATH_CLAW               (MOVE_END_OFFICIAL + 155) // Devimon
+#define MOVE_NIGHT_RAID               (MOVE_END_OFFICIAL + 156) // Vamdemon
+#define MOVE_VENOM_INFUSION           (MOVE_END_OFFICIAL + 157) // VenomVamdemon
+#define MOVE_PANDEMONIUM_FLAME        (MOVE_END_OFFICIAL + 158) // BelialVamdemon
+#define MOVE_DARKNESS_WAVE            (MOVE_END_OFFICIAL + 159) // LadyDevimon
+#define MOVE_PHANTOM_PAIN             (MOVE_END_OFFICIAL + 160) // Lilithmon
+#define MOVE_DARKNESS_LOVE            (MOVE_END_OFFICIAL + 161) // Lilithmon
+#define MOVE_ELECTRIC_SHOCK           (MOVE_END_OFFICIAL + 162) // Betamon
+#define MOVE_ICE_ARROW                (MOVE_END_OFFICIAL + 163) // Seadramon
+#define MOVE_THUNDER_JAVELIN          (MOVE_END_OFFICIAL + 164) // MegaSeadramon
+#define MOVE_ULTIMATE_STREAM          (MOVE_END_OFFICIAL + 165) // MetalSeadramon
+#define MOVE_CABLE_CRUSHER            (MOVE_END_OFFICIAL + 166) // Diablomon
+#define MOVE_WEB_WRECKER              (MOVE_END_OFFICIAL + 167) // Diablomon
+#define MOVE_LOST_PARADISE            (MOVE_END_OFFICIAL + 168) // Diablomon
+*/
+
+#define MOVE_ADDED_MODERN_END       MOVE_DOUBLE_TORRENT
 
 #define MOVE_CLASSIC_POUND          (MOVE_ADDED_MODERN_END + 1)
 #define MOVE_CLASSIC_KARATE_CHOP    (MOVE_ADDED_MODERN_END + 2)

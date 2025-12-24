@@ -627,7 +627,7 @@ static inline u32 GetMoveAbsorbPercentage(u32 moveId)
 static inline u32 GetMoveRecoil(u32 moveId)
 {
     moveId = SanitizeMoveId(moveId);
-    assertf(gMovesInfo[moveId].effect == EFFECT_RECOIL, "not a recoil move: %S", gMovesInfo[moveId].name);
+    assertf(gMovesInfo[moveId].effect == EFFECT_RECOIL || gMovesInfo[moveId].effect == EFFECT_EX_SHADOW_MOVE_RECOIL_CURRENT_HP, "not a recoil move: %S", gMovesInfo[moveId].name);
     return gMovesInfo[moveId].argument.recoilPercentage;
 }
 

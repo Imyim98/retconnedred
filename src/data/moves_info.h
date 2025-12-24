@@ -23296,6 +23296,385 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_CrossDivide,
     },
 
+    [MOVE_BABY_FLAME] =
+    {
+        .name = COMPOUND_STRING("Baby Flame"),
+        .description = COMPOUND_STRING(
+            "A weak fire attack that may\n"
+            "inflict a burn."),
+        .effect = EFFECT_HIT,
+        .power = 40,
+        .type = TYPE_NEW_FIRE,
+        .accuracy = 100,
+        .pp = 25,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 10,
+        }),
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SUNNY_DAY},
+        .battleAnimScript = gBattleAnimMove_Ember,
+    },
+
+    [MOVE_MEGA_FLAME] =
+    {
+        .name = COMPOUND_STRING("Mega Flame"),
+        .description = COMPOUND_STRING(
+            "A fire attack that may\n"
+            "inflict a burn."),
+        .effect = EFFECT_HIT,
+        .power = 65,
+        .type = TYPE_NEW_FIRE,
+        .accuracy = 100,
+        .pp = 20,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 10,
+        }),
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SUNNY_DAY},
+        .battleAnimScript = gBattleAnimMove_DragonRage,
+    },
+
+    [MOVE_GIGA_DESTROYER] = // to do anim
+    {
+        .name = COMPOUND_STRING("Giga Destroyer"),
+        .description = COMPOUND_STRING(
+            "Launches 2 missiles that\n"
+            "may inflict a burn."),
+        .effect = EFFECT_HIT,
+        .power = 40,
+        .type = TYPE_NEW_METAL,
+        .accuracy = 95,
+        .pp = 15,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 10,
+        }),
+        .strikeCount = 2,
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SUNNY_DAY},
+        .battleAnimScript = gBattleAnimMove_DragonRage,
+    },
+
+    [MOVE_GROUND_ZERO] = // to do anim
+    {
+        .name = COMPOUND_STRING("Ground Zero"),
+        .description = COMPOUND_STRING(
+            "Launches a big missile that\n"
+            "blows away the target."),
+        .effect = EFFECT_HIT_SWITCH_TARGET,
+        .power = 100,
+        .type = TYPE_NEW_DARK,
+        .accuracy = 90,
+        .pp = 5,
+        .target = TARGET_SELECTED,
+        .priority = -6,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .copycatBanned = TRUE,
+        .assistBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 10,
+        }),
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SUNNY_DAY},
+        .battleAnimScript = gBattleAnimMove_DragonRage,
+    },
+
+    [MOVE_GREAT_TORNADO] =  // to do anim
+    {
+        .name = COMPOUND_STRING("Great Tornado"),
+        .description = COMPOUND_STRING(
+            "A spinning pointed part\n"
+            "bypasses a foe's Protect."),
+        .effect = EFFECT_HIT,
+        .power = 90,
+        .type = TYPE_NEW_WIND,
+        .accuracy = 100,
+        .pp = 5,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .ignoresProtect = TRUE,
+        .metronomeBanned = TRUE,
+        .windMove = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 10,
+        }),
+        .battleAnimScript = gBattleAnimMove_HyperDrill,
+    },
+
+    [MOVE_MUGEN_CANNON] =  // Edited
+    {
+        .name = COMPOUND_STRING("Mugen Cannon"),
+        .description = COMPOUND_STRING(
+            "A strong energy blast\n"
+            "from cannons."),
+        .effect = EFFECT_HIT,
+        .power = 50,
+        .type = TYPE_NEW_METAL,
+        .accuracy = 95,
+        .pp = 5,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .strikeCount = 2,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_SP_DEF_MINUS_1,
+            .chance = 20,
+        },
+        {
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 10,
+        }),
+        .contestEffect = CONTEST_EFFECT_USER_MORE_EASILY_STARTLED,
+        .contestCategory = CONTEST_CATEGORY_TOUGH,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_FleurCannon,
+    },
+
+    [MOVE_PETIT_FIRE] = // to do anim
+    {
+        .name = COMPOUND_STRING("Petit Fire"),
+        .description = COMPOUND_STRING(
+            "A weak fire attack that may\n"
+            "inflict a paralysis."),
+        .effect = EFFECT_HIT,
+        .power = 40,
+        .type = TYPE_NEW_FIRE,
+        .accuracy = 100,
+        .pp = 25,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_PARALYSIS,
+            .chance = 10,
+        }),
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SUNNY_DAY},
+        .battleAnimScript = gBattleAnimMove_Ember,
+    },
+
+    [MOVE_FOX_FIRE] =  // to do anim
+    {
+        .name = COMPOUND_STRING("Fox Fire"),
+        .description = COMPOUND_STRING(
+            "A fire attack that\n"
+            "may inflict a paralysis."),
+        .effect = EFFECT_HIT,
+        .power = 65,
+        .type = TYPE_NEW_FIRE,
+        .accuracy = 100,
+        .pp = 20,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_PARALYSIS,
+            .chance = 10,
+        }),
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SUNNY_DAY},
+        .battleAnimScript = gBattleAnimMove_Flamethrower,
+    },
+
+    [MOVE_KAISER_NAIL] =  // to do anim
+    {
+        .name = COMPOUND_STRING("Kaiser Nail"),
+        .description = COMPOUND_STRING(
+            "Claw that may lower defense.\n"
+            "High critical-hit ratio."),
+        .effect = EFFECT_REVERSE_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_BEAST,
+        .accuracy = 100,
+        .criticalHitStage = 2,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_DEF_MINUS_1,
+            .chance = 20,
+        }),
+        .slicingMove = TRUE,
+        .contestEffect = CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL,
+        .contestCategory = C_UPDATED_MOVE_CATEGORIES >= GEN_6 ? CONTEST_CATEGORY_COOL : CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_FOCUS_ENERGY},
+        .battleAnimScript = gBattleAnimMove_NightSlash,
+    },
+
+    [MOVE_COCYTUS_BREATH] =
+    {
+        .name = COMPOUND_STRING("Cocytus Breath"),
+        .description = COMPOUND_STRING(
+            "Blasts the foe with an icy\n"
+            "beam that may freeze them."),
+        .effect = EFFECT_HIT,
+        .power = 95,
+        .type = TYPE_NEW_ICE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_FREEZE_OR_FROSTBITE,
+            .chance = 10,
+        }),
+        .contestEffect = CONTEST_EFFECT_STARTLE_MONS_SAME_TYPE_APPEAL,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_HAIL},
+        .battleAnimScript = gBattleAnimMove_IceBeam,
+    },
+
+    [MOVE_GRACE_CROSS_FREEZER] =  // to do anim
+    {
+        .name = COMPOUND_STRING("Grace Cross Freezer"),
+        .description = COMPOUND_STRING(
+            "The user attacks the foe\n"
+            "five times in a row."),
+        .effect = EFFECT_HIT,
+        .power = 20,
+        .type = TYPE_NEW_ILLUSION,
+        .accuracy = 90,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_FREEZE_OR_FROSTBITE,
+            .chance = 5,
+        }),
+        .strikeCount = 5,
+        .battleAnimScript = gBattleAnimMove_RockBlast,
+    },
+
+    [MOVE_GREY_SWORD] =
+    {
+        .name = COMPOUND_STRING("Grey Sword"),
+        .description = COMPOUND_STRING(
+            "Slashes using fiery blade that\n"
+            "may cause paralysis. High crit."),
+        .effect = EFFECT_HIT,
+        .power = 100,
+        .type = TYPE_NEW_FIRE,
+        .accuracy = 100,
+        .criticalHitStage = 2,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_PARALYSIS,
+            .chance = 40,
+        }),
+        .makesContact = TRUE,
+        .slicingMove = TRUE,
+        .metronomeBanned = TRUE,
+        .contestEffect = CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL,
+        .contestCategory = CONTEST_CATEGORY_COOL,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SCRATCH, COMBO_STARTER_SWORDS_DANCE},
+        .battleAnimScript = gBattleAnimMove_GreySword,
+    },
+
+    [MOVE_GARURU_CANNON] =
+    {
+        .name = COMPOUND_STRING("Garuru Cannon"),
+        .description = COMPOUND_STRING(
+            "Shoots a strong energy ball\n"
+            "that may cause freezing."),
+        .effect = EFFECT_HIT,
+        .power = 100,
+        .type = TYPE_NEW_ICE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .ballisticMove = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_FREEZE_OR_FROSTBITE,
+            .chance = 10,
+        }),
+        .contestEffect = CONTEST_EFFECT_BADLY_STARTLE_PREV_MONS,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_GaruruCannon,
+    },
+
+    [MOVE_DOUBLE_TORRENT] =
+    {
+        .name = COMPOUND_STRING("Double Torrent"),
+        .description = COMPOUND_STRING(
+            "Blasts strong fire and ice\n"
+            "energy. May freeze or burn."),
+        .effect = EFFECT_HIT,
+        .power = 110,
+        .type = TYPE_NEW_DIVINE,
+        .accuracy = 95,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_FREEZE_OR_FROSTBITE,
+            .chance = 30,
+        },
+        {
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 30,
+        }),
+        .contestEffect = CONTEST_EFFECT_BADLY_STARTLE_PREV_MONS,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_DoubleTorrent,
+    },
+
 // ============= Start Classing Moves ===================
 
     [MOVE_CLASSIC_POUND] =
