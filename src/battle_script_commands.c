@@ -5228,6 +5228,10 @@ void SetMoveEffect(u32 battler, u32 effectBattler, enum MoveEffect moveEffect, c
         BattleScriptPush(battleScript);
         gBattlescriptCurrInstr = BattleScript_EffectConfuseSide;
         break;
+    case MOVE_EFFECT_INFATUATE:
+        BattleScriptPush(battleScript);
+        gBattlescriptCurrInstr = BattleScript_EffectInfatuate;
+        break;
     case MOVE_EFFECT_INFATUATE_SIDE:
         BattleScriptPush(battleScript);
         gBattlescriptCurrInstr = BattleScript_EffectInfatuateSide;
@@ -17274,8 +17278,7 @@ void BS_TrySetInfatuation(void)
 
     if (!gBattleMons[gBattlerTarget].volatiles.infatuation
         && gBattleMons[gBattlerTarget].ability != ABILITY_OBLIVIOUS
-        && !IsAbilityOnSide(gBattlerTarget, ABILITY_AROMA_VEIL)
-        && AreBattlersOfOppositeGender(gBattlerAttacker, gBattlerTarget))
+        && !IsAbilityOnSide(gBattlerTarget, ABILITY_AROMA_VEIL))
     {
         gBattleMons[gBattlerTarget].volatiles.infatuation = INFATUATED_WITH(gBattlerAttacker);
         gBattleCommunication[MULTIUSE_STATE] = 2;

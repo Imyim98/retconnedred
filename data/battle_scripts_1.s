@@ -9524,3 +9524,15 @@ BattleScript_ExShadowHalfAttackerDamage::
 	datahpupdate BS_ATTACKER, MOVE_DAMAGE_HP_UPDATE
 	tryfaintmon BS_ATTACKER
 	return
+
+
+BattleScript_EffectInfatuate::
+	savetarget
+	copybyte sBATTLER, gBattlerTarget
+	trysetinfatuation BattleScript_InfatuateEnd
+	volatileanimation BS_EFFECT_BATTLER, VOLATILE_INFATUATION
+	printstring STRINGID_PKMNFELLINLOVE
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_InfatuateEnd:
+	restoretarget
+	return

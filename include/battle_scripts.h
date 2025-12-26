@@ -868,5 +868,6 @@ extern const u8 BattleScript_EffectSpAtkSpDefUp2[];
 extern const u8 BattleScript_EffectTransformHit[];
 extern const u8 BattleScript_ExShadowSkyHeal[];
 extern const u8 BattleScript_AutumnGoddessesHealingActivates[];
+extern const u8 BattleScript_EffectInfatuate[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H
