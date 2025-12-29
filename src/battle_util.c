@@ -4839,10 +4839,10 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                     BattleScriptCall(BattleScript_MistySurgeActivates);
                     effect++;
                 }
-                if (gWishFutureKnock.wishCounter[gBattlerAttacker] == 0)
+                if (gBattleStruct->wish[gBattlerAttacker].counter == 0)
                 {
-                    gWishFutureKnock.wishCounter[gBattlerAttacker] = 2;
-                    gWishFutureKnock.wishPartyId[gBattlerAttacker] = gBattlerPartyIndexes[gBattlerAttacker];
+                    gBattleStruct->wish[gBattlerAttacker].counter = 2;
+                    gBattleStruct->wish[gBattlerAttacker].partyId = gBattlerPartyIndexes[gBattlerAttacker];
                     BattleScriptCall(BattleScript_DeusExMachinaWishInitiate);
                     effect++;
                 }
@@ -4850,7 +4850,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 {
                     gBattlerAttacker = battler;
                     gBattlerTarget = BATTLE_OPPOSITE(battler);
-                    if (gWishFutureKnock.futureSightCounter[gBattlerTarget] == 0)
+                    if (gBattleStruct->futureSight[gBattlerTarget].counter == 0)
                     {
                         if (gBattlerAttacker == B_POSITION_PLAYER_LEFT)
                         {
@@ -4872,10 +4872,10 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
 
                         }
                         gCurrentMove = MOVE_DOOM_DESIRE;
-                        gWishFutureKnock.futureSightMove[gBattlerTarget] = gCurrentMove;
-                        gWishFutureKnock.futureSightBattlerIndex[gBattlerTarget] = gBattlerAttacker;
-                        gWishFutureKnock.futureSightPartyIndex[gBattlerTarget] = gBattlerPartyIndexes[gBattlerAttacker];
-                        gWishFutureKnock.futureSightCounter[gBattlerTarget] = 3;
+                        gBattleStruct->futureSight[gBattlerTarget].move = gCurrentMove;
+                        gBattleStruct->futureSight[gBattlerTarget].battlerIndex = gBattlerAttacker;
+                        gBattleStruct->futureSight[gBattlerTarget].partyIndex = gBattlerPartyIndexes[gBattlerAttacker];
+                        gBattleStruct->futureSight[gBattlerTarget].counter = 3;
 
                         if (gCurrentMove == MOVE_DOOM_DESIRE)
                             gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_DOOM_DESIRE;
