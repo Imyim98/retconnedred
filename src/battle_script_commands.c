@@ -10492,7 +10492,12 @@ static void HandleScriptMegaPrimalBurst(u32 caseId, u32 battler, u32 type)
         if (type == HANDLE_TYPE_MEGA_EVOLUTION)
         {
             if (!TryBattleFormChange(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM))
-                TryBattleFormChange(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_MOVE);
+            {
+                if (!TryBattleFormChange(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_MOVE))
+                    TryBattleFormChange(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_LEVEL);
+                else
+                    TryBattleFormChange(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_MOVE);
+            }
         }
         else if (type == HANDLE_TYPE_PRIMAL_REVERSION)
             TryBattleFormChange(battler, FORM_CHANGE_BATTLE_PRIMAL_REVERSION);

@@ -10430,6 +10430,10 @@ bool32 CanMegaEvolve(u32 battler)
     if (GetBattleFormChangeTargetSpecies(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_MOVE) != gBattleMons[battler].species)
         return TRUE;
 
+    // Check if there is an entry in the form change table for Level Mega Evolution.
+    if (GetBattleFormChangeTargetSpecies(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_LEVEL) != gBattleMons[battler].species)
+        return TRUE;
+
     // No checks passed, the mon CAN'T mega evolve.
     return FALSE;
 }
@@ -10475,6 +10479,8 @@ void ActivateMegaEvolution(u32 battler)
         else
             BattleScriptPushCursorAndCallback(BattleScript_WishMegaEvolution);
     }
+    else if (GetBattleFormChangeTargetSpecies(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_LEVEL) != gBattleMons[battler].species)
+        BattleScriptPushCursorAndCallback(BattleScript_WishMegaEvolution);
     else
         BattleScriptPushCursorAndCallback(BattleScript_MegaEvolution);
 }
@@ -10538,6 +10544,10 @@ u16 GetBattleFormChangeTargetSpecies(u32 battler, enum FormChanges method)
             case FORM_CHANGE_BATTLE_PRIMAL_REVERSION:
             case FORM_CHANGE_BATTLE_ULTRA_BURST:
                 if (heldItem == formChanges[i].param1)
+                    targetSpecies = formChanges[i].targetSpecies;
+                break;
+            case FORM_CHANGE_BATTLE_MEGA_EVOLUTION_LEVEL:
+                if (gBattleMons[battler].level >= formChanges[i].param1)
                     targetSpecies = formChanges[i].targetSpecies;
                 break;
             case FORM_CHANGE_BATTLE_MEGA_EVOLUTION_MOVE:

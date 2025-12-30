@@ -81,6 +81,7 @@ TEST("Form change targets have the appropriate species flags")
         {
         case FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM:
         case FORM_CHANGE_BATTLE_MEGA_EVOLUTION_MOVE:
+        case FORM_CHANGE_BATTLE_MEGA_EVOLUTION_LEVEL:
             EXPECT(targetSpeciesInfo->isMegaEvolution);
             break;
         case FORM_CHANGE_BATTLE_PRIMAL_REVERSION:
