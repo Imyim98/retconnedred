@@ -697,7 +697,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - MOVE_TAIL_GLOW
 - Glacial Lance
 - Psychic
-- MOVE_CLASSIC_STRING_SHOT
+- MOVE_DOLL_STRINGS
 
 Altaria
 Level: 100
