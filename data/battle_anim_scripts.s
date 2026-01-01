@@ -23256,6 +23256,28 @@ gBattleAnimMove_DoubleTorrent::
 	blendoff
 	end
 
+gBattleAnimMove_CardInclude::
+	loadspritegfx ANIM_TAG_LEER
+	loadspritegfx ANIM_TAG_SERVANT_CARD
+	monbg ANIM_ATTACKER
+	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 1, 0, 8, RGB(14, 0, 14)
+	waitforvisualfinish
+	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
+	createsprite gLeerSpriteTemplate, ANIM_ATTACKER, 2, 24, -12
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 10, 0, 1
+	waitforvisualfinish
+	delay 7
+	createsprite gServantCardSpriteTemplate, ANIM_ATTACKER, 41, 0, 0, 0, 0
+	playsewithpan SE_M_REVERSAL, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 1, 8, 0, RGB(14, 0, 14)
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	blendoff
+	delay 1
+	waitforvisualfinish
+	end
+
 gBattleAnimMove_ClassicHyperBeam::
 	loadspritegfx ANIM_TAG_CLASSIC_ORBS
 	loadspritegfx ANIM_TAG_CLASSIC_LASER_BEAM

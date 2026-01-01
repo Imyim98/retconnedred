@@ -3476,4 +3476,7 @@ extern const u32 gBattleAnimSpriteGfx_ClassicAmnesia[];
 extern const u16 gBattleAnimSpritePal_ClassicAmnesia[];
 extern const u32 gBattleAnimSpriteGfx_ClawSlashReverse[];
 
+extern const u32 gBattleAnimSpriteGfx_ServantCard[];
+extern const u16 gBattleAnimSpritePal_ServantCard[];
+
 #endif //GUARD_GRAPHICS_H

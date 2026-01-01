@@ -2711,6 +2711,7 @@ void AnimTask_GetTrappedMoveAnimId(u8 taskId)
     case MOVE_FIRE_SPIN:
         gBattleAnimArgs[0] = TRAP_ANIM_FIRE_SPIN;
         break;
+    case MOVE_CARD_INCLUDE_GANRYU_JIMA:
     case MOVE_WHIRLPOOL:
         gBattleAnimArgs[0] = TRAP_ANIM_WHIRLPOOL;
         break;

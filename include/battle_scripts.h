@@ -538,6 +538,7 @@ extern const u8 BattleScript_UltraMedicineV2Activates[];
 extern const u8 BattleScript_RideSummonActivates[];
 extern const u8 BattleScript_UltraSeigaActivates[];
 extern const u8 BattleScript_ExShadowHalfAttackerDamage[];
+extern const u8 BattleScript_EffectCardInclude[];
 
 // zmoves
 extern const u8 BattleScript_ZMoveActivateDamaging[];

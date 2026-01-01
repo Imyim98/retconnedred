@@ -1908,6 +1908,10 @@
 	callnative BS_TransformDataExecutionCallingMultiUnit
 	.endm
 
+	.macro trycardincludeattack
+	callnative BS_TryCardIncludeAttack
+	.endm
+
 	.macro setspritebehindsubstitute
 	callnative BS_SetSpriteBehindSubstitute
 	.endm

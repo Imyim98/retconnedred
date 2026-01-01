@@ -754,6 +754,17 @@ const struct SpriteTemplate gApotheosisRingSpriteTemplate =
     .callback = AnimSpriteOnMonPos,
 };
 
+const struct SpriteTemplate gServantCardSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SERVANT_CARD,
+    .paletteTag = ANIM_TAG_SERVANT_CARD,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gThinRingExpandingAffineAnimTable,
+    .callback = AnimSpriteOnMonPos,
+};
+
 const struct SpriteTemplate gBlendThinRingExpandingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THIN_RING,

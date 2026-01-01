@@ -9491,7 +9491,6 @@ BattleScript_ExShadowHalfAttackerDamage::
 	tryfaintmon BS_ATTACKER
 	return
 
-
 BattleScript_EffectInfatuate::
 	savetarget
 	copybyte sBATTLER, gBattlerTarget
@@ -9502,3 +9501,10 @@ BattleScript_EffectInfatuate::
 BattleScript_InfatuateEnd:
 	restoretarget
 	return
+
+BattleScript_EffectCardInclude::
+	attackcanceler
+	trycardincludeattack
+	attackanimation
+	waitanimation
+	jumptocalledmove TRUE

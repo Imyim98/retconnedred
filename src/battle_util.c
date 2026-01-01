@@ -3611,7 +3611,8 @@ bool32 CanAbilityBlockMove(u32 battlerAtk, u32 battlerDef, enum Ability abilityA
              && target != TARGET_FIELD
              && target != TARGET_USER
              && GetMoveEffect(move) != EFFECT_GRIMOIRE_CALL
-             && GetMoveEffect(move) != EFFECT_A_TRANCE)
+             && GetMoveEffect(move) != EFFECT_A_TRANCE
+             && GetMoveEffect(move) != EFFECT_CARD_INCLUDE)
                 battleScriptBlocksMove = BattleScript_GoodAsGoldActivates;
         }
         break;
@@ -9961,6 +9962,10 @@ static inline void MulByTypeEffectiveness(struct BattleContext *ctx, uq4_12_t *m
         mod = UQ_4_12(1.0);
         if (ctx->updateFlags)
             RecordAbilityBattle(ctx->battlerAtk, ctx->abilityAtk);
+    }
+    else if ((ctx->move == MOVE_CARD_INCLUDE_MARBLE_PHANTASM || ctx->move == MOVE_CARD_INCLUDE_RAYPROOF_KYRIELIGHT) && mod == UQ_4_12(0.0))
+    {
+        mod = UQ_4_12(1.0);
     }
 
     if (ctx->moveType == TYPE_NEW_REASON && defType == TYPE_NEW_DARK && gBattleMons[ctx->battlerDef].volatiles.miracleEye && mod == UQ_4_12(0.0))

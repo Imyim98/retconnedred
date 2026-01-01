@@ -18059,6 +18059,99 @@ void BS_TransformDataExecutionCallingMultiUnit(void)
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
+// The order of this is assumed to be the same as the types
+static const u16 sCardIncludeAttackMoveTable[] = {
+    MOVE_CARD_INCLUDE_BELLEROPHON, // Wind Physical
+    MOVE_CARD_INCLUDE_EXCALIBUR_SPECIAL, // Wind Special
+    MOVE_CARD_INCLUDE_BUDDHA_PALM, // Divine Physical
+    MOVE_CARD_INCLUDE_ENUMA_ELISH, // Divine Special
+    MOVE_CARD_INCLUDE_UNLIMITED_BLADES_WORK, // Reason Physical
+    MOVE_CARD_INCLUDE_SANAT_KUMARA, // Reason Special
+    MOVE_CARD_INCLUDE_GAE_BOLG, // Steel Physical
+    MOVE_CARD_INCLUDE_HOLLOW_HEART_ALBION, // Steel Special
+    MOVE_CARD_INCLUDE_GANRYU_JIMA, // Water Physical
+    MOVE_CARD_INCLUDE_SECECE_MORGAN, // Water Special
+    MOVE_CARD_INCLUDE_ZABANIYA, // Miasma Physical
+    MOVE_CARD_INCLUDE_ANGRA_MANYU_CURSE, // Miasma Special
+    MOVE_CARD_INCLUDE_CHARIOT_MY_LOVE, // Heart Physical
+    MOVE_CARD_INCLUDE_SAMSARA_KAMA, // Heart Special
+    MOVE_CARD_INCLUDE_NINE_LIVES_BLADES_WORK, // Beast Physical
+    MOVE_CARD_INCLUDE_SAMADHI_FLAMES, // Beast Special
+    MOVE_CARD_INCLUDE_TARASQUE, // Dream Physical 
+    MOVE_CARD_INCLUDE_UOMO_UNIVERSALE, // Dream Special
+    MOVE_CARD_INCLUDE_OPUTATESHIKE_OKIMUNPE, // Ice Phycial
+    MOVE_CARD_INCLUDE_VIY_VIY_VIY, // Ice Special
+    MOVE_CARD_INCLUDE_RASHOUMON_DAIENGI, // Fire Physical
+    MOVE_CARD_INCLUDE_EXCALIBUR_GALATINE, // Fire Special
+    MOVE_CARD_INCLUDE_RULE_BREAKER, // Nether Physical
+    MOVE_CARD_INCLUDE_KUR_KI_GAL_IRKALA, // Nether Special
+    MOVE_CARD_INCLUDE_HIPPOGRIF, // Flying Physical
+    MOVE_CARD_INCLUDE_VALKYRIE_RAGNAROG, // Flying Special
+    MOVE_CARD_INCLUDE_NEZUMI_JOUDO, // Earth Physical
+    MOVE_CARD_INCLUDE_EARTHLIGHT_STARBOW, // Earth Special
+    MOVE_CARD_INCLUDE_BLASTED_TREE, // Electric Physical
+    MOVE_CARD_INCLUDE_SYSTEM_KERAUNOS, // Electric Special
+    MOVE_CARD_INCLUDE_HAMISH_AVALIM, // Nature Physical
+    MOVE_CARD_INCLUDE_KAMA_RUPASTRA, // Nature Special
+    MOVE_CARD_INCLUDE_MARIA_THE_RIPPER, // Dark Special
+    MOVE_CARD_INCLUDE_ISHA_RAA, // Dark Special
+    MOVE_CARD_INCLUDE_MARBLE_PHANTASM, // Illusion Physical
+    MOVE_CARD_INCLUDE_RAYPROOF_KYRIELIGHT, // Illusion Special
+};
+
+void BS_TryCardIncludeAttack(void)
+{
+    NATIVE_ARGS();
+
+    struct BattleContext ctx;
+
+    u32 i = 0;
+    u16 moveUsed = MOVE_NONE;
+    u16 highestDamage = 0;
+    s32 calcDamage;
+
+    ctx.battlerAtk = gBattlerAttacker;
+    ctx.battlerDef = gBattlerTarget;
+    ctx.randomFactor = TRUE; // All the other factors won't be factored in otherwise
+    ctx.updateFlags = FALSE;
+    ctx.isCrit = FALSE;
+    ctx.fixedBasePower = 0;
+
+    // Try to look for a move that deals the most damage with almost everything in mind
+    for (i = 0; i < ARRAY_COUNT(sCardIncludeAttackMoveTable); i++)
+    {
+        ctx.move = sCardIncludeAttackMoveTable[i];
+        ctx.moveType = CheckDynamicMoveType(GetBattlerMon(ctx.battlerAtk), ctx.move, ctx.battlerAtk, MON_IN_BATTLE);
+        calcDamage = CalculateMoveDamage(&ctx);
+
+        if (CanAbilityAbsorbMove(ctx.battlerAtk, ctx.battlerDef, GetBattlerAbility(ctx.battlerDef), ctx.move, ctx.moveType, CHECK_TRIGGER))
+            calcDamage = 0;
+
+        if (calcDamage > highestDamage)
+        {
+            moveUsed = ctx.move;
+            highestDamage = calcDamage;
+        }
+    }
+
+    // somehow didn't find one that does more than 0
+    if (moveUsed == MOVE_NONE)
+        moveUsed = sCardIncludeAttackMoveTable[Random() % ARRAY_COUNT(sCardIncludeAttackMoveTable)];
+
+    if (GetActiveGimmick(gBattlerAttacker) == GIMMICK_Z_MOVE)
+    {
+        gBattleStruct->zmove.baseMoves[gBattlerAttacker] = moveUsed;
+        gCalledMove = GetTypeBasedZMove(moveUsed);
+    }
+    else
+    {
+        gCalledMove = moveUsed;
+    }
+    gBattleStruct->categoryOverride = GetMoveCategory(moveUsed);
+
+    gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
 void BS_SetSpriteBehindSubstitute(void)
 {
     NATIVE_ARGS();

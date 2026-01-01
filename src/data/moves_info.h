@@ -25327,6 +25327,1009 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_ClassicAmnesia,
     },
 
+    [MOVE_CARD_INCLUDE] =
+    {
+        .name = COMPOUND_STRING("Card: <Include>"),
+        .description = COMPOUND_STRING(
+            "Calls a move that channeled\n"
+            "from a hero. Double PP usage."),
+        .effect = EFFECT_CARD_INCLUDE,
+        .power = 70,
+        .type = TYPE_NEW_ILLUSION,
+        .accuracy = 0,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+//        .zMove = { .effect = Z_EFFECT_ATK_UP_1 },
+        .mirrorMoveBanned = TRUE,
+        .metronomeBanned = TRUE,
+        .copycatBanned = TRUE,
+        .sleepTalkBanned = TRUE,
+        .instructBanned = TRUE,
+        .encoreBanned = TRUE,
+        .assistBanned = TRUE,
+        .mimicBanned = TRUE,
+        .contestEffect = CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS,
+        .contestCategory = CONTEST_CATEGORY_CUTE,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_CardInclude,
+    },
+
+    [MOVE_CARD_INCLUDE_BELLEROPHON] = // to do anim
+    {
+        .name = COMPOUND_STRING("Bellerophon"),
+        .description = COMPOUND_STRING(
+            "Strikes by riding Bellerohen.\n"
+            "but lowers abilities."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_WIND,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .metronomeBanned = TRUE,
+        .windMove = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_DEF_MINUS_1,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_USER_MORE_EASILY_STARTLED,
+        .contestCategory = CONTEST_CATEGORY_TOUGH,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_LOCK_ON, COMBO_STARTER_MIND_READER},
+        .battleAnimScript = gBattleAnimMove_Superpower,
+    },
+
+    [MOVE_CARD_INCLUDE_EXCALIBUR_SPECIAL] = // to do anim
+    {
+        .name = COMPOUND_STRING("Excalibur"),
+        .description = COMPOUND_STRING(
+            "Launches energy beam from a.\n"
+            "sword. Lowers accuracy."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_WIND,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .windMove = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_ACC_MINUS_1,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN,
+        .contestCategory = CONTEST_CATEGORY_SMART,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_Eternabeam,
+    },
+
+    [MOVE_CARD_INCLUDE_BUDDHA_PALM] = // to do anim
+    {
+        .name = COMPOUND_STRING("Buddha Palm"),
+        .description = COMPOUND_STRING(
+            "Barrage of divine punches\n"
+            "that causes paralysis."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_DIVINE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .punchingMove = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_PARALYSIS,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_COOL,
+        .contestComboStarterId = COMBO_STARTER_FORCE_PALM,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_CloseCombat,
+    },
+
+    [MOVE_CARD_INCLUDE_ENUMA_ELISH] = // to do anim
+    {
+        .name = COMPOUND_STRING("Enuma Elish"),
+        .description = COMPOUND_STRING(
+            "A blast from an ancient weapon\n"
+            "that clears obstacles."),
+        .effect = EFFECT_BRICK_BREAK,
+        .power = 70,
+        .type = TYPE_NEW_DIVINE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .contestEffect = CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN,
+        .contestCategory = CONTEST_CATEGORY_SMART,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_Eternabeam,
+    },
+
+    [MOVE_CARD_INCLUDE_UNLIMITED_BLADES_WORK] = // to do anim
+    {
+        .name = COMPOUND_STRING("Unlimited Blades Work"),
+        .description = COMPOUND_STRING(
+            "Hits the target using a lot of\n"
+            "swords. Deploys reality marble."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_REASON,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .slicingMove = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_UBW,
+        }),
+        .contestEffect = CONTEST_EFFECT_STARTLE_MONS_SAME_TYPE_APPEAL,
+        .contestCategory = CONTEST_CATEGORY_BEAUTIFUL,
+        .contestComboStarterId = COMBO_STARTER_THOUSAND_ARROWS,
+        .contestComboMoves = {COMBO_STARTER_THOUSAND_WAVES},
+        .battleAnimScript = gBattleAnimMove_ThousandArrows,
+    },
+
+    [MOVE_CARD_INCLUDE_SANAT_KUMARA] = // to do anim
+    {
+        .name = COMPOUND_STRING("Sanat Kumara"),
+        .description = COMPOUND_STRING(
+            "Blasts the foe using laser\n"
+            "from UFO. Lowers Sp. Def."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_REASON,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_SP_DEF_MINUS_1,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_BETTER_IF_SAME_TYPE,
+        .contestCategory = CONTEST_CATEGORY_SMART,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_PhotonGeyser,
+    },
+
+    [MOVE_CARD_INCLUDE_GAE_BOLG] = // to do anim
+    {
+        .name = COMPOUND_STRING("Gae Bolg"),
+        .description = COMPOUND_STRING(
+            "Throws a lance that never\n"
+            "misses. Deals extra damage."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_METAL,
+        .accuracy = 0,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .slicingMove = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_RECOIL_HP_25,
+            .chance = 100,
+        }),
+        .contestEffect = C_UPDATED_MOVE_EFFECTS >= GEN_6 ? CONTEST_EFFECT_REPETITION_NOT_BORING : CONTEST_EFFECT_BETTER_IF_SAME_TYPE,
+        .contestCategory = CONTEST_CATEGORY_COOL,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_Megahorn,
+    },
+
+    [MOVE_CARD_INCLUDE_HOLLOW_HEART_ALBION] = // to do anim
+    {
+        .name = COMPOUND_STRING("Hollow Heart Albion"),
+        .description = COMPOUND_STRING(
+            "Blasts the foe using laser\n"
+            "from Albion. Causes burning."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_METAL,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_BETTER_IF_SAME_TYPE,
+        .contestCategory = CONTEST_CATEGORY_SMART,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_PhotonGeyser,
+    },
+
+    [MOVE_CARD_INCLUDE_GANRYU_JIMA] = // to do anim
+    {
+        .name = COMPOUND_STRING("Ganryu Jima"),
+        .description = COMPOUND_STRING(
+            "Creates a huge wave, then\n"
+            "slashes. Traps in a whirlpool"),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_WATER,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .slicingMove = TRUE,
+        .metronomeBanned = TRUE,
+        .makesContact = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_WRAP,
+            .multistring.wrapped = B_MSG_WRAPPED_WHIRLPOOL,
+        }),
+        .contestEffect = C_UPDATED_MOVE_EFFECTS >= GEN_6 ? CONTEST_EFFECT_STARTLE_PREV_MONS : CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = COMBO_STARTER_SURF,
+        .contestComboMoves = {COMBO_STARTER_DIVE, COMBO_STARTER_RAIN_DANCE},
+        .battleAnimScript = gBattleAnimMove_Surf,
+    },
+
+    [MOVE_CARD_INCLUDE_SECECE_MORGAN] = // to do anim
+    {
+        .name = COMPOUND_STRING("Secece Morgan"),
+        .description = COMPOUND_STRING(
+            "Powerful water cannon.\n"
+            "May also lower Attack."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_WATER,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_ATK_MINUS_1,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN,
+        .contestCategory = CONTEST_CATEGORY_COOL,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_RAIN_DANCE},
+        .battleAnimScript = gBattleAnimMove_HydroCannon,
+    },
+
+    [MOVE_CARD_INCLUDE_ZABANIYA] = // to do anim
+    {
+        .name = COMPOUND_STRING("Zabaniya"),
+        .description = COMPOUND_STRING(
+            "An attack that always crit.\n"
+            "Induces various statuses."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_MIASMA,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .alwaysCriticalHit = TRUE,
+        .punchingMove = TRUE,
+        .metronomeBanned = TRUE,
+        .makesContact = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_DIRE_CLAW,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_REPETITION_NOT_BORING,
+        .contestCategory = CONTEST_CATEGORY_TOUGH,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_CrushGrip,
+    },
+
+    [MOVE_CARD_INCLUDE_ANGRA_MANYU_CURSE] = // to do anim
+    {
+        .name = COMPOUND_STRING("Angra Manyu Curse"),
+        .description = COMPOUND_STRING(
+            "Curses of the black grail.\n"
+            "Causes toxic."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_MIASMA,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_TOXIC,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_REPETITION_NOT_BORING,
+        .contestCategory = CONTEST_CATEGORY_TOUGH,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_Brine,
+    },
+
+    [MOVE_CARD_INCLUDE_CHARIOT_MY_LOVE] = // to do anim
+    {
+        .name = COMPOUND_STRING("Chariot My Love"),
+        .description = COMPOUND_STRING(
+            "Rams the target with love.\n"
+            "Causes infatuation."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_HEART,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .makesContact = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_INFATUATE,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS,
+        .contestCategory = CONTEST_CATEGORY_CUTE,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_Uehehehehehe,
+    },
+
+    [MOVE_CARD_INCLUDE_SAMSARA_KAMA] = // to do anim
+    {
+        .name = COMPOUND_STRING("Samsara Kama"),
+        .description = COMPOUND_STRING(
+            "Draws the target into Samasara.\n"
+            "Causes infatuation."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_HEART,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_INFATUATE,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS,
+        .contestCategory = CONTEST_CATEGORY_CUTE,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_CosmicPower,
+    },
+
+    [MOVE_CARD_INCLUDE_NINE_LIVES_BLADES_WORK] = // to do anim
+    {
+        .name = COMPOUND_STRING("9-Live Blades Work"),
+        .description = COMPOUND_STRING(
+            "A high-crit attack that\n"
+            "lowers foe's Defense."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_BEAST,
+        .accuracy = 100,
+        .criticalHitStage = 2,
+        .pp = 100,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .slicingMove = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_DEF_MINUS_1,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL,
+        .contestCategory = CONTEST_CATEGORY_COOL,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SCRATCH, COMBO_STARTER_SWORDS_DANCE},
+        .battleAnimScript = gBattleAnimMove_NeptuneBreak,
+    },
+
+    [MOVE_CARD_INCLUDE_SAMADHI_FLAMES] = // to do anim
+    {
+        .name = COMPOUND_STRING("Samadhi Flame"),
+        .description = COMPOUND_STRING(
+            "Incinerates everything it\n"
+            "strikes. May cause a burn."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_BEAST,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 100,
+        }),
+        .contestEffect = C_UPDATED_MOVE_EFFECTS >= GEN_6 ? CONTEST_EFFECT_BETTER_WHEN_AUDIENCE_EXCITED : CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SUNNY_DAY},
+        .battleAnimScript = gBattleAnimMove_FireBlast,
+    },
+
+    [MOVE_CARD_INCLUDE_TARASQUE] = // to do anim
+    {
+        .name = COMPOUND_STRING("Tarasque"),
+        .description = COMPOUND_STRING(
+            "Saint's punches that lower\n"
+            "the target's defense."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_DREAM,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .punchingMove = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_DEF_MINUS_1,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_USER_MORE_EASILY_STARTLED,
+        .contestCategory = C_UPDATED_MOVE_CATEGORIES >= GEN_6 ? CONTEST_CATEGORY_TOUGH : CONTEST_CATEGORY_SMART,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_FOCUS_ENERGY, COMBO_STARTER_MIND_READER},
+        .battleAnimScript = gBattleAnimMove_CloseCombat,
+    },
+
+    [MOVE_CARD_INCLUDE_UOMO_UNIVERSALE] = // to do anim
+    {
+        .name = COMPOUND_STRING("Uomo Universale"),
+        .description = COMPOUND_STRING(
+            "Shoots a strong energy ball\n"
+            "that resets stats."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_DREAM,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .ballisticMove = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_CLEAR_SMOG,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_BADLY_STARTLE_PREV_MONS,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_ElectroBall,
+    },
+
+    [MOVE_CARD_INCLUDE_OPUTATESHIKE_OKIMUNPE] = // to do anim
+    {
+        .name = COMPOUND_STRING("Oputateshike Okimunpe"),
+        .description = COMPOUND_STRING(
+            "Cloaks the foe using ice, then\n"
+            "slashes. Also, summons hail."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_ICE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .slicingMove = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_HAIL,
+        },
+        {
+            .moveEffect = MOVE_EFFECT_AURORA_VEIL,
+        }),
+        .contestEffect = CONTEST_EFFECT_BETTER_IF_LAST,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_GlacialLance,
+    },
+
+    [MOVE_CARD_INCLUDE_VIY_VIY_VIY] =
+    {
+        .name = COMPOUND_STRING("Viy Viy Viy"),
+        .description = COMPOUND_STRING(
+            "Blasts the foe with an icy\n"
+            "beam. Lowers speed."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_ICE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_SPD_MINUS_1,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_STARTLE_MONS_SAME_TYPE_APPEAL,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_ShadowChill,
+    },
+
+    [MOVE_CARD_INCLUDE_RASHOUMON_DAIENGI] = // to do anim
+    {
+        .name = COMPOUND_STRING("Rashoumon Daiengi"),
+        .description = COMPOUND_STRING(
+            "Grabs and squishes the foe.\n"
+            "Breaks through protect."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_FIRE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .ignoresProtect = TRUE,
+        .metronomeBanned = TRUE,
+        .contestEffect = CONTEST_EFFECT_REPETITION_NOT_BORING,
+        .contestCategory = CONTEST_CATEGORY_TOUGH,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_CrushGrip,
+    },
+
+    [MOVE_CARD_INCLUDE_EXCALIBUR_GALATINE] = // to do anim
+    {
+        .name = COMPOUND_STRING("Excalibur Galatine"),
+        .description = COMPOUND_STRING(
+            "Incinerates everything it\n"
+            "strikes. May cause a burn."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_FIRE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 100,
+        }),
+        .contestEffect = C_UPDATED_MOVE_EFFECTS >= GEN_6 ? CONTEST_EFFECT_BETTER_WHEN_AUDIENCE_EXCITED : CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SUNNY_DAY},
+        .battleAnimScript = gBattleAnimMove_VCreate,
+    },
+
+    [MOVE_CARD_INCLUDE_RULE_BREAKER] =
+    {
+        .name = COMPOUND_STRING("Rule Breaker"),
+        .description = COMPOUND_STRING(
+            "Resets the target's stats.\n"
+            "High critical-hit ratio."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_NETHER,
+        .accuracy = 100,
+        .criticalHitStage = 2,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_CLEAR_SMOG,
+        }),
+        .slicingMove = TRUE,
+        .contestEffect = CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL,
+        .contestCategory = C_UPDATED_MOVE_CATEGORIES >= GEN_6 ? CONTEST_CATEGORY_COOL : CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_FOCUS_ENERGY},
+        .battleAnimScript = gBattleAnimMove_NightSlash,
+    },
+
+    [MOVE_CARD_INCLUDE_KUR_KI_GAL_IRKALA] =  // Edited
+    {
+        .name = COMPOUND_STRING("Kur Ki Gal Irkala"),
+        .description = COMPOUND_STRING(
+            "A powerful fire attack that\n"
+            "may inflict a burn."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_NETHER,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_SLEEP,
+            .chance = 50,
+        }),
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_SUNNY_DAY},
+        .battleAnimScript = gBattleAnimMove_BlastBurn,
+    },
+
+    [MOVE_CARD_INCLUDE_HIPPOGRIF] =  // to do anim
+    {
+        .name = COMPOUND_STRING("Hippogrif"),
+        .description = COMPOUND_STRING(
+            "A low altitude charge.\n"
+            "Increases the user's speed."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_FLYING,
+        .accuracy = 100,
+        .pp = 70,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_SP_ATK_PLUS_1,
+            .self = TRUE,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_USER_MORE_EASILY_STARTLED,
+        .contestCategory = C_UPDATED_MOVE_CATEGORIES >= GEN_6 ? CONTEST_CATEGORY_COOL : CONTEST_CATEGORY_CUTE,
+        .contestComboStarterId = COMBO_STARTER_BRAVE_BIRD,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_BraveBird,
+    },
+
+    [MOVE_CARD_INCLUDE_VALKYRIE_RAGNAROG] = // to do anim
+    {
+        .name = COMPOUND_STRING("Valkyrie Ragnarog"),
+        .description = COMPOUND_STRING(
+            "Hits the target using a lot of\n"
+            "energy lances. Deploys Divine Field."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_FLYING,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .slicingMove = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_MISTY_TERRAIN,
+        }),
+        .contestEffect = CONTEST_EFFECT_STARTLE_MONS_SAME_TYPE_APPEAL,
+        .contestCategory = CONTEST_CATEGORY_BEAUTIFUL,
+        .contestComboStarterId = COMBO_STARTER_THOUSAND_ARROWS,
+        .contestComboMoves = {COMBO_STARTER_THOUSAND_WAVES},
+        .battleAnimScript = gBattleAnimMove_ThousandArrows,
+    },
+
+    [MOVE_CARD_INCLUDE_NEZUMI_JOUDO] =  // to do effect 
+    {
+        .name = COMPOUND_STRING("Nezumi Joudo"),
+        .description = COMPOUND_STRING(
+            "Plays rough with the foe.\n"
+            "May lower Attack."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_EARTH,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_CLEAR_SMOG, // to do tidy up + rapid spin all sides
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS,
+        .contestCategory = CONTEST_CATEGORY_CUTE,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_PlayRough,
+    },
+
+    [MOVE_CARD_INCLUDE_EARTHLIGHT_STARBOW] = // to do anim
+    {
+        .name = COMPOUND_STRING("Earthlight Starbow"),
+        .description = COMPOUND_STRING(
+            "Unleashes energy blast.\n"
+            "Supresses the foe's ability."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_EARTH,
+        .accuracy = 100,
+        .pp = 100,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_CORE_ENFORCER,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_USER_MORE_EASILY_STARTLED,
+        .contestCategory = CONTEST_CATEGORY_SMART,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_DynamaxCannon,
+    },
+
+    [MOVE_CARD_INCLUDE_BLASTED_TREE] = // to do anim
+    {
+        .name = COMPOUND_STRING("Blasted Tree"),
+        .description = COMPOUND_STRING(
+            "Bonks foes using electrified\n"
+            "hammer. May flinch the foe."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_ELECTRIC,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_PARALYSIS,
+            .chance = 100,
+        },
+        {
+            .moveEffect = MOVE_EFFECT_FLINCH,
+            .chance = 30,
+        }),
+        .contestEffect = C_UPDATED_MOVE_EFFECTS >= GEN_6 ? CONTEST_EFFECT_STARTLE_PREV_MON : CONTEST_EFFECT_BADLY_STARTLE_FRONT_MON,
+        .contestCategory = CONTEST_CATEGORY_SMART,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_FAKE_OUT},
+        .battleAnimScript = gBattleAnimMove_KnockOff,
+    },
+
+    [MOVE_CARD_INCLUDE_SYSTEM_KERAUNOS] =  // to do anim
+    {
+        .name = COMPOUND_STRING("System Keraunos"),
+        .description = COMPOUND_STRING(
+            "Zaps all other {PKMN} with\n"
+            "electricity. Ups Sp. Atk."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_ELECTRIC,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_SP_ATK_PLUS_1,
+            .self = TRUE,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_STARTLE_PREV_MONS,
+        .contestCategory = C_UPDATED_MOVE_CATEGORIES >= GEN_6 ? CONTEST_CATEGORY_BEAUTY : CONTEST_CATEGORY_COOL,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_CHARGE},
+        .battleAnimScript = gBattleAnimMove_Discharge,
+    },
+
+    [MOVE_CARD_INCLUDE_HAMISH_AVALIM] =  // to do anim
+    {
+        .name = COMPOUND_STRING("Hamish Avalim"),
+        .description = COMPOUND_STRING(
+            "Giant stalk scatters seeds\n"
+            "that drain HP every turn."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_NATURE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_LEECH_SEED,
+        }),
+        .contestEffect = C_UPDATED_MOVE_EFFECTS >= GEN_6 ? CONTEST_EFFECT_BADLY_STARTLE_FRONT_MON : CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION,
+        .contestCategory = CONTEST_CATEGORY_SMART,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_GROWTH},
+        .battleAnimScript = gBattleAnimMove_SappySeed,
+    },
+
+    [MOVE_CARD_INCLUDE_KAMA_RUPASTRA] =  // to do anim
+    {
+        .name = COMPOUND_STRING("Kama Rupastra"),
+        .description = COMPOUND_STRING(
+            "Stirs up a violent storm\n"
+            "of sakura petals to attack."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_NATURE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_INFATUATE,
+            .chance = 100,
+        },
+        {
+            .moveEffect = MOVE_EFFECT_AROMATHERAPY,
+        }),
+        .contestEffect = CONTEST_EFFECT_STARTLE_PREV_MONS,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_PetalBlizzard,
+    },
+
+    [MOVE_CARD_INCLUDE_MARIA_THE_RIPPER] =
+    {
+        .name = COMPOUND_STRING("Maria the Ripper"),
+        .description = COMPOUND_STRING(
+            "A slash that causes toxic.\n"
+            "High critical-hit ratio."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 70,
+        .type = TYPE_NEW_DARK,
+        .accuracy = 100,
+        .criticalHitStage = 2,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .slicingMove = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_TOXIC,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL,
+        .contestCategory = C_UPDATED_MOVE_CATEGORIES >= GEN_6 ? CONTEST_CATEGORY_COOL : CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_FOCUS_ENERGY},
+        .battleAnimScript = gBattleAnimMove_NightSlash,
+    },
+
+    [MOVE_CARD_INCLUDE_ISHA_RAA] =  // to do anim
+    {
+        .name = COMPOUND_STRING("Isha Raa"),
+        .description = COMPOUND_STRING(
+            "Traps the foe in a fierce\n"
+            "cyclone. Cause confusion."),
+        .effect = EFFECT_HIT,
+        .power = 70,
+        .type = TYPE_NEW_WIND,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .windMove = TRUE,
+        .damagesAirborne = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_CONFUSION,
+            .chance = 100,
+        }),
+        .contestEffect = CONTEST_EFFECT_BADLY_STARTLE_MONS_WITH_GOOD_APPEALS,
+        .contestCategory = CONTEST_CATEGORY_TOUGH,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_RAIN_DANCE},
+        .battleAnimScript = gBattleAnimMove_Hurricane,
+    },
+
+    [MOVE_CARD_INCLUDE_MARBLE_PHANTASM] = // to do anim
+    {
+        .name = COMPOUND_STRING("Marble Phantasm"),
+        .description = COMPOUND_STRING(
+            "Bonks foes using big staff\n"
+            "May flinch the foe."),
+        .effect = EFFECT_PSYSHOCK,
+        .power = 120,
+        .type = TYPE_NEW_ILLUSION,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .makesContact = TRUE,
+        .minimizeDoubleDamage = TRUE,
+        .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_SLEEP,
+            .chance = 100,
+        },
+        {
+            .moveEffect = MOVE_EFFECT_FLINCH,
+            .chance = 30,
+        }),
+        .contestEffect = C_UPDATED_MOVE_EFFECTS >= GEN_6 ? CONTEST_EFFECT_STARTLE_PREV_MON : CONTEST_EFFECT_BADLY_STARTLE_FRONT_MON,
+        .contestCategory = CONTEST_CATEGORY_SMART,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {COMBO_STARTER_FAKE_OUT},
+        .battleAnimScript = gBattleAnimMove_KnockOff,
+    },
+
+    [MOVE_CARD_INCLUDE_RAYPROOF_KYRIELIGHT] = // to do anim
+    {
+        .name = COMPOUND_STRING("Rayproof Kyrielight"),
+        .description = COMPOUND_STRING(
+            "Shoots a strong energy ball.\n"
+            "Breaks protection and walls."),
+        .effect = EFFECT_BRICK_BREAK,
+        .power = 120,
+        .type = TYPE_NEW_ILLUSION,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .ballisticMove = TRUE,
+        .metronomeBanned = TRUE,
+        .ignoresProtect = TRUE,
+        .contestEffect = CONTEST_EFFECT_BADLY_STARTLE_PREV_MONS,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_GaruruCannon,
+    },
+
 // ============= Start Shadow Moves ===================
 
     [MOVE_EX_SHADOW_BLITZ] =

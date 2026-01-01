@@ -894,6 +894,7 @@ extern const u8 gBattleAnimMove_ClassicHyperBeam[];
 extern const u8 gBattleAnimMove_ClassicFlamethrower[];
 extern const u8 gBattleAnimMove_ClassicThunderbolt[];
 extern const u8 gBattleAnimMove_ClassicAmnesia[];
+extern const u8 gBattleAnimMove_CardInclude[];
 extern const u8 gBattleAnimMove_ShadowFire[];
 extern const u8 gBattleAnimMove_ShadowBolt[];
 extern const u8 gBattleAnimMove_ShadowChill[];
