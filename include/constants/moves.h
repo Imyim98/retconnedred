@@ -1315,6 +1315,45 @@
 #define MOVE_CLASSIC_MASTER_SPARK   (MOVE_ADDED_MODERN_END + 47)
 #define MOVE_CLASSIC_THUNDERBOLT    (MOVE_ADDED_MODERN_END + 48)
 #define MOVE_CLASSIC_AMNESIA        (MOVE_ADDED_MODERN_END + 49)
+/*
+#define MOVE_CARD_INCLUDE           (MOVE_ADDED_MODERN_END + 50)
+#define MOVE_EXCALIBUR_SPECIAL      (MOVE_ADDED_MODERN_END + 51) // Wind Special
+#define MOVE_BELLEROPHON            (MOVE_ADDED_MODERN_END + 52) // Wind Physical
+#define MOVE_BUDDHA_PALM            (MOVE_ADDED_MODERN_END + 53) // Divine Physical
+#define MOVE_ENUMA_ELISH            (MOVE_ADDED_MODERN_END + 54) // Divine Special
+#define MOVE_UNLIMITED_BLADES_WORK  (MOVE_ADDED_MODERN_END + 55) // Reason Physical
+#define MOVE_SANAT_KUMARA           (MOVE_ADDED_MODERN_END + 56) // Reason Special
+#define MOVE_GAE_BOLG               (MOVE_ADDED_MODERN_END + 57) // Steel Physical
+#define MOVE_HOLLOW_HEART_ALBION    (MOVE_ADDED_MODERN_END + 58) // Steel Special
+#define MOVE_GANRYU_JIMA            (MOVE_ADDED_MODERN_END + 59) // Water Physical
+#define MOVE_SECECE_MORGAN          (MOVE_ADDED_MODERN_END + 60) // Water Special
+#define MOVE_ZABANIYA               (MOVE_ADDED_MODERN_END + 61) // Miasma Physical
+#define MOVE_ANGRA_MANYU_CURSE      (MOVE_ADDED_MODERN_END + 62) // Miasma Special
+#define MOVE_CHARIOT_MY_LOVE        (MOVE_ADDED_MODERN_END + 63) // Heart Physical
+#define MOVE_SAMSARA_KAMA           (MOVE_ADDED_MODERN_END + 64) // Heart Special
+#define MOVE_NINE_LIVES_BLADES_WORK (MOVE_ADDED_MODERN_END + 65) // Beast Physical
+#define MOVE_SAMADHI_FLAMES         (MOVE_ADDED_MODERN_END + 66) // Beast Special
+#define MOVE_TARASQUE               (MOVE_ADDED_MODERN_END + 67) // Dream Physical 
+#define MOVE_UOMO_UNIVERSALE        (MOVE_ADDED_MODERN_END + 68) // Dream Special
+#define MOVE_OPUTATESHIKE_OKIMUNPE  (MOVE_ADDED_MODERN_END + 69) // Ice Phycial
+#define MOVE_VIY_VIY_VIY            (MOVE_ADDED_MODERN_END + 70) // Ice Special
+#define MOVE_RASHOUMON_DAIENGI      (MOVE_ADDED_MODERN_END + 71) // Fire Physical
+#define MOVE_EXCALIBUR_GALATINE     (MOVE_ADDED_MODERN_END + 72) // Fire Special
+#define MOVE_RULE_BREAKER           (MOVE_ADDED_MODERN_END + 73) // Nether Physical
+#define MOVE_KUR_KI_GAL_IRKALA      (MOVE_ADDED_MODERN_END + 74) // Nether Special
+#define MOVE_HIPPOGRIF              (MOVE_ADDED_MODERN_END + 75) // Flying Physical
+#define MOVE_VALKYRIE_RAGNAROG      (MOVE_ADDED_MODERN_END + 76) // Flying Special
+#define MOVE_NEZUMI_JOUDO           (MOVE_ADDED_MODERN_END + 77) // Earth Physical
+#define MOVE_EARTHLIGHT_STARBOW     (MOVE_ADDED_MODERN_END + 78) // Earth Special
+#define MOVE_BLASTED_TREE           (MOVE_ADDED_MODERN_END + 79) // Electric Physical
+#define MOVE_SYSTEM_KERAUNOS        (MOVE_ADDED_MODERN_END + 80) // Electric Special
+#define MOVE_HAMISH_AVALIM          (MOVE_ADDED_MODERN_END + 81) // Nature Physical
+#define MOVE_KAMA_RUPASTRA          (MOVE_ADDED_MODERN_END + 82) // Nature Special
+#define MOVE_MARIA_THE_RIPPER       (MOVE_ADDED_MODERN_END + 83) // Dark Special
+#define MOVE_ISHA_RAA               (MOVE_ADDED_MODERN_END + 84) // Dark Special
+#define MOVE_MARBLE_PHANTASM        (MOVE_ADDED_MODERN_END + 85) // Illusion Physical
+#define MOVE_RAYPROOF_KYRIELIGHT    (MOVE_ADDED_MODERN_END + 86) // Illusion Special
+*/
 
 #define MOVE_END_CLASSIC            MOVE_CLASSIC_AMNESIA
 
