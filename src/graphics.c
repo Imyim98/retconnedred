@@ -1331,6 +1331,9 @@ const u16 gBattleAnimSpritePal_SpatialTear[] = INCBIN_U16("graphics/battle_anims
 const u32 gBattleAnimSpriteGfx_ServantCard[] = INCBIN_U32("graphics/battle_anims/sprites/servant_card.4bpp.smol");
 const u16 gBattleAnimSpritePal_ServantCard[] = INCBIN_U16("graphics/battle_anims/sprites/servant_card.gbapal");
 
+const u32 gBattleAnimSpriteGfx_SwordsDiagonal[] = INCBIN_U32("graphics/battle_anims/sprites/swords_diagonal.4bpp.smol");
+const u16 gBattleAnimSpritePal_SwordsDiagonal[] = INCBIN_U16("graphics/battle_anims/sprites/swords_diagonal.gbapal");
+
 #include "data/graphics/trainers.h"
 
 const u32 gBattleVSFrame_Gfx[] = INCBIN_U32("graphics/battle_transitions/vs_frame.4bpp.smol");

@@ -171,6 +171,9 @@ Debug_EventScript_Script_5::
 	end
 
 Debug_EventScript_Script_6::
+	setflag FLAG_CUSTOM_BGM_BATTLE
+	setvar VAR_SETTING_MUSIC, MUS_VCID_TRIPLE_BAKA
+	trainerbattle_no_intro TRAINER_SHAYLA, TrimmedGensokyo_Text_Debug1_2
 	release
 	end
 

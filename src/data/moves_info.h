@@ -25485,10 +25485,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_BEAUTIFUL,
         .contestComboStarterId = COMBO_STARTER_THOUSAND_ARROWS,
         .contestComboMoves = {COMBO_STARTER_THOUSAND_WAVES},
-        .battleAnimScript = gBattleAnimMove_ThousandArrows,
+        .battleAnimScript = gBattleAnimMove_UnlimitedBladesWork,
     },
 
-    [MOVE_CARD_INCLUDE_SANAT_KUMARA] = // to do anim
+    [MOVE_CARD_INCLUDE_SANAT_KUMARA] =
     {
         .name = COMPOUND_STRING("Sanat Kumara"),
         .description = COMPOUND_STRING(
@@ -25511,10 +25511,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_SMART,
         .contestComboStarterId = 0,
         .contestComboMoves = {0},
-        .battleAnimScript = gBattleAnimMove_PhotonGeyser,
+        .battleAnimScript = gBattleAnimMove_SanatKumara,
     },
 
-    [MOVE_CARD_INCLUDE_GAE_BOLG] = // to do anim
+    [MOVE_CARD_INCLUDE_GAE_BOLG] =
     {
         .name = COMPOUND_STRING("Gae Bolg"),
         .description = COMPOUND_STRING(
@@ -25538,10 +25538,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_COOL,
         .contestComboStarterId = 0,
         .contestComboMoves = {0},
-        .battleAnimScript = gBattleAnimMove_Megahorn,
+        .battleAnimScript = gBattleAnimMove_GaeBolg,
     },
 
-    [MOVE_CARD_INCLUDE_HOLLOW_HEART_ALBION] = // to do anim
+    [MOVE_CARD_INCLUDE_HOLLOW_HEART_ALBION] =
     {
         .name = COMPOUND_STRING("Hollow Heart Albion"),
         .description = COMPOUND_STRING(
@@ -25564,7 +25564,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_SMART,
         .contestComboStarterId = 0,
         .contestComboMoves = {0},
-        .battleAnimScript = gBattleAnimMove_PhotonGeyser,
+        .battleAnimScript = gBattleAnimMove_HollowHeartAlbion,
     },
 
     [MOVE_CARD_INCLUDE_GANRYU_JIMA] = // to do anim
@@ -25703,7 +25703,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_Uehehehehehe,
     },
 
-    [MOVE_CARD_INCLUDE_SAMSARA_KAMA] = // to do anim
+    [MOVE_CARD_INCLUDE_SAMSARA_KAMA] =
     {
         .name = COMPOUND_STRING("Samsara Kama"),
         .description = COMPOUND_STRING(
@@ -25726,7 +25726,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_CUTE,
         .contestComboStarterId = 0,
         .contestComboMoves = {0},
-        .battleAnimScript = gBattleAnimMove_CosmicPower,
+        .battleAnimScript = gBattleAnimMove_SamasaraKama,
     },
 
     [MOVE_CARD_INCLUDE_NINE_LIVES_BLADES_WORK] = // to do anim
@@ -25758,7 +25758,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_NeptuneBreak,
     },
 
-    [MOVE_CARD_INCLUDE_SAMADHI_FLAMES] = // to do anim
+    [MOVE_CARD_INCLUDE_SAMADHI_FLAMES] =
     {
         .name = COMPOUND_STRING("Samadhi Flame"),
         .description = COMPOUND_STRING(
@@ -25781,7 +25781,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_BEAUTY,
         .contestComboStarterId = 0,
         .contestComboMoves = {COMBO_STARTER_SUNNY_DAY},
-        .battleAnimScript = gBattleAnimMove_FireBlast,
+        .battleAnimScript = gBattleAnimMove_SamadhiFlame,
     },
 
     [MOVE_CARD_INCLUDE_TARASQUE] = // to do anim
@@ -25869,7 +25869,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_GlacialLance,
     },
 
-    [MOVE_CARD_INCLUDE_VIY_VIY_VIY] =
+    [MOVE_CARD_INCLUDE_VIY_VIY_VIY] = // to do anim
     {
         .name = COMPOUND_STRING("Viy Viy Viy"),
         .description = COMPOUND_STRING(
@@ -25919,7 +25919,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_CrushGrip,
     },
 
-    [MOVE_CARD_INCLUDE_EXCALIBUR_GALATINE] = // to do anim
+    [MOVE_CARD_INCLUDE_EXCALIBUR_GALATINE] =
     {
         .name = COMPOUND_STRING("Excalibur Galatine"),
         .description = COMPOUND_STRING(
@@ -25942,7 +25942,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_BEAUTY,
         .contestComboStarterId = 0,
         .contestComboMoves = {COMBO_STARTER_SUNNY_DAY},
-        .battleAnimScript = gBattleAnimMove_VCreate,
+        .battleAnimScript = gBattleAnimMove_ExcaliburGalatine,
     },
 
     [MOVE_CARD_INCLUDE_RULE_BREAKER] =
@@ -26080,7 +26080,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_PlayRough,
     },
 
-    [MOVE_CARD_INCLUDE_EARTHLIGHT_STARBOW] = // to do anim
+    [MOVE_CARD_INCLUDE_EARTHLIGHT_STARBOW] =
     {
         .name = COMPOUND_STRING("Earthlight Starbow"),
         .description = COMPOUND_STRING(
@@ -26090,7 +26090,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .power = 70,
         .type = TYPE_NEW_EARTH,
         .accuracy = 100,
-        .pp = 100,
+        .pp = 10,
         .target = TARGET_SELECTED,
         .priority = 0,
         .category = DAMAGE_CATEGORY_SPECIAL,
@@ -26103,7 +26103,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_SMART,
         .contestComboStarterId = 0,
         .contestComboMoves = {0},
-        .battleAnimScript = gBattleAnimMove_DynamaxCannon,
+        .battleAnimScript = gBattleAnimMove_EarthlightStarbow,
     },
 
     [MOVE_CARD_INCLUDE_BLASTED_TREE] = // to do anim
@@ -26189,7 +26189,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_SappySeed,
     },
 
-    [MOVE_CARD_INCLUDE_KAMA_RUPASTRA] =  // to do anim
+    [MOVE_CARD_INCLUDE_KAMA_RUPASTRA] =
     {
         .name = COMPOUND_STRING("Kama Rupastra"),
         .description = COMPOUND_STRING(
@@ -26215,10 +26215,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_BEAUTY,
         .contestComboStarterId = 0,
         .contestComboMoves = {0},
-        .battleAnimScript = gBattleAnimMove_PetalBlizzard,
+        .battleAnimScript = gBattleAnimMove_KamaRupastra,
     },
 
-    [MOVE_CARD_INCLUDE_MARIA_THE_RIPPER] =
+    [MOVE_CARD_INCLUDE_MARIA_THE_RIPPER] = // to do anim
     {
         .name = COMPOUND_STRING("Maria the Ripper"),
         .description = COMPOUND_STRING(
@@ -26274,7 +26274,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_Hurricane,
     },
 
-    [MOVE_CARD_INCLUDE_MARBLE_PHANTASM] = // to do anim
+    [MOVE_CARD_INCLUDE_MARBLE_PHANTASM] =
     {
         .name = COMPOUND_STRING("Marble Phantasm"),
         .description = COMPOUND_STRING(
@@ -26303,7 +26303,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_SMART,
         .contestComboStarterId = 0,
         .contestComboMoves = {COMBO_STARTER_FAKE_OUT},
-        .battleAnimScript = gBattleAnimMove_KnockOff,
+        .battleAnimScript = gBattleAnimMove_MarblePhantasm,
     },
 
     [MOVE_CARD_INCLUDE_RAYPROOF_KYRIELIGHT] = // to do anim

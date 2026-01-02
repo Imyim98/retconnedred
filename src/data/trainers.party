@@ -13757,35 +13757,35 @@ Level: 18
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_SHAYLA ===
-Name: SHAYLA
-Class: Aroma Lady
-Pic: Aroma Lady
+Name: Miku
+Class: TRAINER_CLASS_0XFB
+Pic: TRAINER_PIC_114
 Gender: Female
 Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Tentacruel
+Altaria
 Level: 100
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Clefable
+Jirachi
 Level: 100
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Absol
+Bulbasaur
 Level: 100
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Hippowdon
+Mewtwo
 Level: 100
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Meloetta
+Celebi
 Level: 100
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Misdreavus
+Latios
 Level: 100
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 

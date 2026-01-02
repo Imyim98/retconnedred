@@ -226,6 +226,15 @@ const struct SpriteTemplate gDracoMeteorTailSpriteTemplate =
     .callback = AnimDracoMeteorRock,
 };
 
+// UBW Swords
+const struct SpriteTemplate gUBWSwordsSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SWORDS_DIAGONAL,
+    .paletteTag = ANIM_TAG_SWORDS_DIAGONAL,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .callback = AnimDracoMeteorRock,
+};
+
 const union AnimCmd gDragonRushAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 4),
