@@ -49,7 +49,7 @@ static enum MoveEndResult MoveEnd_ProtectLikeEffect(void)
     switch (method)
     {
     case PROTECT_SPIKY_SHIELD:
-        if (!IsAbilityAndRecord(gBattlerAttacker, GetBattlerAbility(gBattlerAttacker), ABILITY_MAGIC_GUARD))
+        if (!(IsAbilityAndRecord(gBattlerAttacker, GetBattlerAbility(gBattlerAttacker), ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(gBattlerAttacker, GetBattlerAbility(gBattlerAttacker), ABILITY_FANTASY_BREAKER)))
         {
             SetPassiveDamageAmount(gBattlerAttacker, GetNonDynamaxMaxHP(gBattlerAttacker) / 8);
             PREPARE_MOVE_BUFFER(gBattleTextBuff1, MOVE_SPIKY_SHIELD);
@@ -60,9 +60,9 @@ static enum MoveEndResult MoveEnd_ProtectLikeEffect(void)
     case PROTECT_KINGS_SHIELD:
         SWAP(gBattlerAttacker, gBattlerTarget, temp); // gBattlerTarget and gBattlerAttacker are swapped in order to activate Defiant, if applicable
         if (B_KINGS_SHIELD_LOWER_ATK >= GEN_8)
-            gBattleScripting.moveEffect = MOVE_EFFECT_ATK_MINUS_1;
+            gBattleScripting.moveEffect = MOVE_EFFECT_ACC_MINUS_1;
         else
-            gBattleScripting.moveEffect = MOVE_EFFECT_ATK_MINUS_2;
+            gBattleScripting.moveEffect = MOVE_EFFECT_ACC_MINUS_2;
         BattleScriptCall(BattleScript_KingsShieldEffect);
         result = MOVEEND_STEP_RUN_SCRIPT;
         break;
@@ -169,7 +169,7 @@ static enum MoveEndResult MoveEnd_Absorb(void)
          && (gBattleStruct->doneDoublesSpreadHit || !IsDoubleSpreadMove())
          && !gSpecialStatuses[gBattlerAttacker].mindBlownRecoil
          && !(gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_FAILED)
-         && !IsAbilityAndRecord(gBattlerAttacker, GetBattlerAbility(gBattlerAttacker), ABILITY_MAGIC_GUARD))
+         && !(IsAbilityAndRecord(gBattlerAttacker, GetBattlerAbility(gBattlerAttacker), ABILITY_MAGIC_GUARD) || IsAbilityAndRecord(gBattlerAttacker, GetBattlerAbility(gBattlerAttacker), ABILITY_FANTASY_BREAKER)))
         {
             s32 recoil = (GetNonDynamaxMaxHP(gBattlerAttacker) + 1) / 2; // Half of Max HP Rounded UP
             SetPassiveDamageAmount(gBattlerAttacker, recoil);
@@ -434,7 +434,8 @@ static enum MoveEndResult MoveEnd_FaintBlock(void)
              && IsBattlerTurnDamaged(gBattlerTarget)
              && IsBattlerAlive(gBattlerAttacker)
              && GetActiveGimmick(gBattlerAttacker) != GIMMICK_DYNAMAX
-             && !IsBattlerAlly(gBattlerAttacker, gBattlerTarget))
+             && !IsBattlerAlly(gBattlerAttacker, gBattlerTarget)
+             && GetBattlerAbility(gBattlerAttacker) != ABILITY_FANTASY_BREAKER)
             {
                 gBattleStruct->tryDestinyBond = TRUE;
             }
@@ -479,7 +480,7 @@ static enum MoveEndResult MoveEnd_FaintBlock(void)
             gBattleStruct->eventState.moveEndBlock++;
             break;
         case FAINT_BLOCK_DO_DESTINY_BOND:
-            if (gBattleStruct->tryDestinyBond)
+            if (gBattleStruct->tryDestinyBond && GetBattlerAbility(gBattlerAttacker) != ABILITY_FANTASY_BREAKER)
             {
                 gBattleStruct->passiveHpUpdate[gBattlerAttacker] = gBattleMons[gBattlerAttacker].hp;
                 BattleScriptCall(BattleScript_DestinyBondTakesLife);
@@ -989,11 +990,29 @@ static enum MoveEndResult MoveEnd_MoveBlock(void)
         {
             enum Ability ability = GetBattlerAbility(gBattlerAttacker);
             if (IsAbilityAndRecord(gBattlerAttacker, ability, ABILITY_ROCK_HEAD)
-             || IsAbilityAndRecord(gBattlerAttacker, ability, ABILITY_MAGIC_GUARD))
+             || IsAbilityAndRecord(gBattlerAttacker, ability, ABILITY_MAGIC_GUARD)
+             || IsAbilityAndRecord(gBattlerAttacker, ability, ABILITY_FANTASY_BREAKER))
                 break;
 
             SetPassiveDamageAmount(gBattlerAttacker, gBattleScripting.savedDmg * max(1, GetMoveRecoil(gCurrentMove)) / 100);
             TryUpdateEvolutionTracker(IF_RECOIL_DAMAGE_GE, gBattleStruct->passiveHpUpdate[gBattlerAttacker], MOVE_NONE);
+            BattleScriptCall(BattleScript_MoveEffectRecoil);
+            result = MOVEEND_STEP_RUN_SCRIPT;
+        }
+        break;
+    case EFFECT_EX_SHADOW_MOVE_RECOIL:
+        if (IsBattlerTurnDamaged(gBattlerTarget) && IsBattlerAlive(gBattlerAttacker) && gBattleStruct->moveDamage[gBattlerTarget] > 0)
+        {
+            SetPassiveDamageAmount(gBattlerAttacker, gBattleScripting.savedDmg * max(1, GetMoveRecoil(gCurrentMove)) / 100);
+            BattleScriptCall(BattleScript_MoveEffectRecoil);
+            result = MOVEEND_STEP_RUN_SCRIPT;
+        }
+        break;
+    case EFFECT_EX_SHADOW_MOVE_RECOIL_CURRENT_HP:
+        if (IsBattlerTurnDamaged(gBattlerTarget) && IsBattlerAlive(gBattlerAttacker) && gBattleStruct->moveDamage[gBattlerTarget] > 0)
+        {
+            s32 recoilCurrentHP = (GetNonDynamaxHP(gBattlerAttacker) + 1) / 2; // Half of Max HP Rounded UP
+            SetPassiveDamageAmount(gBattlerAttacker, recoilCurrentHP);
             BattleScriptCall(BattleScript_MoveEffectRecoil);
             result = MOVEEND_STEP_RUN_SCRIPT;
         }
@@ -1003,13 +1022,24 @@ static enum MoveEndResult MoveEnd_MoveBlock(void)
         {
             enum Ability ability = GetBattlerAbility(gBattlerAttacker);
             if (IsAbilityAndRecord(gBattlerAttacker, ability, ABILITY_ROCK_HEAD)
-             || IsAbilityAndRecord(gBattlerAttacker, ability, ABILITY_MAGIC_GUARD))
+             || IsAbilityAndRecord(gBattlerAttacker, ability, ABILITY_MAGIC_GUARD)
+             || IsAbilityAndRecord(gBattlerAttacker, ability, ABILITY_FANTASY_BREAKER))
                 break;
 
             s32 recoil = (GetNonDynamaxMaxHP(gBattlerAttacker) + 1) / 2; // Half of Max HP Rounded UP
             SetPassiveDamageAmount(gBattlerAttacker, recoil);
             TryUpdateEvolutionTracker(IF_RECOIL_DAMAGE_GE, gBattleStruct->passiveHpUpdate[gBattlerAttacker], MOVE_NONE);
             BattleScriptCall(BattleScript_MoveEffectRecoil);
+            result = MOVEEND_STEP_RUN_SCRIPT;
+        }
+        break;
+    case EFFECT_EX_SHADOW_MOVE_HALF:
+        if (IsBattlerTurnDamaged(gBattlerTarget) && IsBattlerAlive(gBattlerAttacker)
+         && !(gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_FAILED))
+        {
+            s32 damage = (GetNonDynamaxHP(gBattlerAttacker) + 1) / 2; // Half of Max HP Rounded UP
+            SetMoveDamageAmount(gBattlerAttacker, damage);
+            BattleScriptCall(BattleScript_ExShadowHalfAttackerDamage);
             result = MOVEEND_STEP_RUN_SCRIPT;
         }
         break;

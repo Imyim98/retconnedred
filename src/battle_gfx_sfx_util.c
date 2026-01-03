@@ -957,8 +957,8 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
 
             if (changeType == SPECIES_GFX_CHANGE_TRANSFORM)
             {
-                personalityValue = gBattleMons[battlerDef].volatiles.transformedMonPID;
-                isShiny = gBattleMons[battlerDef].volatiles.isTransformedMonShiny;
+                personalityValue = gTransformedPersonalities[battlerDef];
+                isShiny = gTransformedShininess[battlerDef];
             }
             else
             {
@@ -1023,8 +1023,8 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
             position = GetBattlerPosition(battlerAtk);
             targetSpecies = gBattleMons[gBattlerAttacker].volatiles.transformationDCDTemp;
             gBattleSpritesDataPtr->battlerData[battlerAtk].transformSpecies = targetSpecies;
-            personalityValue = gBattleMons[battlerAtk].personality;
-            isShiny = gBattleMons[battlerAtk].isShiny;
+            personalityValue = gTransformedPersonalities[battlerAtk];
+            isShiny = gTransformedShininess[battlerAtk];
 
             HandleLoadSpecialPokePic(!IsOnPlayerSide(battlerAtk),
                                     gMonSpritesGfxPtr->spritesGfx[position],
@@ -1108,8 +1108,8 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
 
             if (changeType == SPECIES_GFX_CHANGE_TRANSFORM)
             {
-                personalityValue = gBattleMons[battlerAtk].volatiles.transformedMonPID;
-                isShiny = gBattleMons[battlerAtk].volatiles.isTransformedMonShiny;
+                personalityValue = gTransformedPersonalities[battlerAtk];
+                isShiny = gTransformedShininess[battlerAtk];
             }
             else
             {
