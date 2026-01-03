@@ -12389,11 +12389,11 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
     [SPECIES_LATIOS] =
     {
         .baseHP        = 80,
-        .baseAttack    = 90,
+        .baseAttack    = 80,
         .baseDefense   = 80,
-        .baseSpeed     = 110,
-        .baseSpAttack  = 130,
-        .baseSpDefense = 110,
+        .baseSpeed     = 70,
+        .baseSpAttack  = 100,
+        .baseSpDefense = 120,
         .types = MON_TYPES(TYPE_NEW_DREAM, TYPE_NEW_FLYING),
         .catchRate = 3,
     #if P_UPDATED_EXP_YIELDS >= GEN_8
@@ -12853,12 +12853,12 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
 #if P_FAMILY_RAYQUAZA
     [SPECIES_RAYQUAZA] =
     {
-        .baseHP        = 105,
-        .baseAttack    = 100,
-        .baseDefense   = 100,
-        .baseSpeed     = 115,
-        .baseSpAttack  = 150,
-        .baseSpDefense = 110,
+        .baseHP        = 85,
+        .baseAttack    = 60,
+        .baseDefense   = 80,
+        .baseSpeed     = 95,
+        .baseSpAttack  = 120,
+        .baseSpDefense = 100,
         .types = MON_TYPES(TYPE_NEW_REASON, TYPE_NEW_HEART),
         .catchRate = 45,
     #if P_UPDATED_EXP_YIELDS >= GEN_8

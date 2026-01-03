@@ -141,10 +141,10 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 
 #if P_FAMILY_CHARMANDER
 #if !P_GBA_STYLE_SPECIES_GFX
-    const u32 gMonFrontPic_Charmander[] = INCBIN_U32("graphics/pokemon/charmander/anim_front.4bpp.smol");
-    const u16 gMonPalette_Charmander[] = INCBIN_U16("graphics/pokemon/charmander/normal.gbapal");
-    const u32 gMonBackPic_Charmander[] = INCBIN_U32("graphics/pokemon/charmander/back.4bpp.smol");
-    const u16 gMonShinyPalette_Charmander[] = INCBIN_U16("graphics/pokemon/charmander/shiny.gbapal");
+    const u32 gMonFrontPic_Charmander[] = INCBIN_U32("graphics/pokemon/_add/etc/magireco/madoka/normal/anim_front.4bpp.smol");
+    const u16 gMonPalette_Charmander[] = INCBIN_U16("graphics/pokemon/_add/etc/magireco/madoka/normal/normal.gbapal");
+    const u32 gMonBackPic_Charmander[] = INCBIN_U32("graphics/pokemon/_add/etc/magireco/madoka/normal/back.4bpp.smol");
+    const u16 gMonShinyPalette_Charmander[] = INCBIN_U16("graphics/pokemon/_add/etc/magireco/madoka/normal/shiny.gbapal");
 #else
     const u32 gMonFrontPic_Charmander[] = INCBIN_U32("graphics/pokemon/charmander/anim_front_gba.4bpp.smol");
     const u16 gMonPalette_Charmander[] = INCBIN_U16("graphics/pokemon/charmander/normal_gba.gbapal");
@@ -152,12 +152,12 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u16 gMonShinyPalette_Charmander[] = INCBIN_U16("graphics/pokemon/charmander/shiny_gba.gbapal");
 #endif //P_GBA_STYLE_SPECIES_GFX
 #if !P_GBA_STYLE_SPECIES_ICONS
-    const u8 gMonIcon_Charmander[] = INCBIN_U8("graphics/pokemon/charmander/icon.4bpp");
+    const u8 gMonIcon_Charmander[] = INCBIN_U8("graphics/pokemon/_add/etc/magireco/madoka/normal/icon.4bpp");
 #else
     const u8 gMonIcon_Charmander[] = INCBIN_U8("graphics/pokemon/charmander/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
 #if P_FOOTPRINTS
-    const u8 gMonFootprint_Charmander[] = INCBIN_U8("graphics/pokemon/charmander/footprint.1bpp");
+    const u8 gMonFootprint_Charmander[] = INCBIN_U8("graphics/pokemon/_add/etc/magireco/madoka/normal/footprint.1bpp");
 #endif //P_FOOTPRINTS
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_Charmander[] = INCBIN_COMP("graphics/pokemon/charmander/overworld.4bpp");
@@ -267,10 +267,10 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 
 #if P_FAMILY_SQUIRTLE
 #if !P_GBA_STYLE_SPECIES_GFX
-    const u32 gMonFrontPic_Squirtle[] = INCBIN_U32("graphics/pokemon/squirtle/anim_front.4bpp.smol");
-    const u16 gMonPalette_Squirtle[] = INCBIN_U16("graphics/pokemon/squirtle/normal.gbapal");
-    const u32 gMonBackPic_Squirtle[] = INCBIN_U32("graphics/pokemon/squirtle/back.4bpp.smol");
-    const u16 gMonShinyPalette_Squirtle[] = INCBIN_U16("graphics/pokemon/squirtle/shiny.gbapal");
+    const u32 gMonFrontPic_Squirtle[] = INCBIN_U32("graphics/pokemon/_add/etc/magireco/sayaka/normal/anim_front.4bpp.smol");
+    const u16 gMonPalette_Squirtle[] = INCBIN_U16("graphics/pokemon/_add/etc/magireco/sayaka/normal/normal.gbapal");
+    const u32 gMonBackPic_Squirtle[] = INCBIN_U32("graphics/pokemon/_add/etc/magireco/sayaka/normal/back.4bpp.smol");
+    const u16 gMonShinyPalette_Squirtle[] = INCBIN_U16("graphics/pokemon/_add/etc/magireco/sayaka/normal/shiny.gbapal");
 #else
     const u32 gMonFrontPic_Squirtle[] = INCBIN_U32("graphics/pokemon/squirtle/anim_front_gba.4bpp.smol");
     const u16 gMonPalette_Squirtle[] = INCBIN_U16("graphics/pokemon/squirtle/normal_gba.gbapal");
@@ -278,12 +278,12 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u16 gMonShinyPalette_Squirtle[] = INCBIN_U16("graphics/pokemon/squirtle/shiny_gba.gbapal");
 #endif //P_GBA_STYLE_SPECIES_GFX
 #if !P_GBA_STYLE_SPECIES_ICONS
-    const u8 gMonIcon_Squirtle[] = INCBIN_U8("graphics/pokemon/squirtle/icon.4bpp");
+    const u8 gMonIcon_Squirtle[] = INCBIN_U8("graphics/pokemon/_add/etc/magireco/sayaka/normal/icon.4bpp");
 #else
     const u8 gMonIcon_Squirtle[] = INCBIN_U8("graphics/pokemon/squirtle/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
 #if P_FOOTPRINTS
-    const u8 gMonFootprint_Squirtle[] = INCBIN_U8("graphics/pokemon/squirtle/footprint.1bpp");
+    const u8 gMonFootprint_Squirtle[] = INCBIN_U8("graphics/pokemon/_add/etc/magireco/sayaka/normal/footprint.1bpp");
 #endif //P_FOOTPRINTS
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_Squirtle[] = INCBIN_COMP("graphics/pokemon/squirtle/overworld.4bpp");
