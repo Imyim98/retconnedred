@@ -16243,7 +16243,7 @@ static const u16 sCardIncludeAttackMoveTable[] = {
     MOVE_CARD_INCLUDE_EXCALIBUR_SPECIAL, // Wind Special
     MOVE_CARD_INCLUDE_BUDDHA_PALM, // Divine Physical
     MOVE_CARD_INCLUDE_ENUMA_ELISH, // Divine Special
-    MOVE_CARD_INCLUDE_UNLIMITED_BLADES_WORK, // Reason Physical
+    MOVE_CARD_INCLUDE_UNLIMITED_BLADE_WORKS, // Reason Physical
     MOVE_CARD_INCLUDE_SANAT_KUMARA, // Reason Special
     MOVE_CARD_INCLUDE_GAE_BOLG, // Steel Physical
     MOVE_CARD_INCLUDE_HOLLOW_HEART_ALBION, // Steel Special

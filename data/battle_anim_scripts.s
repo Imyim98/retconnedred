@@ -23256,7 +23256,7 @@ gBattleAnimMove_DoubleTorrent::
 	blendoff
 	end
 
-gBattleAnimMove_UnlimitedBladesWork::
+gBattleAnimMove_UnlimitedBladeWorks::
 	loadspritegfx ANIM_TAG_SWORDS_DIAGONAL @Swords
 	loadspritegfx ANIM_TAG_FAIRY_LOCK_CHAINS @Gray Colour
 	loadspritegfx ANIM_TAG_WATER_GUN @Sparkles Trail

@@ -904,7 +904,7 @@ extern const u8 gBattleAnimMove_KamaRupastra[];
 extern const u8 gBattleAnimMove_MarblePhantasm[];
 extern const u8 gBattleAnimMove_ExcaliburGalatine[];
 extern const u8 gBattleAnimMove_SamadhiFlame[];
-extern const u8 gBattleAnimMove_UnlimitedBladesWork[];
+extern const u8 gBattleAnimMove_UnlimitedBladeWorks[];
 extern const u8 gBattleAnimMove_ShadowFire[];
 extern const u8 gBattleAnimMove_ShadowBolt[];
 extern const u8 gBattleAnimMove_ShadowChill[];

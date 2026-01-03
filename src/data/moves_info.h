@@ -25461,9 +25461,9 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_Eternabeam,
     },
 
-    [MOVE_CARD_INCLUDE_UNLIMITED_BLADES_WORK] = // to do anim
+    [MOVE_CARD_INCLUDE_UNLIMITED_BLADE_WORKS] = // to do anim
     {
-        .name = COMPOUND_STRING("Unlimited Blades Work"),
+        .name = COMPOUND_STRING("Unlimited Blade Works"),
         .description = COMPOUND_STRING(
             "Hits the target using a lot of\n"
             "swords. Deploys reality marble."),
@@ -25484,7 +25484,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestCategory = CONTEST_CATEGORY_BEAUTIFUL,
         .contestComboStarterId = COMBO_STARTER_THOUSAND_ARROWS,
         .contestComboMoves = {COMBO_STARTER_THOUSAND_WAVES},
-        .battleAnimScript = gBattleAnimMove_UnlimitedBladesWork,
+        .battleAnimScript = gBattleAnimMove_UnlimitedBladeWorks,
     },
 
     [MOVE_CARD_INCLUDE_SANAT_KUMARA] =
