@@ -8982,7 +8982,15 @@ static void Cmd_setfieldweather(void)
 {
     CMD_ARGS();
 
-    if (TryChangeBattleWeather(gBattlerAttacker, GetMoveWeatherType(gCurrentMove), ABILITY_NONE))
+    if (gCurrentMove == MOVE_BEAT_UP_CALLING)
+    {
+        if (TryChangeBattleWeather(gBattlerAttacker, BATTLE_WEATHER_SUN, ABILITY_NONE))
+        {
+            gBattlescriptCurrInstr = cmd->nextInstr;
+            return;
+        }
+    }
+    else if (TryChangeBattleWeather(gBattlerAttacker, GetMoveWeatherType(gCurrentMove), ABILITY_NONE))
     {
         gBattlescriptCurrInstr = cmd->nextInstr;
         return;

@@ -9063,7 +9063,7 @@ static inline u32 CalcDefenseStat(struct BattleContext *ctx)
     uq4_12_t modifier;
     u32 battlerDef = ctx->battlerDef;
     enum Move move = ctx->move;
-    enum moveType = ctx->moveType;
+    enum Type moveType = ctx->moveType;
     enum BattleMoveEffects moveEffect = GetMoveEffect(move);
 
     def = gBattleMons[battlerDef].defense;

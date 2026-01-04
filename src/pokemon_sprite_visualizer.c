@@ -340,7 +340,7 @@ const u8 gFrontAnimNames[][34] =
     [ANIM_SHAKE_GLOW_PURPLE_SLOW]            = _("SHAKE GLOW PURPLE SLOW"),
 };
 
-const u8 gBattleEnvironmentBackgroundNames[][17] =
+const u8 gBattleEnvironmentBackgroundNames[][26] =
 {
     [BATTLE_ENVIRONMENT_GRASS]      = _("GRASS           "),
     [BATTLE_ENVIRONMENT_LONG_GRASS] = _("LONG GRASS      "),

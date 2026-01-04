@@ -26617,7 +26617,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Powers up shadow types,\n"
             "and hurts non-shadow."),
-        .effect = EFFECT_EX_SHADOW_MOVE_SKY,
+        .effect = EFFECT_WEATHER,
         .power = 0,
         .type = TYPE_MYSTERY,
         .accuracy = 0,
@@ -26629,6 +26629,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .ignoresProtect = TRUE,
         .mirrorMoveBanned = TRUE,
         .metronomeBanned = TRUE,
+        .argument = { .weatherType = BATTLE_WEATHER_EX_SHADOW_SKY },
         .contestEffect = CONTEST_EFFECT_BETTER_WHEN_AUDIENCE_EXCITED,
         .contestCategory = CONTEST_CATEGORY_TOUGH,
         .contestComboStarterId = 0,

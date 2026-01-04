@@ -88,7 +88,7 @@ BattleScript_EffectTransformHitDoTransformFirstAkiSistersSunnyDay:
 	jumpifhalfword CMP_COMMON_BITS, gBattleWeather, B_WEATHER_EX_SHADOW_SKY_DEEP, BattleScript_EffectTransformHitBeatingUp
 	call BattleScript_AbilityPopUpBeatUpCalling
 	pause B_WAIT_TIME_SHORT
-	setfieldweather BATTLE_WEATHER_SUN
+	setfieldweather
 	playmoveanimation MOVE_SUNNY_DAY
 	waitanimation
 	call BattleScript_MoveWeatherChangeRet
@@ -9340,13 +9340,6 @@ BattleScript_EffectGaiaForce::
 BattleScript_EffectGaiaForceChangeDark:
 	setbyte sB_ANIM_TURN, 1
 	goto BattleScript_EffectHit
-	goto BattleScript_MoveEnd
-
-BattleScript_EffectExShadowSky::
-	attackcanceler
-	call BattleScript_CheckPrimalWeather
-	setfieldweather BATTLE_WEATHER_EX_SHADOW_SKY
-	goto BattleScript_MoveWeatherChange
 	goto BattleScript_MoveEnd
 
 BattleScript_ExShadowSkyHeal::

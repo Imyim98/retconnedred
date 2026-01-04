@@ -183,9 +183,7 @@ static bool32 HandleEndTurnWeatherDamage(u32 battler)
          && GetBattlerHoldEffect(battler) != HOLD_EFFECT_SAFETY_GOGGLES
          && !gBattleMons[battler].isShadow)
         {
-            gBattleStruct->moveDamage[battler] = GetNonDynamaxMaxHP(battler) / 16;
-            if (gBattleStruct->moveDamage[battler] == 0)
-                gBattleStruct->moveDamage[battler] = 1;
+            SetPassiveDamageAmount(battler, GetNonDynamaxMaxHP(battler) / 16);
             gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_EXSHADOWSKY;
             BattleScriptExecute(BattleScript_DamagingWeather);
             effect = TRUE;
@@ -199,10 +197,7 @@ static bool32 HandleEndTurnWeatherDamage(u32 battler)
              && !gBattleMons[battler].volatiles.healBlock)
             {
                 BattleScriptPushCursorAndCallback(BattleScript_ExShadowSkyHeal);
-                gBattleStruct->moveDamage[battler] = GetNonDynamaxMaxHP(battler) / 16;
-                if (gBattleStruct->moveDamage[battler] == 0)
-                    gBattleStruct->moveDamage[battler] = 1;
-                gBattleStruct->moveDamage[battler] *= -1;
+                SetHealAmount(battler, GetNonDynamaxMaxHP(battler) / 16);
                 effect = TRUE;
             }
         }
