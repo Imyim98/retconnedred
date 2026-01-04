@@ -32,7 +32,7 @@
 #include "event_data.h"
 
 // this file's functions
-static u8 GetBattlePalaceMoveGroup(u8 battler, u16 move);
+static u8 GetBattlePalaceMoveGroup(u8 battler, enum Move move);
 static u16 GetBattlePalaceTarget(u32 battler);
 static void SpriteCB_TrainerSlideVertical(struct Sprite *sprite);
 static bool8 ShouldAnimBeDoneRegardlessOfSubstitute(u8 animId);
@@ -318,7 +318,7 @@ u16 ChooseMoveAndTargetInBattlePalace(u32 battler)
 #undef numMultipleMoveGroups
 #undef randSelectGroup
 
-static u8 GetBattlePalaceMoveGroup(u8 battler, u16 move)
+static u8 GetBattlePalaceMoveGroup(u8 battler, enum Move move)
 {
     switch (GetBattlerMoveTargetType(battler, move))
     {
@@ -704,7 +704,7 @@ void DecompressTrainerFrontPic(u16 frontPicId, u8 battler)
     LoadSpritePalette(&gTrainerSprites[frontPicId].palette);
 }
 
-void DecompressTrainerBackPic(u16 backPicId, u8 battler)
+void DecompressTrainerBackPic(enum TrainerPicID backPicId, u8 battler)
 {
     u8 position = GetBattlerPosition(battler);
     CopyTrainerBackspriteFramesToDest(backPicId, gMonSpritesGfxPtr->spritesGfx[position]);
@@ -1201,7 +1201,7 @@ void LoadBattleMonGfxAndAnimate(u8 battler, bool8 loadMonSprite, u8 spriteId)
         gSprites[spriteId].y = GetBattlerSpriteDefault_Y(battler);
 }
 
-void TrySetBehindSubstituteSpriteBit(u8 battler, u16 move)
+void TrySetBehindSubstituteSpriteBit(u8 battler, enum Move move)
 {
     enum BattleMoveEffects effect = GetMoveEffect(move);
     if (effect == EFFECT_SUBSTITUTE || effect == EFFECT_SHED_TAIL)
