@@ -1591,9 +1591,14 @@ BattleScript_EffectBestow::
 	waitanimation
 	printstring STRINGID_BESTOWITEMGIVING
 	waitmessage B_WAIT_TIME_LONG
+	tryactivateabilitywithabilityshield BS_TARGET, FALSE
 	tryactivateitem BS_TARGET, ACTIVATION_ON_USABLE_AGAIN
 	trysymbiosis BS_ATTACKER
 	goto BattleScript_MoveEnd
+
+BattleScript_ActivateSwitchInAbility::
+	switchinabilities BS_SCRIPTING
+	return
 
 BattleScript_EffectAfterYou::
 	attackcanceler
@@ -3739,18 +3744,22 @@ BattleScript_EffectShoreUp::
 
 BattleScript_EffectWeather::
 	attackcanceler
+BattleScript_EffectWeatherSetWeather:
 	setfieldweather
 	attackanimation
 	waitanimation
 	call BattleScript_MoveWeatherChangeRet
 	goto BattleScript_MoveEnd
 
-BattleScript_EffectWeatherAndSwitch::
+BattleScript_ChillyReceptionMessage::
 	printstring STRINGID_PKMNTELLCHILLINGRECEPTIONJOKE
 	waitmessage B_WAIT_TIME_LONG
-	jumpifbattletype BATTLE_TYPE_ARENA, BattleScript_EffectWeather
-	jumpifcantswitch SWITCH_IGNORE_ESCAPE_PREVENTION | BS_ATTACKER, BattleScript_EffectWeather
+	return
+
+BattleScript_EffectWeatherAndSwitch::
 	attackcanceler
+	jumpifbattletype BATTLE_TYPE_ARENA, BattleScript_EffectWeatherSetWeather
+	jumpifcantswitch SWITCH_IGNORE_ESCAPE_PREVENTION | BS_ATTACKER, BattleScript_EffectWeatherSetWeather
 	setfieldweather
 	clearmoveresultflags MOVE_RESULT_NO_EFFECT
 	attackanimation
@@ -4147,6 +4156,9 @@ BattleScript_EffectTrick::
 	waitmessage B_WAIT_TIME_LONG
 	printfromtable gItemSwapStringIds
 	waitmessage B_WAIT_TIME_LONG
+	tryactivateabilitywithabilityshield BS_TARGET, TRUE
+	tryactivateitem BS_ATTACKER, ACTIVATION_ON_USABLE_AGAIN
+	tryactivateitem BS_TARGET, ACTIVATION_ON_USABLE_AGAIN
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectRolePlay::
@@ -5048,6 +5060,7 @@ BattleScript_LeechSeedTurnDrain:
 	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	tryfaintmon BS_ATTACKER
+	tryactivateitem BS_ATTACKER, ACTIVATION_ON_HP_THRESHOLD
 	return
 
 BattleScript_BideStoringEnergy::
@@ -6348,6 +6361,7 @@ BattleScript_YawnMakesAsleepEnd2::
 	waitmessage B_WAIT_TIME_LONG
 	updatestatusicon BS_EFFECT_BATTLER
 	waitstate
+	tryactivateitem BS_EFFECT_BATTLER, ACTIVATION_ON_STATUS_CHANGE
 	jumpfifsemiinvulnerable BS_EFFECT_BATTLER, STATE_SKY_DROP, BattleScript_YawnEnd
 	makevisible BS_EFFECT_BATTLER
 	skydropyawn
@@ -6451,6 +6465,7 @@ BattleScript_ItemSteal::
 	playanimation BS_EFFECT_BATTLER, B_ANIM_ITEM_STEAL
 	printstring STRINGID_PKMNSTOLEITEM
 	waitmessage B_WAIT_TIME_LONG
+	tryactivateabilitywithabilityshield BS_ATTACKER, FALSE
 	return
 
 BattleScript_AbilityRaisesDefenderStat::
@@ -8338,6 +8353,7 @@ BattleScript_SymbiosisActivates::
 	call BattleScript_AbilityPopUp
 	printstring STRINGID_SYMBIOSISITEMPASS
 	waitmessage B_WAIT_TIME_LONG
+	tryactivateabilitywithabilityshield BS_EFFECT_BATTLER, FALSE
 	return
 
 BattleScript_TargetAbilityStatRaiseRet::

@@ -142,13 +142,13 @@ struct PokemonSubstruct0
 
 struct PokemonSubstruct1
 {
-    u16 move1:11; // 2047 moves.
+    enum Move move1:11; // 2047 moves.
     u16 evolutionTracker1:5;
-    u16 move2:11; // 2047 moves.
+    enum Move move2:11; // 2047 moves.
     u16 evolutionTracker2:5;
-    u16 move3:11; // 2047 moves.
+    enum Move move3:11; // 2047 moves.
     u16 unused_04:5;
-    u16 move4:11; // 2047 moves.
+    enum Move move4:11; // 2047 moves.
     u16 unused_06:3;
     u16 hyperTrainedHP:1;
     u16 hyperTrainedAttack:1;
@@ -490,7 +490,8 @@ struct SpeciesInfo /*0xC4*/
     u32 dexForceRequired:1; // This species will be taken into account for Pokédex ratings even if they have the "isMythical" flag set.
     u32 teachingType:1; // Not used in the ROM but used in compilation (check constants/teaching_types.h for explanations)
     u32 isFrontierBanned:1; // This species is not allowed to participate in Battle Frontier facilities.
-    u32 padding4:10;
+    u32 isSkyBattleBanned:1;
+    u32 padding4:9;
     // Shadow settings
     s8 enemyShadowXOffset; // This determines the X-offset for an enemy Pokémon's shadow during battle; negative values point left, positive values point right.
     s8 enemyShadowYOffset; // This determines the Y-offset for an enemy Pokémon's shadow during battle; negative values point up, positive values point down.
@@ -616,7 +617,7 @@ struct SpindaSpot
 
 struct LevelUpMove
 {
-    u16 move;
+    enum Move move;
     u16 level;
 };
 
