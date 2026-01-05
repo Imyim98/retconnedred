@@ -1230,11 +1230,11 @@
 	.endm
 
 	.macro tryreducefoespartyhptozero
-	.byte 0xe6
+	.byte B_SCR_OP_TRYREDUCEFOESPARTYTOZERO
 	.endm
 
 	.macro ishplessthanquarter failInstr:req
-	.byte 0xe7
+	.byte B_SCR_OP_ISHPLESSTHANQUARTER
 	.4byte \failInstr
 	.endm
 
