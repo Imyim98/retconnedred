@@ -21,13 +21,15 @@
 #include "overworld.h"
 #include "palette.h"
 #include "party_menu.h"
+#include "pokemon_animation.h"
 #include "recorded_battle.h"
 #include "string_util.h"
 #include "sound.h"
 #include "task.h"
 #include "test_runner.h"
-#include "util.h"
 #include "text.h"
+#include "util.h"
+#include "wild_encounter.h"
 #include "constants/abilities.h"
 #include "constants/item_effects.h"
 #include "constants/songs.h"
@@ -154,12 +156,7 @@ void SetUpBattleVarsAndBirchZigzagoon(void)
     BattleAI_SetupFlags();
 
     if (gBattleTypeFlags & BATTLE_TYPE_FIRST_BATTLE)
-    {
-        ZeroEnemyPartyMons();
-        CreateMon(&gEnemyParty[0], SPECIES_ZIGZAGOON, 2, USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
-        i = 0;
-        SetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM, &i);
-    }
+        CreateWildMon(SPECIES_ZIGZAGOON, 2);
 }
 
 void InitBattleControllers(void)
