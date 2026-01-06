@@ -4033,23 +4033,14 @@ void CreateSecretBaseEnemyParty(struct SecretBase *secretBaseRecord)
         {
             if (gBattleResources->secretBase->party.species[i])
             {
-                CreateMon(&gEnemyParty[i],
+                CreateMonWithIVs(&gEnemyParty[i],
                     gBattleResources->secretBase->party.species[i],
                     gBattleResources->secretBase->party.levels[i],
-                    15,
-                    TRUE,
                     gBattleResources->secretBase->party.personality[i],
-                    OT_ID_PRESET,
-                    gBattleResources->secretBase->trainerId[0]);
+                    OTID_STRUCT_RANDOM_NO_SHINY,
+                    15);
 
                 SetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, &gBattleResources->secretBase->party.heldItems[i]);
-
-                SetMonData(&gEnemyParty[i], MON_DATA_HP_IV, &monIv);
-                SetMonData(&gEnemyParty[i], MON_DATA_ATK_IV, &monIv);
-                SetMonData(&gEnemyParty[i], MON_DATA_DEF_IV, &monIv);
-                SetMonData(&gEnemyParty[i], MON_DATA_SPEED_IV, &monIv);
-                SetMonData(&gEnemyParty[i], MON_DATA_SPATK_IV, &monIv);
-                SetMonData(&gEnemyParty[i], MON_DATA_SPDEF_IV, &monIv);
 
                 for (j = 0; j < NUM_STATS; j++)
                     SetMonData(&gEnemyParty[i], MON_DATA_HP_EV + j, &gBattleResources->secretBase->party.EVs[i]);

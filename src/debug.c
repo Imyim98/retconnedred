@@ -3034,7 +3034,6 @@ static void DebugAction_Give_Pokemon_SelectLevel(u8 taskId)
         if (gTasks[taskId].tIsComplex == FALSE)
         {
             PlaySE(MUS_LEVEL_UP);
-            VarSet(VAR_GIFTMON_VERSION_SETTING, VERSION_IDENTIFIER_DEBUG);
             ScriptGiveMonDebugSimple(sDebugMonData->species, gTasks[taskId].tInput, ITEM_NONE);
             // Set flag for user convenience
             FlagSet(FLAG_SYS_POKEMON_GET);
@@ -3592,7 +3591,6 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
     //Update mon stats before giving it to the player
     CalculateMonStats(&mon);
 
-// <<<<<<< HEAD
     // give player the mon
     SetMonData(&mon, MON_DATA_OT_NAME, gSaveBlock2Ptr->playerName);
     SetMonData(&mon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
@@ -3626,38 +3624,7 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
         SetMonData(&mon, MON_DATA_POKEBALL, &ball);
     }
 
-    for (i = 0; i < PARTY_SIZE; i++)
-    {
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL) == SPECIES_NONE)
-            break;
-    }
-
-    if (i >= PARTY_SIZE)
-    {
-        sentToPc = CopyMonToPC(&mon);
-    }
-    else
-    {
-        sentToPc = MON_GIVEN_TO_PARTY;
-        CopyMon(&gPlayerParty[i], &mon, sizeof(mon));
-        gPlayerPartyCount = i + 1;
-    }
-
-    //Pokedex entry
-    nationalDexNum = SpeciesToNationalPokedexNum(species);
-    switch(sentToPc)
-    {
-    case MON_GIVEN_TO_PARTY:
-    case MON_GIVEN_TO_PC:
-        GetSetPokedexFlag(nationalDexNum, FLAG_SET_SEEN);
-        GetSetPokedexFlag(nationalDexNum, FLAG_SET_CAUGHT);
-        break;
-    case MON_CANT_GIVE:
-        break;
-    }
-// =======
-//    GiveScriptedMonToPlayer(&mon, PARTY_SIZE);
-// >>>>>>> upstream/upcoming
+    GiveScriptedMonToPlayer(&mon, PARTY_SIZE);
 
     // Set flag for user convenience
     FlagSet(FLAG_SYS_POKEMON_GET);

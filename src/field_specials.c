@@ -44,6 +44,7 @@
 #include "rtc.h"
 #include "script.h"
 #include "script_menu.h"
+#include "script_pokemon_util.h"
 #include "sound.h"
 #include "starter_choose.h"
 #include "string_util.h"
@@ -2113,7 +2114,7 @@ void SetShoalItemFlag(u16 unused)
 void LoadWallyZigzagoon(void)
 {
     u16 monData;
-    CreateMon(&gPlayerParty[0], SPECIES_MEW, 69, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+    CreateMon(&gPlayerParty[0], SPECIES_JIRACHI, 69, Random32(), OTID_STRUCT_PLAYER_ID);
     monData = TRUE;
     SetMonData(&gPlayerParty[0], MON_DATA_ABILITY_NUM, &monData);
     monData = MOVE_HOLD_BACK;
@@ -2124,6 +2125,8 @@ void LoadWallyZigzagoon(void)
 	SetMonData(&gPlayerParty[0], MON_DATA_MOVE3, &monData);
     monData = MOVE_SWORDS_DANCE;
 	SetMonData(&gPlayerParty[0], MON_DATA_MOVE4, &monData);
+    CalculateMonStats(&gPlayerParty[0]);
+    HealPlayerParty();
 }
 
 bool8 IsStarterInParty(void)

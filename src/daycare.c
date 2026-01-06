@@ -1164,7 +1164,7 @@ void CreateEggMiracle(struct Pokemon *mon, u16 species, bool8 setHotSpringsLocat
     u8 assignRibbon;
     u8 gameMet;
         
-    CreateMon(mon, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+    CreateRandomMonWithIVs(mon, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS);
     metLevel = 0;
     ball = ITEM_POKE_BALL;
     language = LANGUAGE_JAPANESE;
