@@ -1181,7 +1181,7 @@ static u8 SaveDoSaveCallback(void)
 
 static u8 SaveSuccessCallback(void)
 {
-    if (!IsTextPrinterActive(0))
+    if (!IsTextPrinterActiveOnWindow(0))
     {
         PlaySE(SE_SAVE);
         sSaveDialogCallback = SaveReturnSuccessCallback;
@@ -1205,7 +1205,7 @@ static u8 SaveReturnSuccessCallback(void)
 
 static u8 SaveErrorCallback(void)
 {
-    if (!IsTextPrinterActive(0))
+    if (!IsTextPrinterActiveOnWindow(0))
     {
         PlaySE(SE_BOO);
         sSaveDialogCallback = SaveReturnErrorCallback;

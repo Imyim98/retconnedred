@@ -30528,7 +30528,7 @@ gBattleAnimMove_RazorLeaf::
 	end
 
 gBattleAnimMove_NaturePower::
-	@ No actual animation, uses the animation of a move from gBattleEnvironmentInfo.naturePower instead
+	@ No actual animation, uses the animation of a move from src/data/battle_environment.h instead
 
 gBattleAnimMove_AncientPower::
 	loadspritegfx ANIM_TAG_ROCKS
@@ -33371,6 +33371,7 @@ gBattleAnimMove_SecretPower::
 	jumpargeq 0, BATTLE_ENVIRONMENT_BUILDING_MONO,       gBattleAnimMove_Strength
 	goto gBattleAnimMove_Slam
 .endif
+	@ No actual animation, uses the animation of a move from src/data/battle_environment.h instead
 
 gBattleAnimMove_Twister::
 	loadspritegfx ANIM_TAG_LEAF
