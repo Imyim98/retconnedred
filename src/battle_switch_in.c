@@ -324,7 +324,7 @@ static bool32 TryHazardsOnSwitchIn(u32 battler, enum Ability ability, enum HoldE
         {
             effect = FALSE;
         }
-        else if (IS_BATTLER_OF_TYPE(battler, TYPE_POISON)) // Absorb the toxic spikes.
+        else if (IS_BATTLER_OF_TYPE(battler, TYPE_NEW_MIASMA)) // Absorb the toxic spikes.
         {
             gSideTimers[side].toxicSpikesAmount = 0;
             RemoveHazardFromField(side, HAZARDS_TOXIC_SPIKES);

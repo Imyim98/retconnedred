@@ -4775,7 +4775,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FIRE,
+        .secondaryId = TYPE_NEW_FIRE,
         .flingPower = 90,
         .iconPic = gItemIcon_FlamePlate,
         .iconPalette = gItemIconPalette_FlamePlate,
@@ -4795,7 +4795,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_WATER,
+        .secondaryId = TYPE_NEW_WATER,
         .flingPower = 90,
         .iconPic = gItemIcon_SplashPlate,
         .iconPalette = gItemIconPalette_SplashPlate,
@@ -4815,7 +4815,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ELECTRIC,
+        .secondaryId = TYPE_NEW_ELECTRIC,
         .flingPower = 90,
         .iconPic = gItemIcon_ZapPlate,
         .iconPalette = gItemIconPalette_ZapPlate,
@@ -4830,12 +4830,12 @@ const struct Item gItemsInfo[] =
         .description = COMPOUND_STRING(
             "A tablet that ups\n"
             "the power of\n"
-            "Grass-type moves."),
+            "Nature-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GRASS,
+        .secondaryId = TYPE_NEW_NATURE,
         .flingPower = 90,
         .iconPic = gItemIcon_MeadowPlate,
         .iconPalette = gItemIconPalette_MeadowPlate,
@@ -4855,7 +4855,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ICE,
+        .secondaryId = TYPE_NEW_ICE,
         .flingPower = 90,
         .iconPic = gItemIcon_IciclePlate,
         .iconPalette = gItemIconPalette_IciclePlate,
@@ -4863,7 +4863,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_FIST_PLATE] =
     {
-        .name = ITEM_NAME("Fist Plate"),
+        .name = ITEM_NAME("Dream Plate"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_PLATE,
         .holdEffectParam = 20,
@@ -4875,7 +4875,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FIGHTING,
+        .secondaryId = TYPE_NEW_DREAM,
         .flingPower = 90,
         .iconPic = gItemIcon_FistPlate,
         .iconPalette = gItemIconPalette_FistPlate,
@@ -4883,19 +4883,19 @@ const struct Item gItemsInfo[] =
 
     [ITEM_TOXIC_PLATE] =
     {
-        .name = ITEM_NAME("Toxic Plate"),
+        .name = ITEM_NAME("Miasma Plate"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_PLATE,
         .holdEffectParam = 20,
         .description = COMPOUND_STRING(
             "A tablet that ups\n"
             "the power of\n"
-            "Poison-type moves."),
+            "Miasma-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_POISON,
+        .secondaryId = TYPE_NEW_MIASMA,
         .flingPower = 90,
         .iconPic = gItemIcon_ToxicPlate,
         .iconPalette = gItemIconPalette_ToxicPlate,
@@ -4910,12 +4910,12 @@ const struct Item gItemsInfo[] =
         .description = COMPOUND_STRING(
             "A tablet that ups\n"
             "the power of\n"
-            "Ground-type moves."),
+            "Earth-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GROUND,
+        .secondaryId = TYPE_NEW_EARTH,
         .flingPower = 90,
         .iconPic = gItemIcon_EarthPlate,
         .iconPalette = gItemIconPalette_EarthPlate,
@@ -4923,7 +4923,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_SKY_PLATE] =
     {
-        .name = ITEM_NAME("Sky Plate"),
+        .name = ITEM_NAME("Wing Plate"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_PLATE,
         .holdEffectParam = 20,
@@ -4935,7 +4935,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FLYING,
+        .secondaryId = TYPE_NEW_FLYING,
         .flingPower = 90,
         .iconPic = gItemIcon_SkyPlate,
         .iconPalette = gItemIconPalette_SkyPlate,
@@ -4949,13 +4949,13 @@ const struct Item gItemsInfo[] =
         .holdEffectParam = 20,
         .description = COMPOUND_STRING(
             "A tablet that ups\n"
-            "the power of Psy\n"
-            "chic-type moves."),
+            "the power of Rea\n"
+            "son-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_PSYCHIC,
+        .secondaryId = TYPE_NEW_REASON,
         .flingPower = 90,
         .iconPic = gItemIcon_MindPlate,
         .iconPalette = gItemIconPalette_MindPlate,
@@ -4963,19 +4963,19 @@ const struct Item gItemsInfo[] =
 
     [ITEM_INSECT_PLATE] =
     {
-        .name = ITEM_NAME("Insect Plate"),
+        .name = ITEM_NAME("Emotion Plate"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_PLATE,
         .holdEffectParam = 20,
         .description = COMPOUND_STRING(
             "A tablet that ups\n"
             "the power of\n"
-            "Bug-type moves."),
+            "Heart-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_BUG,
+        .secondaryId = TYPE_NEW_HEART,
         .flingPower = 90,
         .iconPic = gItemIcon_InsectPlate,
         .iconPalette = gItemIconPalette_InsectPlate,
@@ -4983,19 +4983,19 @@ const struct Item gItemsInfo[] =
 
     [ITEM_STONE_PLATE] =
     {
-        .name = ITEM_NAME("Stone Plate"),
+        .name = ITEM_NAME("Wild Plate"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_PLATE,
         .holdEffectParam = 20,
         .description = COMPOUND_STRING(
             "A tablet that ups\n"
             "the power of\n"
-            "Rock-type moves."),
+            "Beast-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ROCK,
+        .secondaryId = TYPE_NEW_BEAST,
         .flingPower = 90,
         .iconPic = gItemIcon_StonePlate,
         .iconPalette = gItemIconPalette_StonePlate,
@@ -5010,12 +5010,12 @@ const struct Item gItemsInfo[] =
         .description = COMPOUND_STRING(
             "A tablet that ups\n"
             "the power of\n"
-            "Ghost-type moves."),
+            "Nether-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GHOST,
+        .secondaryId = TYPE_NEW_NETHER,
         .flingPower = 90,
         .iconPic = gItemIcon_SpookyPlate,
         .iconPalette = gItemIconPalette_SpookyPlate,
@@ -5023,19 +5023,19 @@ const struct Item gItemsInfo[] =
 
     [ITEM_DRACO_PLATE] =
     {
-        .name = ITEM_NAME("Draco Plate"),
+        .name = ITEM_NAME("Sacred Plate"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_PLATE,
         .holdEffectParam = 20,
         .description = COMPOUND_STRING(
             "A tablet that ups\n"
             "the power of\n"
-            "Dragon-type moves."),
+            "Divine-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_DRAGON,
+        .secondaryId = TYPE_NEW_DIVINE,
         .flingPower = 90,
         .iconPic = gItemIcon_DracoPlate,
         .iconPalette = gItemIconPalette_DracoPlate,
@@ -5055,7 +5055,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_DARK,
+        .secondaryId = TYPE_NEW_DARK,
         .flingPower = 90,
         .iconPic = gItemIcon_DreadPlate,
         .iconPalette = gItemIconPalette_DreadPlate,
@@ -5063,19 +5063,19 @@ const struct Item gItemsInfo[] =
 
     [ITEM_IRON_PLATE] =
     {
-        .name = ITEM_NAME("Iron Plate"),
+        .name = ITEM_NAME("Metal Plate"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_PLATE,
         .holdEffectParam = 20,
         .description = COMPOUND_STRING(
             "A tablet that ups\n"
             "the power of\n"
-            "Steel-type moves."),
+            "Metal-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_STEEL,
+        .secondaryId = TYPE_NEW_METAL,
         .flingPower = 90,
         .iconPic = gItemIcon_IronPlate,
         .iconPalette = gItemIconPalette_IronPlate,
@@ -5083,19 +5083,19 @@ const struct Item gItemsInfo[] =
 
     [ITEM_PIXIE_PLATE] =
     {
-        .name = ITEM_NAME("Pixie Plate"),
+        .name = ITEM_NAME("Breeze Plate"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_PLATE,
         .holdEffectParam = 20,
         .description = COMPOUND_STRING(
             "A tablet that ups\n"
             "the power of\n"
-            "Fairy-type moves."),
+            "Wind-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_PLATE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FAIRY,
+        .secondaryId = TYPE_NEW_WIND,
         .flingPower = 90,
         .iconPic = gItemIcon_PixiePlate,
         .iconPalette = gItemIconPalette_PixiePlate,
@@ -5116,7 +5116,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_DRIVE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_WATER,
+        .secondaryId = TYPE_NEW_WATER,
         .flingPower = 70,
         .iconPic = gItemIcon_DouseDrive,
         .iconPalette = gItemIconPalette_DouseDrive,
@@ -5135,7 +5135,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_DRIVE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ELECTRIC,
+        .secondaryId = TYPE_NEW_ELECTRIC,
         .flingPower = 70,
         .iconPic = gItemIcon_ShockDrive,
         .iconPalette = gItemIconPalette_ShockDrive,
@@ -5154,7 +5154,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_DRIVE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FIRE,
+        .secondaryId = TYPE_NEW_FIRE,
         .flingPower = 70,
         .iconPic = gItemIcon_BurnDrive,
         .iconPalette = gItemIconPalette_BurnDrive,
@@ -5173,7 +5173,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_DRIVE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ICE,
+        .secondaryId = TYPE_NEW_ICE,
         .flingPower = 70,
         .iconPic = gItemIcon_ChillDrive,
         .iconPalette = gItemIconPalette_ChillDrive,
@@ -5196,7 +5196,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FIRE,
+        .secondaryId = TYPE_NEW_FIRE,
         .flingPower = 50,
         .iconPic = gItemIcon_FireMemory,
         .iconPalette = gItemIconPalette_FireMemory,
@@ -5217,7 +5217,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_WATER,
+        .secondaryId = TYPE_NEW_WATER,
         .flingPower = 50,
         .iconPic = gItemIcon_WaterMemory,
         .iconPalette = gItemIconPalette_WaterMemory,
@@ -5238,7 +5238,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ELECTRIC,
+        .secondaryId = TYPE_NEW_ELECTRIC,
         .flingPower = 50,
         .iconPic = gItemIcon_ElectricMemory,
         .iconPalette = gItemIconPalette_ElectricMemory,
@@ -5246,20 +5246,20 @@ const struct Item gItemsInfo[] =
 
     [ITEM_GRASS_MEMORY] =
     {
-        .name = ITEM_NAME("Grass Memory"),
-        .pluralName = ITEM_PLURAL_NAME("Grass Memories"),
+        .name = ITEM_NAME("Nature Memory"),
+        .pluralName = ITEM_PLURAL_NAME("Nature Memories"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_MEMORY,
         .holdEffectParam = 0,
         .description = COMPOUND_STRING(
-            "A disc with Grass\n"
+            "A disc with Nature\n"
             "type data. It swaps\n"
             "Silvally's type."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GRASS,
+        .secondaryId = TYPE_NEW_NATURE,
         .flingPower = 50,
         .iconPic = gItemIcon_GrassMemory,
         .iconPalette = gItemIconPalette_GrassMemory,
@@ -5280,7 +5280,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ICE,
+        .secondaryId = TYPE_NEW_ICE,
         .flingPower = 50,
         .iconPic = gItemIcon_IceMemory,
         .iconPalette = gItemIconPalette_IceMemory,
@@ -5288,20 +5288,20 @@ const struct Item gItemsInfo[] =
 
     [ITEM_FIGHTING_MEMORY] =
     {
-        .name = ITEM_NAME("Fighting Memory"),
+        .name = ITEM_NAME("Dream Memory"),
         .pluralName = ITEM_PLURAL_NAME("Fighting Memories"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_MEMORY,
         .holdEffectParam = 0,
         .description = COMPOUND_STRING(
-            "Disc with Fighting\n"
+            "Disc with Dream\n"
             "type data. It swaps\n"
             "Silvally's type."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FIGHTING,
+        .secondaryId = TYPE_NEW_DREAM,
         .flingPower = 50,
         .iconPic = gItemIcon_FightingMemory,
         .iconPalette = gItemIconPalette_FightingMemory,
@@ -5309,20 +5309,20 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POISON_MEMORY] =
     {
-        .name = ITEM_NAME("Poison Memory"),
-        .pluralName = ITEM_PLURAL_NAME("Poison Memories"),
+        .name = ITEM_NAME("Miasma Memory"),
+        .pluralName = ITEM_PLURAL_NAME("Miasma Memories"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_MEMORY,
         .holdEffectParam = 0,
         .description = COMPOUND_STRING(
-            "A disc with Poison\n"
+            "A disc with Miasma\n"
             "type data. It swaps\n"
             "Silvally's type."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_POISON,
+        .secondaryId = TYPE_NEW_MIASMA,
         .flingPower = 50,
         .iconPic = gItemIcon_PoisonMemory,
         .iconPalette = gItemIconPalette_PoisonMemory,
@@ -5330,20 +5330,20 @@ const struct Item gItemsInfo[] =
 
     [ITEM_GROUND_MEMORY] =
     {
-        .name = ITEM_NAME("Ground Memory"),
-        .pluralName = ITEM_PLURAL_NAME("Ground Memories"),
+        .name = ITEM_NAME("Earth Memory"),
+        .pluralName = ITEM_PLURAL_NAME("Earth Memories"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_MEMORY,
         .holdEffectParam = 0,
         .description = COMPOUND_STRING(
-            "A disc with Ground\n"
+            "A disc with Earth\n"
             "type data. It swaps\n"
             "Silvally's type."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GROUND,
+        .secondaryId = TYPE_NEW_EARTH,
         .flingPower = 50,
         .iconPic = gItemIcon_GroundMemory,
         .iconPalette = gItemIconPalette_GroundMemory,
@@ -5364,7 +5364,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FLYING,
+        .secondaryId = TYPE_NEW_FLYING,
         .flingPower = 50,
         .iconPic = gItemIcon_FlyingMemory,
         .iconPalette = gItemIconPalette_FlyingMemory,
@@ -5372,20 +5372,20 @@ const struct Item gItemsInfo[] =
 
     [ITEM_PSYCHIC_MEMORY] =
     {
-        .name = ITEM_NAME("Psychic Memory"),
-        .pluralName = ITEM_PLURAL_NAME("Psychic Memories"),
+        .name = ITEM_NAME("Reason Memory"),
+        .pluralName = ITEM_PLURAL_NAME("Reason Memories"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_MEMORY,
         .holdEffectParam = 0,
         .description = COMPOUND_STRING(
-            "A disc with Psychic\n"
+            "A disc with Reason\n"
             "type data. It swaps\n"
             "Silvally's type."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_PSYCHIC,
+        .secondaryId = TYPE_NEW_REASON,
         .flingPower = 50,
         .iconPic = gItemIcon_PsychicMemory,
         .iconPalette = gItemIconPalette_PsychicMemory,
@@ -5393,20 +5393,20 @@ const struct Item gItemsInfo[] =
 
     [ITEM_BUG_MEMORY] =
     {
-        .name = ITEM_NAME("Bug Memory"),
-        .pluralName = ITEM_PLURAL_NAME("Bug Memories"),
+        .name = ITEM_NAME("Heart Memory"),
+        .pluralName = ITEM_PLURAL_NAME("Heart Memories"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_MEMORY,
         .holdEffectParam = 0,
         .description = COMPOUND_STRING(
-            "A disc with Bug\n"
+            "A disc with Heart\n"
             "type data. It swaps\n"
             "Silvally's type."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_BUG,
+        .secondaryId = TYPE_NEW_HEART,
         .flingPower = 50,
         .iconPic = gItemIcon_BugMemory,
         .iconPalette = gItemIconPalette_BugMemory,
@@ -5414,20 +5414,20 @@ const struct Item gItemsInfo[] =
 
     [ITEM_ROCK_MEMORY] =
     {
-        .name = ITEM_NAME("Rock Memory"),
-        .pluralName = ITEM_PLURAL_NAME("Rock Memories"),
+        .name = ITEM_NAME("Beast Memory"),
+        .pluralName = ITEM_PLURAL_NAME("Beast Memories"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_MEMORY,
         .holdEffectParam = 0,
         .description = COMPOUND_STRING(
-            "A disc with Rock\n"
+            "A disc with Beast\n"
             "type data. It swaps\n"
             "Silvally's type."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ROCK,
+        .secondaryId = TYPE_NEW_BEAST,
         .flingPower = 50,
         .iconPic = gItemIcon_RockMemory,
         .iconPalette = gItemIconPalette_RockMemory,
@@ -5435,20 +5435,20 @@ const struct Item gItemsInfo[] =
 
     [ITEM_GHOST_MEMORY] =
     {
-        .name = ITEM_NAME("Ghost Memory"),
-        .pluralName = ITEM_PLURAL_NAME("Ghost Memories"),
+        .name = ITEM_NAME("Nether Memory"),
+        .pluralName = ITEM_PLURAL_NAME("Nether Memories"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_MEMORY,
         .holdEffectParam = 0,
         .description = COMPOUND_STRING(
-            "A disc with Ghost\n"
+            "A disc with Nether\n"
             "type data. It swaps\n"
             "Silvally's type."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GHOST,
+        .secondaryId = TYPE_NEW_NETHER,
         .flingPower = 50,
         .iconPic = gItemIcon_GhostMemory,
         .iconPalette = gItemIconPalette_GhostMemory,
@@ -5456,20 +5456,20 @@ const struct Item gItemsInfo[] =
 
     [ITEM_DRAGON_MEMORY] =
     {
-        .name = ITEM_NAME("Dragon Memory"),
-        .pluralName = ITEM_PLURAL_NAME("Dragon Memories"),
+        .name = ITEM_NAME("Divine Memory"),
+        .pluralName = ITEM_PLURAL_NAME("Divine Memories"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_MEMORY,
         .holdEffectParam = 0,
         .description = COMPOUND_STRING(
-            "A disc with Dragon\n"
+            "A disc with Divine\n"
             "type data. It swaps\n"
             "Silvally's type."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_DRAGON,
+        .secondaryId = TYPE_NEW_DIVINE,
         .flingPower = 50,
         .iconPic = gItemIcon_DragonMemory,
         .iconPalette = gItemIconPalette_DragonMemory,
@@ -5490,7 +5490,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_DARK,
+        .secondaryId = TYPE_NEW_DARK,
         .flingPower = 50,
         .iconPic = gItemIcon_DarkMemory,
         .iconPalette = gItemIconPalette_DarkMemory,
@@ -5498,20 +5498,20 @@ const struct Item gItemsInfo[] =
 
     [ITEM_STEEL_MEMORY] =
     {
-        .name = ITEM_NAME("Steel Memory"),
-        .pluralName = ITEM_PLURAL_NAME("Steel Memories"),
+        .name = ITEM_NAME("Metal Memory"),
+        .pluralName = ITEM_PLURAL_NAME("Metal Memories"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_MEMORY,
         .holdEffectParam = 0,
         .description = COMPOUND_STRING(
-            "A disc with Steel\n"
+            "A disc with Metal\n"
             "type data. It swaps\n"
             "Silvally's type."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_STEEL,
+        .secondaryId = TYPE_NEW_METAL,
         .flingPower = 50,
         .iconPic = gItemIcon_SteelMemory,
         .iconPalette = gItemIconPalette_SteelMemory,
@@ -5519,20 +5519,20 @@ const struct Item gItemsInfo[] =
 
     [ITEM_FAIRY_MEMORY] =
     {
-        .name = ITEM_NAME("Fairy Memory"),
-        .pluralName = ITEM_PLURAL_NAME("Fairy Memories"),
+        .name = ITEM_NAME("Wind Memory"),
+        .pluralName = ITEM_PLURAL_NAME("Wind Memories"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_MEMORY,
         .holdEffectParam = 0,
         .description = COMPOUND_STRING(
-            "A disc with Fairy\n"
+            "A disc with Wind\n"
             "type data. It swaps\n"
             "Silvally's type."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_MEMORY,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FAIRY,
+        .secondaryId = TYPE_NEW_WIND,
         .flingPower = 50,
         .iconPic = gItemIcon_FairyMemory,
         .iconPalette = gItemIconPalette_FairyMemory,
@@ -6921,7 +6921,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_NORMAL_GEM] =
     {
-        .name = ITEM_NAME("Normal Gem"),
+        .name = ITEM_NAME("Illusion Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
@@ -6933,7 +6933,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_NORMAL,
+        .secondaryId = TYPE_NEW_ILLUSION,
         .iconPic = gItemIcon_NormalGem,
         .iconPalette = gItemIconPalette_NormalGem,
     },
@@ -6952,7 +6952,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FIRE,
+        .secondaryId = TYPE_NEW_FIRE,
         .iconPic = gItemIcon_FireGem,
         .iconPalette = gItemIconPalette_FireGem,
     },
@@ -6971,7 +6971,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_WATER,
+        .secondaryId = TYPE_NEW_WATER,
         .iconPic = gItemIcon_WaterGem,
         .iconPalette = gItemIconPalette_WaterGem,
     },
@@ -6990,26 +6990,26 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ELECTRIC,
+        .secondaryId = TYPE_NEW_ELECTRIC,
         .iconPic = gItemIcon_ElectricGem,
         .iconPalette = gItemIconPalette_ElectricGem,
     },
 
     [ITEM_GRASS_GEM] =
     {
-        .name = ITEM_NAME("Grass Gem"),
+        .name = ITEM_NAME("Nature Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "Increases the\n"
-            "power of Grass\n"
+            "power of Nature\n"
             "Type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GRASS,
+        .secondaryId = TYPE_NEW_NATURE,
         .iconPic = gItemIcon_GrassGem,
         .iconPalette = gItemIconPalette_GrassGem,
     },
@@ -7028,64 +7028,64 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ICE,
+        .secondaryId = TYPE_NEW_ICE,
         .iconPic = gItemIcon_IceGem,
         .iconPalette = gItemIconPalette_IceGem,
     },
 
     [ITEM_FIGHTING_GEM] =
     {
-        .name = ITEM_NAME("Fighting Gem"),
+        .name = ITEM_NAME("Dream Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "Increases the\n"
-            "power of Fighting\n"
+            "power of Dream\n"
             "Type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FIGHTING,
+        .secondaryId = TYPE_NEW_DREAM,
         .iconPic = gItemIcon_FightingGem,
         .iconPalette = gItemIconPalette_FightingGem,
     },
 
     [ITEM_POISON_GEM] =
     {
-        .name = ITEM_NAME("Poison Gem"),
+        .name = ITEM_NAME("Miasma Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "Increases the\n"
-            "power of Poison\n"
+            "power of Miasma\n"
             "Type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_POISON,
+        .secondaryId = TYPE_NEW_MIASMA,
         .iconPic = gItemIcon_PoisonGem,
         .iconPalette = gItemIconPalette_PoisonGem,
     },
 
     [ITEM_GROUND_GEM] =
     {
-        .name = ITEM_NAME("Ground Gem"),
+        .name = ITEM_NAME("Earth Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "Increases the\n"
-            "power of Ground\n"
+            "power of Earth\n"
             "Type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GROUND,
+        .secondaryId = TYPE_NEW_EARTH,
         .iconPic = gItemIcon_GroundGem,
         .iconPalette = gItemIconPalette_GroundGem,
     },
@@ -7104,71 +7104,71 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FLYING,
+        .secondaryId = TYPE_NEW_FLYING,
         .iconPic = gItemIcon_FlyingGem,
         .iconPalette = gItemIconPalette_FlyingGem,
     },
 
     [ITEM_PSYCHIC_GEM] =
     {
-        .name = ITEM_NAME("Psychic Gem"),
+        .name = ITEM_NAME("Reason Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "Increases the\n"
-            "power of Psychic\n"
+            "power of Reason\n"
             "Type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_PSYCHIC,
+        .secondaryId = TYPE_NEW_REASON,
         .iconPic = gItemIcon_PsychicGem,
         .iconPalette = gItemIconPalette_PsychicGem,
     },
 
     [ITEM_BUG_GEM] =
     {
-        .name = ITEM_NAME("Bug Gem"),
+        .name = ITEM_NAME("Heart Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "Increases the\n"
-            "power of Bug\n"
+            "power of Heart\n"
             "Type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_BUG,
+        .secondaryId = TYPE_NEW_HEART,
         .iconPic = gItemIcon_BugGem,
         .iconPalette = gItemIconPalette_BugGem,
     },
 
     [ITEM_ROCK_GEM] =
     {
-        .name = ITEM_NAME("Rock Gem"),
+        .name = ITEM_NAME("Beast Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "Increases the\n"
-            "power of Rock\n"
+            "power of Beast\n"
             "Type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ROCK,
+        .secondaryId = TYPE_NEW_BEAST,
         .iconPic = gItemIcon_RockGem,
         .iconPalette = gItemIconPalette_RockGem,
     },
 
     [ITEM_GHOST_GEM] =
     {
-        .name = ITEM_NAME("Ghost Gem"),
+        .name = ITEM_NAME("Nether Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
@@ -7180,26 +7180,26 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GHOST,
+        .secondaryId = TYPE_NEW_NETHER,
         .iconPic = gItemIcon_GhostGem,
         .iconPalette = gItemIconPalette_GhostGem,
     },
 
     [ITEM_DRAGON_GEM] =
     {
-        .name = ITEM_NAME("Dragon Gem"),
+        .name = ITEM_NAME("Divine Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "Increases the\n"
-            "power of Dragon\n"
+            "power of Divine\n"
             "Type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_DRAGON,
+        .secondaryId = TYPE_NEW_DIVINE,
         .iconPic = gItemIcon_DragonGem,
         .iconPalette = gItemIconPalette_DragonGem,
     },
@@ -7218,33 +7218,33 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_DARK,
+        .secondaryId = TYPE_NEW_DARK,
         .iconPic = gItemIcon_DarkGem,
         .iconPalette = gItemIconPalette_DarkGem,
     },
 
     [ITEM_STEEL_GEM] =
     {
-        .name = ITEM_NAME("Steel Gem"),
+        .name = ITEM_NAME("Metal Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "Increases the\n"
-            "power of Steel\n"
+            "power of Metal\n"
             "Type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_STEEL,
+        .secondaryId = TYPE_NEW_METAL,
         .iconPic = gItemIcon_SteelGem,
         .iconPalette = gItemIconPalette_SteelGem,
     },
 
     [ITEM_FAIRY_GEM] =
     {
-        .name = ITEM_NAME("Fairy Gem"),
+        .name = ITEM_NAME("Wind Gem"),
         .price = GEM_PRICE,
         .holdEffect = HOLD_EFFECT_GEMS,
         .holdEffectParam = GEM_BOOST_PARAM,
@@ -7256,7 +7256,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_GEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FAIRY,
+        .secondaryId = TYPE_NEW_WIND,
         .iconPic = gItemIcon_FairyGem,
         .iconPalette = gItemIconPalette_FairyGem,
     },
@@ -7265,7 +7265,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_NORMALIUM_Z] =
     {
-        .name = ITEM_NAME("Normalium Z"),
+        .name = ITEM_NAME("Illusionium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
@@ -7276,7 +7276,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_NORMAL,
+        .secondaryId = TYPE_NEW_ILLUSION,
         .iconPic = gItemIcon_NormaliumZ,
         .iconPalette = gItemIconPalette_NormaliumZ,
     },
@@ -7294,7 +7294,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FIRE,
+        .secondaryId = TYPE_NEW_FIRE,
         .iconPic = gItemIcon_FiriumZ,
         .iconPalette = gItemIconPalette_FiriumZ,
     },
@@ -7312,7 +7312,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_WATER,
+        .secondaryId = TYPE_NEW_WATER,
         .iconPic = gItemIcon_WateriumZ,
         .iconPalette = gItemIconPalette_WateriumZ,
     },
@@ -7330,25 +7330,25 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ELECTRIC,
+        .secondaryId = TYPE_NEW_ELECTRIC,
         .iconPic = gItemIcon_ElectriumZ,
         .iconPalette = gItemIconPalette_ElectriumZ,
     },
 
     [ITEM_GRASSIUM_Z] =
     {
-        .name = ITEM_NAME("Grassium Z"),
+        .name = ITEM_NAME("Naturium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
-            "Upgrade Grass-\n"
+            "Upgrade Nature-\n"
             "type moves into\n"
             "Z-Moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GRASS,
+        .secondaryId = TYPE_NEW_NATURE,
         .iconPic = gItemIcon_GrassiumZ,
         .iconPalette = gItemIconPalette_GrassiumZ,
     },
@@ -7366,61 +7366,61 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ICE,
+        .secondaryId = TYPE_NEW_ICE,
         .iconPic = gItemIcon_IciumZ,
         .iconPalette = gItemIconPalette_IciumZ,
     },
 
     [ITEM_FIGHTINIUM_Z] =
     {
-        .name = ITEM_NAME("Fightinium Z"),
+        .name = ITEM_NAME("Dreamium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
-            "Upgrade Fighting-\n"
+            "Upgrade Dream-\n"
             "type moves into\n"
             "Z-Moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FIGHTING,
+        .secondaryId = TYPE_NEW_DREAM,
         .iconPic = gItemIcon_FightiniumZ,
         .iconPalette = gItemIconPalette_FightiniumZ,
     },
 
     [ITEM_POISONIUM_Z] =
     {
-        .name = ITEM_NAME("Poisonium Z"),
+        .name = ITEM_NAME("Miasmium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
-            "Upgrade Poison-\n"
+            "Upgrade Miasma-\n"
             "type moves into\n"
             "Z-Moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_POISON,
+        .secondaryId = TYPE_NEW_MIASMA,
         .iconPic = gItemIcon_PoisoniumZ,
         .iconPalette = gItemIconPalette_PoisoniumZ,
     },
 
     [ITEM_GROUNDIUM_Z] =
     {
-        .name = ITEM_NAME("Groundium Z"),
+        .name = ITEM_NAME("Earthium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
-            "Upgrade Ground-\n"
+            "Upgrade Earth-\n"
             "type moves into\n"
             "Z-Moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GROUND,
+        .secondaryId = TYPE_NEW_EARTH,
         .iconPic = gItemIcon_GroundiumZ,
         .iconPalette = gItemIconPalette_GroundiumZ,
     },
@@ -7438,97 +7438,97 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FLYING,
+        .secondaryId = TYPE_NEW_FLYING,
         .iconPic = gItemIcon_FlyiniumZ,
         .iconPalette = gItemIconPalette_FlyiniumZ,
     },
 
     [ITEM_PSYCHIUM_Z] =
     {
-        .name = ITEM_NAME("Psychium Z"),
+        .name = ITEM_NAME("Reasonium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
-            "Upgrade Psychic-\n"
+            "Upgrade Reason-\n"
             "type moves into\n"
             "Z-Moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_PSYCHIC,
+        .secondaryId = TYPE_NEW_REASON,
         .iconPic = gItemIcon_PsychiumZ,
         .iconPalette = gItemIconPalette_PsychiumZ,
     },
 
     [ITEM_BUGINIUM_Z] =
     {
-        .name = ITEM_NAME("Buginium Z"),
+        .name = ITEM_NAME("Heartium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
-            "Upgrade Bug-\n"
+            "Upgrade Heart-\n"
             "type moves into\n"
             "Z-Moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_BUG,
+        .secondaryId = TYPE_NEW_HEART,
         .iconPic = gItemIcon_BuginiumZ,
         .iconPalette = gItemIconPalette_BuginiumZ,
     },
 
     [ITEM_ROCKIUM_Z] =
     {
-        .name = ITEM_NAME("Rockium Z"),
+        .name = ITEM_NAME("Beastium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
-            "Upgrade Rock-\n"
+            "Upgrade Beast-\n"
             "type moves into\n"
             "Z-Moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ROCK,
+        .secondaryId = TYPE_NEW_BEAST,
         .iconPic = gItemIcon_RockiumZ,
         .iconPalette = gItemIconPalette_RockiumZ,
     },
 
     [ITEM_GHOSTIUM_Z] =
     {
-        .name = ITEM_NAME("Ghostium Z"),
+        .name = ITEM_NAME("Netherium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
-            "Upgrade Ghost-\n"
+            "Upgrade Nether-\n"
             "type moves into\n"
             "Z-Moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GHOST,
+        .secondaryId = TYPE_NEW_NETHER,
         .iconPic = gItemIcon_GhostiumZ,
         .iconPalette = gItemIconPalette_GhostiumZ,
     },
 
     [ITEM_DRAGONIUM_Z] =
     {
-        .name = ITEM_NAME("Dragonium Z"),
+        .name = ITEM_NAME("Divinium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
-            "Upgrade Dragon-\n"
+            "Upgrade Divine-\n"
             "type moves into\n"
             "Z-Moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_DRAGON,
+        .secondaryId = TYPE_NEW_DIVINE,
         .iconPic = gItemIcon_DragoniumZ,
         .iconPalette = gItemIconPalette_DragoniumZ,
     },
@@ -7546,43 +7546,43 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_DARK,
+        .secondaryId = TYPE_NEW_DARK,
         .iconPic = gItemIcon_DarkiniumZ,
         .iconPalette = gItemIconPalette_DarkiniumZ,
     },
 
     [ITEM_STEELIUM_Z] =
     {
-        .name = ITEM_NAME("Steelium Z"),
+        .name = ITEM_NAME("Metalium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
-            "Upgrade Steel-\n"
+            "Upgrade Metal-\n"
             "type moves into\n"
             "Z-Moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_STEEL,
+        .secondaryId = TYPE_NEW_METAL,
         .iconPic = gItemIcon_SteeliumZ,
         .iconPalette = gItemIconPalette_SteeliumZ,
     },
 
     [ITEM_FAIRIUM_Z] =
     {
-        .name = ITEM_NAME("Fairium Z"),
+        .name = ITEM_NAME("Windium Z"),
         .price = 0,
         .holdEffect = HOLD_EFFECT_Z_CRYSTAL,
         .description = COMPOUND_STRING(
-            "Upgrade Fairy-\n"
+            "Upgrade Wind-\n"
             "type moves into\n"
             "Z-Moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_Z_CRYSTAL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FAIRY,
+        .secondaryId = TYPE_NEW_WIND,
         .iconPic = gItemIcon_FairiumZ,
         .iconPalette = gItemIconPalette_FairiumZ,
     },
@@ -8138,7 +8138,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_INCENSE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_WATER,
+        .secondaryId = TYPE_NEW_WATER,
         .flingPower = 10,
         .iconPic = gItemIcon_SeaIncense,
         .iconPalette = gItemIconPalette_SeaIncense,
@@ -8174,7 +8174,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_INCENSE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_PSYCHIC,
+        .secondaryId = TYPE_NEW_REASON,
         .flingPower = 10,
         .iconPic = gItemIcon_OddIncense,
         .iconPalette = gItemIconPalette_OddIncense,
@@ -8182,7 +8182,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_ROCK_INCENSE] =
     {
-        .name = ITEM_NAME("Rock Incense"),
+        .name = ITEM_NAME("Dreamy Incense"),
         .price = (I_PRICE >= GEN_7) ? 2000 : 9600,
         .holdEffect = HOLD_EFFECT_TYPE_POWER,
         .holdEffectParam = 20,
@@ -8191,7 +8191,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_INCENSE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ROCK,
+        .secondaryId = TYPE_NEW_DREAM,
         .flingPower = 10,
         .iconPic = gItemIcon_RockIncense,
         .iconPalette = gItemIconPalette_RockIncense,
@@ -8224,7 +8224,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_INCENSE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_WATER,
+        .secondaryId = TYPE_NEW_WATER,
         .flingPower = 10,
         .iconPic = gItemIcon_WaveIncense,
         .iconPalette = gItemIconPalette_WaveIncense,
@@ -8241,7 +8241,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_INCENSE,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GRASS,
+        .secondaryId = TYPE_NEW_NATURE,
         .flingPower = 10,
         .iconPic = gItemIcon_RoseIncense,
         .iconPalette = gItemIconPalette_RoseIncense,
@@ -8521,8 +8521,8 @@ const struct Item gItemsInfo[] =
 
     [ITEM_SILK_SCARF] =
     {
-        .name = ITEM_NAME("Silk Scarf"),
-        .pluralName = ITEM_PLURAL_NAME("Silk Scarves"),
+        .name = ITEM_NAME("Mirage Scarf"),
+        .pluralName = ITEM_PLURAL_NAME("Mirage Scarves"),
         .price = TYPE_BOOSTING_PRICE,
         .holdEffect = HOLD_EFFECT_TYPE_POWER,
         .holdEffectParam = TYPE_BOOST_PARAM,
@@ -8534,7 +8534,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_NORMAL,
+        .secondaryId = TYPE_NEW_ILLUSION,
         .flingPower = 10,
         .iconPic = gItemIcon_SilkScarf,
         .iconPalette = gItemIconPalette_SilkScarf,
@@ -8560,7 +8560,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FIRE,
+        .secondaryId = TYPE_NEW_FIRE,
         .flingPower = 30,
         .iconPic = gItemIcon_Charcoal,
         .iconPalette = gItemIconPalette_Charcoal,
@@ -8580,7 +8580,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_WATER,
+        .secondaryId = TYPE_NEW_WATER,
         .flingPower = 30,
         .iconPic = gItemIcon_MysticWater,
         .iconPalette = gItemIconPalette_MysticWater,
@@ -8600,7 +8600,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ELECTRIC,
+        .secondaryId = TYPE_NEW_ELECTRIC,
         .flingPower = 30,
         .iconPic = gItemIcon_Magnet,
         .iconPalette = gItemIconPalette_Magnet,
@@ -8617,7 +8617,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GRASS,
+        .secondaryId = TYPE_NEW_NATURE,
         .flingPower = 30,
         .iconPic = gItemIcon_MiracleSeed,
         .iconPalette = gItemIconPalette_MiracleSeed,
@@ -8637,7 +8637,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ICE,
+        .secondaryId = TYPE_NEW_ICE,
         .flingPower = 30,
         .iconPic = gItemIcon_NeverMeltIce,
         .iconPalette = gItemIconPalette_NeverMeltIce,
@@ -8651,13 +8651,13 @@ const struct Item gItemsInfo[] =
         .holdEffectParam = TYPE_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "boosts Fighting-\n"
+            "boosts Dream-\n"
             "type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FIGHTING,
+        .secondaryId = TYPE_NEW_DREAM,
         .flingPower = 30,
         .iconPic = gItemIcon_BlackBelt,
         .iconPalette = gItemIconPalette_BlackTypeEnhancingItem,
@@ -8672,12 +8672,12 @@ const struct Item gItemsInfo[] =
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "raises the power of\n"
-            "Poison-type moves."),
+            "Miasma-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_POISON,
+        .secondaryId = TYPE_NEW_MIASMA,
         .flingPower = 70,
         .iconPic = gItemIcon_PoisonBarb,
         .iconPalette = gItemIconPalette_PoisonBarb,
@@ -8693,12 +8693,12 @@ const struct Item gItemsInfo[] =
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "raises the power of\n"
-            "Ground-type moves."),
+            "Earth-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GROUND,
+        .secondaryId = TYPE_NEW_EARTH,
         .flingPower = 10,
         .iconPic = gItemIcon_SoftSand,
         .iconPalette = gItemIconPalette_SoftSand,
@@ -8718,7 +8718,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FLYING,
+        .secondaryId = TYPE_NEW_FLYING,
         .flingPower = 50,
         .iconPic = gItemIcon_SharpBeak,
         .iconPalette = gItemIconPalette_SharpBeak,
@@ -8735,7 +8735,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_PSYCHIC,
+        .secondaryId = TYPE_NEW_REASON,
         .flingPower = 30,
         .iconPic = gItemIcon_TwistedSpoon,
         .iconPalette = gItemIconPalette_TwistedSpoon,
@@ -8743,19 +8743,19 @@ const struct Item gItemsInfo[] =
 
     [ITEM_SILVER_POWDER] =
     {
-        .name = ITEM_NAME("Silver Powder"),
+        .name = ITEM_NAME("Sweet Powder"),
         .price = TYPE_BOOSTING_PRICE,
         .holdEffect = HOLD_EFFECT_TYPE_POWER,
         .holdEffectParam = TYPE_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "raises the power of\n"
-            "Bug-type moves."),
+            "Heart-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_BUG,
+        .secondaryId = TYPE_NEW_HEART,
         .flingPower = 10,
         .iconPic = gItemIcon_SilverPowder,
         .iconPalette = gItemIconPalette_SilverPowder,
@@ -8763,7 +8763,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_HARD_STONE] =
     {
-        .name = ITEM_NAME("Hard Stone"),
+        .name = ITEM_NAME("Beast Pebble"),
         .price = TYPE_BOOSTING_PRICE,
         .holdEffect = HOLD_EFFECT_TYPE_POWER,
         .holdEffectParam = TYPE_BOOST_PARAM,
@@ -8772,7 +8772,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_ROCK,
+        .secondaryId = TYPE_NEW_BEAST,
         .flingPower = 100,
         .iconPic = gItemIcon_HardStone,
         .iconPalette = gItemIconPalette_HardStone,
@@ -8787,12 +8787,12 @@ const struct Item gItemsInfo[] =
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "raises the power of\n"
-            "Ghost-type moves."),
+            "Nether-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_GHOST,
+        .secondaryId = TYPE_NEW_NETHER,
         .flingPower = 30,
         .iconPic = gItemIcon_SpellTag,
         .iconPalette = gItemIconPalette_SpellTag,
@@ -8800,19 +8800,19 @@ const struct Item gItemsInfo[] =
 
     [ITEM_DRAGON_FANG] =
     {
-        .name = ITEM_NAME("Dragon Fang"),
+        .name = ITEM_NAME("Sacred Fang"),
         .price = TYPE_BOOSTING_PRICE,
         .holdEffect = HOLD_EFFECT_TYPE_POWER,
         .holdEffectParam = TYPE_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "raises the power of\n"
-            "Dragon-type moves."),
+            "Divine-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_DRAGON,
+        .secondaryId = TYPE_NEW_DIVINE,
         .flingPower = 70,
         .iconPic = gItemIcon_DragonFang,
         .iconPalette = gItemIconPalette_DragonFang,
@@ -8833,7 +8833,7 @@ const struct Item gItemsInfo[] =
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_DARK,
+        .secondaryId = TYPE_NEW_DARK,
         .flingPower = 30,
         .iconPic = gItemIcon_BlackGlasses,
         .iconPalette = gItemIconPalette_BlackTypeEnhancingItem,
@@ -8854,13 +8854,13 @@ const struct Item gItemsInfo[] =
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "raises the power of\n"
-            "Steel-type moves."),
+            "Metal-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = EVO_HELD_ITEM_TYPE,
         .fieldUseFunc = EVO_HELD_ITEM_FIELD_FUNC,
         .effect = gItemEffect_EvoItem,
-        .secondaryId = TYPE_STEEL,
+        .secondaryId = TYPE_NEW_METAL,
         .flingPower = 30,
         .iconPic = gItemIcon_MetalCoat,
         .iconPalette = gItemIconPalette_MetalCoat,
@@ -11211,7 +11211,7 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Chilan Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_NORMAL,
+        .holdEffectParam = TYPE_NEW_ILLUSION,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "weakens a Normal\n"
@@ -11230,7 +11230,7 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Occa Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_FIRE,
+        .holdEffectParam = TYPE_NEW_FIRE,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "weakens a Fire\n"
@@ -11249,7 +11249,7 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Passho Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_WATER,
+        .holdEffectParam = TYPE_NEW_WATER,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "weakens a Water\n"
@@ -11268,7 +11268,7 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Wacan Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_ELECTRIC,
+        .holdEffectParam = TYPE_NEW_ELECTRIC,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "weakens a Electric\n"
@@ -11287,10 +11287,10 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Rindo Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_GRASS,
+        .holdEffectParam = TYPE_NEW_NATURE,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "weakens a Grass\n"
+            "weakens a Nature\n"
             "move if weak to it."),
         .pocket = POCKET_BERRIES,
         .type = ITEM_USE_BAG_MENU,
@@ -11306,7 +11306,7 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Yache Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_ICE,
+        .holdEffectParam = TYPE_NEW_ICE,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "weakens a Ice\n"
@@ -11325,7 +11325,7 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Chople Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_FIGHTING,
+        .holdEffectParam = TYPE_NEW_DREAM,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "weakens a Fighting\n"
@@ -11344,10 +11344,10 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Kebia Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_POISON,
+        .holdEffectParam = TYPE_NEW_MIASMA,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "weakens a Poison\n"
+            "weakens a Miasma\n"
             "move if weak to it."),
         .pocket = POCKET_BERRIES,
         .type = ITEM_USE_BAG_MENU,
@@ -11363,10 +11363,10 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Shuca Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_GROUND,
+        .holdEffectParam = TYPE_NEW_EARTH,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "weakens a Ground\n"
+            "weakens a Earth\n"
             "move if weak to it."),
         .pocket = POCKET_BERRIES,
         .type = ITEM_USE_BAG_MENU,
@@ -11382,7 +11382,7 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Coba Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_FLYING,
+        .holdEffectParam = TYPE_NEW_FLYING,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "weakens a Flying\n"
@@ -11401,10 +11401,10 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Payapa Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_PSYCHIC,
+        .holdEffectParam = TYPE_NEW_REASON,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "weakens a Psychic\n"
+            "weakens a Reason\n"
             "move if weak to it."),
         .pocket = POCKET_BERRIES,
         .type = ITEM_USE_BAG_MENU,
@@ -11420,10 +11420,10 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Tanga Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_BUG,
+        .holdEffectParam = TYPE_NEW_HEART,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "weakens a Bug\n"
+            "weakens a Heart\n"
             "move if weak to it."),
         .pocket = POCKET_BERRIES,
         .type = ITEM_USE_BAG_MENU,
@@ -11439,10 +11439,10 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Charti Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_ROCK,
+        .holdEffectParam = TYPE_NEW_BEAST,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "weakens a Rock\n"
+            "weakens a Beast\n"
             "move if weak to it."),
         .pocket = POCKET_BERRIES,
         .type = ITEM_USE_BAG_MENU,
@@ -11458,10 +11458,10 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Kasib Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_GHOST,
+        .holdEffectParam = TYPE_NEW_NETHER,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "weakens a Ghost\n"
+            "weakens a Nether\n"
             "move if weak to it."),
         .pocket = POCKET_BERRIES,
         .type = ITEM_USE_BAG_MENU,
@@ -11477,10 +11477,10 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Haban Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_DRAGON,
+        .holdEffectParam = TYPE_NEW_DIVINE,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "weakens a Dragon\n"
+            "weakens a Dicine\n"
             "move if weak to it."),
         .pocket = POCKET_BERRIES,
         .type = ITEM_USE_BAG_MENU,
@@ -11496,7 +11496,7 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Colbur Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_DARK,
+        .holdEffectParam = TYPE_NEW_DARK,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "weakens a Dark\n"
@@ -11515,10 +11515,10 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Babiri Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_STEEL,
+        .holdEffectParam = TYPE_NEW_METAL,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "weakens a Steel\n"
+            "weakens a Metal\n"
             "move if weak to it."),
         .pocket = POCKET_BERRIES,
         .type = ITEM_USE_BAG_MENU,
@@ -11534,7 +11534,7 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Roseli Berries"),
         .price = (I_BERRY_PRICE >= GEN_8) ? 80 : 20,
         .holdEffect = HOLD_EFFECT_RESIST_BERRY,
-        .holdEffectParam = TYPE_FAIRY,
+        .holdEffectParam = TYPE_NEW_WIND,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "weakens a Fairy\n"
@@ -14969,19 +14969,19 @@ const struct Item gItemsInfo[] =
 
     [ITEM_FAIRY_FEATHER] =
     {
-        .name = ITEM_NAME("Fairy Feather"),
+        .name = ITEM_NAME("Valkyrie Feather"),
         .price = 1000,
         .holdEffect = HOLD_EFFECT_TYPE_POWER,
         .holdEffectParam = TYPE_BOOST_PARAM,
         .description = COMPOUND_STRING(
             "A hold item that\n"
             "raises the power of\n"
-            "Fairy-type moves."),
+            "Wind-type moves."),
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_TYPE_BOOST_HELD_ITEM,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = TYPE_FAIRY,
+        .secondaryId = TYPE_NEW_WIND,
         .flingPower = 10,
         .iconPic = gItemIcon_FairyFeather,
         .iconPalette = gItemIconPalette_FairyFeather,

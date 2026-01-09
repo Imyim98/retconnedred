@@ -817,8 +817,8 @@ static bool32 GetHitEscapeTransformState(u32 battlerAtk, enum Move move)
         return FALSE;
 
     moveType = GetBattleMoveType(move);
-    if ((moveType == TYPE_WATER && (AI_GetWeather() & B_WEATHER_SUN_PRIMAL))
-     || (moveType == TYPE_FIRE && (AI_GetWeather() & B_WEATHER_RAIN_PRIMAL)))
+    if ((moveType == TYPE_NEW_WATER && (AI_GetWeather() & B_WEATHER_SUN_PRIMAL))
+     || (moveType == TYPE_NEW_FIRE && (AI_GetWeather() & B_WEATHER_RAIN_PRIMAL)))
         return FALSE;
 
     for (u32 battlerDef = 0; battlerDef < gBattlersCount; battlerDef++)
@@ -837,8 +837,8 @@ static bool32 GetHitEscapeTransformState(u32 battlerAtk, enum Move move)
         if (CanAbilityAbsorbMove(battlerAtk, battlerDef, abilityDef, move, moveType, AI_CHECK)
          || CanAbilityBlockMove(battlerAtk, battlerDef, gAiLogicData->abilities[battlerAtk], abilityDef, move, AI_CHECK))
         {
-            if ((moveType == TYPE_WATER && abilityDef == ABILITY_STORM_DRAIN)
-             || (moveType == TYPE_ELECTRIC && abilityDef == ABILITY_LIGHTNING_ROD))
+            if ((moveType == TYPE_NEW_WATER && abilityDef == ABILITY_STORM_DRAIN)
+             || (moveType == TYPE_NEW_ELECTRIC && abilityDef == ABILITY_LIGHTNING_ROD))
                 absorberOnField = TRUE;
             gAiLogicData->effectiveness[battlerAtk][battlerDef][moveIndex] = UQ_4_12(0.0);
             continue;

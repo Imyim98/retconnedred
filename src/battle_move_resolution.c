@@ -673,7 +673,7 @@ static enum MoveEndResult MoveEnd_Defrost(void)
         && IsBattlerTurnDamaged(gBattlerTarget)
         && IsBattlerAlive(gBattlerTarget)
         && gBattlerAttacker != gBattlerTarget
-        && (GetBattleMoveType(gCurrentMove) == TYPE_FIRE || CanBurnHitThaw(gCurrentMove))
+        && (GetBattleMoveType(gCurrentMove) == TYPE_NEW_FIRE || CanBurnHitThaw(gCurrentMove))
         && !(gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_NO_EFFECT))
     {
         gBattleMons[gBattlerTarget].status1 &= ~STATUS1_FREEZE;

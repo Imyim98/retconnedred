@@ -73,7 +73,7 @@ const u32 gBattleEnvironmentAnimTilemap_BlankGBC[] = INCBIN_U32("graphics/battle
 #endif
 #define CAVE_SECRET_POWER_ANIMATION B_SECRET_POWER_ANIMATION >= GEN_4 ? gBattleAnimMove_RockThrow : gBattleAnimMove_Bite
 #define CAVE_SECRET_POWER_EFFECT    MOVE_EFFECT_FLINCH
-#define CAVE_CAMOUFLAGE_TYPE        TYPE_ROCK
+#define CAVE_CAMOUFLAGE_TYPE        TYPE_NEW_EARTH
 #define CAVE_CAMOUFLAGE_BLEND       RGB(14, 9, 3)
 #define CAVE_BATTLE_INTRO_SLIDE     BattleIntroSlide1
 
@@ -87,7 +87,7 @@ const u32 gBattleEnvironmentAnimTilemap_BlankGBC[] = INCBIN_U32("graphics/battle
     #define BUILDING_SECRET_POWER_ANIMATION gBattleAnimMove_Strength,
 #endif
 #define BUILDING_SECRET_POWER_EFFECT MOVE_EFFECT_PARALYSIS
-#define BUILDING_CAMOUFLAGE_TYPE     TYPE_NORMAL
+#define BUILDING_CAMOUFLAGE_TYPE     TYPE_NEW_ILLUSION
 #define BUILDING_CAMOUFLAGE_BLEND    RGB_WHITE
 #define BUILDING_BATTLE_INTRO_SLIDE  BattleIntroSlide3
 

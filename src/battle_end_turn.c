@@ -141,7 +141,7 @@ static bool32 HandleEndTurnWeatherDamage(u32 battler)
          && ability != ABILITY_SAND_FORCE
          && ability != ABILITY_SAND_RUSH
          && ability != ABILITY_OVERCOAT
-         && !IS_BATTLER_ANY_TYPE(battler, TYPE_NEW_EARTH, TYPE_STEEL)
+         && !IS_BATTLER_ANY_TYPE(battler, TYPE_NEW_EARTH, TYPE_NEW_METAL)
          && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERGROUND
          && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERWATER
          && GetBattlerHoldEffect(battler) != HOLD_EFFECT_SAFETY_GOGGLES

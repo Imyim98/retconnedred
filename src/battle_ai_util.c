@@ -79,7 +79,7 @@ static u32 AI_CanBattlerHitBothFoesInTerrain(u32 battler, enum Move move, enum B
 enum MoveTarget AI_GetBattlerMoveTargetType(u32 battler, enum Move move)
 {
     enum BattleMoveEffects effect = GetMoveEffect(move);
-    if (effect == EFFECT_CURSE && !IS_BATTLER_OF_TYPE(battler, TYPE_GHOST))
+    if (effect == EFFECT_CURSE && !IS_BATTLER_OF_TYPE(battler, TYPE_NEW_NETHER))
         return TARGET_USER;
     if (AI_CanBattlerHitBothFoesInTerrain(battler, move, effect))
         return TARGET_BOTH;
@@ -668,9 +668,9 @@ bool32 IsDamageMoveUnusable(struct BattleContext *ctx)
 
     if (HasWeatherEffect())
     {
-        if (ctx->weather & B_WEATHER_SUN_PRIMAL && ctx->moveType == TYPE_WATER)
+        if (ctx->weather & B_WEATHER_SUN_PRIMAL && ctx->moveType == TYPE_NEW_WATER)
             return TRUE;
-        if (ctx->weather & B_WEATHER_RAIN_PRIMAL && ctx->moveType == TYPE_FIRE)
+        if (ctx->weather & B_WEATHER_RAIN_PRIMAL && ctx->moveType == TYPE_NEW_FIRE)
             return TRUE;
     }
 
@@ -5192,7 +5192,7 @@ bool32 ShouldUseZMove(u32 battlerAtk, u32 battlerDef, enum Move chosenMove)
 
             if (zEffect == Z_EFFECT_CURSE)
             {
-                if (IS_BATTLER_OF_TYPE(battlerAtk, TYPE_GHOST))
+                if (IS_BATTLER_OF_TYPE(battlerAtk, TYPE_NEW_NETHER))
                     zEffect = Z_EFFECT_RECOVER_HP;
                 else
                     zEffect = Z_EFFECT_ATK_UP_1;

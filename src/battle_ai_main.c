@@ -3568,7 +3568,7 @@ static s32 AI_DoubleBattle(u32 battlerAtk, u32 battlerDef, enum Move move, s32 s
                 }
                 break;
             case ABILITY_STEAM_ENGINE:
-                if (isFriendlyFireOK && (moveType == TYPE_WATER || moveType == TYPE_FIRE)
+                if (isFriendlyFireOK && (moveType == TYPE_NEW_WATER || moveType == TYPE_NEW_FIRE)
                     && ShouldTriggerAbility(battlerAtk, battlerAtkPartner, atkPartnerAbility))
                 {
                     if (moveTarget == TARGET_FOES_AND_ALLY)
@@ -3583,7 +3583,7 @@ static s32 AI_DoubleBattle(u32 battlerAtk, u32 battlerDef, enum Move move, s32 s
                 }
                 break;
             case ABILITY_THERMAL_EXCHANGE:
-                if (moveType == TYPE_FIRE && isFriendlyFireOK
+                if (moveType == TYPE_NEW_FIRE && isFriendlyFireOK
                     && !IsBattleMoveStatus(move)
                     && ShouldTriggerAbility(battlerAtk, battlerAtkPartner, atkPartnerAbility))
                 {
@@ -5764,7 +5764,7 @@ static s32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, enum Move move
         ADJUST_SCORE(AI_ShouldCopyStatChanges(battlerAtk, battlerDef));
         break;
     case EFFECT_SMACK_DOWN:
-        if (!AI_IsBattlerGrounded(battlerDef) && HasDamagingMoveOfType(battlerAtk, TYPE_GROUND) && !CanTargetFaintAi(battlerDef, battlerAtk))
+        if (!AI_IsBattlerGrounded(battlerDef) && HasDamagingMoveOfType(battlerAtk, TYPE_NEW_EARTH) && !CanTargetFaintAi(battlerDef, battlerAtk))
             ADJUST_SCORE(DECENT_EFFECT);
         break;
     case EFFECT_KNOCK_OFF:
@@ -5820,7 +5820,7 @@ static s32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, enum Move move
                         ADJUST_SCORE(DECENT_EFFECT);
                     break;
                 case HOLD_EFFECT_BLACK_SLUDGE:
-                    if (IS_BATTLER_OF_TYPE(battlerAtk, TYPE_POISON))
+                    if (IS_BATTLER_OF_TYPE(battlerAtk, TYPE_NEW_MIASMA))
                         ADJUST_SCORE(DECENT_EFFECT);
                     break;
                 case HOLD_EFFECT_IRON_BALL:
@@ -6096,7 +6096,7 @@ static s32 AI_CalcAdditionalEffectScore(u32 battlerAtk, u32 battlerDef, enum Mov
                     ADJUST_SCORE(BEST_EFFECT);
                 break;
             case MOVE_EFFECT_SALT_CURE:
-                if (IS_BATTLER_OF_TYPE(battlerDef, TYPE_WATER) || IS_BATTLER_OF_TYPE(battlerDef, TYPE_STEEL))
+                if (IS_BATTLER_OF_TYPE(battlerDef, TYPE_NEW_WATER) || IS_BATTLER_OF_TYPE(battlerDef, TYPE_NEW_METAL))
                     ADJUST_SCORE(DECENT_EFFECT);
                 break;
             case MOVE_EFFECT_SUN:
@@ -6513,6 +6513,7 @@ static s32 AI_HPAware(u32 battlerAtk, u32 battlerDef, enum Move move, s32 score)
          || (moveType == TYPE_NEW_ELECTRIC && gAiLogicData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_VOLT_ABSORB)
          || (moveType == TYPE_NEW_EARTH && gAiLogicData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_EARTH_EATER)
          || (moveType == TYPE_NEW_EARTH && gAiLogicData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_SCULPTOR_GOD)
+         || ((moveType == TYPE_NEW_DIVINE || moveType == TYPE_NEW_DARK) && gAiLogicData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_MAKAI_GODDESS)
          || (moveType == TYPE_NEW_WATER && (gAiLogicData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_DRY_SKIN || gAiLogicData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_WATER_ABSORB)))
         {
             if (gBattleMons[battlerDef].volatiles.healBlock)

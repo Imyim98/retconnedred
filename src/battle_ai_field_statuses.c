@@ -538,14 +538,14 @@ static enum FieldEffectOutcome BenefitsFromGravity(u32 battler)
     if (IsBattlerAlive(LEFT_FOE(battler)))
     {
         if (HasMoveWithLowAccuracy(battler, LEFT_FOE(battler), LOW_ACCURACY_THRESHOLD, FALSE)
-         || (!AI_IsBattlerGrounded(LEFT_FOE(battler)) && HasDamagingMoveOfType(battler, TYPE_GROUND)))
+         || (!AI_IsBattlerGrounded(LEFT_FOE(battler)) && HasDamagingMoveOfType(battler, TYPE_NEW_EARTH)))
             return FIELD_EFFECT_POSITIVE;
     }
 
     if (IsBattlerAlive(RIGHT_FOE(battler)))
     {
         if (HasMoveWithLowAccuracy(battler, RIGHT_FOE(battler), LOW_ACCURACY_THRESHOLD, FALSE)
-         || (!AI_IsBattlerGrounded(RIGHT_FOE(battler)) && HasDamagingMoveOfType(battler, TYPE_GROUND)))
+         || (!AI_IsBattlerGrounded(RIGHT_FOE(battler)) && HasDamagingMoveOfType(battler, TYPE_NEW_EARTH)))
             return FIELD_EFFECT_POSITIVE;
     }
     return FIELD_EFFECT_NEUTRAL;
@@ -606,7 +606,7 @@ s32 CalcWeatherScore(u32 battlerAtk, u32 battlerDef, enum Move move, struct AiLo
              || HasBattlerSideMoveWithEffect(battlerDef, EFFECT_SOLAR_BEAM)
              || HasBattlerSideMoveWithEffect(battlerDef, EFFECT_MOONLIGHT))
                 score += WEAK_EFFECT;
-            if (HasDamagingMoveOfType(battlerDef, TYPE_FIRE) || HasDamagingMoveOfType(BATTLE_PARTNER(battlerDef), TYPE_FIRE))
+            if (HasDamagingMoveOfType(battlerDef, TYPE_NEW_FIRE) || HasDamagingMoveOfType(BATTLE_PARTNER(battlerDef), TYPE_NEW_FIRE))
                 score += WEAK_EFFECT;
         }
         break;
@@ -619,7 +619,7 @@ s32 CalcWeatherScore(u32 battlerAtk, u32 battlerDef, enum Move move, struct AiLo
                 score += WEAK_EFFECT;
             if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_HEAT_ROCK)
                 score += WEAK_EFFECT;
-            if (HasDamagingMoveOfType(battlerDef, TYPE_WATER) || HasDamagingMoveOfType(BATTLE_PARTNER(battlerDef), TYPE_WATER))
+            if (HasDamagingMoveOfType(battlerDef, TYPE_NEW_WATER) || HasDamagingMoveOfType(BATTLE_PARTNER(battlerDef), TYPE_NEW_WATER))
                 score += WEAK_EFFECT;
             if (HasMoveWithFlag(battlerDef, MoveHas50AccuracyInSun) || HasMoveWithFlag(BATTLE_PARTNER(battlerDef), MoveHas50AccuracyInSun))
                 score += WEAK_EFFECT;

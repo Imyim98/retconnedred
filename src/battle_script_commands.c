@@ -10640,7 +10640,7 @@ static void Cmd_settypetorandomresistance(void)
     {
         moveToCheck = gLastLandedMoves[gBattlerAttacker];
         if (GetMoveEffect(moveToCheck) == EFFECT_STRUGGLE)
-            typeToCheck = TYPE_NORMAL;
+            typeToCheck = TYPE_NEW_ILLUSION;
         else
             typeToCheck = gLastHitByType[gBattlerAttacker];
     }
@@ -15512,7 +15512,7 @@ void BS_TryFlingHoldEffect(void)
         SetMoveEffect(gBattlerAttacker, gBattlerTarget, MOVE_EFFECT_PARALYSIS, cmd->nextInstr, NO_FLAGS);
         break;
     case HOLD_EFFECT_TYPE_POWER:
-        if (GetItemSecondaryId(gLastUsedItem) != TYPE_POISON)
+        if (GetItemSecondaryId(gLastUsedItem) != TYPE_NEW_MIASMA)
             gBattlescriptCurrInstr = cmd->nextInstr;
         else
             SetMoveEffect(gBattlerAttacker, gBattlerTarget, MOVE_EFFECT_POISON, cmd->nextInstr, NO_FLAGS);

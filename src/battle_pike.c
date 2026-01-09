@@ -861,7 +861,7 @@ static bool8 DoesTypePreventStatus(u16 species, u32 status)
             ret = TRUE;
         break;
     case STATUS1_PARALYSIS:
-        if (GetSpeciesType(species, 0) == TYPE_GROUND || GetSpeciesType(species, 1) == TYPE_NEW_EARTH
+        if (GetSpeciesType(species, 0) == TYPE_NEW_EARTH || GetSpeciesType(species, 1) == TYPE_NEW_EARTH
             || (GetConfig(CONFIG_PARALYZE_ELECTRIC) >= GEN_6 && (GetSpeciesType(species, 0) == TYPE_NEW_ELECTRIC || GetSpeciesType(species, 1) == TYPE_NEW_ELECTRIC)))
             ret = TRUE;
         break;
