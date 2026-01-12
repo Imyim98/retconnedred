@@ -12621,7 +12621,12 @@ static void FinalizeCapture(void)
     BtlController_EmitBallThrowAnim(gBattlerAttacker, B_COMM_TO_CONTROLLER, BALL_3_SHAKES_SUCCESS);
     MarkBattlerForControllerExec(gBattlerAttacker);
     TryBattleFormChange(gBattlerTarget, FORM_CHANGE_END_BATTLE);
-    gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
+
+    if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
+        gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
+    else
+        gBattlescriptCurrInstr = BattleScript_SuccessBallThrow_NoMusic;
+
     struct Pokemon *caughtMon = GetBattlerMon(gBattlerTarget);
     SetMonData(caughtMon, MON_DATA_POKEBALL, &ballId);
 
@@ -12840,6 +12845,9 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
         ball->divider = 4096;
         break;
     }
+
+    if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SAFARI_ZONE_SOUTH_FIRST_CONSTRUCTION) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SAFARI_ZONE_SOUTH_FIRST_CONSTRUCTION)))
+        ball->guaranteedCapture = TRUE;
 
 }
 
