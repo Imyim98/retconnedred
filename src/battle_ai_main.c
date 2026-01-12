@@ -2146,8 +2146,6 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, enum Move move, s32 s
               || !CanBattlerGetOrLoseItem(battlerAtk, battlerDef, aiData->items[battlerDef])
               || !CanBattlerGetOrLoseItem(battlerDef, battlerAtk, aiData->items[battlerDef])
               || !CanBattlerGetOrLoseItem(battlerDef, battlerAtk, gBattleMons[battlerAtk].item)
-              || aiData->abilities[battlerDef] == ABILITY_STICKY_HOLD
-              || aiData->abilities[battlerDef] == ABILITY_COLLECTOR
               || DoesSubstituteBlockMove(battlerAtk, battlerDef, move))
                 ADJUST_SCORE(-10);
         case EFFECT_KNOCK_OFF:
@@ -2542,8 +2540,6 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, enum Move move, s32 s
               || aiData->items[battlerDef] != ITEM_NONE
               || !CanBattlerGetOrLoseItem(battlerAtk, battlerDef, gBattleMons[battlerAtk].item)    // AI knows its own item
               || !CanBattlerGetOrLoseItem(battlerDef, battlerAtk, gBattleMons[battlerAtk].item)
-              || aiData->abilities[battlerAtk] == ABILITY_STICKY_HOLD
-              || aiData->abilities[battlerAtk] == ABILITY_COLLECTOR
               || DoesSubstituteBlockMove(battlerAtk, battlerDef, move))
                 ADJUST_SCORE(-10);
             break;

@@ -2033,7 +2033,8 @@ void CB2_QuitRecordedBattle(void)
             if (taskId != TASK_NONE)
                 DestroyTask(taskId);
 
-            TestRunner_Battle_AfterLastTurn();
+            gCurrentActionFuncId = B_ACTION_FINISHED;
+            sEndTurnFuncsTable[gBattleOutcome & 0x7F](); // Contains TestRunner_Battle_AfterLastTurn
         }
         FreeRestoreBattleData();
         FreeAllWindowBuffers();
@@ -2196,7 +2197,7 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                     if (speciesInfo->abilities[abilityNum] == partyData[monIndex].ability)
                         break;
                 }
-                assertf(abilityNum < maxAbilityNum, "illegal ability %S for %S", gAbilitiesInfo[partyData[monIndex].ability], speciesInfo->speciesName);
+                assertf(abilityNum < maxAbilityNum, "illegal ability %S for %S", gAbilitiesInfo[partyData[monIndex].ability].name, speciesInfo->speciesName);
             }
             else if (B_TRAINER_MON_RANDOM_ABILITY)
             {
@@ -3745,7 +3746,7 @@ static void DoBattleIntro(void)
                 {
                     BtlController_EmitLoadMonSprite(battler, B_COMM_TO_CONTROLLER);
                     MarkBattlerForControllerExec(battler);
-                    gBattleResults.lastOpponentSpecies = GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES, NULL);
+                    gBattleResults.lastOpponentSpecies = GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES);
                 }
                 break;
             case B_POSITION_PLAYER_RIGHT:
@@ -3768,8 +3769,10 @@ static void DoBattleIntro(void)
                 {
                     BtlController_EmitLoadMonSprite(battler, B_COMM_TO_CONTROLLER);
                     MarkBattlerForControllerExec(battler);
-                    gBattleResults.lastOpponentSpecies = GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES, NULL);
+                    gBattleResults.lastOpponentSpecies = GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES);
                 }
+                break;
+            default:
                 break;
             }
 
@@ -4259,7 +4262,7 @@ u8 IsRunningFromBattleImpossible(u32 battler)
 
     if (holdEffect == HOLD_EFFECT_CAN_ALWAYS_RUN)
         return BATTLE_RUN_SUCCESS;
-    if (B_GHOSTS_ESCAPE >= GEN_6 && IS_BATTLER_OF_TYPE(battler, TYPE_NEW_NETHER))
+    if (GetConfig(CONFIG_GHOSTS_ESCAPE) >= GEN_6 && IS_BATTLER_OF_TYPE(battler, TYPE_NEW_NETHER))
         return BATTLE_RUN_SUCCESS;
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
         return BATTLE_RUN_SUCCESS;
@@ -4350,7 +4353,7 @@ static void HandleTurnActionSelectionState(void)
     gBattleCommunication[ACTIONS_CONFIRMED_COUNT] = 0;
     for (battler = 0; battler < gBattlersCount; battler++)
     {
-        u32 position = GetBattlerPosition(battler);
+        enum BattlerPosition position = GetBattlerPosition(battler);
         switch (gBattleCommunication[battler])
         {
         case STATE_TURN_START_RECORD: // Recorded battle related action on start of every turn.
@@ -5793,12 +5796,12 @@ static void HandleEndTurn_FinishBattle(void)
                 {
                     if (gBattleResults.playerMon1Species == SPECIES_NONE)
                     {
-                        gBattleResults.playerMon1Species = GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES, NULL);
+                        gBattleResults.playerMon1Species = GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES);
                         GetMonData(GetBattlerMon(battler), MON_DATA_NICKNAME, gBattleResults.playerMon1Name);
                     }
                     else
                     {
-                        gBattleResults.playerMon2Species = GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES, NULL);
+                        gBattleResults.playerMon2Species = GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES);
                         GetMonData(GetBattlerMon(battler), MON_DATA_NICKNAME, gBattleResults.playerMon2Name);
                     }
                 }
@@ -5840,21 +5843,11 @@ static void HandleEndTurn_FinishBattle(void)
             TryPutBreakingNewsOnAir();
         }
 
-        RecordedBattle_SetPlaybackFinished();
-        if (gTestRunnerEnabled)
-            TestRunner_Battle_AfterLastTurn();
         BeginFastPaletteFade(3);
         if (!(FlagGet(FLAG_MUSIC_NO_CHANGE) || GetCurrentRegionMapSectionId() == MAPSEC_JOHTO_SPACE_HYPER_VESSEL))
             FadeOutMapMusic(5);
         if (B_TRAINERS_KNOCK_OFF_ITEMS == TRUE || B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9)
             TryRestoreHeldItems();
-
-        // Undo Dynamax HP multiplier before recalculating stats.
-        for (battler = 0; battler < gBattlersCount; ++battler)
-        {
-            if (GetActiveGimmick(battler) == GIMMICK_DYNAMAX)
-                UndoDynamax(battler);
-        }
 
         for (i = 0; i < PARTY_SIZE; i++)
         {
@@ -5864,6 +5857,9 @@ static void HandleEndTurn_FinishBattle(void)
             if (!changedForm && B_RECALCULATE_STATS >= GEN_5)
                 CalculateMonStats(&gPlayerParty[i]);
         }
+        RecordedBattle_SetPlaybackFinished();
+        if (gTestRunnerEnabled)
+            TestRunner_Battle_AfterLastTurn();
         // Clear battle mon species to avoid a bug on the next battle that causes
         // healthboxes loading incorrectly due to it trying to create a Mega Indicator
         // if the previous battler would've had it.
