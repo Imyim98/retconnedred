@@ -219,6 +219,17 @@ static bool32 FirstEventBlockEvents(struct BattleCalcValues *calcValues)
             BattleScriptCall(BattleScript_LunarDanceActivates);
             effect = TRUE;
         }
+        else if (gBattleStruct->battlerState[battler].lastWishFlag != 0 && gBattleStruct->battlerState[battler].lastWishAmount != 0)
+        {
+            u16 amountHP = gBattleStruct->battlerState[battler].lastWishAmount;
+            
+            gBattleScripting.battler = battler;
+            SetHealAmount(battler, amountHP);
+            BattleScriptCall(BattleScript_LastWishRecover);
+            gBattleStruct->battlerState[battler].lastWishFlag = 0;
+            gBattleStruct->battlerState[battler].lastWishAmount = 0;
+            effect = TRUE;
+        }
         else if (gBattleStruct->zmove.healReplacement & 1u << battler)
         {
             gBattleStruct->zmove.healReplacement &= ~(1u << battler);

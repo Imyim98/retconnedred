@@ -526,6 +526,9 @@ struct BattlerState
     u16 fainted:1;
     u16 isFirstTurn:2;
     u16 padding:12;
+    // custom
+    u16 lastWishFlag;
+    u16 lastWishAmount;
 };
 
 struct PartyState

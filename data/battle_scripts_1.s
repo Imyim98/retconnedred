@@ -9429,3 +9429,21 @@ BattleScript_BlankCardActivates::
 	settracedability BS_SCRIPTING
 	switchinabilities BS_SCRIPTING
 	return
+
+BattleScript_MadeLastWish::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUpScripting
+	printstring STRINGID_POKEMONMADELASTWISH
+	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_LastWishRecover::
+	waitmessage B_WAIT_TIME_LONG
+	playanimation BS_SCRIPTING, B_ANIM_WISH_HEAL
+	waitanimation
+	healthbarupdate BS_SCRIPTING, PASSIVE_HP_UPDATE
+	datahpupdate BS_SCRIPTING, PASSIVE_HP_UPDATE
+	waitstate
+	printstring STRINGID_POKEMONRECOVEREDFROMLASTWISH
+	waitmessage B_WAIT_TIME_LONG
+	return

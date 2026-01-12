@@ -5935,6 +5935,19 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 effect++;
             }
             break;
+        case ABILITY_LAST_WISH:
+            if (!(gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_NO_EFFECT)
+             && !IsBattlerAlive(gBattlerTarget)
+             && gBattleStruct->battlerState[gBattlerTarget].lastWishFlag == 0)
+            {
+                gBattleStruct->battlerState[gBattlerTarget].lastWishFlag = 1;
+                gBattleStruct->battlerState[gBattlerTarget].lastWishAmount = GetNonDynamaxMaxHP(gBattlerTarget) / 2;
+
+                gBattleScripting.battler = gBattlerTarget;
+                BattleScriptCall(BattleScript_MadeLastWish);
+                effect++;
+            }
+            break;
         case ABILITY_AFTERMATH:
             if (!(gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_NO_EFFECT)
              && !IsBattlerAlive(gBattlerTarget)

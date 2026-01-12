@@ -926,6 +926,8 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_CALLINGFRIENDANDBEATUP]               = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} grouped up and ready to beat up the opponent!"),
     [STRINGID_CALLINGFRIENDFAILED]                  = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} failed to group up!"),
     [STRINGID_ATTACKERABILITYSTATDROP]              = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX}'s {B_BUFF1} dropped due to {B_SCR_ABILITY} {B_BUFF2}!"),
+    [STRINGID_POKEMONMADELASTWISH]                  = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} made its last wish…"),
+    [STRINGID_POKEMONRECOVEREDFROMLASTWISH]         = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} regained health from the last wish!"),
 };
 
 const u16 gTrainerUsedItemStringIds[] =
