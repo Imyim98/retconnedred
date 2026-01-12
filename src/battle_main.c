@@ -4946,7 +4946,9 @@ u32 GetBattlerTotalSpeedStat(u32 battler, enum Ability ability, enum HoldEffect 
     else if (ability == ABILITY_PURE_WHITE && gBattleMons[battler].status1 & STATUS1_PARALYSIS)
         speed = (speed * 150) / 100;
     else if (ability == ABILITY_SABOTEN_CORE)
-        speed = (speed * 130) / 100;
+        speed = (speed * 150) / 100;
+    else if (ability == ABILITY_PURE_ENIGMA)
+        speed = (speed * 150) / 100;
     else if (ability == ABILITY_UNBURDEN && gBattleMons[battler].volatiles.unburdenActive)
         speed *= 2;
 

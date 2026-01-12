@@ -148,7 +148,7 @@ static enum MoveEndResult MoveEnd_Absorb(void)
             s32 healAmount = (gBattleStruct->moveDamage[gBattlerTarget] * GetMoveAbsorbPercentage(gCurrentMove) / 100);
             healAmount = GetDrainedBigRootHp(gBattlerAttacker, healAmount);
             if ((moveEffect == EFFECT_DREAM_EATER && GetConfig(CONFIG_DREAM_EATER_LIQUID_OOZE) < GEN_5)
-                || GetBattlerAbility(gBattlerTarget) != ABILITY_LIQUID_OOZE)
+                || !(GetBattlerAbility(gBattlerTarget) == ABILITY_LIQUID_OOZE || GetBattlerAbility(gBattlerTarget) == ABILITY_STRANGE_MIST))
             {
                 SetHealAmount(gBattlerAttacker, healAmount);
                 gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_ABSORB;
@@ -857,7 +857,7 @@ static enum MoveEndResult MoveEnd_MoveBlock(void)
         {
             u32 side = GetBattlerSide(gBattlerTarget);
 
-            if (GetBattlerAbility(gBattlerTarget) == ABILITY_STICKY_HOLD)
+            if (GetBattlerAbility(gBattlerTarget) == ABILITY_STICKY_HOLD || GetBattlerAbility(gBattlerTarget) == ABILITY_COLLECTOR)
             {
                 gBattlerAbility = gBattlerTarget;
                 BattleScriptCall(BattleScript_StickyHoldActivatesRet);
@@ -897,7 +897,7 @@ static enum MoveEndResult MoveEnd_MoveBlock(void)
         {
             result = MOVEEND_STEP_CONTINUE;
         }
-        else if (GetBattlerAbility(gBattlerTarget) == ABILITY_STICKY_HOLD)
+        else if (GetBattlerAbility(gBattlerTarget) == ABILITY_STICKY_HOLD || GetBattlerAbility(gBattlerTarget) == ABILITY_COLLECTOR)
         {
             BattleScriptCall(BattleScript_NoItemSteal);
             gLastUsedAbility = gBattleMons[gBattlerTarget].ability;
@@ -929,7 +929,7 @@ static enum MoveEndResult MoveEnd_MoveBlock(void)
             if (targetAbility == ABILITY_GUARD_DOG)
                 break;
 
-            if (targetAbility == ABILITY_SUCTION_CUPS)
+            if (targetAbility == ABILITY_SUCTION_CUPS || targetAbility == ABILITY_GATE_KEEPER)
             {
                 BattleScriptCall(BattleScript_AbilityPreventsPhasingOutRet);
             }
@@ -1505,7 +1505,7 @@ static enum MoveEndResult MoveEnd_Pickpocket(void)
             {
                 gBattlerTarget = gBattlerAbility = battler;
                 // Battle scripting is super brittle so we shall do the item exchange now (if possible)
-                if (GetBattlerAbility(gBattlerAttacker) != ABILITY_STICKY_HOLD)
+                if (!(GetBattlerAbility(gBattlerAttacker) == ABILITY_STICKY_HOLD || GetBattlerAbility(gBattlerAttacker) == ABILITY_COLLECTOR))
                     StealTargetItem(gBattlerTarget, gBattlerAttacker);  // Target takes attacker's item
 
                 gEffectBattler = gBattlerAttacker;

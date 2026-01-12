@@ -2342,6 +2342,18 @@ static void Cmd_attackcanceler(void)
         PREPARE_BYTE_NUMBER_BUFFER(gBattleScripting.multihitString, 1, 0)
         return;
     }
+    
+    if (gSpecialStatuses[gBattlerAttacker].parentalBondState == PARENTAL_BOND_OFF
+     && ctx.abilityAtk == ABILITY_TWIN_BODY
+     && IsMoveAffectedByParentalBond(gCurrentMove, gBattlerAttacker)
+     && !(gAbsentBattlerFlags & (1u << gBattlerTarget))
+     && GetActiveGimmick(gBattlerAttacker) != GIMMICK_Z_MOVE)
+    {
+        gSpecialStatuses[gBattlerAttacker].parentalBondState = PARENTAL_BOND_1ST_HIT;
+        gMultiHitCounter = 2;
+        PREPARE_BYTE_NUMBER_BUFFER(gBattleScripting.multihitString, 1, 0)
+        return;
+    }
 
     // UBW
     if (gSpecialStatuses[gBattlerAttacker].parentalBondState == PARENTAL_BOND_OFF
@@ -4458,6 +4470,8 @@ void SetMoveEffect(u32 battler, u32 effectBattler, enum MoveEffect moveEffect, c
             recoil = 1;
         if (GetBattlerAbility(gEffectBattler) == ABILITY_PARENTAL_BOND)
             recoil *= 2;
+        if (GetBattlerAbility(gEffectBattler) == ABILITY_TWIN_BODY)
+            recoil *= 2;
         SetPassiveDamageAmount(gEffectBattler, recoil);
         TryUpdateEvolutionTracker(IF_RECOIL_DAMAGE_GE, gBattleStruct->passiveHpUpdate[gBattlerAttacker], MOVE_NONE);
         BattleScriptPush(battleScript);
@@ -4565,7 +4579,7 @@ void SetMoveEffect(u32 battler, u32 effectBattler, enum MoveEffect moveEffect, c
             gBattlescriptCurrInstr = battleScript;
         }
         else if (GetItemPocket(gBattleMons[gEffectBattler].item) == POCKET_BERRIES
-            && battlerAbility != ABILITY_STICKY_HOLD)
+            && !(battlerAbility == ABILITY_STICKY_HOLD || battlerAbility == ABILITY_COLLECTOR))
         {
             // target loses their berry
             gLastUsedItem = gBattleMons[gEffectBattler].item;
@@ -9294,8 +9308,9 @@ static void TryPlayStatChangeAnimation(u32 battler, enum Ability ability, u32 st
                     }
                 }
                 else if (!((ability == ABILITY_KEEN_EYE || ability == ABILITY_MINDS_EYE) && currStat == STAT_ACC)
-                        && !(GetConfig(CONFIG_ILLUMINATE_EFFECT) >= GEN_9 && ability == ABILITY_ILLUMINATE && currStat == STAT_ACC)
+                        && !(GetConfig(CONFIG_ILLUMINATE_EFFECT) >= GEN_9 && (ability == ABILITY_ILLUMINATE || ability == ABILITY_DIVA) && currStat == STAT_ACC)
                         && !(ability == ABILITY_HYPER_CUTTER && currStat == STAT_ATK)
+                        && !(ability == ABILITY_HI_STRENGTH && currStat == STAT_ATK)
                         && !(ability == ABILITY_BIG_PECKS && currStat == STAT_DEF))
                 {
                     if (gBattleMons[battler].statStages[currStat] > MIN_STAT_STAGE)
@@ -9464,8 +9479,9 @@ static u32 ChangeStatBuffs(u32 battler, s8 statValue, enum Stat statId, union St
         }
         else if (!flags.certain
                 && (((battlerAbility == ABILITY_KEEN_EYE || battlerAbility == ABILITY_MINDS_EYE) && statId == STAT_ACC)
-                || (GetConfig(CONFIG_ILLUMINATE_EFFECT) >= GEN_9 && battlerAbility == ABILITY_ILLUMINATE && statId == STAT_ACC)
+                || (GetConfig(CONFIG_ILLUMINATE_EFFECT) >= GEN_9 && (battlerAbility == ABILITY_ILLUMINATE || battlerAbility == ABILITY_DIVA) && statId == STAT_ACC)
                 || (battlerAbility == ABILITY_HYPER_CUTTER && statId == STAT_ATK)
+                || (battlerAbility == ABILITY_HI_STRENGTH && statId == STAT_ATK)
                 || (battlerAbility == ABILITY_BIG_PECKS && statId == STAT_DEF)))
         {
             if (flags.allowPtr)
@@ -11708,7 +11724,7 @@ static void Cmd_tryswapitems(void)
             gBattlescriptCurrInstr = cmd->failInstr;
         }
         // check if ability prevents swapping
-        else if (GetBattlerAbility(gBattlerTarget) == ABILITY_STICKY_HOLD)
+        else if (GetBattlerAbility(gBattlerTarget) == ABILITY_STICKY_HOLD || GetBattlerAbility(gBattlerTarget) == ABILITY_COLLECTOR)
         {
             gBattlescriptCurrInstr = BattleScript_StickyHoldActivates;
             gLastUsedAbility = gBattleMons[gBattlerTarget].ability;
@@ -13722,6 +13738,7 @@ static bool32 CanAbilityPreventStatLoss(enum Ability abilityDef)
     case ABILITY_CLEAR_BODY:
     case ABILITY_FULL_METAL_BODY:
     case ABILITY_WHITE_SMOKE:
+    case ABILITY_MAGIC_BARRIER:
     case ABILITY_HAKUREI_MIKO:
     case ABILITY_DOUBLE_HEROINES:
         return TRUE;
@@ -15546,6 +15563,7 @@ void BS_JumpIfAbilityCantBeReactivated(void)
     case ABILITY_IMPOSTER:
     case ABILITY_NEUTRALIZING_GAS:
     case ABILITY_AIR_LOCK:
+    case ABILITY_HISOUTEN:
     case ABILITY_CLOUD_NINE:
         gBattlescriptCurrInstr = cmd->jumpInstr;
         break;
@@ -17281,6 +17299,7 @@ void BS_TryBestow(void)
         || !CanBattlerGetOrLoseItem(gBattlerAttacker, gBattlerTarget, gBattleMons[gBattlerAttacker].item)
         || !CanBattlerGetOrLoseItem(gBattlerTarget, gBattlerAttacker, gBattleMons[gBattlerAttacker].item)
         || GetBattlerAbility(gBattlerAttacker) == ABILITY_STICKY_HOLD
+        || GetBattlerAbility(gBattlerAttacker) == ABILITY_COLLECTOR
         || GetBattlerPartyState(gBattlerTarget)->knockedOffItem)
     {
         gBattlescriptCurrInstr = cmd->failInstr;

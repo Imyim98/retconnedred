@@ -570,6 +570,7 @@ BattleScript_EffectCorrosiveGas::
 	attackanimation
 	waitanimation
 	jumpifability BS_TARGET, ABILITY_STICKY_HOLD, BattleScript_StickyHoldActivates
+	jumpifability BS_TARGET, ABILITY_COLLECTOR, BattleScript_StickyHoldActivates
 	setlastuseditem BS_TARGET
 	removeitem BS_TARGET
 	printstring STRINGID_PKMNITEMMELTED
@@ -1237,11 +1238,13 @@ BattleScript_StrengthSapAnimation:
 @ Drain HP without lowering a stat
 BattleScript_StrengthSapHp:
 	jumpifability BS_TARGET, ABILITY_LIQUID_OOZE, BattleScript_StrengthSapManipulateDmg
+	jumpifability BS_TARGET, ABILITY_STRANGE_MIST, BattleScript_StrengthSapManipulateDmg
 	jumpifvolatile BS_ATTACKER, VOLATILE_HEAL_BLOCK, BattleScript_MoveEnd
 	jumpiffullhp BS_ATTACKER, BattleScript_MoveEnd
 BattleScript_StrengthSapManipulateDmg:
 	manipulatedamage DMG_BIG_ROOT
 	jumpifability BS_TARGET, ABILITY_LIQUID_OOZE, BattleScript_StrengthSapLiquidOoze
+	jumpifability BS_TARGET, ABILITY_STRANGE_MIST, BattleScript_StrengthSapLiquidOoze
 	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	printstring STRINGID_PKMNENERGYDRAINED
@@ -2919,6 +2922,7 @@ BattleScript_EffectRoar::
 	jumpifcommanderactive BattleScript_ButItFailed
 	jumpifability BS_TARGET, ABILITY_GUARD_DOG, BattleScript_ButItFailed
 	jumpifability BS_TARGET, ABILITY_SUCTION_CUPS, BattleScript_AbilityPreventsPhasingOut
+	jumpifability BS_TARGET, ABILITY_GATE_KEEPER, BattleScript_AbilityPreventsPhasingOut
 	jumpifvolatile BS_TARGET, VOLATILE_ROOT, BattleScript_PrintMonIsRooted
 	jumpiftargetdynamaxed BattleScript_RoarBlockedByDynamax
 	accuracycheck BattleScript_ButItFailed, NO_ACC_CALC_CHECK_LOCK_ON
@@ -6184,6 +6188,7 @@ BattleScript_PowderMoveNoEffect::
 	pause B_WAIT_TIME_SHORT
 	jumpiftype BS_TARGET, TYPE_NEW_NATURE, BattleScript_PowderMoveNoEffectPrint
 	jumpifability BS_TARGET, ABILITY_OVERCOAT, BattleScript_PowderMoveNoEffectOvercoat
+	jumpifability BS_TARGET, ABILITY_WIDE_HAT, BattleScript_PowderMoveNoEffectOvercoat
 	setlastuseditem BS_TARGET
 	printstring STRINGID_SAFETYGOGGLESPROTECTED
 	goto BattleScript_PowderMoveNoEffectWaitMsg
@@ -6544,7 +6549,7 @@ BattleScript_ShichininMisakiActivatesEnd:
 BattleScript_UltraEgoActivates::
 	call BattleScript_AbilityPopUp
 BattleScript_UltraEgoActivatesNoPopUp:
-	statbuffchange BS_ATTACKER, STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_CERTAIN | STAT_CHANGE_ALLOW_PTR, NULL
+	statbuffchange BS_SCRIPTING, STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_CERTAIN | STAT_CHANGE_ALLOW_PTR, NULL
 	printstring STRINGID_TARGETSSTATWASMAXEDOUT
 	waitmessage B_WAIT_TIME_LONG
 	return
@@ -7351,6 +7356,20 @@ BattleScript_AttackerAbilityStatRaiseEnd3::
 
 BattleScript_AttackerAbilityStatRaiseEnd2::
 	call BattleScript_AttackerAbilityStatRaise
+	restoreattacker
+	end2
+
+BattleScript_AttackerAbilityStatDrop::
+	statbuffchange BS_SCRIPTING, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_ONLY_CHECKING, BattleScript_AttackerAbilityStatDrop_End
+	call BattleScript_AbilityPopUpScripting
+	statbuffchange BS_SCRIPTING, STAT_CHANGE_ALLOW_PTR, BattleScript_AttackerAbilityStatDrop_End
+	printstring STRINGID_ATTACKERABILITYSTATDROP
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_AttackerAbilityStatDrop_End:
+	return
+
+BattleScript_AttackerAbilityStatDropEnd2::
+	call BattleScript_AttackerAbilityStatDrop
 	restoreattacker
 	end2
 
@@ -8166,6 +8185,7 @@ BattleScript_RemoveTerrain::
 BattleScript_Pickpocket::
 	call BattleScript_AbilityPopUp
 	jumpifability BS_ATTACKER, ABILITY_STICKY_HOLD, BattleScript_PickpocketPrevented
+	jumpifability BS_ATTACKER, ABILITY_COLLECTOR, BattleScript_PickpocketPrevented
 	swapattackerwithtarget
 	copybyte gEffectBattler, gBattlerTarget
 	call BattleScript_ItemSteal
@@ -8204,6 +8224,7 @@ BattleScript_RedCardActivates::
 	swapattackerwithtarget
 	jumpifvolatile BS_EFFECT_BATTLER, VOLATILE_ROOT, BattleScript_RedCardIngrain
 	jumpifability BS_EFFECT_BATTLER, ABILITY_SUCTION_CUPS, BattleScript_RedCardSuctionCups
+	jumpifability BS_EFFECT_BATTLER, ABILITY_GATE_KEEPER, BattleScript_RedCardSuctionCups
 	jumpiftargetdynamaxed BattleScript_RedCardDynamaxed
 	removeitem BS_SCRIPTING
 	setbyte sSWITCH_CASE, B_SWITCH_RED_CARD
@@ -9399,3 +9420,12 @@ BattleScript_EffectCardInclude::
 	attackanimation
 	waitanimation
 	jumptocalledmove TRUE
+
+BattleScript_BlankCardActivates::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUpScripting
+	printstring STRINGID_ATTACKERACQUIREDABILITY
+	waitmessage B_WAIT_TIME_LONG
+	settracedability BS_SCRIPTING
+	switchinabilities BS_SCRIPTING
+	return

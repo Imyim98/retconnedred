@@ -141,6 +141,7 @@ static bool32 HandleEndTurnWeatherDamage(u32 battler)
          && ability != ABILITY_SAND_FORCE
          && ability != ABILITY_SAND_RUSH
          && ability != ABILITY_OVERCOAT
+         && ability != ABILITY_WIDE_HAT
          && !IS_BATTLER_ANY_TYPE(battler, TYPE_NEW_EARTH, TYPE_NEW_METAL)
          && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERGROUND
          && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERWATER
@@ -164,6 +165,7 @@ static bool32 HandleEndTurnWeatherDamage(u32 battler)
         {
             if (ability != ABILITY_SNOW_CLOAK
              && ability != ABILITY_OVERCOAT
+             && ability != ABILITY_WIDE_HAT
              && !IS_BATTLER_OF_TYPE(battler, TYPE_NEW_ICE)
              && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERGROUND
              && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERWATER
@@ -426,6 +428,7 @@ static bool32 HandleEndTurnFirstEventBlock(u32 battler)
         case ABILITY_HEALER:
         case ABILITY_HYDRATION:
         case ABILITY_SHED_SKIN:
+        case ABILITY_MAINTENANCE:
             if (AbilityBattleEffects(ABILITYEFFECT_ENDTURN, battler, ability, MOVE_NONE, TRUE))
                 effect = TRUE;
             break;
@@ -500,7 +503,7 @@ static bool32 HandleEndTurnLeechSeed(u32 battler)
         gBattleScripting.animArg2 = gBattlerAttacker;
         s32 drainAmount = GetNonDynamaxMaxHP(gBattlerAttacker) / 8;
         s32 healAmount = GetDrainedBigRootHp(gBattlerTarget, drainAmount);
-        if (GetBattlerAbility(battler) == ABILITY_LIQUID_OOZE)
+        if (GetBattlerAbility(battler) == ABILITY_LIQUID_OOZE || GetBattlerAbility(battler) == ABILITY_STRANGE_MIST)
         {
             SetPassiveDamageAmount(gBattlerAttacker, drainAmount);
             SetPassiveDamageAmount(gBattlerTarget, healAmount);

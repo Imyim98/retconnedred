@@ -810,7 +810,7 @@ static inline void CalcDynamicMoveDamage(struct BattleContext *ctx, u16 *medianD
             maximum *= 5;
         }
     }
-    else if (ctx->abilityAtk == ABILITY_PARENTAL_BOND
+    else if ((ctx->abilityAtk == ABILITY_PARENTAL_BOND || ctx->abilityAtk == ABILITY_TWIN_BODY)
           && strikeCount == 0
           && !AI_IsDoubleSpreadMove(ctx->battlerAtk, ctx->move))
     {
@@ -1238,11 +1238,11 @@ static bool32 AI_IsMoveEffectInMinus(u32 battlerAtk, u32 battlerDef, enum Move m
             return TRUE;
         break;
     case EFFECT_ABSORB:
-        if (abilityDef == ABILITY_LIQUID_OOZE)
+        if (abilityDef == ABILITY_LIQUID_OOZE || abilityDef == ABILITY_STRANGE_MIST)
             return TRUE;
         break;
     case EFFECT_DREAM_EATER:
-        if (abilityDef == ABILITY_LIQUID_OOZE && GetConfig(CONFIG_DREAM_EATER_LIQUID_OOZE) >= GEN_5)
+        if ((abilityDef == ABILITY_LIQUID_OOZE || abilityDef == ABILITY_STRANGE_MIST) && GetConfig(CONFIG_DREAM_EATER_LIQUID_OOZE) >= GEN_5)
             return TRUE;
         break;
     default:
@@ -1489,6 +1489,8 @@ s32 AI_WhoStrikesFirst(u32 battlerAI, u32 battler, enum Move aiMoveConsidered, e
 bool32 CanEndureHit(u32 battler, u32 battlerTarget, enum Move move)
 {
     if (!AI_BattlerAtMaxHp(battlerTarget) || IsMultiHitMove(move) || gAiLogicData->abilities[battler]  == ABILITY_PARENTAL_BOND)
+        return FALSE;
+    if (!AI_BattlerAtMaxHp(battlerTarget) || IsMultiHitMove(move) || gAiLogicData->abilities[battler]  == ABILITY_TWIN_BODY)
         return FALSE;
     if (GetMoveStrikeCount(move) > 1 && !(AI_GetBattlerMoveTargetType(battler, move) == TARGET_SMART && !HasTwoOpponents(battler)))
         return FALSE;
@@ -1901,7 +1903,7 @@ u32 AI_GetSwitchinWeather(u32 battler)
     // Forced weather behaviour
     if (!AI_WeatherHasEffect())
         return B_WEATHER_NONE;
-    if (ability == ABILITY_CLOUD_NINE || ability == ABILITY_AIR_LOCK)
+    if (ability == ABILITY_CLOUD_NINE || ability == ABILITY_AIR_LOCK || ability == ABILITY_HISOUTEN)
         return B_WEATHER_NONE;
     if (gBattleWeather & B_WEATHER_PRIMAL_ANY)
         return gBattleWeather;
@@ -2315,12 +2317,14 @@ bool32 CanLowerStat(u32 battlerAtk, u32 battlerDef, struct AiLogicData *aiData, 
             if (stat == STAT_SPEED)
                 return FALSE;
         case ABILITY_HYPER_CUTTER:
+        case ABILITY_HI_STRENGTH:
             if (stat == STAT_ATK)
                 return FALSE;
         case ABILITY_BIG_PECKS:
             if (stat == STAT_DEF)
                 return FALSE;
         case ABILITY_ILLUMINATE:
+        case ABILITY_DIVA:
             if (GetConfig(CONFIG_ILLUMINATE_EFFECT) < GEN_9)
                 break;
         case ABILITY_KEEN_EYE:
@@ -2330,6 +2334,7 @@ bool32 CanLowerStat(u32 battlerAtk, u32 battlerDef, struct AiLogicData *aiData, 
         case ABILITY_CONTRARY:
         case ABILITY_CLEAR_BODY:
         case ABILITY_WHITE_SMOKE:
+        case ABILITY_MAGIC_BARRIER:
         case ABILITY_FULL_METAL_BODY:
 		case ABILITY_HAKUREI_MIKO:
 		case ABILITY_DOUBLE_HEROINES:
@@ -3320,7 +3325,8 @@ static bool32 BattlerAffectedBySandstorm(u32 battlerId, enum Ability ability)
       && ability != ABILITY_SAND_VEIL
       && ability != ABILITY_SAND_FORCE
       && ability != ABILITY_SAND_RUSH
-      && ability != ABILITY_OVERCOAT)
+      && ability != ABILITY_OVERCOAT
+      && ability != ABILITY_WIDE_HAT)
         return TRUE;
     return FALSE;
 }
@@ -3330,7 +3336,8 @@ static bool32 BattlerAffectedByHail(u32 battlerId, enum Ability ability)
     if (!IS_BATTLER_OF_TYPE(battlerId, TYPE_NEW_ICE)
       && ability != ABILITY_SNOW_CLOAK
       && ability != ABILITY_OVERCOAT
-      && ability != ABILITY_ICE_BODY)
+      && ability != ABILITY_ICE_BODY
+      && ability != ABILITY_WIDE_HAT)
         return TRUE;
     return FALSE;
 }
@@ -3441,7 +3448,7 @@ bool32 BattlerHasMaxHPProtection(u32 battler)
         return TRUE;
     if (B_STURDY >= GEN_5 && ability == ABILITY_STURDY)
         return TRUE;
-    if (ability == ABILITY_MULTISCALE || ability == ABILITY_SHADOW_SHIELD)
+    if (ability == ABILITY_MULTISCALE || ability == ABILITY_SHADOW_SHIELD || ability == ABILITY_CHEERFUL)
         return TRUE;
     return FALSE;
 }
@@ -3492,6 +3499,9 @@ bool32 CanKnockOffItem(u32 fromBattler, u32 battler, u32 item)
     if (gAiLogicData->abilities[fromBattler] == ABILITY_STICKY_HOLD)
         return FALSE;
 
+    if (gAiLogicData->abilities[fromBattler] == ABILITY_COLLECTOR)
+        return FALSE;
+
     if (!CanBattlerGetOrLoseItem(fromBattler, battler, item))
         return FALSE;
 
@@ -3526,6 +3536,7 @@ bool32 AI_CanPutToSleep(u32 battlerAtk, u32 battlerDef, enum Ability defAbility,
 static inline bool32 DoesBattlerBenefitFromAllVolatileStatus(u32 battler, enum Ability ability)
 {
     if (ability == ABILITY_MARVEL_SCALE
+     || ability == ABILITY_SPRING_CHARM
      || ability == ABILITY_QUICK_FEET
      || ability == ABILITY_MAGIC_GUARD
      || ability == ABILITY_FANTASY_BREAKER
@@ -3935,7 +3946,7 @@ bool32 ShouldAbsorb(u32 battlerAtk, u32 battlerDef, enum Move move)
     if (gBattleMons[battlerAtk].volatiles.healBlock)
         healAmount = 0;
 
-    if (gAiLogicData->abilities[battlerDef] == ABILITY_LIQUID_OOZE)
+    if (gAiLogicData->abilities[battlerDef] == ABILITY_LIQUID_OOZE || gAiLogicData->abilities[battlerDef] == ABILITY_STRANGE_MIST)
         return FALSE;
     if (IsBattlerAtMaxHp(battlerAtk) && (aiIsFaster || GetMoveCategory(GetIncomingMove(battlerAtk, battlerDef, gAiLogicData)) == DAMAGE_CATEGORY_STATUS))
         return FALSE;
@@ -6082,6 +6093,7 @@ s32 BattlerBenefitsFromAbilityScore(u32 battler, enum Ability ability, struct Ai
     case ABILITY_PURIFYING_SALT:
     case ABILITY_SPEED_BOOST:
     case ABILITY_WHITE_SMOKE:
+    case ABILITY_MAGIC_BARRIER:
         return GOOD_EFFECT;
     // Conditional ability logic goes here.
     case ABILITY_COMPOUND_EYES:
@@ -6106,8 +6118,12 @@ s32 BattlerBenefitsFromAbilityScore(u32 battler, enum Ability ability, struct Ai
             return GOOD_EFFECT;
         break;
     case ABILITY_HUGE_POWER:
-    case ABILITY_PURE_POWER:
+    case ABILITY_UNZAN:
         if (HasMoveWithCategory(battler, DAMAGE_CATEGORY_PHYSICAL))
+            return BEST_EFFECT;
+        break;
+    case ABILITY_PURE_POWER:
+        if (HasMoveWithCategory(battler, DAMAGE_CATEGORY_SPECIAL))
             return BEST_EFFECT;
         break;
     // Also used to Worry Seed WORRY_SEED

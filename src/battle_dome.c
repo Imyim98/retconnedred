@@ -2412,7 +2412,7 @@ static int GetTypeEffectivenessPoints(enum Move move, int targetSpecies, int mod
         if (defType2 != defType1)
             typePower = (typeEffectiveness2 * typePower) / 10;
 
-        if (defAbility == ABILITY_WONDER_GUARD && typeEffectiveness1 != TYPE_x1 && typeEffectiveness2 != TYPE_x1)
+        if ((defAbility == ABILITY_WONDER_GUARD || defAbility == ABILITY_PLAY_GHOST) && typeEffectiveness1 != TYPE_x1 && typeEffectiveness2 != TYPE_x1)
             typePower = 0;
     }
 

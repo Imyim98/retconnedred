@@ -493,7 +493,7 @@ static bool32 ShouldSwitchIfWonderGuard(u32 battler)
     if (IsDoubleBattle())
         return FALSE;
 
-    if (gAiLogicData->abilities[opposingBattler] != ABILITY_WONDER_GUARD)
+    if (!(gAiLogicData->abilities[opposingBattler] == ABILITY_WONDER_GUARD || gAiLogicData->abilities[opposingBattler] == ABILITY_PLAY_GHOST))
         return FALSE;
 
     // Check if Pokémon has a super effective move.
@@ -735,6 +735,7 @@ static bool32 ShouldSwitchIfBadlyStatused(u32 battler)
             // Checks to see if active Pokemon can do something against sleep
             if ((monAbility == ABILITY_NATURAL_CURE
                 || monAbility == ABILITY_SHED_SKIN
+                || monAbility == ABILITY_MAINTENANCE
                 || monAbility == ABILITY_EARLY_BIRD)
                 || holdEffect == (HOLD_EFFECT_CURE_SLP | HOLD_EFFECT_CURE_STATUS)
                 || HasMoveWithEffect(battler, EFFECT_SLEEP_TALK)
@@ -749,7 +750,7 @@ static bool32 ShouldSwitchIfBadlyStatused(u32 battler)
                 && gAiLogicData->abilities[opposingBattler] != ABILITY_UNAWARE
                 && gAiLogicData->abilities[opposingBattler] != ABILITY_KEEN_EYE
                 && gAiLogicData->abilities[opposingBattler] != ABILITY_MINDS_EYE
-                && (GetConfig(CONFIG_ILLUMINATE_EFFECT) >= GEN_9 && gAiLogicData->abilities[opposingBattler] != ABILITY_ILLUMINATE)
+                && (GetConfig(CONFIG_ILLUMINATE_EFFECT) >= GEN_9 && !(gAiLogicData->abilities[opposingBattler] == ABILITY_ILLUMINATE || gAiLogicData->abilities[opposingBattler] == ABILITY_DIVA))
                 && !gBattleMons[battler].volatiles.foresight
                 && !gBattleMons[battler].volatiles.miracleEye)
                 switchMon = FALSE;
@@ -1462,7 +1463,7 @@ static s32 GetSwitchinWeatherImpact(u32 battler)
     if (HasWeatherEffect())
     {
         // Damage
-        if (holdEffect != HOLD_EFFECT_SAFETY_GOGGLES && ability != ABILITY_MAGIC_GUARD && ability != ABILITY_FANTASY_BREAKER && ability != ABILITY_OVERCOAT)
+        if (holdEffect != HOLD_EFFECT_SAFETY_GOGGLES && ability != ABILITY_MAGIC_GUARD && ability != ABILITY_FANTASY_BREAKER && ability != ABILITY_OVERCOAT && ability != ABILITY_WIDE_HAT)
         {
             if ((gBattleWeather & B_WEATHER_HAIL)
              && IS_BATTLER_OF_TYPE(battler, TYPE_NEW_ICE)

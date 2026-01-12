@@ -925,6 +925,7 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_GATHERINGENERGYINTHESKY]              = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} is gathering energy in the sky!"),
     [STRINGID_CALLINGFRIENDANDBEATUP]               = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} grouped up and ready to beat up the opponent!"),
     [STRINGID_CALLINGFRIENDFAILED]                  = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} failed to group up!"),
+    [STRINGID_ATTACKERABILITYSTATDROP]              = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX}'s {B_BUFF1} dropped due to {B_SCR_ABILITY} {B_BUFF2}!"),
 };
 
 const u16 gTrainerUsedItemStringIds[] =
