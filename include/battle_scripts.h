@@ -867,5 +867,9 @@ extern const u8 BattleScript_EffectInfatuate[];
 extern const u8 BattleScript_AttackerAbilityStatDrop[];
 extern const u8 BattleScript_AttackerAbilityStatDropEnd2[];
 extern const u8 BattleScript_BlankCardActivates[];
+extern const u8 BattleScript_DourEchoActivatesAttack[];
+extern const u8 BattleScript_DourEchoActivatesSpAttack[];
+extern const u8 BattleScript_ManicEchoActivatesAttack[];
+extern const u8 BattleScript_ManicEchoActivatesSpAttack[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

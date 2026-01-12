@@ -5817,12 +5817,14 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             break;
         case ABILITY_LINGERING_AROMA:
         case ABILITY_MUMMY:
+        case ABILITY_CONTAGION:
             if (IsBattlerAlive(gBattlerAttacker)
              && IsBattlerTurnDamaged(gBattlerTarget)
              && !CanBattlerAvoidContactEffects(gBattlerAttacker, gBattlerTarget, GetBattlerAbility(gBattlerAttacker), GetBattlerHoldEffect(gBattlerAttacker), move)
              && gBattleMons[gBattlerAttacker].volatiles.overwrittenAbility != GetBattlerAbility(gBattlerTarget)
              && gBattleMons[gBattlerAttacker].ability != ABILITY_MUMMY
              && gBattleMons[gBattlerAttacker].ability != ABILITY_LINGERING_AROMA
+             && gBattleMons[gBattlerAttacker].ability != ABILITY_CONTAGION
              && !gAbilitiesInfo[gBattleMons[gBattlerAttacker].ability].cantBeSuppressed)
             {
                 if (GetBattlerHoldEffectIgnoreAbility(gBattlerAttacker) == HOLD_EFFECT_ABILITY_SHIELD)
@@ -5891,7 +5893,21 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 effect++;
             }
             break;
+        case ABILITY_LECTURE:
+            if (IsBattlerAlive(gBattlerAttacker)
+             && (CompareStat(gBattlerAttacker, STAT_SPEED, MIN_STAT_STAGE, CMP_GREATER_THAN, gLastUsedAbility) || GetBattlerAbility(gBattlerAttacker) == ABILITY_MIRROR_ARMOR)
+             && !gBattleStruct->unableToUseMove
+             && IsBattlerTurnDamaged(gBattlerTarget)
+             && GetBattlerAbility(gBattlerTarget) != ABILITY_SOUNDPROOF)
+            {
+                SET_STATCHANGER(STAT_SPEED, 1, TRUE);
+                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
+                BattleScriptCall(BattleScript_GooeyActivates);
+                effect++;
+            }
+            break;
         case ABILITY_DOLL_WALL:
+        case ABILITY_DOLL_SKEWER:
         case ABILITY_ROUGH_SKIN:
         case ABILITY_IRON_BARBS:
             if (IsBattlerAlive(gBattlerAttacker)
@@ -6386,6 +6402,54 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 gBattleScripting.moveEffect = MOVE_EFFECT_CONFUSION;
                 PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
                 BattleScriptCall(BattleScript_AbilityStatusEffect);
+                effect++;
+            }
+            break;
+        case ABILITY_DOUR_ECHO:
+            if (IsBattlerAlive(gBattlerTarget)
+             && (CompareStat(gBattlerTarget, STAT_ATK, MIN_STAT_STAGE, CMP_GREATER_THAN, gLastUsedAbility) || GetBattlerAbility(gBattlerTarget) == ABILITY_MIRROR_ARMOR)
+             && !gBattleStruct->unableToUseMove
+             && IsSoundMove(move)
+             && gBattleMons[gBattlerTarget].attack >= gBattleMons[gBattlerTarget].spAttack)
+            {
+                SET_STATCHANGER(STAT_ATK, 1, TRUE);
+                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
+                BattleScriptCall(BattleScript_DourEchoActivatesAttack);
+                effect++;
+            }
+            else if (IsBattlerAlive(gBattlerTarget)
+             && (CompareStat(gBattlerTarget, STAT_SPATK, MIN_STAT_STAGE, CMP_GREATER_THAN, gLastUsedAbility) || GetBattlerAbility(gBattlerTarget) == ABILITY_MIRROR_ARMOR)
+             && !gBattleStruct->unableToUseMove
+             && IsSoundMove(move)
+             && gBattleMons[gBattlerTarget].attack < gBattleMons[gBattlerTarget].spAttack)
+            {
+                SET_STATCHANGER(STAT_SPATK, 1, TRUE);
+                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
+                BattleScriptCall(BattleScript_DourEchoActivatesSpAttack);
+                effect++;
+            }
+            break;
+        case ABILITY_MANIC_ECHO:
+            if (IsBattlerAlive(gBattlerAttacker)
+             && CompareStat(gBattlerAttacker, STAT_ATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility)
+             && !gBattleStruct->unableToUseMove
+             && IsSoundMove(move)
+             && gBattleMons[gBattlerAttacker].attack >= gBattleMons[gBattlerAttacker].spAttack)
+            {
+                SET_STATCHANGER(STAT_ATK, 1, FALSE);
+                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
+                BattleScriptCall(BattleScript_ManicEchoActivatesAttack);
+                effect++;
+            }
+            else if (IsBattlerAlive(gBattlerAttacker)
+             && CompareStat(gBattlerAttacker, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility)
+             && !gBattleStruct->unableToUseMove
+             && IsSoundMove(move)
+             && gBattleMons[gBattlerAttacker].attack < gBattleMons[gBattlerAttacker].spAttack)
+            {
+                SET_STATCHANGER(STAT_SPATK, 1, FALSE);
+                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
+                BattleScriptCall(BattleScript_ManicEchoActivatesSpAttack);
                 effect++;
             }
             break;
@@ -8740,6 +8804,10 @@ static inline u32 CalcMoveBasePowerAfterModifiers(struct BattleContext *ctx)
         if (IsSlicingMove(move))
            modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));
         break;
+    case ABILITY_SWORDMASTER:
+        if (gMovesInfo[SanitizeMoveId(move)].priority > 0)
+           modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));
+        break;
     case ABILITY_SUPREME_OVERLORD:
         modifier = uq4_12_multiply(modifier, GetSupremeOverlordModifier(battlerAtk));
         break;
@@ -9068,6 +9136,7 @@ static inline u32 CalcAttackStat(struct BattleContext *ctx)
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
         break;
     case ABILITY_DEFEATIST:
+    case ABILITY_CHARISMATIC:
         if (gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 2))
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(0.5));
         break;
@@ -9152,6 +9221,26 @@ static inline u32 CalcAttackStat(struct BattleContext *ctx)
     case ABILITY_STONEWORKER:
         if (moveType == TYPE_NEW_EARTH)
             modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));
+        break;
+    case ABILITY_LOGICIAN:
+        if (moveType == TYPE_NEW_REASON)
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));
+        break;
+    case ABILITY_TOXICOLOGIST:
+        if (moveType == TYPE_NEW_MIASMA)
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));
+        break;
+    case ABILITY_ARSONIST:
+        if (moveType == TYPE_NEW_FIRE)
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));
+        break;
+    case ABILITY_YIN_AND_YANG:
+        if (gBattleMons[battlerAtk].attack > gBattleMons[battlerAtk].spAttack && IsBattleMoveSpecial(move))
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1.3));
+        else if (gBattleMons[battlerAtk].attack < gBattleMons[battlerAtk].spAttack && IsBattleMovePhysical(move))
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1.3));
+        else if (gBattleMons[battlerAtk].attack == gBattleMons[battlerAtk].spAttack)
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1.3));
         break;
     case ABILITY_WINTER_GIFT:
         if ((IsBattlerWeatherAffected(battlerAtk, B_WEATHER_SNOW) || IsBattlerWeatherAffected(battlerAtk, B_WEATHER_HAIL)) && IsBattleMoveSpecial(move))
@@ -9308,6 +9397,7 @@ static inline u32 CalcDefenseStat(struct BattleContext *ctx)
     u32 defStat, def, spDef;
     uq4_12_t modifier;
     u32 battlerDef = ctx->battlerDef;
+    u32 battlerAtk = ctx->battlerAtk;
     enum Move move = ctx->move;
     enum Type moveType = ctx->moveType;
     enum BattleMoveEffects moveEffect = GetMoveEffect(move);
@@ -9390,6 +9480,14 @@ static inline u32 CalcDefenseStat(struct BattleContext *ctx)
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
             if (ctx->updateFlags)
                 RecordAbilityBattle(battlerDef, ABILITY_SPRING_CHARM);
+        }
+        break;
+    case ABILITY_JEALOUSY:
+        if(gBattleMons[battlerDef].item == ITEM_NONE && gBattleMons[battlerAtk].item != ITEM_NONE)
+        {
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+            if (ctx->updateFlags)
+                RecordAbilityBattle(battlerDef, ABILITY_JEALOUSY);
         }
         break;
     case ABILITY_WINTER_GIFT:

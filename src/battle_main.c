@@ -5044,8 +5044,12 @@ s32 GetBattleMovePriority(u32 battler, enum Ability ability, enum Move move)
     {
         priority += 3;
     }
+    else if (ability == ABILITY_TIME_CONTROL && !IsAbilityOnField(ABILITY_TIME_JACKER))
+    {
+        priority++;
+    }
 
-    if (IsAbilityOnField(ABILITY_TIME_JACKER) && !(IsAbilityOnField(ABILITY_FANTASY_BREAKER)))
+    if (IsAbilityOnField(ABILITY_TIME_JACKER) && !IsAbilityOnField(ABILITY_FANTASY_BREAKER))
     {
         rngTimeJacker = Random() % 17;
         if (rngTimeJacker == 0)

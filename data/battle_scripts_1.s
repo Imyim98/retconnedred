@@ -7487,6 +7487,46 @@ BattleScript_GooeyActivates::
 BattleScript_GooeyActivatesRet:
 	return
 
+BattleScript_DourEchoActivatesAttack::
+	statbuffchange BS_TARGET, STAT_CHANGE_ONLY_CHECKING, BattleScript_DourEchoActivatesAttackRet
+	waitstate
+	call BattleScript_AbilityPopUp
+	swapattackerwithtarget  @ for defiant, mirror armor
+	seteffectsecondary BS_TARGET, BS_ATTACKER, MOVE_EFFECT_ATK_MINUS_1
+	swapattackerwithtarget
+BattleScript_DourEchoActivatesAttackRet:
+	return
+
+BattleScript_DourEchoActivatesSpAttack::
+	statbuffchange BS_TARGET, STAT_CHANGE_ONLY_CHECKING, BattleScript_DourEchoActivatesSpAttackRet
+	waitstate
+	call BattleScript_AbilityPopUp
+	swapattackerwithtarget  @ for defiant, mirror armor
+	seteffectsecondary BS_TARGET, BS_ATTACKER, MOVE_EFFECT_SP_ATK_MINUS_1
+	swapattackerwithtarget
+BattleScript_DourEchoActivatesSpAttackRet:
+	return
+
+BattleScript_ManicEchoActivatesAttack::
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ONLY_CHECKING, BattleScript_ManicEchoActivatesAttackRet
+	waitstate
+	call BattleScript_AbilityPopUp
+	swapattackerwithtarget  @ for defiant, mirror armor
+	seteffectsecondary BS_ATTACKER, BS_TARGET, MOVE_EFFECT_ATK_MINUS_1
+	swapattackerwithtarget
+BattleScript_ManicEchoActivatesAttackRet:
+	return
+
+BattleScript_ManicEchoActivatesSpAttack::
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ONLY_CHECKING, BattleScript_ManicEchoActivatesSpAttackRet
+	waitstate
+	call BattleScript_AbilityPopUp
+	swapattackerwithtarget  @ for defiant, mirror armor
+	seteffectsecondary BS_ATTACKER, BS_TARGET, MOVE_EFFECT_SP_ATK_MINUS_1
+	swapattackerwithtarget
+BattleScript_ManicEchoActivatesSpAttackRet:
+	return
+
 BattleScript_AbilityStatusEffect::
 	waitstate
 	call BattleScript_AbilityPopUp
