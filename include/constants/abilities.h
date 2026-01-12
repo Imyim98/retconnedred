@@ -432,9 +432,9 @@ enum __attribute__((packed)) Ability
     ABILITY_REACTIVE = (ABILITY_OFFICIAL_END + 96), // TO DO // When hit by physical move, raise own Def and lower SDef. Likewise for specials.
     ABILITY_DEVOUR = (ABILITY_OFFICIAL_END + 97), // TO DO // On knocking out a foe, recover HP equal to 1/3 of foe's max HP.
     ABILITY_LOST_DREAM = (ABILITY_OFFICIAL_END + 98), // TO DO // Ignores Normal-type's immunities.
-    ABILITY_LAST_WISH = (ABILITY_OFFICIAL_END + 99), // TO DO // On fainting, next mon recovers 50% HP of this mon's HP.
+    ABILITY_LAST_WISH = (ABILITY_OFFICIAL_END + 99), // On fainting, next mon recovers 50% HP of this mon's HP.
     ABILITY_LAST_GRUDGE = (ABILITY_OFFICIAL_END + 100), // TO DO // When knocked out by a move, lower move's PP to 1.
-    ABILITY_SALVAGE = (ABILITY_OFFICIAL_END + 101), // TO DO // When any mon faints, raise own Defense.
+    ABILITY_SALVAGE = (ABILITY_OFFICIAL_END + 101), // When any mon faints, raise own Defense.
     ABILITY_TOXICOLOGIST = (ABILITY_OFFICIAL_END + 102), // TO DO // Boosts Miasma damage by 50%.
     ABILITY_GRAND_THEORY = (ABILITY_OFFICIAL_END + 103), // TO DO // Boosts Sp. Atk when another puppet uses a move it also knows.
     ABILITY_CHARISMATIC = (ABILITY_OFFICIAL_END + 104), // TO DO // (as Defeatist)

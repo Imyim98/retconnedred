@@ -4489,6 +4489,7 @@ BattleScript_FaintBattler::
 	waitanimation
 	tryactivatereceiver BS_FAINTED
 	tryactivatesoulheart
+	tryactivatesalvage
 	trytrainerslidemsgfirstoff BS_FAINTED
 	return
 

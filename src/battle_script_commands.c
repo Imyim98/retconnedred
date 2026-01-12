@@ -17051,6 +17051,28 @@ void BS_TryActivateSoulheart(void)
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
+void BS_TryActivateSalvage(void)
+{
+    NATIVE_ARGS();
+    while (gBattleStruct->soulheartBattlerId < gBattlersCount)
+    {
+        gBattleScripting.battler = gBattleStruct->soulheartBattlerId++;
+        u32 ability = GetBattlerAbility(gBattleScripting.battler);
+        if (ability == ABILITY_SALVAGE
+            && IsBattlerAlive(gBattleScripting.battler)
+            && !NoAliveMonsForEitherParty()
+            && CompareStat(gBattleScripting.battler, STAT_DEF, MAX_STAT_STAGE, CMP_LESS_THAN, ability))
+        {
+            SET_STATCHANGER(STAT_DEF, 1, FALSE);
+            PREPARE_STAT_BUFFER(gBattleTextBuff1, STAT_DEF);
+            BattleScriptCall(BattleScript_ScriptingAbilityStatRaise);
+            return;
+        }
+    }
+    gBattleStruct->soulheartBattlerId = 0;
+    gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
 void BS_PlayMoveAnimation(void)
 {
     NATIVE_ARGS(u16 move);
