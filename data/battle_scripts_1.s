@@ -1031,6 +1031,16 @@ BattleScript_MoveEffectLightScreen::
 	waitmessage B_WAIT_TIME_LONG
 	return
 
+BattleScript_MoveEffectSafeguard::
+	printfromtable gReflectLightScreenSafeguardStringIds
+	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_MoveEffectMist::
+	printfromtable gReflectLightScreenSafeguardStringIds
+	waitmessage B_WAIT_TIME_LONG
+	return
+
 BattleScript_EffectStuffCheeks::
 	attackcanceler
 	attackanimation
@@ -9486,5 +9496,57 @@ BattleScript_LastWishRecover::
 	datahpupdate BS_SCRIPTING, PASSIVE_HP_UPDATE
 	waitstate
 	printstring STRINGID_POKEMONRECOVEREDFROMLASTWISH
+	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_WallMasterActivatesCalledLightScreen::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	setlightscreen
+	printstring STRINGID_WALLMASTERALSOCALLEDLIGHTSCREEN
+	waitmessage B_WAIT_TIME_LONG
+	playmoveanimation MOVE_LIGHT_SCREEN
+	waitanimation
+	printstring STRINGID_PKMNRAISEDSPDEF
+	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_WallMasterActivatesCalledReflect::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	setreflect
+	printstring STRINGID_WALLMASTERALSOCALLEDREFLECT
+	waitmessage B_WAIT_TIME_LONG
+	playmoveanimation MOVE_REFLECT
+	waitanimation
+	printstring STRINGID_PKMNRAISEDDEF
+	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_WallMasterActivatesCalledSafeguard::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	setsafeguard
+	printstring STRINGID_WALLMASTERALSOCALLEDSAFEGUARD
+	waitmessage B_WAIT_TIME_LONG
+	playmoveanimation MOVE_SAFEGUARD
+	waitanimation
+	printstring STRINGID_PKMNCOVEREDBYVEIL
+	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_WallMasterActivatesCalledMist::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	setmist
+	printstring STRINGID_WALLMASTERALSOCALLEDMIST
+	waitmessage B_WAIT_TIME_LONG
+	playmoveanimation MOVE_MIST
+	waitanimation
+	printstring STRINGID_PKMNSHROUDEDINMIST
 	waitmessage B_WAIT_TIME_LONG
 	return

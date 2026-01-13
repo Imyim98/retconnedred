@@ -3948,6 +3948,42 @@ static inline bool32 TrySetLightScreen(u32 battler)
     return FALSE;
 }
 
+static inline bool32 TrySetSafeguard(u32 battler)
+{
+    u32 side = GetBattlerSide(battler);
+    if (!(gSideStatuses[side] & SIDE_STATUS_SAFEGUARD))
+    {
+        gSideStatuses[side] |= SIDE_STATUS_SAFEGUARD;
+        gSideTimers[side].safeguardTimer = 5;
+
+        if (IsDoubleBattle() && CountAliveMonsInBattle(BATTLE_ALIVE_SIDE, battler) == 2)
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_SAFEGUARD;
+        else
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_SAFEGUARD;
+
+        return TRUE;
+    }
+    return FALSE;
+}
+
+static inline bool32 TrySetMist(u32 battler)
+{
+    u32 side = GetBattlerSide(battler);
+    if (!(gSideStatuses[side] & SIDE_STATUS_MIST))
+    {
+        gSideStatuses[side] |= SIDE_STATUS_MIST;
+        gSideTimers[side].mistTimer = 5;
+
+        if (IsDoubleBattle() && CountAliveMonsInBattle(BATTLE_ALIVE_SIDE, battler) == 2)
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_SAFEGUARD;
+        else
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_SAFEGUARD;
+
+        return TRUE;
+    }
+    return FALSE;
+}
+
 static void SetNonVolatileStatus(u32 effectBattler, enum MoveEffect effect, const u8 *battleScript, enum StatusTrigger trigger)
 {
     gEffectBattler = effectBattler;
@@ -4794,6 +4830,20 @@ void SetMoveEffect(u32 battler, u32 effectBattler, enum MoveEffect moveEffect, c
         {
             BattleScriptPush(battleScript);
             gBattlescriptCurrInstr = BattleScript_MoveEffectLightScreen;
+        }
+        break;
+    case MOVE_EFFECT_SAFEGUARD:
+        if (TrySetSafeguard(gBattlerAttacker))
+        {
+            BattleScriptPush(battleScript);
+            gBattlescriptCurrInstr = BattleScript_MoveEffectSafeguard;
+        }
+        break;
+    case MOVE_EFFECT_MIST:
+        if (TrySetMist(gBattlerAttacker))
+        {
+            BattleScriptPush(battleScript);
+            gBattlescriptCurrInstr = BattleScript_MoveEffectMist;
         }
         break;
     case MOVE_EFFECT_SALT_CURE:

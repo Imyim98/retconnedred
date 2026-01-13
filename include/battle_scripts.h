@@ -807,6 +807,8 @@ extern const u8 BattleScript_EffectStruggle[];
 extern const u8 BattleScript_EffectStuffCheeks[];
 extern const u8 BattleScript_MoveEffectLightScreen[];
 extern const u8 BattleScript_MoveEffectReflect[];
+extern const u8 BattleScript_MoveEffectSafeguard[];
+extern const u8 BattleScript_MoveEffectMist[];
 extern const u8 BattleScript_MoveEffectLeechSeed[];
 extern const u8 BattleScript_MoveEffectHaze[];
 extern const u8 BattleScript_MoveEffectIonDeluge[];
@@ -871,5 +873,9 @@ extern const u8 BattleScript_DourEchoActivatesAttack[];
 extern const u8 BattleScript_DourEchoActivatesSpAttack[];
 extern const u8 BattleScript_ManicEchoActivatesAttack[];
 extern const u8 BattleScript_ManicEchoActivatesSpAttack[];
+extern const u8 BattleScript_WallMasterActivatesCalledLightScreen[];
+extern const u8 BattleScript_WallMasterActivatesCalledReflect[];
+extern const u8 BattleScript_WallMasterActivatesCalledSafeguard[];
+extern const u8 BattleScript_WallMasterActivatesCalledMist[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

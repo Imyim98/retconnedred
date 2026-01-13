@@ -7,6 +7,7 @@
 #include "battle_util.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
+#include "battle_move_resolution.h"
 #include "battle_setup.h"
 #include "battle_z_move.h"
 #include "battle_gimmick.h"
@@ -6450,6 +6451,38 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 SET_STATCHANGER(STAT_SPATK, 1, FALSE);
                 PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
                 BattleScriptCall(BattleScript_ManicEchoActivatesSpAttack);
+                effect++;
+            }
+            break;
+        case ABILITY_WALL_MASTER:
+            if (!gBattleStruct->unableToUseMove
+             && (gCurrentMove == MOVE_REFLECT
+                || gCurrentMove == MOVE_LIGHT_SCREEN
+                || gCurrentMove == MOVE_MIST
+                || gCurrentMove == MOVE_SAFEGUARD))
+            {
+                u16 i;
+                gBattleScripting.battler = gBattlerAttacker;
+
+                for (i = 0; i < 4; i++)
+                {
+                    if ((gBattleMons[gBattlerAttacker].moves[i] == MOVE_REFLECT
+                       || gBattleMons[gBattlerAttacker].moves[i] == MOVE_LIGHT_SCREEN
+                       || gBattleMons[gBattlerAttacker].moves[i] == MOVE_SAFEGUARD
+                       || gBattleMons[gBattlerAttacker].moves[i] == MOVE_MIST))
+                    {
+                        u16 scannedMove = gBattleMons[gBattlerAttacker].moves[i];
+                        
+                        if (scannedMove == MOVE_REFLECT && !(gSideStatuses[GetBattlerSide(gBattlerAttacker)] & SIDE_STATUS_REFLECT))
+                            BattleScriptCall(BattleScript_WallMasterActivatesCalledReflect);
+                        else if (scannedMove == MOVE_LIGHT_SCREEN && !(gSideStatuses[GetBattlerSide(gBattlerAttacker)] & SIDE_STATUS_LIGHTSCREEN))
+                            BattleScriptCall(BattleScript_WallMasterActivatesCalledLightScreen);
+                        else if (scannedMove == MOVE_SAFEGUARD && !(gSideStatuses[GetBattlerSide(gBattlerAttacker)] & SIDE_STATUS_SAFEGUARD))
+                            BattleScriptCall(BattleScript_WallMasterActivatesCalledSafeguard);
+                        else if (scannedMove == MOVE_MIST && !(gSideStatuses[GetBattlerSide(gBattlerAttacker)] & SIDE_STATUS_MIST))
+                            BattleScriptCall(BattleScript_WallMasterActivatesCalledMist);
+                    }
+                }
                 effect++;
             }
             break;
