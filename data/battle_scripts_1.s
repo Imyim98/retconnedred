@@ -9550,3 +9550,42 @@ BattleScript_WallMasterActivatesCalledMist::
 	printstring STRINGID_PKMNSHROUDEDINMIST
 	waitmessage B_WAIT_TIME_LONG
 	return
+
+BattleScript_DevourHeal::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUp
+	waitanimation
+	waitmessage B_WAIT_TIME_LONG
+	playmoveanimation MOVE_GIGA_DRAIN
+	waitanimation
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	printstring STRINGID_DEVOURHEAL
+	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_DevourHealBlock::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUp
+	waitanimation
+	waitmessage B_WAIT_TIME_LONG
+	playmoveanimation MOVE_GIGA_DRAIN
+	waitanimation
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	return
+
+BattleScript_DevourLiquidOoze::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUp
+	waitanimation
+	waitmessage B_WAIT_TIME_LONG
+	playmoveanimation MOVE_GIGA_DRAIN
+	waitanimation
+	call BattleScript_AbilityPopUpTarget
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	printstring STRINGID_ITSUCKEDLIQUIDOOZE
+	waitmessage B_WAIT_TIME_LONG
+	return
+

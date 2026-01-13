@@ -17104,9 +17104,9 @@ void BS_TryActivateSoulheart(void)
 void BS_TryActivateSalvage(void)
 {
     NATIVE_ARGS();
-    while (gBattleStruct->soulheartBattlerId < gBattlersCount)
+    while (gBattleStruct->salvageBattlerId < gBattlersCount)
     {
-        gBattleScripting.battler = gBattleStruct->soulheartBattlerId++;
+        gBattleScripting.battler = gBattleStruct->salvageBattlerId++;
         u32 ability = GetBattlerAbility(gBattleScripting.battler);
         if (ability == ABILITY_SALVAGE
             && IsBattlerAlive(gBattleScripting.battler)
@@ -17119,7 +17119,7 @@ void BS_TryActivateSalvage(void)
             return;
         }
     }
-    gBattleStruct->soulheartBattlerId = 0;
+    gBattleStruct->salvageBattlerId = 0;
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
 

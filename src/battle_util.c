@@ -6573,6 +6573,30 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 }
             }
             break;
+        case ABILITY_DEVOUR:
+            if (IsBattlerAlive(battler)
+             && !IsBattlerAtMaxHp(battler)
+             && !IsBattlerAlive(gBattlerTarget))
+            {
+                s32 devourAmount = GetDrainedBigRootHp(gBattlerAttacker, GetNonDynamaxMaxHP(gBattlerTarget) / 3);
+
+                if (GetBattlerAbility(gBattlerTarget) == ABILITY_LIQUID_OOZE || GetBattlerAbility(gBattlerTarget) == ABILITY_STRANGE_MIST)
+                {
+                    SetPassiveDamageAmount(gBattlerAttacker, devourAmount);
+                    BattleScriptCall(BattleScript_DevourLiquidOoze);
+                }
+                else if ((gBattleMons[gBattlerAttacker].volatiles.healBlock))
+                {
+                    BattleScriptCall(BattleScript_DevourHealBlock);
+                }
+                else
+                {
+                    SetHealAmount(gBattlerAttacker, devourAmount);
+                    BattleScriptCall(BattleScript_DevourHeal);
+                }
+                effect = TRUE;
+            }
+            break;
         case ABILITY_MOXIE:
         case ABILITY_CHILLING_NEIGH:
         case ABILITY_AS_ONE_ICE_RIDER:

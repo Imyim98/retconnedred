@@ -727,6 +727,7 @@ struct BattleStruct
     u8 incrementEchoedVoice:1;
     u8 echoedVoiceCounter:3;
     u8 padding4:4;
+    u8 salvageBattlerId;
 };
 
 struct AiBattleData

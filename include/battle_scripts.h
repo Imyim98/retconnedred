@@ -877,5 +877,9 @@ extern const u8 BattleScript_WallMasterActivatesCalledLightScreen[];
 extern const u8 BattleScript_WallMasterActivatesCalledReflect[];
 extern const u8 BattleScript_WallMasterActivatesCalledSafeguard[];
 extern const u8 BattleScript_WallMasterActivatesCalledMist[];
+extern const u8 BattleScript_DevourHeal[];
+extern const u8 BattleScript_DevourHealBlock[];
+extern const u8 BattleScript_DevourLiquidOoze[];
+
 
 #endif // GUARD_BATTLE_SCRIPTS_H

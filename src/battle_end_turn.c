@@ -576,16 +576,32 @@ static bool32 HandleEndTurnPoison(u32 battler)
         }
         else if (gBattleMons[battler].status1 & STATUS1_TOXIC_POISON)
         {
+            u32 side = (BATTLE_OPPOSITE(GetBattlerPosition(battler))) & BIT_SIDE;
+            u32 opposite1 = GetBattlerAtPosition(side);
+            u32 opposite2 = GetBattlerAtPosition(side + BIT_FLANK);
+            u32 catalystExtraDamage = GetNonDynamaxMaxHP(battler) / 8;
+
             SetPassiveDamageAmount(battler, GetNonDynamaxMaxHP(battler) / 16);
             if ((gBattleMons[battler].status1 & STATUS1_TOXIC_COUNTER) != STATUS1_TOXIC_TURN(15)) // not 16 turns
                 gBattleMons[battler].status1 += STATUS1_TOXIC_TURN(1);
-            gBattleStruct->passiveHpUpdate[battler] *= (gBattleMons[battler].status1 & STATUS1_TOXIC_COUNTER) >> 8;
+            if (GetBattlerAbility(opposite1) == ABILITY_CATALYST || GetBattlerAbility(opposite2) == ABILITY_CATALYST)
+                gBattleStruct->passiveHpUpdate[battler] = (gBattleStruct->passiveHpUpdate[battler] * (gBattleMons[battler].status1 & STATUS1_TOXIC_COUNTER) >> 8) + catalystExtraDamage;
+            else
+                gBattleStruct->passiveHpUpdate[battler] *= (gBattleMons[battler].status1 & STATUS1_TOXIC_COUNTER) >> 8;
             BattleScriptExecute(BattleScript_PoisonTurnDmg);
             effect = TRUE;
         }
         else
         {
-            SetPassiveDamageAmount(battler, GetNonDynamaxMaxHP(battler) / 8);
+            u32 side = (BATTLE_OPPOSITE(GetBattlerPosition(battler))) & BIT_SIDE;
+            u32 opposite1 = GetBattlerAtPosition(side);
+            u32 opposite2 = GetBattlerAtPosition(side + BIT_FLANK);
+            u32 catalystExtraDamage = GetNonDynamaxMaxHP(battler) / 8;
+
+            if (GetBattlerAbility(opposite1) == ABILITY_CATALYST || GetBattlerAbility(opposite2) == ABILITY_CATALYST)
+                SetPassiveDamageAmount(battler, (GetNonDynamaxMaxHP(battler) / 8) + catalystExtraDamage);
+            else
+                SetPassiveDamageAmount(battler, GetNonDynamaxMaxHP(battler) / 8);
             BattleScriptExecute(BattleScript_PoisonTurnDmg);
             effect = TRUE;
         }
