@@ -880,6 +880,6 @@ extern const u8 BattleScript_WallMasterActivatesCalledMist[];
 extern const u8 BattleScript_DevourHeal[];
 extern const u8 BattleScript_DevourHealBlock[];
 extern const u8 BattleScript_DevourLiquidOoze[];
-
+extern const u8 BattleScript_DevourHealMultiTarget[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

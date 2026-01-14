@@ -9586,6 +9586,54 @@ BattleScript_DevourLiquidOoze::
 	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	printstring STRINGID_ITSUCKEDLIQUIDOOZE
+	tryfaintmon BS_ATTACKER
 	waitmessage B_WAIT_TIME_LONG
 	return
 
+BattleScript_DevourHealMultiTarget::
+	saveattacker
+	savetarget
+	jumpifvolatile BS_ATTACKER, VOLATILE_HEAL_BLOCK, BattleScript_DevourHealMultiTarget_Return
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUp
+	waitanimation
+	waitmessage B_WAIT_TIME_LONG
+	setbyte gBattlerTarget, 0
+BattleScript_DevourHealMultiTarget_Loop:
+	jumpifpresent BS_TARGET, BattleScript_DevourHealMultiTarget_LoopIncrement
+BattleScript_DevourHealMultiTarget_Effect:
+	jumpifability BS_TARGET, ABILITY_LIQUID_OOZE, BattleScript_DevourHealMultiTarget_EffectLiquidOoze
+	jumpifability BS_TARGET, ABILITY_STRANGE_MIST, BattleScript_DevourHealMultiTarget_EffectLiquidOoze
+BattleScript_DevourHealMultiTarget_EffectHeal:
+	jumpifabsent BS_ATTACKER, BattleScript_DevourHealMultiTarget_LoopIncrement
+	jumpiffullhp BS_ATTACKER, BattleScript_DevourHealMultiTarget_LoopIncrement
+	calcdevourhealamount BS_TARGET
+	playmoveanimation MOVE_GIGA_DRAIN
+	waitanimation
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	printstring STRINGID_DEVOURHEAL
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_DevourHealMultiTarget_LoopIncrement
+BattleScript_DevourHealMultiTarget_EffectLiquidOoze:
+	jumpifabsent BS_ATTACKER, BattleScript_DevourHealMultiTarget_LoopIncrement
+	calcdevourdamageamountliquidooze BS_TARGET
+	playmoveanimation MOVE_GIGA_DRAIN
+	waitanimation
+	call BattleScript_AbilityPopUpTarget
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	printstring STRINGID_ITSUCKEDLIQUIDOOZE
+	tryfaintmon BS_ATTACKER
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_DevourHealMultiTarget_LoopIncrement
+BattleScript_DevourHealMultiTarget_WaitString:
+BattleScript_DevourHealMultiTarget_LoopIncrement:
+	addbyte gBattlerTarget, 1
+	jumpifbytenotequal gBattlerTarget, gBattlersCount, BattleScript_DevourHealMultiTarget_Loop
+	destroyabilitypopup
+	pause B_WAIT_TIME_MED
+BattleScript_DevourHealMultiTarget_Return:
+	restoretarget
+	restoreattacker
+	return

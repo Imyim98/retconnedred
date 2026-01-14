@@ -663,11 +663,7 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, u32 battler)
     // transform's pink color
     if (gBattleMons[battler].volatiles.transformed)
     {
-        if (gBattleMons[gBattlerAttacker].volatiles.flagMultiUnitTransform == 1)
-        {
-            CpuCopy32(&gPlttBufferFaded[paletteOffset], &gPlttBufferUnfaded[paletteOffset], PLTT_SIZEOF(16));
-        }
-        else
+        if (gBattleMons[gBattlerAttacker].volatiles.flagMultiUnitTransform != 1)
         {
             BlendPalette(paletteOffset, 16, 6, RGB_WHITE);
             CpuCopy32(&gPlttBufferFaded[paletteOffset], &gPlttBufferUnfaded[paletteOffset], PLTT_SIZEOF(16));

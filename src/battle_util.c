@@ -6574,25 +6574,45 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             }
             break;
         case ABILITY_DEVOUR:
-            if (IsBattlerAlive(battler)
-             && !IsBattlerAtMaxHp(battler)
-             && !IsBattlerAlive(gBattlerTarget))
+            if (IsBattlerAlive(battler) && !IsBattlerAtMaxHp(battler))
             {
-                s32 devourAmount = GetDrainedBigRootHp(gBattlerAttacker, GetNonDynamaxMaxHP(gBattlerTarget) / 3);
+                s32 devourAmount;
 
-                if (GetBattlerAbility(gBattlerTarget) == ABILITY_LIQUID_OOZE || GetBattlerAbility(gBattlerTarget) == ABILITY_STRANGE_MIST)
+                if ((gMovesInfo[gCurrentMove].target == TARGET_DEPENDS
+                 || gMovesInfo[gCurrentMove].target == TARGET_BOTH
+                 || gMovesInfo[gCurrentMove].target == TARGET_USER_AND_ALLY
+                 || gMovesInfo[gCurrentMove].target == TARGET_FOES_AND_ALLY
+                 || gMovesInfo[gCurrentMove].target == TARGET_FIELD
+                 || gMovesInfo[gCurrentMove].target == TARGET_OPPONENTS_FIELD
+                 || gMovesInfo[gCurrentMove].target == TARGET_ALL_BATTLERS))
                 {
-                    SetPassiveDamageAmount(gBattlerAttacker, devourAmount);
-                    BattleScriptCall(BattleScript_DevourLiquidOoze);
+                    BattleScriptCall(BattleScript_DevourHealMultiTarget);
                 }
-                else if ((gBattleMons[gBattlerAttacker].volatiles.healBlock))
+                else if ((gMovesInfo[gCurrentMove].target == TARGET_SELECTED
+                 || gMovesInfo[gCurrentMove].target == TARGET_OPPONENT
+                 || gMovesInfo[gCurrentMove].target == TARGET_SMART
+                 || gMovesInfo[gCurrentMove].target == TARGET_RANDOM
+                 || gMovesInfo[gCurrentMove].target == TARGET_USER
+                 || gMovesInfo[gCurrentMove].target == TARGET_ALLY
+                 || gMovesInfo[gCurrentMove].target == TARGET_USER_OR_ALLY)
+                 && !IsBattlerAlive(gBattlerTarget))
                 {
-                    BattleScriptCall(BattleScript_DevourHealBlock);
-                }
-                else
-                {
-                    SetHealAmount(gBattlerAttacker, devourAmount);
-                    BattleScriptCall(BattleScript_DevourHeal);
+                    devourAmount = GetDrainedBigRootHp(gBattlerAttacker, GetNonDynamaxMaxHP(gBattlerTarget) / 3);
+
+                    if (GetBattlerAbility(gBattlerTarget) == ABILITY_LIQUID_OOZE || GetBattlerAbility(gBattlerTarget) == ABILITY_STRANGE_MIST)
+                    {
+                        SetPassiveDamageAmount(gBattlerAttacker, devourAmount);
+                        BattleScriptCall(BattleScript_DevourLiquidOoze);
+                    }
+                    else if ((gBattleMons[gBattlerAttacker].volatiles.healBlock))
+                    {
+                        BattleScriptCall(BattleScript_DevourHealBlock);
+                    }
+                    else
+                    {
+                        SetHealAmount(gBattlerAttacker, devourAmount);
+                        BattleScriptCall(BattleScript_DevourHeal);
+                    }
                 }
                 effect = TRUE;
             }
