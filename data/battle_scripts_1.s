@@ -884,6 +884,7 @@ BattleScript_EffectFling::
 	jumpifability BS_TARGET, ABILITY_SHIELD_DUST, BattleScript_FlingBlockedByShieldDust
 	jumpifability BS_TARGET, ABILITY_ADVENT, BattleScript_FlingBlockedByShieldDust
 	jumpifability BS_TARGET, ABILITY_PRISMA_ZWEI, BattleScript_FlingBlockedByShieldDust
+	jumpifability BS_TARGET, ABILITY_FLAWLESS, BattleScript_FlingBlockedByShieldDust
 	tryflingholdeffect
 	goto BattleScript_FlingEnd
 

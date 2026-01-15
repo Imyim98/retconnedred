@@ -385,7 +385,7 @@ enum __attribute__((packed)) Ability
     ABILITY_ULTRA_SEIGA = (ABILITY_OFFICIAL_END + 49),
     ABILITY_GUARD_ARMOR = (ABILITY_OFFICIAL_END + 50), // (as Shell Armor, Battle Armor)
     ABILITY_MYSTERIOUS = (ABILITY_OFFICIAL_END + 51), // (as Color Change)
-    ABILITY_FLAWLESS = (ABILITY_OFFICIAL_END + 52), // TO DO // (as Shield Dust)
+    ABILITY_FLAWLESS = (ABILITY_OFFICIAL_END + 52), // (as Shield Dust)
     ABILITY_GATE_KEEPER = (ABILITY_OFFICIAL_END + 53), // (as Suction Cups)
     ABILITY_PLAY_GHOST = (ABILITY_OFFICIAL_END + 54), // (as Wonder Guard)
     ABILITY_INFECTIOUS = (ABILITY_OFFICIAL_END + 55), // (as Effect Spore; works on Nature-types)
@@ -412,7 +412,7 @@ enum __attribute__((packed)) Ability
     ABILITY_WINTER_GIFT = (ABILITY_OFFICIAL_END + 76), // During Hail/Snow, +50% boost to SAtk/SDef.
     ABILITY_PURE_FURIES = (ABILITY_OFFICIAL_END + 77), // TO DO // --- (was mold breaker)
     ABILITY_PURE_ENIGMA = (ABILITY_OFFICIAL_END + 78), // TO DO for Okina, for now 50% // Doubles Atk, Def, SAtk, SDef, and Speed. (+50% if user is not Okina).
-    ABILITY_ABERRANT = (ABILITY_OFFICIAL_END + 79), // TO DO // Switches own Atk and SAtk.
+    ABILITY_ABERRANT = (ABILITY_OFFICIAL_END + 79), // Switches own Atk and SAtk.
     ABILITY_STORM_SHAWL = (ABILITY_OFFICIAL_END + 80), // TO DO // During abnormal weather, +50% SDef. Blocks sand/hail damage.
     ABILITY_HARMONIZE = (ABILITY_OFFICIAL_END + 81), // TO DO // Damaging moves do 10% more damage per ally that also knows them.
     ABILITY_CONTAGION = (ABILITY_OFFICIAL_END + 82), // (as Mummy)
@@ -449,9 +449,9 @@ enum __attribute__((packed)) Ability
     ABILITY_MY_REALM = (ABILITY_OFFICIAL_END + 113), // TO DO // Sets (or clears) Trick Room for 5 turns on entry.
     ABILITY_SWORDMASTER = (ABILITY_OFFICIAL_END + 114), // Boosts priority move power by 50%.
     ABILITY_ATHEISM = (ABILITY_OFFICIAL_END + 115), // TO DO // Quarters damage taken from Faith moves.
-    ABILITY_FIRM_DEFENSE = (ABILITY_OFFICIAL_END + 116), // TO DO // Prevents Defense drops.
+    ABILITY_FIRM_DEFENSE = (ABILITY_OFFICIAL_END + 116), // Prevents Defense drops.
     ABILITY_SUNBATHING = (ABILITY_OFFICIAL_END + 117), // TO DO // In Sun, recover from status at end of turn.
-    ABILITY_LAST_PRANK = (ABILITY_OFFICIAL_END + 118), // TO DO // When knocked out by a move, attacker takes damage equal to half their HP (minimum 1).
+    ABILITY_LAST_PRANK = (ABILITY_OFFICIAL_END + 118), // When knocked out by a move, attacker takes damage equal to half their HP (minimum 1).
     ABILITY_DIAMOND_DUST = (ABILITY_OFFICIAL_END + 119), // TO DO // ---
     ABILITY_BUZZER = (ABILITY_OFFICIAL_END + 120), // TO DO // When taking resisted hit, lower foe's Atk or SAtk (matching move). Blocked by Soundproof.
     ABILITY_SAND_CASTLE = (ABILITY_OFFICIAL_END + 121), // TO DO // During sandstorm, doubles Defense.

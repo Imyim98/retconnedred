@@ -724,7 +724,11 @@ bool32 IsAdditionalEffectBlocked(u32 battlerAtk, u32 abilityAtk, u32 battlerDef,
     if (gAiLogicData->holdEffects[battlerDef] == HOLD_EFFECT_COVERT_CLOAK)
         return TRUE;
 
-    if (abilityDef == ABILITY_SHIELD_DUST && !IsMoldBreakerTypeAbility(battlerAtk, abilityAtk))
+    if ((abilityDef == ABILITY_SHIELD_DUST
+      || abilityDef == ABILITY_ADVENT
+      || abilityDef == ABILITY_PRISMA_ZWEI
+      || abilityDef == ABILITY_FLAWLESS)
+      && !IsMoldBreakerTypeAbility(battlerAtk, abilityAtk))
         return TRUE;
 
     return FALSE;
@@ -2321,6 +2325,7 @@ bool32 CanLowerStat(u32 battlerAtk, u32 battlerDef, struct AiLogicData *aiData, 
             if (stat == STAT_ATK)
                 return FALSE;
         case ABILITY_BIG_PECKS:
+        case ABILITY_FIRM_DEFENSE:
             if (stat == STAT_DEF)
                 return FALSE;
         case ABILITY_ILLUMINATE:
@@ -2340,6 +2345,9 @@ bool32 CanLowerStat(u32 battlerAtk, u32 battlerDef, struct AiLogicData *aiData, 
 		case ABILITY_DOUBLE_HEROINES:
             return FALSE;
         case ABILITY_SHIELD_DUST:
+        case ABILITY_ADVENT:
+        case ABILITY_PRISMA_ZWEI:
+        case ABILITY_FLAWLESS:
             if (!IsBattleMoveStatus(move) && GetActiveGimmick(battlerAtk) != GIMMICK_DYNAMAX)
                 return FALSE;
             break;
@@ -3722,7 +3730,7 @@ bool32 AI_CanBeInfatuated(u32 battlerAtk, u32 battlerDef, enum Ability defAbilit
 u32 ShouldTryToFlinch(u32 battlerAtk, u32 battlerDef, enum Ability atkAbility, enum Ability defAbility, enum Move move)
 {
     enum Move predictedMoveSpeedCheck = GetIncomingMoveSpeedCheck(battlerAtk, battlerDef, gAiLogicData);
-    if (((!IsMoldBreakerTypeAbility(battlerAtk, gAiLogicData->abilities[battlerAtk]) && (defAbility == ABILITY_SHIELD_DUST || defAbility == ABILITY_INNER_FOCUS || defAbility == ABILITY_ADVENT || defAbility == ABILITY_PRISMA_ZWEI))
+    if (((!IsMoldBreakerTypeAbility(battlerAtk, gAiLogicData->abilities[battlerAtk]) && (defAbility == ABILITY_SHIELD_DUST || defAbility == ABILITY_INNER_FOCUS || defAbility == ABILITY_ADVENT || defAbility == ABILITY_PRISMA_ZWEI || defAbility == ABILITY_FLAWLESS))
       || gAiLogicData->holdEffects[battlerDef] == HOLD_EFFECT_COVERT_CLOAK
       || DoesSubstituteBlockMove(battlerAtk, battlerDef, move)
       || AI_IsSlower(battlerAtk, battlerDef, move, predictedMoveSpeedCheck, CONSIDER_PRIORITY))) // Opponent goes first
@@ -3784,7 +3792,7 @@ bool32 IsFlinchGuaranteed(u32 battlerAtk, u32 battlerDef, enum Move move)
             if (gAiLogicData->holdEffects[battlerDef] == HOLD_EFFECT_COVERT_CLOAK
             || DoesSubstituteBlockMove(battlerAtk, battlerDef, move)
             || (!IsMoldBreakerTypeAbility(battlerAtk, gAiLogicData->abilities[battlerAtk])
-            && (gAiLogicData->abilities[battlerDef] == ABILITY_SHIELD_DUST || gAiLogicData->abilities[battlerDef] == ABILITY_INNER_FOCUS || gAiLogicData->abilities[battlerDef] == ABILITY_ADVENT || gAiLogicData->abilities[battlerDef] == ABILITY_PRISMA_ZWEI)))
+            && (gAiLogicData->abilities[battlerDef] == ABILITY_SHIELD_DUST || gAiLogicData->abilities[battlerDef] == ABILITY_INNER_FOCUS || gAiLogicData->abilities[battlerDef] == ABILITY_ADVENT || gAiLogicData->abilities[battlerDef] == ABILITY_PRISMA_ZWEI || gAiLogicData->abilities[battlerDef] == ABILITY_FLAWLESS)))
                 return FALSE;
             else
                 return TRUE;
@@ -5648,7 +5656,10 @@ bool32 AI_ShouldSetUpHazards(u32 battlerAtk, u32 battlerDef, enum Move move, str
     {
         if (DoesBattlerIgnoreAbilityChecks(battlerAtk, aiData->abilities[battlerAtk], move))
             return TRUE;
-        if (aiData->abilities[battlerDef] == ABILITY_SHIELD_DUST)
+        if (aiData->abilities[battlerDef] == ABILITY_SHIELD_DUST
+         || aiData->abilities[battlerDef] == ABILITY_ADVENT
+         || aiData->abilities[battlerDef] == ABILITY_PRISMA_ZWEI
+         || aiData->abilities[battlerDef] == ABILITY_FLAWLESS)
             return FALSE;
     }
     return TRUE;

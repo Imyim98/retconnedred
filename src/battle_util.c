@@ -5174,7 +5174,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
         case ABILITY_POWER_LEAK:
             if (shouldAbilityTrigger && CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
             {
-                SET_STATCHANGER(STAT_SPATK, 1, FALSE);
+                SET_STATCHANGER(STAT_SPATK, 2, FALSE);
                 BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
                 effect++;
             }
@@ -5512,7 +5512,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 }
                 break;
             case ABILITY_POWER_LEAK:
-                if (CompareStat(battler, STAT_SPATK, 0, CMP_GREATER_THAN, gLastUsedAbility) && gBattleStruct->battlerState[battler].isFirstTurn != 2)
+                if (CompareStat(battler, STAT_SPATK, MIN_STAT_STAGE, CMP_GREATER_THAN, gLastUsedAbility) && gBattleStruct->battlerState[battler].isFirstTurn != 2)
                 {
                     SaveBattlerAttacker(gBattlerAttacker);
                     SET_STATCHANGER(STAT_SPATK, 1, TRUE);
@@ -6000,6 +6000,16 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 effect++;
             }
             break;
+        case ABILITY_LAST_PRANK:
+            if (!(gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_NO_EFFECT)
+             && !IsBattlerAlive(gBattlerTarget)
+             && IsBattlerAlive(gBattlerAttacker))
+             {
+                gBattleScripting.battler = gBattlerTarget;
+                SetPassiveDamageAmount(gBattlerAttacker, GetNonDynamaxHP(gBattlerAttacker) / 2);
+                BattleScriptCall(BattleScript_AftermathDmg);
+                effect++;
+             }
         case ABILITY_EFFECT_SPORE:
         {
             enum Ability abilityAtk = GetBattlerAbility(gBattlerAttacker);
@@ -9107,28 +9117,60 @@ static inline u32 CalcAttackStat(struct BattleContext *ctx)
 
     if (moveEffect == EFFECT_FOUL_PLAY)
     {
-        if (IsBattleMovePhysical(move))
+        if (ctx->abilityDef == ABILITY_ABERRANT)
         {
-            atkStat = gBattleMons[battlerDef].attack;
-            atkStage = gBattleMons[battlerDef].statStages[STAT_ATK];
+            if (IsBattleMovePhysical(move))
+            {
+                atkStat = gBattleMons[battlerDef].spAttack;
+                atkStage = gBattleMons[battlerDef].statStages[STAT_SPATK];
+            }
+            else
+            {
+                atkStat = gBattleMons[battlerDef].attack;
+                atkStage = gBattleMons[battlerDef].statStages[STAT_ATK];
+            }
         }
         else
         {
-            atkStat = gBattleMons[battlerDef].spAttack;
-            atkStage = gBattleMons[battlerDef].statStages[STAT_SPATK];
+            if (IsBattleMovePhysical(move))
+            {
+                atkStat = gBattleMons[battlerDef].attack;
+                atkStage = gBattleMons[battlerDef].statStages[STAT_ATK];
+            }
+            else
+            {
+                atkStat = gBattleMons[battlerDef].spAttack;
+                atkStage = gBattleMons[battlerDef].statStages[STAT_SPATK];
+            }
         }
     }
     else if (moveEffect == EFFECT_MIND_HACK)
     {
-        if (IsBattleMoveSpecial(move))
+        if (ctx->abilityDef == ABILITY_ABERRANT)
         {
-            atkStat = gBattleMons[battlerDef].spAttack;
-            atkStage = gBattleMons[battlerDef].statStages[STAT_SPATK];
+            if (IsBattleMoveSpecial(move))
+            {
+                atkStat = gBattleMons[battlerDef].attack;
+                atkStage = gBattleMons[battlerDef].statStages[STAT_ATK];
+            }
+            else
+            {
+                atkStat = gBattleMons[battlerDef].spAttack;
+                atkStage = gBattleMons[battlerDef].statStages[STAT_SPATK];
+            }
         }
         else
         {
-            atkStat = gBattleMons[battlerDef].attack;
-            atkStage = gBattleMons[battlerDef].statStages[STAT_ATK];
+            if (IsBattleMoveSpecial(move))
+            {
+                atkStat = gBattleMons[battlerDef].spAttack;
+                atkStage = gBattleMons[battlerDef].statStages[STAT_SPATK];
+            }
+            else
+            {
+                atkStat = gBattleMons[battlerDef].attack;
+                atkStage = gBattleMons[battlerDef].statStages[STAT_ATK];
+            }
         }
     }
     else if (moveEffect == EFFECT_BODY_PRESS)
@@ -9482,39 +9524,79 @@ static inline u32 CalcDefenseStat(struct BattleContext *ctx)
     def = gBattleMons[battlerDef].defense;
     spDef = gBattleMons[battlerDef].spDefense;
 
-    if (moveEffect == EFFECT_REVERSE_PSYSHOCK && IsBattleMovePhysical(move))
+    if (ctx->abilityAtk == ABILITY_ABERRANT)
     {
-        defStat = spDef;
-        defStage = gBattleMons[battlerDef].statStages[STAT_SPDEF];
-        usesDefStat = FALSE;
-    }
-    else if (moveEffect == EFFECT_PSYSHOCK || IsBattleMovePhysical(move)) // uses defense stat instead of sp.def
-    {
-        if (ctx->fieldStatuses & STATUS_FIELD_WONDER_ROOM) // the defense stats are swapped
-        {
-            defStat = spDef;
-            usesDefStat = FALSE;
-        }
-        else
+        if (moveEffect == EFFECT_REVERSE_PSYSHOCK && IsBattleMovePhysical(move))
         {
             defStat = def;
+            defStage = gBattleMons[battlerDef].statStages[STAT_DEF];
             usesDefStat = TRUE;
         }
-        defStage = gBattleMons[battlerDef].statStages[STAT_DEF];
-    }
-    else // is special
-    {
-        if (ctx->fieldStatuses & STATUS_FIELD_WONDER_ROOM) // the defense stats are swapped
+        else if (moveEffect == EFFECT_PSYSHOCK || IsBattleMovePhysical(move)) // uses defense stat instead of sp.def
         {
-            defStat = def;
-            usesDefStat = TRUE;
+            if (ctx->fieldStatuses & STATUS_FIELD_WONDER_ROOM) // the defense stats are swapped
+            {
+                defStat = def;
+                usesDefStat = TRUE;
+            }
+            else
+            {
+                defStat = spDef;
+                usesDefStat = FALSE;
+            }
+            defStage = gBattleMons[battlerDef].statStages[STAT_SPDEF];
         }
-        else
+        else // is special
+        {
+            if (ctx->fieldStatuses & STATUS_FIELD_WONDER_ROOM) // the defense stats are swapped
+            {
+                defStat = spDef;
+                usesDefStat = FALSE;
+            }
+            else
+            {
+                defStat = def;
+                usesDefStat = TRUE;
+            }
+            defStage = gBattleMons[battlerDef].statStages[STAT_DEF];
+        }
+    }
+    else
+    {
+        if (moveEffect == EFFECT_REVERSE_PSYSHOCK && IsBattleMovePhysical(move))
         {
             defStat = spDef;
+            defStage = gBattleMons[battlerDef].statStages[STAT_SPDEF];
             usesDefStat = FALSE;
         }
-        defStage = gBattleMons[battlerDef].statStages[STAT_SPDEF];
+        else if (moveEffect == EFFECT_PSYSHOCK || IsBattleMovePhysical(move)) // uses defense stat instead of sp.def
+        {
+            if (ctx->fieldStatuses & STATUS_FIELD_WONDER_ROOM) // the defense stats are swapped
+            {
+                defStat = spDef;
+                usesDefStat = FALSE;
+            }
+            else
+            {
+                defStat = def;
+                usesDefStat = TRUE;
+            }
+            defStage = gBattleMons[battlerDef].statStages[STAT_DEF];
+        }
+        else // is special
+        {
+            if (ctx->fieldStatuses & STATUS_FIELD_WONDER_ROOM) // the defense stats are swapped
+            {
+                defStat = def;
+                usesDefStat = TRUE;
+            }
+            else
+            {
+                defStat = spDef;
+                usesDefStat = FALSE;
+            }
+            defStage = gBattleMons[battlerDef].statStages[STAT_SPDEF];
+        }
     }
 
     // Self-destruct / Explosion cut defense in half
@@ -12395,7 +12477,7 @@ bool32 DoesDestinyBondFail(u32 battler)
 // This check has always to be the last in a condtion statement because of the recording of AI data.
 bool32 IsMoveEffectBlockedByTarget(enum Ability ability)
 {
-    if (ability == ABILITY_SHIELD_DUST || ability == ABILITY_ADVENT || ability == ABILITY_PRISMA_ZWEI)
+    if (ability == ABILITY_SHIELD_DUST || ability == ABILITY_ADVENT || ability == ABILITY_PRISMA_ZWEI || ability == ABILITY_FLAWLESS)
     {
         RecordAbilityBattle(gBattlerTarget, ability);
         return TRUE;

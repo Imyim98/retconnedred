@@ -9360,7 +9360,8 @@ static void TryPlayStatChangeAnimation(u32 battler, enum Ability ability, u32 st
                         && !(GetConfig(CONFIG_ILLUMINATE_EFFECT) >= GEN_9 && (ability == ABILITY_ILLUMINATE || ability == ABILITY_DIVA) && currStat == STAT_ACC)
                         && !(ability == ABILITY_HYPER_CUTTER && currStat == STAT_ATK)
                         && !(ability == ABILITY_HI_STRENGTH && currStat == STAT_ATK)
-                        && !(ability == ABILITY_BIG_PECKS && currStat == STAT_DEF))
+                        && !(ability == ABILITY_BIG_PECKS && currStat == STAT_DEF)
+                        && !(ability == ABILITY_FIRM_DEFENSE && currStat == STAT_DEF)
                 {
                     if (gBattleMons[battler].statStages[currStat] > MIN_STAT_STAGE)
                     {
@@ -9531,7 +9532,8 @@ static u32 ChangeStatBuffs(u32 battler, s8 statValue, enum Stat statId, union St
                 || (GetConfig(CONFIG_ILLUMINATE_EFFECT) >= GEN_9 && (battlerAbility == ABILITY_ILLUMINATE || battlerAbility == ABILITY_DIVA) && statId == STAT_ACC)
                 || (battlerAbility == ABILITY_HYPER_CUTTER && statId == STAT_ATK)
                 || (battlerAbility == ABILITY_HI_STRENGTH && statId == STAT_ATK)
-                || (battlerAbility == ABILITY_BIG_PECKS && statId == STAT_DEF)))
+                || (battlerAbility == ABILITY_BIG_PECKS && statId == STAT_DEF)
+                || (battlerAbility == ABILITY_FIRM_DEFENSE && statId == STAT_DEF)))
         {
             if (flags.allowPtr)
             {
