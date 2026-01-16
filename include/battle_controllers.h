@@ -467,6 +467,7 @@ void BtlController_HandleSwitchInShowSubstitute(u32 battler);
 
 bool32 ShouldBattleRestrictionsApply(u32 battler);
 void FreeShinyStars(void);
+enum BattleTrainer GetBattleTrainer(enum BattlerId battler);
 
 // Battle Speed Up (Credit to Pokabbie)
 u32 Rogue_GetBattleSpeedScale(bool32 forHealthbar);
