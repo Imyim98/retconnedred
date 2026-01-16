@@ -5654,7 +5654,7 @@ bool32 AI_ShouldSetUpHazards(u32 battlerAtk, u32 battlerDef, enum Move move, str
             return FALSE;
         if (DoesBattlerIgnoreAbilityChecks(battlerAtk, aiData->abilities[battlerAtk], move))
             return TRUE;
-        if (aiData->abilities[battlerDef] == ABILITY_MAGIC_BOUNCE)
+        if (aiData->abilities[battlerDef] == ABILITY_MAGIC_BOUNCE || aiData->abilities[battlerDef] == ABILITY_FANTASY_BREAKER)
             return FALSE;
     }
     else

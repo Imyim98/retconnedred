@@ -3879,7 +3879,7 @@ void SetMoveEffect(u32 battlerAtk, u32 effectBattler, enum MoveEffect moveEffect
                 gBattlescriptCurrInstr = battleScript;
             }
         }
-		else if (battlerAbility == ABILITY_PURE_WHITE)
+		else if (abilities[effectBattler] == ABILITY_PURE_WHITE)
 		{
 			// Inner Focus ALWAYS prevents flinching but only activates
 			// on a move that's supposed to flinch, like Fake Out
@@ -3996,7 +3996,7 @@ void SetMoveEffect(u32 battlerAtk, u32 effectBattler, enum MoveEffect moveEffect
                 MOVE_EFFECT_SLEEP,
                 MOVE_EFFECT_TOXIC
             };
-            SetMoveEffect(battler, effectBattler, RandomElement(RNG_FIVE_ELEMENT, sFiveElementEffects), battleScript, effectFlags);
+            SetMoveEffect(battlerAtk, effectBattler, RandomElement(RNG_FIVE_ELEMENT, sFiveElementEffects), battleScript, effectFlags);
         }
         break;
     case MOVE_EFFECT_STRAWBERRY_CROSS:
@@ -4011,7 +4011,7 @@ void SetMoveEffect(u32 battlerAtk, u32 effectBattler, enum MoveEffect moveEffect
                 MOVE_EFFECT_BURN,
                 MOVE_EFFECT_FREEZE_OR_FROSTBITE
             };
-            SetMoveEffect(battler, effectBattler, RandomElement(RNG_STRAWBERRY_CROSS, sStrawberryCrossEffects), battleScript, effectFlags);
+            SetMoveEffect(battlerAtk, effectBattler, RandomElement(RNG_STRAWBERRY_CROSS, sStrawberryCrossEffects), battleScript, effectFlags);
         }
         break;
     case MOVE_EFFECT_WRAP:
@@ -9174,7 +9174,7 @@ static void TryPlayStatChangeAnimation(u32 battler, enum Ability ability, u32 st
                         && !(ability == ABILITY_HYPER_CUTTER && currStat == STAT_ATK)
                         && !(ability == ABILITY_HI_STRENGTH && currStat == STAT_ATK)
                         && !(ability == ABILITY_BIG_PECKS && currStat == STAT_DEF)
-                        && !(ability == ABILITY_FIRM_DEFENSE && currStat == STAT_DEF)
+                        && !(ability == ABILITY_FIRM_DEFENSE && currStat == STAT_DEF))
                 {
                     if (gBattleMons[battler].statStages[currStat] > MIN_STAT_STAGE)
                     {
@@ -15432,7 +15432,7 @@ void BS_TryGrimoireCall(void)
         ctx.moveType = CheckDynamicMoveType(GetBattlerMon(ctx.battlerAtk), ctx.move, ctx.battlerAtk, MON_IN_BATTLE);
         calcDamage = CalculateMoveDamage(&ctx);
 
-        if (CanAbilityAbsorbMove(ctx.battlerAtk, ctx.battlerDef, GetBattlerAbility(ctx.battlerDef), ctx.move, ctx.moveType, CHECK_TRIGGER))
+        if (CanAbilityAbsorbMove(&ctx))
             calcDamage = 0;
 
         if (calcDamage > highestDamage)
@@ -15529,7 +15529,7 @@ void BS_TransformDataExecutionDecade(void)
         ctx.moveType = CheckDynamicMoveType(GetBattlerMon(ctx.battlerAtk), ctx.move, ctx.battlerAtk, MON_IN_BATTLE);
         calcDamage = CalculateMoveDamage(&ctx);
 
-        if (CanAbilityAbsorbMove(ctx.battlerAtk, ctx.battlerDef, GetBattlerAbility(ctx.battlerDef), ctx.move, ctx.moveType, CHECK_TRIGGER))
+        if (CanAbilityAbsorbMove(&ctx))
             calcDamage = 0;
 
         if (calcDamage > highestDamage)
@@ -16034,7 +16034,7 @@ void BS_TryCardIncludeAttack(void)
         ctx.moveType = CheckDynamicMoveType(GetBattlerMon(ctx.battlerAtk), ctx.move, ctx.battlerAtk, MON_IN_BATTLE);
         calcDamage = CalculateMoveDamage(&ctx);
 
-        if (CanAbilityAbsorbMove(ctx.battlerAtk, ctx.battlerDef, GetBattlerAbility(ctx.battlerDef), ctx.move, ctx.moveType, CHECK_TRIGGER))
+        if (CanAbilityAbsorbMove(&ctx))
             calcDamage = 0;
 
         if (calcDamage > highestDamage)

@@ -3032,7 +3032,7 @@ static enum MoveCanceler CancelerPriorityBlock(struct BattleContext *ctx)
             continue;
 
         ability = GetBattlerAbility(battler);
-        if (IsDazzlingAbility(ability))
+        if (IsDazzlingAbility(ability) && !IsAbilityOnField(ABILITY_TIME_JACKER))
         {
             effect = TRUE;
             break;
@@ -3097,6 +3097,7 @@ static bool32 CanTwoTurnMoveFireThisTurn(struct BattleContext *ctx)
 {
     if (gBattleMoveEffects[GetMoveEffect(ctx->move)].semiInvulnerableEffect
      || GetMoveEffect(ctx->move) == EFFECT_GEOMANCY
+     || GetMoveEffect(ctx->move) == EFFECT_ASTROMANCY
      || !IsBattlerWeatherAffected(ctx->battlerAtk, GetMoveTwoTurnAttackWeather(ctx->move)))
         return FALSE;
     return TRUE;
@@ -3490,7 +3491,9 @@ static enum MoveCanceler CancelerNotFullyProtected(struct BattleContext *ctx)
 
 static bool32 IsMoveParentalBondAffected(struct BattleContext *ctx)
 {
-    if (ctx->abilityAtk != ABILITY_PARENTAL_BOND
+    if (!(ctx->abilityAtk == ABILITY_PARENTAL_BOND
+     || ctx->abilityAtk == ABILITY_TWIN_BODY
+     || (gMovesInfo[gCurrentMove].slicingMove == TRUE && gFieldStatuses & STATUS_FIELD_UBW))
      || gBattleStruct->numSpreadTargets > 1
      || IsMoveParentalBondBanned(ctx->move)
      || GetMoveCategory(ctx->move) == DAMAGE_CATEGORY_STATUS
@@ -4097,7 +4100,7 @@ bool32 CanTargetBlockPranksterMove(struct BattleContext *ctx, s32 movePriority)
     if (movePriority <= 0
      || !IsBattleMoveStatus(ctx->move)
      || !BlocksPrankster(ctx->move, ctx->battlerAtk, ctx->battlerDef, TRUE)
-     || (IsBattleMoveStatus(ctx->move) && (ctx->abilityDef == ABILITY_MAGIC_BOUNCE || gProtectStructs[ctx->battlerDef].bounceMove)))
+     || (IsBattleMoveStatus(ctx->move) && (ctx->abilityDef == ABILITY_MAGIC_BOUNCE || ctx->abilityDef == ABILITY_FANTASY_BREAKER || gProtectStructs[ctx->battlerDef].bounceMove)))
         return FALSE;
 
     if (ctx->runScript)
@@ -4168,7 +4171,7 @@ bool32 CanAbilityAbsorbMove(struct BattleContext *ctx)
             battleScript = AbsorbedByStatIncreaseAbility(ctx->battlerDef, ctx->abilityDef, STAT_ATK, 1);
         break;
     case ABILITY_FLASH_FIRE:
-        if (ctx->moveType == TYPE_FIRE && (B_FLASH_FIRE_FROZEN >= GEN_5 || !(gBattleMons[ctx->battlerDef].status1 & STATUS1_FREEZE)))
+        if (ctx->moveType == TYPE_NEW_FIRE && (B_FLASH_FIRE_FROZEN >= GEN_5 || !(gBattleMons[ctx->battlerDef].status1 & STATUS1_FREEZE)))
             battleScript = AbsorbedByFlashFire(ctx->battlerDef);
         break;
     case ABILITY_SOUNDPROOF:
@@ -4190,10 +4193,17 @@ bool32 CanAbilityAbsorbMove(struct BattleContext *ctx)
                 battleScript = AbsorbedByDrainHpAbility(ctx->battlerDef);
         }
     case ABILITY_GOOD_AS_GOLD:
+    case ABILITY_GREAT_BLOOMING:
+    case ABILITY_SECOND_ADVENT:
+    case ABILITY_PRISMA_ZWEI:
         if (IsBattleMoveStatus(ctx->move))
         {
             enum MoveTarget target = GetBattlerMoveTargetType(ctx->battlerAtk, ctx->move);
-            if (target != TARGET_OPPONENTS_FIELD && target != TARGET_ALL_BATTLERS)
+            if (target != TARGET_OPPONENTS_FIELD 
+                && target != TARGET_ALL_BATTLERS
+                && GetMoveEffect(ctx->move) != EFFECT_GRIMOIRE_CALL
+                && GetMoveEffect(ctx->move) != EFFECT_A_TRANCE
+                && GetMoveEffect(ctx->move) != EFFECT_CARD_INCLUDE)
                 battleScript = BattleScript_GoodAsGoldActivates;
         }
         break;
@@ -4268,7 +4278,7 @@ static bool32 TryMagicBounce(struct BattleContext *ctx)
     if (gBattleStruct->magicBounceActive || gBattleStruct->bouncedMoveIsUsed)
         return FALSE;
 
-    if (ctx->abilityDef != ABILITY_MAGIC_BOUNCE)
+    if (!(ctx->abilityDef == ABILITY_MAGIC_BOUNCE || ctx->abilityDef == ABILITY_FANTASY_BREAKER))
         return FALSE;
 
     gBattleStruct->magicBounceActive = TRUE;
@@ -8806,7 +8816,7 @@ static inline u32 CalcTerrainBoostedPower(struct BattleContext *ctx, u32 basePow
 
 static inline u32 IsFieldMudSportAffected(enum Type moveType)
 {
-    if (moveType != TYPE_ELECTRIC)
+    if (moveType != TYPE_NEW_ELECTRIC)
         return FALSE;
 
     if (gFieldStatuses & STATUS_FIELD_MUDSPORT)

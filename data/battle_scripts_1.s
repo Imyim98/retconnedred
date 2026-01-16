@@ -55,7 +55,7 @@ BattleScript_EffectATrance::
 
 BattleScript_EffectTransformHit::
 	attackcanceler
-	accuracycheck BattleScript_MoveMissedPause, ACC_CURR_MOVE
+	accuracycheck BattleScript_MoveMissedPause
 	jumpifspecies SPECIES_ALTARIA, BattleScript_EffectTransformHitDoTransformFirstAkiSisters
 	jumpifspecies SPECIES_LATIOS, BattleScript_EffectTransformHitDoTransformFirstReiMari
 	jumpifspecies SPECIES_LATIAS, BattleScript_EffectTransformHitDoTransformFirstYorigamiSisters
@@ -207,14 +207,7 @@ BattleScript_UltraInstinctEnd:
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectAstromancy::
-	jumpifvolatile BS_ATTACKER, VOLATILE_MULTIPLETURNS, BattleScript_AstromancySecondTurn
-	call BattleScript_FirstChargingTurn
-	jumpifnoholdeffect BS_ATTACKER, HOLD_EFFECT_POWER_HERB, BattleScript_MoveEnd
-	call BattleScript_PowerHerbActivation
-BattleScript_AstromancySecondTurn:
 	attackcanceler
-	setbyte sB_ANIM_TURN, 1
-	clearvolatile BS_ATTACKER, VOLATILE_MULTIPLETURNS
 	jumpifstat BS_ATTACKER, CMP_LESS_THAN, STAT_ATK, MAX_STAT_STAGE, BattleScript_AstromancyDoMoveAnim
 	jumpifstat BS_ATTACKER, CMP_LESS_THAN, STAT_DEF, MAX_STAT_STAGE, BattleScript_AstromancyDoMoveAnim
 	jumpifstat BS_ATTACKER, CMP_EQUAL, STAT_SPEED, MAX_STAT_STAGE, BattleScript_CantRaiseMultipleStats
@@ -9030,7 +9023,7 @@ BattleScript_EffectUehehehehehe::
 
 BattleScript_EffectUeheheheheheFoe::
 	attackcanceler
-	accuracycheck BattleScript_ButItFailed, ACC_CURR_MOVE
+	accuracycheck BattleScript_ButItFailed
 	jumpifability BS_TARGET_SIDE, ABILITY_AROMA_VEIL, BattleScript_AromaVeilProtects
 	tryinfatuating BattleScript_ButItFailed
 	attackanimation
@@ -9042,7 +9035,7 @@ BattleScript_EffectUeheheheheheFoe::
 
 BattleScript_EffectUeheheheheheAlly::
 	attackcanceler
-	accuracycheck BattleScript_ButItFailed, ACC_CURR_MOVE
+	accuracycheck BattleScript_ButItFailed
 	jumpifability BS_TARGET_SIDE, ABILITY_AROMA_VEIL, BattleScript_AromaVeilProtects
 BattleScript_AllStatsUpOnTarget::
 	jumpifstat BS_TARGET, CMP_LESS_THAN, STAT_ATK, MAX_STAT_STAGE, BattleScript_AllStatsUpOnTargetAtk

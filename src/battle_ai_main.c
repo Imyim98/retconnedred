@@ -1239,7 +1239,6 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, enum Move move, s32 s
 
         switch (abilityDef)
         {
-        case ABILITY_FANTASY_BREAKER:
         case ABILITY_MAGIC_GUARD:
             switch (moveEffect)
             {
@@ -1292,6 +1291,7 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, enum Move move, s32 s
                 RETURN_SCORE_MINUS(10);
             break;
         case ABILITY_MAGIC_BOUNCE:
+        case ABILITY_FANTASY_BREAKER:
             if (MoveCanBeBouncedBack(move))
                 RETURN_SCORE_MINUS(20);
             break;
@@ -1331,6 +1331,7 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, enum Move move, s32 s
                     RETURN_SCORE_MINUS(20);
                 break;
             case ABILITY_MAGIC_BOUNCE:
+            case ABILITY_FANTASY_BREAKER:
                 if (CanMoveBeBouncedBack(battlerAtk, move))
                     RETURN_SCORE_MINUS(20);
                 break;
@@ -2144,6 +2145,9 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, enum Move move, s32 s
             if (!hasPartner
               || DoesPartnerHaveSameMoveEffect(BATTLE_PARTNER(battlerAtk), battlerDef, move, aiData->partnerMove)
               || aiData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_GOOD_AS_GOLD
+              || aiData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_GREAT_BLOOMING
+              || aiData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_SECOND_ADVENT
+              || aiData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_PRISMA_ZWEI
               || (aiData->partnerMove != MOVE_NONE && IsBattleMoveStatus(aiData->partnerMove))
               || gBattleStruct->monToSwitchIntoId[BATTLE_PARTNER(battlerAtk)] != PARTY_SIZE) //Partner is switching out.
                 ADJUST_SCORE(-20);
@@ -3253,6 +3257,9 @@ static s32 AI_DoubleBattle(u32 battlerAtk, u32 battlerDef, enum Move move, s32 s
         if (!hasPartner
          || !HasDamagingMove(battlerAtkPartner)
          || aiData->abilities[battlerAtkPartner] == ABILITY_GOOD_AS_GOLD
+         || aiData->abilities[battlerAtkPartner] == ABILITY_GREAT_BLOOMING
+         || aiData->abilities[battlerAtkPartner] == ABILITY_SECOND_ADVENT
+         || aiData->abilities[battlerAtkPartner] == ABILITY_PRISMA_ZWEI
          || (aiData->partnerMove != MOVE_NONE && IsBattleMoveStatus(aiData->partnerMove)))
         {
             ADJUST_SCORE(WORST_EFFECT);
@@ -6331,6 +6338,7 @@ static s32 AI_ForceSetupFirstTurn(u32 battlerAtk, u32 battlerDef, enum Move move
     case EFFECT_VICTORY_DANCE:
     case EFFECT_CEASELESS_EDGE:
     case EFFECT_STONE_AXE:
+    case EFFECT_ASTROMANCY:
     case EFFECT_UBW:
     case EFFECT_DARKNESS_TERRAIN:
     case EFFECT_MIASMA_TERRAIN:

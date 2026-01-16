@@ -21502,7 +21502,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Kick that may flinch foe\n"
             "and destroys protection."),
-        .effect = EFFECT_BRICK_BREAK,
+        .effect = EFFECT_HIT,
         .power = 100,
         .type = TYPE_NEW_METAL,
         .accuracy = 100,
@@ -21516,6 +21516,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         {
             .moveEffect = MOVE_EFFECT_FLINCH,
             .chance = 30,
+        },
+        {
+            .moveEffect = MOVE_EFFECT_BREAK_SCREEN,
+            .preAttackEffect = TRUE,
         }),
         .ignoresTargetAbility = TRUE,
         .ignoresProtect = TRUE,
@@ -21529,7 +21533,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Shot that may flinch foe\n"
             "and destroys protection."),
-        .effect = EFFECT_BRICK_BREAK,
+        .effect = EFFECT_HIT,
         .power = 100,
         .type = TYPE_NEW_METAL,
         .accuracy = 100,
@@ -21543,6 +21547,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         {
             .moveEffect = MOVE_EFFECT_FLINCH,
             .chance = 30,
+        },
+        {
+            .moveEffect = MOVE_EFFECT_BREAK_SCREEN,
+            .preAttackEffect = TRUE,
         }),
         .ignoresTargetAbility = TRUE,
         .ignoresProtect = TRUE,
@@ -21737,7 +21745,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Slash that may flinch foe\n"
             "and destroys protection."),
-        .effect = EFFECT_BRICK_BREAK,
+        .effect = EFFECT_HIT,
         .power = 100,
         .type = TYPE_NEW_METAL,
         .accuracy = 100,
@@ -21751,6 +21759,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         {
             .moveEffect = MOVE_EFFECT_FLINCH,
             .chance = 30,
+        },
+        {
+            .moveEffect = MOVE_EFFECT_BREAK_SCREEN,
+            .preAttackEffect = TRUE,
         }),
         .slicingMove = TRUE,
         .ignoresTargetAbility = TRUE,
@@ -23296,7 +23308,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Slashes using energy blade that\n"
             "cuts walls. High crit-ratio."),
-        .effect = EFFECT_BRICK_BREAK,
+        .effect = EFFECT_HIT,
         .power = 70,
         .type = TYPE_NEW_ILLUSION,
         .accuracy = 100,
@@ -23308,6 +23320,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .additionalEffects = ADDITIONAL_EFFECTS({
             .moveEffect = MOVE_EFFECT_FLINCH,
             .chance = 30,
+        },
+        {
+            .moveEffect = MOVE_EFFECT_BREAK_SCREEN,
+            .preAttackEffect = TRUE,
         }),
         .makesContact = TRUE,
         .slicingMove = TRUE,
@@ -25467,7 +25483,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "A blast from an ancient weapon\n"
             "that clears obstacles."),
-        .effect = EFFECT_BRICK_BREAK,
+        .effect = EFFECT_HIT,
         .power = 70,
         .type = TYPE_NEW_DIVINE,
         .accuracy = 100,
@@ -25476,6 +25492,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .priority = 0,
         .category = DAMAGE_CATEGORY_SPECIAL,
         .metronomeBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BREAK_SCREEN,
+            .preAttackEffect = TRUE,
+        }),
         .contestEffect = CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN,
         .contestCategory = CONTEST_CATEGORY_SMART,
         .contestComboStarterId = 0,
@@ -26333,7 +26353,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Shoots a strong energy ball.\n"
             "Breaks protection and walls."),
-        .effect = EFFECT_BRICK_BREAK,
+        .effect = EFFECT_HIT,
         .power = 120,
         .type = TYPE_NEW_ILLUSION,
         .accuracy = 100,
@@ -26344,6 +26364,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .ballisticMove = TRUE,
         .metronomeBanned = TRUE,
         .ignoresProtect = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BREAK_SCREEN,
+            .preAttackEffect = TRUE,
+        }),
         .contestEffect = CONTEST_EFFECT_BADLY_STARTLE_PREV_MONS,
         .contestCategory = CONTEST_CATEGORY_BEAUTY,
         .contestComboStarterId = 0,
