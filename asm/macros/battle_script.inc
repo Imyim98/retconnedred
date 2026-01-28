@@ -1870,6 +1870,18 @@
 	.byte \battler
 	.endm
 
+	.macro checkopposingbattlerabilitysetbattler battler:req, ability:req, jumpInstr:req
+	callnative BS_CheckOpposingBattlerAbilitySetBattler
+	.byte \battler
+	.2byte \ability
+	.4byte \jumpInstr
+	.endm
+
+	.macro stasisgazesetbattler battler:req
+	callnative BS_StasisGazeSetBattler
+	.byte \battler
+	.endm
+
 	.macro trygrimoirecall
 	callnative BS_TryGrimoireCall
 	.endm

@@ -880,5 +880,9 @@ extern const u8 BattleScript_DevourHeal[];
 extern const u8 BattleScript_DevourHealBlock[];
 extern const u8 BattleScript_DevourLiquidOoze[];
 extern const u8 BattleScript_DevourHealMultiTarget[];
+extern const u8 BattleScript_StasisGazeActivatesMove[];
+extern const u8 BattleScript_StasisGazeActivatesAbilitySwitchIn[];
+extern const u8 BattleScript_StasisGazeActivatesAbility[];
+extern const u8 BattleScript_StasisGazeActivatesMoveEffect[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

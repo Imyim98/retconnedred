@@ -1385,6 +1385,7 @@ static bool32 HandleEndTurnThirdEventBlock(u32 battler)
         case ABILITY_SHICHININ_MISAKI:
         case ABILITY_GRIMOIRE_USER:
         case ABILITY_SPEED_BOOST:
+        case ABILITY_POWER_LEAK:
             if (AbilityBattleEffects(ABILITYEFFECT_ENDTURN, battler, ability, MOVE_NONE, TRUE))
                 effect = TRUE;
             break;

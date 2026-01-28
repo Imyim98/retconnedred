@@ -555,7 +555,7 @@ enum __attribute__((packed)) MoveEffect
     MOVE_EFFECT_STRAWBERRY_CROSS,
     MOVE_EFFECT_EX_SHADOW_SKY,
     MOVE_EFFECT_INFATUATE,
-
+    MOVE_EFFECT_STASIS_GAZE_PREVENTED,
     // Max move effects happen earlier in the execution chain.
     // For example stealth rock from G-Max Stonesurge is set up before abilities but from Stone Axe after.
     // Stone Axe can also fail to set up rocks if user faints where as Stonesurge will always go up.

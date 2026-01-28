@@ -166,6 +166,8 @@ BattleScript_UltraInstinctTryAcc:
     ishplessthanquarter BattleScript_ButItFailed
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_UltraInstinct_StasisGazePrevented
+BattleScript_UltraInstinctTryAcc_AfterStasisGazeCheck:
 	setstatchanger STAT_ACC, MAX_STAT_STAGE, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_UltraInstinctTryEvasion, BIT_ATK | BIT_DEF | BIT_SPEED | BIT_SPATK | BIT_SPDEF | BIT_EVASION
 	printfromtable gStatUpStringIds
@@ -205,6 +207,9 @@ BattleScript_UltraInstinctEnd:
 	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	goto BattleScript_MoveEnd
+BattleScript_UltraInstinct_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_UltraInstinctTryAcc_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectAstromancy::
 	attackcanceler
@@ -214,6 +219,8 @@ BattleScript_EffectAstromancy::
 BattleScript_AstromancyDoMoveAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_Astromancy_StasisGazePrevented
+BattleScript_AstromancyDoMoveAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 2, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_GeomancyTrySpDef, BIT_DEF | BIT_SPEED
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_AstromancyTryDef
@@ -233,6 +240,9 @@ BattleScript_AstromancyTrySpeed::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_AstromancyEnd::
 	goto BattleScript_MoveEnd
+BattleScript_Astromancy_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_AstromancyDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectFickleBeam::
 	attackcanceler
@@ -277,6 +287,8 @@ BattleScript_LowerAtkSpAtk::
 	jumpifstat BS_EFFECT_BATTLER, CMP_GREATER_THAN, STAT_ATK, MIN_STAT_STAGE, BattleScript_LowerAtkSpAtkDoAnim
 	jumpifstat BS_EFFECT_BATTLER, CMP_EQUAL, STAT_SPATK, MIN_STAT_STAGE, BattleScript_LowerAtkSpAtkEnd
 BattleScript_LowerAtkSpAtkDoAnim::
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_LowerAtkSpAtk_StasisGazePreventedContrary
+BattleScript_LowerAtkSpAtkDoAnim_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_ATK, 1, TRUE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_LowerAtkSpAtkTrySpAtk, BIT_SPATK
 	printfromtable gStatDownStringIds
@@ -288,6 +300,18 @@ BattleScript_LowerAtkSpAtkTrySpAtk::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_LowerAtkSpAtkEnd:
 	return
+BattleScript_LowerAtkSpAtk_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_LowerAtkSpAtk_StasisGazePreventedContraryDo
+	goto BattleScript_LowerAtkSpAtkDoAnim_AfterStasisGazeContraryCheck
+BattleScript_LowerAtkSpAtk_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_LowerAtkSpAtkEnd
 
 BattleScript_EffectSpicyExtract::
 	attackcanceler
@@ -303,17 +327,43 @@ BattleScript_SpicyExtract_RaiseAtk:
 	attackanimation
 	waitanimation
 BattleScript_SpicyExtract_SkipAttackAnim:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectSpicyExtract_StasisGazePrevented
+BattleScript_SpicyExtract_SkipAttackAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 2, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectSpicyExtractDefenseDown
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_EffectSpicyExtractDefenseDown:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectSpicyExtract_StasisGazePreventedContraryDefDown
+BattleScript_EffectSpicyExtractDefenseDown_AfterCheckContraryStasisGaze:
 	setstatchanger STAT_DEF, 2, TRUE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectSpicyExtract_End
 	printfromtable gStatDownStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_EffectSpicyExtract_End:
 	goto BattleScript_MoveEnd
+BattleScript_EffectSpicyExtract_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_SpicyExtract_SkipAttackAnim_AfterStasisGazeCheck
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_EffectSpicyExtractDefenseDown
+BattleScript_EffectSpicyExtract_StasisGazePreventedContraryDefDown:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectSpicyExtract_StasisGazePreventedContraryDefDownDo
+	goto BattleScript_SupersweetSyrupEffect_AfterStasisGazeContraryCheck
+BattleScript_EffectSpicyExtract_StasisGazePreventedContraryDefDownDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_EffectSpicyExtract_End
 
 BattleScript_EffectTidyUp::
 	attackcanceler
@@ -373,6 +423,8 @@ BattleScript_FilletAwayTryAttack::
 	halvehp BattleScript_ButItFailed
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_FilletAway_StasisGazePrevented
+BattleScript_FilletAwayTryAttack_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 2, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_FilletAwayTrySpAtk, BIT_SPATK | BIT_SPEED
 	printfromtable gStatUpStringIds
@@ -392,6 +444,9 @@ BattleScript_FilletAwayEnd::
 	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	goto BattleScript_MoveEnd
+BattleScript_FilletAway_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_FilletAwayTryAttack_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectDoodle::
 	attackcanceler
@@ -426,12 +481,26 @@ BattleScript_SyrupBombActivates::
 BattleScript_SyrupBombEndTurn::
 	flushtextbox
 	playanimation BS_ATTACKER, B_ANIM_SYRUP_BOMB_SPEED_DROP
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_SyrupBombEndTurn_StasisGazePreventedContrary
+BattleScript_SyrupBombEndTurn_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_SPEED, 1, TRUE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_CHECK_PREVENTION | STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_NOT_PROTECT_AFFECTED, BattleScript_SyrupBombTurnDmgEnd
 	printfromtable gStatDownStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_SyrupBombTurnDmgEnd:
 	end2
+BattleScript_SyrupBombEndTurn_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_SyrupBombEndTurn_StasisGazePreventedContraryDo
+	goto BattleScript_SyrupBombEndTurn_AfterStasisGazeContraryCheck
+BattleScript_SyrupBombEndTurn_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_SyrupBombTurnDmgEnd
 
 BattleScript_MoveSwitchPursuitEnd:
 	call BattleScript_MoveSwitchPursuitRet
@@ -860,6 +929,8 @@ BattleScript_EffectOctolock::
 	goto BattleScript_MoveEnd
 
 BattleScript_OctolockEndTurn::
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_OctolockEndTurn_StasisGazePreventedContrary
+BattleScript_OctolockEndTurn_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_DEF, 1, TRUE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_NOT_PROTECT_AFFECTED, BattleScript_OctolockTryLowerSpDef, BIT_SPDEF
 	printfromtable gStatDownStringIds
@@ -871,6 +942,18 @@ BattleScript_OctolockTryLowerSpDef:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_OctlockTurnDmgEnd:
 	end2
+BattleScript_OctolockEndTurn_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_OctolockEndTurn_StasisGazePreventedContraryDo
+	goto BattleScript_OctolockEndTurn_AfterStasisGazeContraryCheck
+BattleScript_OctolockEndTurn_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_OctlockTurnDmgEnd
 
 BattleScript_EffectPoltergeist::
 	attackcanceler
@@ -888,6 +971,8 @@ BattleScript_EffectTarShot::
 	setstatchanger STAT_SPEED, 1, TRUE
 	attackanimation
 	waitanimation
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectTarShot_StasisGazePreventedContrary
+BattleScript_EffectTarShot_AfterStasisGazeContraryCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_TryTarShot
 	printfromtable gStatDownStringIds
 	waitmessage B_WAIT_TIME_LONG
@@ -896,6 +981,18 @@ BattleScript_TryTarShot:
 	printstring STRINGID_PKMNBECAMEWEAKERTOFIRE
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
+BattleScript_EffectTarShot_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectTarShot_StasisGazePreventedContraryDo
+	goto BattleScript_EffectTarShot_AfterStasisGazeContraryCheck
+BattleScript_EffectTarShot_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_TryTarShot
 
 BattleScript_EffectNoRetreat::
 	attackcanceler
@@ -976,11 +1073,23 @@ BattleScript_EffectStuffCheeks::
 	bicword gHitMarker, HITMARKER_DISABLE_ANIMATION
 	setbyte sBERRY_OVERRIDE, 0
 	removeitem BS_ATTACKER
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_StuffCheek_StasisGazePrevented
+BattleScript_EffectStuffCheeks_AfterStasisGazeCheck:
 	setstatchanger STAT_DEF, 2, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_StuffCheeksEnd
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_StuffCheeksEnd:
+	goto BattleScript_MoveEnd
+BattleScript_StuffCheek_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_EffectStuffCheeks_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectDecorate::
@@ -992,6 +1101,8 @@ BattleScript_EffectDecorate::
 BattleScript_DecorateBoost:
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_DecorateBoost_StasisGazePrevented
+BattleScript_DecorateBoost_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 2, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_NOT_PROTECT_AFFECTED, BattleScript_DecorateBoostSpAtk, BIT_SPATK
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, 0x2, BattleScript_DecorateBoostSpAtk
@@ -1004,6 +1115,9 @@ BattleScript_DecorateBoostSpAtk:
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
+BattleScript_DecorateBoost_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_DecorateBoost_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectCoaching::
 	attackcanceler
@@ -1018,6 +1132,8 @@ EffectCoaching_CheckAllyStats:
 BattleScript_CoachingWorks:
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_Coaching_StasisGazePrevented
+BattleScript_CoachingWorks_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_NOT_PROTECT_AFFECTED, BattleScript_CoachingBoostDef, BIT_DEF
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, 0x2, BattleScript_CoachingBoostDef
@@ -1030,6 +1146,9 @@ BattleScript_CoachingBoostDef:
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
+BattleScript_Coaching_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_CoachingWorks_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectJungleHealing::
 	attackcanceler
@@ -1153,6 +1272,8 @@ BattleScript_EffectStrengthSap::
 	accuracycheck BattleScript_MoveMissedPause
 	jumpifstat BS_TARGET, CMP_NOT_EQUAL, STAT_ATK, MIN_STAT_STAGE, BattleScript_StrengthSapTryLower
 	pause B_WAIT_TIME_SHORT
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_SpicyExtract_SkipAttackAnim_AfterStasisGazeCheck
+BattleScript_EffectStrengthSap_AfterStasisGazeContraryCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_MoveEnd
 	printfromtable gStatDownStringIds
 	waitmessage B_WAIT_TIME_LONG
@@ -1164,6 +1285,8 @@ BattleScript_StrengthSapTryLower:
 BattleScript_StrengthSapAnimation:
 	attackanimation
 	waitanimation
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_SpicyExtract_SkipAttackAnim_AfterStasisGazeCheck
+BattleScript_StrengthSapAnimation_AfterStasisGazeContraryCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_StrengthSapHp
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_CHANGE_EMPTY, BattleScript_StrengthSapHp
 	printfromtable gStatDownStringIds
@@ -1197,6 +1320,30 @@ BattleScript_StrengthSapMustLower:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_ONLY_CHECKING, BattleScript_MoveEnd
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_CHANGE_EMPTY, BattleScript_MoveEnd
 	goto BattleScript_StrengthSapAnimation
+BattleScript_StrengthSap_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_StrengthSap_StasisGazePreventedContraryDo
+	goto BattleScript_StrengthSapAnimation_AfterStasisGazeContraryCheck
+BattleScript_StrengthSap_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_StrengthSapHp
+BattleScript_EffectStrengthSap_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectStrengthSap_StasisGazePreventedContraryDo
+	goto BattleScript_EffectStrengthSap_AfterStasisGazeContraryCheck
+BattleScript_EffectStrengthSap_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_MoveEnd
 
 BattleScript_MoveEffectIncinerate::
 	printstring STRINGID_INCINERATEBURN
@@ -1240,6 +1387,8 @@ BattleScript_VCreateStatLoss::
 	jumpifstat BS_ATTACKER, CMP_GREATER_THAN, STAT_SPDEF, MIN_STAT_STAGE, BattleScript_VCreateStatAnim
 	jumpifstat BS_ATTACKER, CMP_EQUAL, STAT_SPEED, MIN_STAT_STAGE, BattleScript_VCreateStatLossRet
 BattleScript_VCreateStatAnim:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_VCreateStatLoss_StasisGazePreventedContrary
+BattleScript_VCreateStatAnim_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_DEF, 1, TRUE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_CERTAIN, BattleScript_VCreateTrySpDef, BIT_SPDEF | BIT_SPEED
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_VCreateTrySpDef
@@ -1259,6 +1408,18 @@ BattleScript_VCreateTrySpeed:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_VCreateStatLossRet:
 	return
+BattleScript_VCreateStatLoss_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_VCreateStatLoss_StasisGazePreventedContraryDo
+	goto BattleScript_VCreateStatAnim_AfterStasisGazeContraryCheck
+BattleScript_VCreateStatLoss_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_VCreateStatLossRet
 
 BattleScript_EffectPartingShot::
 	attackcanceler
@@ -1268,6 +1429,8 @@ BattleScript_EffectPartingShotTryAtk:
 	accuracycheck BattleScript_MoveMissedPause
 	attackanimation
 	waitanimation
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectPartingShot_StasisGazePreventedContrary
+BattleScript_EffectPartingShotTryAtk_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_ATK, 1, TRUE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectPartingShotTrySpAtk, BIT_SPATK
 	printfromtable gStatDownStringIds
@@ -1280,6 +1443,18 @@ BattleScript_EffectPartingShotTrySpAtk:
 BattleScript_EffectPartingShotSwitch:
 	moveendall
 	goto BattleScript_MoveSwitchPursuitEnd
+BattleScript_EffectPartingShot_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectPartingShot_StasisGazePreventedContraryDo
+	goto BattleScript_EffectPartingShotTryAtk_AfterStasisGazeContraryCheck
+BattleScript_EffectPartingShot_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_EffectPartingShotSwitch
 
 BattleScript_EffectPowder::
 	attackcanceler
@@ -1301,6 +1476,8 @@ BattleScript_EffectAromaticMistWorks:
 	statbuffchange BS_TARGET, STAT_CHANGE_ONLY_CHECKING, BattleScript_EffectAromaticMistWontGoHigher
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectAromaticMist_StasisGazePrevented
+BattleScript_EffectAromaticMistWorks_AfterStasisGaze:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectAromaticMistEnd
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
@@ -1312,6 +1489,9 @@ BattleScript_EffectAromaticMistWontGoHigher:
 	waitmessage B_WAIT_TIME_LONG
 	setmoveresultflags MOVE_RESULT_MISSED @ TODO: Is this even necessary?
 	goto BattleScript_EffectAromaticMistEnd
+BattleScript_EffectAromaticMist_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectAromaticMistWorks_AfterStasisGaze
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectMagneticFlux::
 	attackcanceler
@@ -1328,6 +1508,8 @@ BattleScript_EffectMagneticFluxTryDef:
 	attackanimation
 	waitanimation
 BattleScript_EffectMagneticFluxSkipAnim:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectMagneticFlux_StasisGazePrevented
+BattleScript_EffectMagneticFluxSkipAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_DEF, 1, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMagneticFluxTrySpDef, BIT_SPDEF
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_EffectMagneticFluxTrySpDef
@@ -1347,6 +1529,16 @@ BattleScript_EffectMagneticFluxLoop:
 BattleScript_EffectMagneticFluxEnd:
 	jumpifbyte CMP_NOT_EQUAL, gBattleCommunication, 0, BattleScript_MoveEnd
 	goto BattleScript_ButItFailed
+BattleScript_EffectMagneticFlux_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectMagneticFluxSkipAnim_AfterStasisGazeCheck
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_EffectMagneticFluxLoop
 
 BattleScript_EffectGearUp::
 	attackcanceler
@@ -1364,6 +1556,8 @@ BattleScript_EffectGearUpTryAtk:
 	attackanimation
 	waitanimation
 BattleScript_EffectGearUpSkipAnim:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectGearUp_StasisGazePrevented
+BattleScript_EffectGearUpSkipAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectGearUpTrySpAtk, BIT_SPATK
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_EffectGearUpTrySpAtk
@@ -1384,6 +1578,16 @@ BattleScript_EffectGearUpEnd:
 	restoretarget
 	jumpifbyte CMP_NOT_EQUAL, gBattleCommunication, 0, BattleScript_MoveEnd
 	goto BattleScript_ButItFailed
+BattleScript_EffectGearUp_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_SpicyExtract_SkipAttackAnim_AfterStasisGazeCheck
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_EffectGearUpLoop
 
 BattleScript_EffectAcupressure::
 	attackcanceler
@@ -1393,10 +1597,15 @@ BattleScript_EffectAcupressureTry:
 	tryacupressure BattleScript_ButItFailed
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectAcupressure_StasisGazePrevented
+BattleScript_EffectAcupressureTry_AfterStasisGazeCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_CERTAIN, BattleScript_MoveEnd
 	printstring STRINGID_DEFENDERSSTATROSE
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
+BattleScript_EffectAcupressure_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectAcupressureTry_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_MoveEffectFeint::
 	printstring STRINGID_FELLFORFEINT
@@ -1432,6 +1641,8 @@ BattleScript_FlowerShieldLoop:
 	jumpiftype BS_TARGET, TYPE_NEW_NATURE, BattleScript_FlowerShieldLoop2
 	goto BattleScript_FlowerShieldMoveTargetEnd
 BattleScript_FlowerShieldLoop2:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_FlowerShield_StasisGazePreventedLoop2
+BattleScript_FlowerShieldLoop2_AfterStasisGazeCheck:
 	setstatchanger STAT_DEF, 1, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_ONLY_CHECKING, BattleScript_FlowerShieldMoveTargetEnd
 	jumpifbyte CMP_LESS_THAN, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_FlowerShieldDoAnim
@@ -1441,6 +1652,8 @@ BattleScript_FlowerShieldLoop2:
 BattleScript_FlowerShieldDoAnim:
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_FlowerShield_StasisGazePrevented
+BattleScript_FlowerShieldDoAnim_AfterStasisGazeCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_FlowerShieldMoveTargetEnd
 BattleScript_FlowerShieldString:
 	printfromtable gStatUpStringIds
@@ -1451,6 +1664,26 @@ BattleScript_FlowerShieldMoveTargetEnd:
 	restoretarget
 	moveendfrom MOVEEND_ITEM_EFFECTS_ATTACKER_2
 	end
+BattleScript_FlowerShield_StasisGazePreventedLoop2:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_SpicyExtract_SkipAttackAnim_AfterStasisGazeCheck
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_FlowerShieldLoop2_AfterStasisGazeCheck
+BattleScript_FlowerShield_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_SpicyExtract_SkipAttackAnim_AfterStasisGazeCheck
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_FlowerShieldDoAnim_AfterStasisGazeCheck
 
 BattleScript_EffectRototiller::
 	attackcanceler
@@ -1464,6 +1697,8 @@ BattleScript_RototillerLoop:
 	jumpifstat BS_TARGET, CMP_EQUAL, STAT_SPATK, MAX_STAT_STAGE, BattleScript_RototillerCantRaiseMultipleStats
 BattleScript_RototillerCheckAffected:
 	jumpifmoveresultflags MOVE_RESULT_NO_EFFECT, BattleScript_EffectRototillerGetTarget
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectRototiller_Next
+BattleScript_RototillerCheckAffected_AfterStasisGaze:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_RototillerTrySpAtk, BIT_SPATK
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_RototillerTrySpAtk
@@ -1481,6 +1716,16 @@ BattleScript_EffectRototillerGetTarget:
 	getpossiblenexttarget BattleScript_RototillerLoop
 	moveendfrom MOVEEND_ITEM_EFFECTS_ATTACKER_2
 	end
+BattleScript_EffectRototiller_Next:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_RototillerCheckAffected_AfterStasisGaze
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_EffectRototillerMoves
 
 BattleScript_RototillerCantRaiseMultipleStats:
 	saveattacker
@@ -1605,6 +1850,8 @@ BattleScript_DefogDoAnim::
 	attackanimation
 	waitanimation
 	call BattleScript_SwapFromSubstitute
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectDefog_StasisGazePreventedContrary
+BattleScript_DefogDoAnim_AfterStasisGazeContraryCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_DefogTryHazards
 	call BattleScript_SwapToSubstitute
 BattleScript_DefogPrintString::
@@ -1618,6 +1865,18 @@ BattleScript_DefogTryHazards:
 BattleScript_DefogTryHazardsWithAnim:
 	attackanimation
 	waitanimation
+	goto BattleScript_DefogTryHazards
+BattleScript_EffectDefog_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectDefog_StasisGazePreventedContraryDo
+	goto BattleScript_DefogDoAnim_AfterStasisGazeContraryCheck
+BattleScript_EffectDefog_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
 	goto BattleScript_DefogTryHazards
 
 BattleScript_MoveEffectDefog::
@@ -1648,6 +1907,8 @@ BattleScript_EffectAutotomize::
 BattleScript_AutotomizeAttackAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_Autotomize_StasisGazePrevented
+BattleScript_AutotomizeAttackAnim_AfterStasisGazeCheck:
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_AutotomizeWeightLoss
 BattleScript_AutotomizePrintString::
 	printfromtable gStatUpStringIds
@@ -1658,6 +1919,16 @@ BattleScript_AutotomizeWeightLoss::
 	printstring STRINGID_BECAMENIMBLE
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
+BattleScript_Autotomize_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_AutotomizeAttackAnim_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_AutotomizeWeightLoss
 
 BattleScript_FinalGambit::
 	setatkhptozero
@@ -1692,6 +1963,8 @@ BattleScript_EffectToxicThread::
 	pause B_WAIT_TIME_SHORT
 	goto BattleScript_ToxicThreadPrintString
 BattleScript_ToxicThreadDoAnim::
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_SpicyExtract_SkipAttackAnim_AfterStasisGazeCheck
+BattleScript_ToxicThreadDoAnim_AfterStasisGazeContraryCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_ToxicThreadTryPsn
 BattleScript_ToxicThreadPrintString::
 	printfromtable gStatDownStringIds
@@ -1699,6 +1972,18 @@ BattleScript_ToxicThreadPrintString::
 BattleScript_ToxicThreadTryPsn::
 	seteffectprimary BS_ATTACKER, BS_TARGET, MOVE_EFFECT_POISON
 	goto BattleScript_MoveEnd
+BattleScript_EffectToxicThread_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectToxicThread_StasisGazePreventedContraryDo
+	goto BattleScript_ToxicThreadDoAnim_AfterStasisGazeContraryCheck
+BattleScript_EffectToxicThread_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_ToxicThreadTryPsn
 
 BattleScript_EffectVenomDrench::
 	attackcanceler
@@ -1712,6 +1997,8 @@ BattleScript_VenomDrenchDoMoveAnim::
 	accuracycheck BattleScript_ButItFailed
 	attackanimation
 	waitanimation
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_VenomDrench_StasisGazePreventedContrary
+BattleScript_VenomDrenchDoMoveAnim_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_ATK, 1, TRUE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_VenomDrenchTryLowerSpAtk, BIT_SPATK | BIT_SPEED
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_VenomDrenchTryLowerSpAtk
@@ -1731,6 +2018,18 @@ BattleScript_VenomDrenchTryLowerSpeed::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_VenomDrenchEnd::
 	goto BattleScript_MoveEnd
+BattleScript_VenomDrench_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectSpicyExtract_StasisGazePreventedContraryDefDownDo
+	goto BattleScript_VenomDrenchDoMoveAnim_AfterStasisGazeContraryCheck
+BattleScript_VenomDrench_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_VenomDrenchEnd
 
 BattleScript_EffectNobleRoar::
 	attackcanceler
@@ -1740,6 +2039,8 @@ BattleScript_NobleRoarDoMoveAnim::
 	accuracycheck BattleScript_ButItFailed
 	attackanimation
 	waitanimation
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_NobleRoar_StasisGazePreventedContrary
+BattleScript_NobleRoarDoMoveAnim_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_ATK, 1, TRUE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_NobleRoarTryLowerSpAtk, BIT_SPATK
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_NobleRoarTryLowerSpAtk
@@ -1753,6 +2054,18 @@ BattleScript_NobleRoarTryLowerSpAtk::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_NobleRoarEnd::
 	goto BattleScript_MoveEnd
+BattleScript_NobleRoar_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_NobleRoar_StasisGazePreventedContraryDo
+	goto BattleScript_NobleRoarDoMoveAnim_AfterStasisGazeContraryCheck
+BattleScript_NobleRoar_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_NobleRoarEnd
 
 BattleScript_EffectShellSmash::
 	attackcanceler
@@ -1764,6 +2077,8 @@ BattleScript_EffectShellSmash::
 BattleScript_ShellSmashTryDef::
 	attackanimation
 	waitanimation
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_ShellSmashTryDef_StasisGazePreventedContrary
+BattleScript_ShellSmashTryDef_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_DEF, 1, TRUE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_CERTAIN, BattleScript_ShellSmashTrySpDef, BIT_SPDEF
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_ShellSmashTrySpDef
@@ -1776,6 +2091,8 @@ BattleScript_ShellSmashTrySpDef:
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_ShellSmashTryAttack:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_ShellSmash_StasisGazePrevented
+BattleScript_ShellSmashTryAttack_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 2, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_ShellSmashTrySpAtk, BIT_SPATK | BIT_SPEED,
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_ShellSmashTrySpAtk
@@ -1795,6 +2112,28 @@ BattleScript_ShellSmashTrySpeed:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_ShellSmashEnd:
 	goto BattleScript_MoveEnd
+BattleScript_ShellSmashTryDef_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_ShellSmashTryDef_StasisGazePreventedContraryDo
+	goto BattleScript_ShellSmashTryDef_AfterStasisGazeContraryCheck
+BattleScript_ShellSmashTryDef_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_ShellSmashTryAttack
+BattleScript_ShellSmash_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_ShellSmashTryAttack_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_ShellSmashEnd
 
 BattleScript_EffectGrowth::
 	attackcanceler
@@ -1803,6 +2142,8 @@ BattleScript_EffectGrowth::
 BattleScript_GrowthDoMoveAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_Growth_StasisGazePrevented
+BattleScript_GrowthDoMoveAnim_AfterStasisGazeCheck:
 	jumpifweatheraffected B_WEATHER_SUN, BattleScript_GrowthAtk2
 	setstatchanger STAT_ATK, 1, FALSE
 	goto BattleScript_GrowthAtk
@@ -1826,6 +2167,9 @@ BattleScript_GrowthSpAtk:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_GrowthEnd:
 	goto BattleScript_MoveEnd
+BattleScript_Growth_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_GrowthDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectSoak::
 	attackcanceler
@@ -1867,6 +2211,8 @@ BattleScript_EffectShiftGear::
 BattleScript_ShiftGearDoMoveAnim:
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_ShiftGear_StasisGazePrevented
+BattleScript_ShiftGearDoMoveAnim_AfterStasisGazeCheck:
 	jumpifstat BS_ATTACKER, CMP_GREATER_THAN, STAT_SPEED, 10, BattleScript_ShiftGearSpeedBy1
 	setstatchanger STAT_SPEED, 2, FALSE
 	goto BattleScript_ShiftGearDoSpeed
@@ -1885,6 +2231,9 @@ BattleScript_ShiftGearTryAtk:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_ShiftGearEnd:
 	goto BattleScript_MoveEnd
+BattleScript_ShiftGear_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_ShiftGearDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectCoil::
 	attackcanceler
@@ -1894,6 +2243,8 @@ BattleScript_EffectCoil::
 BattleScript_CoilDoMoveAnim:
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_Coil_StasisGazePrevented
+BattleScript_CoilDoMoveAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_CoilTryDef, BIT_DEF | BIT_ACC
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_CoilTryDef
@@ -1913,6 +2264,9 @@ BattleScript_CoilTryAcc:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_CoilEnd:
 	goto BattleScript_MoveEnd
+BattleScript_Coil_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_CoilDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectQuiverDance::
 	attackcanceler
@@ -1922,6 +2276,8 @@ BattleScript_EffectQuiverDance::
 BattleScript_QuiverDanceDoMoveAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_QuiverDance_StasisGazePrevented
+BattleScript_QuiverDanceDoMoveAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_SPATK, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_QuiverDanceTrySpDef, BIT_SPDEF | BIT_SPEED
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_QuiverDanceTrySpDef
@@ -1941,6 +2297,9 @@ BattleScript_QuiverDanceTrySpeed::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_QuiverDanceEnd::
 	goto BattleScript_MoveEnd
+BattleScript_QuiverDance_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_QuiverDanceDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectVictoryDance::
 	attackcanceler
@@ -1950,6 +2309,8 @@ BattleScript_EffectVictoryDance::
 BattleScript_VictoryDanceDoMoveAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_VictoryDance_StasisGazePrevented
+BattleScript_VictoryDanceDoMoveAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_VictoryDanceTryDef, BIT_DEF | BIT_SPEED
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_VictoryDanceTryDef
@@ -1969,6 +2330,9 @@ BattleScript_VictoryDanceTrySpeed::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_VictoryDanceEnd::
 	goto BattleScript_MoveEnd
+BattleScript_VictoryDance_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_VictoryDanceDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectAttackSpAttackUp::
 	attackcanceler
@@ -1977,6 +2341,8 @@ BattleScript_EffectAttackSpAttackUp::
 BattleScript_AttackSpAttackUpDoMoveAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_AttackSpAttackUp_StasisGazePrevented
+BattleScript_AttackSpAttackUpDoMoveAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_AttackSpAttackUpTrySpAtk, BIT_SPATK
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_AttackSpAttackUpTrySpAtk
@@ -1990,6 +2356,9 @@ BattleScript_AttackSpAttackUpTrySpAtk::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_AttackSpAttackUpEnd:
 	goto BattleScript_MoveEnd
+BattleScript_AttackSpAttackUp_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_AttackSpAttackUpDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectAttackAccUp::
 	attackcanceler
@@ -1998,6 +2367,8 @@ BattleScript_EffectAttackAccUp::
 BattleScript_AttackAccUpDoMoveAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_AttackAccUp_StasisGazePrevented
+BattleScript_AttackAccUpDoMoveAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_AttackAccUpTryAcc, BIT_ACC
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_AttackAccUpTryAcc
@@ -2011,6 +2382,9 @@ BattleScript_AttackAccUpTryAcc::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_AttackAccUpEnd:
 	goto BattleScript_MoveEnd
+BattleScript_AttackAccUp_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_AttackAccUpDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectMiasmaTerrain::
 BattleScript_EffectDarknessTerrain::
@@ -2693,6 +3067,8 @@ BattleScript_StatUpAttackAnim::
 	attackanimation
 	waitanimation
 BattleScript_StatUpDoAnim::
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_StatUp_StasisGazePrevented
+BattleScript_StatUpDoAnim_AfterStasisGazeCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_StatUpEnd
 BattleScript_StatUpPrintString::
     saveattacker
@@ -2702,6 +3078,9 @@ BattleScript_StatUpPrintString::
     restoreattacker
 BattleScript_StatUpEnd::
 	goto BattleScript_MoveEnd
+BattleScript_StatUp_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_StatUpDoAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_StatUp::
 	printfromtable gStatUpStringIds
@@ -2751,6 +3130,8 @@ BattleScript_EffectStatDownFromStatBuffChange:
 BattleScript_StatDownDoAnim::
 	attackanimation
 	waitanimation
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_StatDownDoAnim_StasisGazePreventedContrary
+BattleScript_StatDownDoAnim_AfterStasisGazeContraryCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_StatDownEnd
 	bicword gHitMarker, HITMARKER_DISABLE_ANIMATION
 BattleScript_StatDownPrintString::
@@ -2758,12 +3139,26 @@ BattleScript_StatDownPrintString::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_StatDownEnd::
 	goto BattleScript_MoveEnd
+BattleScript_StatDownDoAnim_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_StatDownDoAnim_StasisGazePreventedContraryDo
+	goto BattleScript_StatDownDoAnim_AfterStasisGazeContraryCheck
+BattleScript_StatDownDoAnim_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_StatDownEnd
 
 BattleScript_MirrorArmorReflect::
 	pause B_WAIT_TIME_SHORT
 	call BattleScript_AbilityPopUp
 	jumpifvolatile BS_ATTACKER, VOLATILE_SUBSTITUTE, BattleScript_MirrorArmorDoesntAffect
 BattleScript_MirrorArmorReflectStatLoss:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_MirrorArmorReflect_StasisGazePreventedContrary
+BattleScript_MirrorArmorReflectStatLoss_AfterStasisGazeContraryCheck:
 	statbuffchange BS_ATTACKER, STAT_CHANGE_MIRROR_ARMOR | STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_ALLOW_PTR, BattleScript_MirrorArmorReflectEnd
 	jumpifbyte CMP_LESS_THAN, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_MirrorArmorReflectPrintString
 	goto BattleScript_MirrorArmorReflectWontFall
@@ -2772,6 +3167,18 @@ BattleScript_MirrorArmorReflectPrintString:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_MirrorArmorReflectEnd:
 	return
+BattleScript_MirrorArmorReflect_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_MirrorArmorReflect_StasisGazePreventedContraryDo
+	goto BattleScript_MirrorArmorReflectStatLoss_AfterStasisGazeContraryCheck
+BattleScript_MirrorArmorReflect_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_MirrorArmorReflectEnd
 
 BattleScript_MirrorArmorDoesntAffect:
 	swapattackerwithtarget
@@ -3107,6 +3514,8 @@ BattleScript_EffectGeomancy::
 BattleScript_GeomancyDoMoveAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_Geomancy_StasisGazePrevented
+BattleScript_GeomancyDoMoveAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_SPATK, 2, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_GeomancyTrySpDef, BIT_SPDEF | BIT_SPEED
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_GeomancyTrySpDef
@@ -3126,6 +3535,9 @@ BattleScript_GeomancyTrySpeed::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_GeomancyEnd::
 	goto BattleScript_MoveEnd
+BattleScript_Geomancy_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_GeomancyDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_TwoTurnMoveCharging::
 	waitmessage B_WAIT_TIME_LONG
@@ -3416,11 +3828,15 @@ BattleScript_CurseTrySpeed::
 	setbyte sB_ANIM_TURN, 1
 	attackanimation
 	waitanimation
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_CurseTrySpeed_StasisGazeContraryCheck
+BattleScript_CurseTrySpeed_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_SPEED, 1, TRUE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_CurseTryAttack
 	printfromtable gStatDownStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_CurseTryAttack::
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_CurseTryAttack_StasisGazePrevented
+BattleScript_CurseTryAttack_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_CurseTryDefense, BIT_DEF
 	printfromtable gStatUpStringIds
@@ -3447,6 +3863,21 @@ BattleScript_DoGhostCurse::
 	waitmessage B_WAIT_TIME_LONG
 	tryfaintmon BS_ATTACKER
 	goto BattleScript_MoveEnd
+BattleScript_CurseTryAttack_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_CurseTryAttack_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
+BattleScript_CurseTrySpeed_StasisGazeContraryCheck:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_CurseTrySpeed_StasisGazeContraryPrevented
+	goto BattleScript_CurseTryAttack_AfterStasisGazeCheck
+BattleScript_CurseTrySpeed_StasisGazeContraryPrevented:
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_CurseTryAttack
 
 BattleScript_EffectProtect::
 BattleScript_EffectEndure::
@@ -3494,6 +3925,8 @@ BattleScript_EffectSwagger::
 	jumpifconfusedandstatmaxed STAT_ATK, BattleScript_ButItFailed
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_Swagger_StasisGazePrevented
+BattleScript_EffectSwagger_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 2, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_SwaggerTryConfuse
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_SwaggerTryConfuse
@@ -3504,6 +3937,16 @@ BattleScript_SwaggerTryConfuse:
 	jumpifsafeguard BattleScript_SafeguardProtected
 	seteffectprimary BS_ATTACKER, BS_TARGET, MOVE_EFFECT_CONFUSION
 	goto BattleScript_MoveEnd
+BattleScript_Swagger_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectSwagger_AfterStasisGazeCheck
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_SwaggerTryConfuse
 
 BattleScript_TryDestinyKnotTarget:
 	jumpifnoholdeffect BS_ATTACKER, HOLD_EFFECT_DESTINY_KNOT, BattleScript_TryDestinyKnotTargetRet
@@ -3669,11 +4112,16 @@ BattleScript_EffectBellyDrum::
 	waitanimation
 	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_EffectBellyDrum_StasisGazePrevented
+BattleScript_EffectBellyDrum_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, MAX_STAT_STAGE, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_MoveEnd
 	printstring STRINGID_PKMNCUTHPMAXEDATTACK
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
+BattleScript_EffectBellyDrum_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_EffectBellyDrum_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectPsychUp::
 	attackcanceler
@@ -3726,14 +4174,19 @@ BattleScript_EffectBeatUpGen3:
 
 BattleScript_EffectDefenseCurl::
 	attackcanceler
+	attackanimation
+	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_EffectDefenseCurl_StasisGazePrevented
+BattleScript_EffectDefenseCurl_AfterStasisGazeCheck:
 	setvolatile BS_TARGET, VOLATILE_DEFENSE_CURL
 	setstatchanger STAT_DEF, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_ONLY_CHECKING, BattleScript_DefenseCurlDoStatUpAnim
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_StatUpPrintString
-	attackanimation
-	waitanimation
 BattleScript_DefenseCurlDoStatUpAnim::
 	goto BattleScript_StatUpDoAnim
+BattleScript_EffectDefenseCurl_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_EffectDefenseCurl_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectSoftboiled::
 	attackcanceler
@@ -3799,6 +4252,8 @@ BattleScript_EffectStockpile::
 	jumpifstat BS_ATTACKER, CMP_LESS_THAN, STAT_DEF, MAX_STAT_STAGE, BattleScript_EffectStockpileDef
 	jumpifstat BS_ATTACKER, CMP_EQUAL, STAT_SPDEF, MAX_STAT_STAGE, BattleScript_MoveEnd
 BattleScript_EffectStockpileDef:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_EffectStockpile_StasisGazePrevented
+BattleScript_EffectStockpileDef_AfterStasisGazeCheck:
 	setstatchanger STAT_DEF, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectStockpileSpDef, BIT_SPDEF
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_EffectStockpileSpDef
@@ -3811,6 +4266,9 @@ BattleScript_EffectStockpileSpDef::
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
+BattleScript_EffectStockpile_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_EffectStockpileDef_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_MoveEffectStockpileWoreOff::
 	.if B_STOCKPILE_RAISES_DEFS >= GEN_4
@@ -3821,11 +4279,25 @@ BattleScript_MoveEffectStockpileWoreOff::
 	return
 
 BattleScript_StockpileStatChangeDown:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_StockpileStatChangeDown_StasisGazePreventedContrary
+BattleScript_StockpileStatChangeDown_AfterStasisGazeContraryCheck:
 	statbuffchange BS_ATTACKER, STAT_CHANGE_CERTAIN, BattleScript_StockpileStatChangeDown_Ret
 	printfromtable gStatDownStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_StockpileStatChangeDown_Ret:
 	return
+BattleScript_StockpileStatChangeDown_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_StockpileStatChangeDown_StasisGazePreventedContraryDo
+	goto BattleScript_StockpileStatChangeDown_AfterStasisGazeContraryCheck
+BattleScript_StockpileStatChangeDown_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_StockpileStatChangeDown_Ret
 
 BattleScript_EffectSpitUp::
 	attackcanceler
@@ -3875,6 +4347,8 @@ BattleScript_EffectFlatter::
 	jumpifconfusedandstatmaxed STAT_SPATK, BattleScript_ButItFailed
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_Flatter_StasisGazePrevented
+BattleScript_EffectFlatter_AfterStasisGazeCheck:
 	setstatchanger STAT_SPATK, 1, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_FlatterTryConfuse
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_FlatterTryConfuse
@@ -3885,6 +4359,17 @@ BattleScript_FlatterTryConfuse::
 	jumpifsafeguard BattleScript_SafeguardProtected
 	seteffectprimary BS_ATTACKER, BS_TARGET, MOVE_EFFECT_CONFUSION
 	goto BattleScript_MoveEnd
+BattleScript_Flatter_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectFlatter_AfterStasisGazeCheck
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_FlatterTryConfuse
+
 
 BattleScript_EffectDarkVoid::
 .if B_DARK_VOID_FAIL >= GEN_7
@@ -3918,6 +4403,8 @@ BattleScript_EffectMemento::
 	attackanimation
 	waitanimation
 	jumpifsubstituteblocks BattleScript_EffectMementoPrintNoEffect
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectMemento_StasisGazePreventedContrary
+BattleScript_EffectMemento_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_ATK, 2, TRUE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMementoTrySpAtk, BIT_SPATK
 @ Greater than B_MSG_DEFENDER_STAT_CHANGED is checking if the stat cannot decrease
@@ -3949,6 +4436,18 @@ BattleScript_MementoTargetProtectEnd:
 	waitmessage B_WAIT_TIME_LONG
 	tryfaintmon BS_ATTACKER
 	goto BattleScript_MoveEnd
+BattleScript_EffectMemento_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectMemento_StasisGazePreventedContraryDo
+	goto BattleScript_EffectMemento_AfterStasisGazeContraryCheck
+BattleScript_EffectMemento_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_EffectMementoTryFaint
 
 BattleScript_FocusPunchLostFocus::
 	printstring STRINGID_PKMNLOSTFOCUS
@@ -3970,11 +4469,23 @@ BattleScript_EffectCharge::
 	attackanimation
 	waitanimation
 .if B_CHARGE_SPDEF_RAISE >= GEN_5
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_EffectCharge_StasisGazePrevented
+BattleScript_EffectCharge_AfterStasisGazeCheck:
 	setstatchanger STAT_SPDEF, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectChargeString
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_EffectChargeString
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_EffectChargeString
+BattleScript_EffectCharge_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_EffectCharge_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
 BattleScript_EffectChargeString:
 .endif
 	printstring STRINGID_PKMNCHARGINGPOWER
@@ -4185,6 +4696,8 @@ BattleScript_TickleDoMoveAnim::
 	accuracycheck BattleScript_ButItFailed
 	attackanimation
 	waitanimation
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_Tickle_StasisGazePreventedContrary
+BattleScript_TickleDoMoveAnim_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_ATK, 1, TRUE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_TickleTryLowerDef, BIT_DEF
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_TickleTryLowerDef
@@ -4198,6 +4711,18 @@ BattleScript_TickleTryLowerDef::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_TickleEnd::
 	goto BattleScript_MoveEnd
+BattleScript_Tickle_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_Tickle_StasisGazePreventedContraryDo
+	goto BattleScript_TickleDoMoveAnim_AfterStasisGazeContraryCheck
+BattleScript_Tickle_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_TickleEnd
 
 BattleScript_CantLowerMultipleStats::
 	pause B_WAIT_TIME_SHORT
@@ -4213,6 +4738,8 @@ BattleScript_EffectCosmicPower::
 BattleScript_CosmicPowerDoMoveAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_CosmicPower_StasisGazePrevented
+BattleScript_CosmicPowerDoMoveAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_DEF, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_CosmicPowerTrySpDef, BIT_SPDEF
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_CosmicPowerTrySpDef
@@ -4226,6 +4753,9 @@ BattleScript_CosmicPowerTrySpDef::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_CosmicPowerEnd::
 	goto BattleScript_MoveEnd
+BattleScript_CosmicPower_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_CosmicPowerDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectBulkUp::
 	attackcanceler
@@ -4234,6 +4764,8 @@ BattleScript_EffectBulkUp::
 BattleScript_BulkUpDoMoveAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_BulkUp_StasisGazePrevented
+BattleScript_BulkUpDoMoveAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_BulkUpTryDef, BIT_DEF
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_BulkUpTryDef
@@ -4247,6 +4779,9 @@ BattleScript_BulkUpTryDef::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_BulkUpEnd::
 	goto BattleScript_MoveEnd
+BattleScript_BulkUp_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_BulkUpDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectCalmMind::
 	attackcanceler
@@ -4257,6 +4792,8 @@ BattleScript_CalmMindDoMoveAnim::
 	attackanimation
 	waitanimation
 BattleScript_CalmMindStatRaise::
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_CalmMind_StasisGazePrevented
+BattleScript_CalmMindStatRaise_AfterStasisGazeCheck:
 	setstatchanger STAT_SPATK, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_CalmMindTrySpDef, BIT_SPDEF
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_CalmMindTrySpDef
@@ -4270,6 +4807,9 @@ BattleScript_CalmMindTrySpDef::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_CalmMindEnd::
 	goto BattleScript_MoveEnd
+BattleScript_CalmMind_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_CalmMindStatRaise_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_CantRaiseMultipleStats::
 	pause B_WAIT_TIME_SHORT
@@ -4286,6 +4826,8 @@ BattleScript_EffectDragonDanceFromStatUp::
 BattleScript_DragonDanceDoMoveAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_DragonDance_StasisGazePrevented
+BattleScript_DragonDanceDoMoveAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_DragonDanceTrySpeed, BIT_SPEED
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_DragonDanceTrySpeed
@@ -4299,6 +4841,9 @@ BattleScript_DragonDanceTrySpeed::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_DragonDanceEnd::
 	goto BattleScript_MoveEnd
+BattleScript_DragonDance_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_DragonDanceDoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectCamouflage::
 	attackcanceler
@@ -4982,6 +5527,8 @@ BattleScript_WeaknessPolicy::
 BattleScript_WeaknessPolicyAtk:
 	playanimation BS_TARGET, B_ANIM_HELD_ITEM_EFFECT
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_WeaknessPolicy_StasisGazePrevented
+BattleScript_WeaknessPolicyAtk_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 2, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_WeaknessPolicySpAtk, BIT_SPATK
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_WeaknessPolicySpAtk
@@ -4997,6 +5544,16 @@ BattleScript_WeaknessPolicyRemoveItem:
 	removeitem BS_TARGET
 BattleScript_WeaknessPolicyEnd:
 	return
+BattleScript_WeaknessPolicy_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_WeaknessPolicyAtk_AfterStasisGazeCheck
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_WeaknessPolicyRemoveItem
 
 BattleScript_TargetItemStatRaise::
 	copybyte sBATTLER, gBattlerTarget
@@ -5004,12 +5561,25 @@ BattleScript_TargetItemStatRaise::
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_TargetItemStatRaiseRemoveItemRet
 	playanimation BS_TARGET, B_ANIM_HELD_ITEM_EFFECT
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_TargetItemStatRaise_StasisGazePrevented
+BattleScript_TargetItemStatRaise_AfterStasisGazeCheck:
 	statbuffchange BS_TARGET, 0, BattleScript_TargetItemStatRaiseRemoveItemRet
 	printstring STRINGID_USINGITEMSTATOFPKMNROSE
 	waitmessage B_WAIT_TIME_LONG
+BattleScript_TargetItemStatRaiseRemoveItem:
 	removeitem BS_TARGET
 BattleScript_TargetItemStatRaiseRemoveItemRet:
 	return
+BattleScript_TargetItemStatRaise_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_TargetItemStatRaise_AfterStasisGazeCheck
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_TargetItemStatRaiseRemoveItem
 
 BattleScript_AttackerItemStatRaise::
 	copybyte sBATTLER, gBattlerAttacker
@@ -5017,12 +5587,25 @@ BattleScript_AttackerItemStatRaise::
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_AttackerItemStatRaiseRet
 	playanimation BS_ATTACKER, B_ANIM_HELD_ITEM_EFFECT
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_AttackerItemStatRaise_StasisGazePrevented
+BattleScript_AttackerItemStatRaise_AfterStasisGazeCheck:
 	statbuffchange BS_ATTACKER, 0, BattleScript_AttackerItemStatRaiseRet
 	printstring STRINGID_USINGITEMSTATOFPKMNROSE
 	waitmessage B_WAIT_TIME_LONG
+BattleScript_AttackerItemStatRaiseRemoveItem:
 	removeitem BS_ATTACKER
 BattleScript_AttackerItemStatRaiseRet:
 	return
+BattleScript_AttackerItemStatRaise_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_AttackerItemStatRaise_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_AttackerItemStatRaiseRemoveItem
 
 BattleScript_MistProtected::
 	pause B_WAIT_TIME_SHORT
@@ -5031,11 +5614,25 @@ BattleScript_MistProtected::
 	return
 
 BattleScript_RageIsBuilding::
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectSpicyExtract_StasisGazePreventedContraryDefDown
+BattleScript_RageIsBuilding_AfterStasisGazeContraryCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_RageIsBuildingEnd
 	printstring STRINGID_PKMNRAGEBUILDING
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_RageIsBuildingEnd:
 	return
+BattleScript_RageIsBuilding_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_RageIsBuilding_StasisGazePreventedContraryDo
+	goto BattleScript_RageIsBuilding_AfterStasisGazeContraryCheck
+BattleScript_RageIsBuilding_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_RageIsBuildingEnd
 
 BattleScript_MoveUsedIsDisabled::
 	printstring STRINGID_PKMNMOVEISDISABLED
@@ -5119,6 +5716,8 @@ BattleScript_StickyWebOnSwitchIn::
 	printstring STRINGID_STICKYWEBSWITCHIN
 	waitmessage B_WAIT_TIME_LONG
 	jumpifability BS_TARGET, ABILITY_MIRROR_ARMOR, BattleScript_MirrorArmorReflectStickyWeb
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_StickyWebOnSwitchIn_StasisGazePreventedContrary
+BattleScript_StickyWebOnSwitchIn_StasisGazeContraryCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_CHECK_PREVENTION | STAT_CHANGE_ALLOW_PTR, BattleScript_StickyWebOnSwitchInEnd
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_CHANGE_EMPTY, BattleScript_StickyWebOnSwitchInEnd
 	printfromtable gStatDownStringIds
@@ -5128,6 +5727,18 @@ BattleScript_StickyWebOnSwitchInEnd:
 	restoreattacker
 	setbyte sSTICKY_WEB_STAT_DROP, 0
 	return
+BattleScript_StickyWebOnSwitchIn_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_StickyWebOnSwitchIn_StasisGazePreventedContraryDo
+	goto BattleScript_StickyWebOnSwitchIn_StasisGazeContraryCheck
+BattleScript_StickyWebOnSwitchIn_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_StickyWebOnSwitchInEnd
 
 BattleScript_PerishSongTakesLife::
 	printstring STRINGID_PKMNPERISHCOUNTFELL
@@ -5188,6 +5799,8 @@ BattleScript_GulpMissileNoDmgGulping:
 	playanimation BS_TARGET, B_ANIM_FORM_CHANGE
 	waitanimation
 	swapattackerwithtarget @ to make gStatDownStringIds down below print the right battler
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_GulpMissileNoDmgGulping_StasisGazePreventedContrary
+BattleScript_GulpMissileNoDmgGulping_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_DEF, 1, TRUE
 	statbuffchange BS_TARGET, STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_ALLOW_PTR, BattleScript_GulpMissileGulpingEnd
 	printfromtable gStatDownStringIds
@@ -5200,6 +5813,18 @@ BattleScript_GulpMissileNoSecondEffectGulping:
 	playanimation BS_TARGET, B_ANIM_FORM_CHANGE
 	waitanimation
 	return
+BattleScript_GulpMissileNoDmgGulping_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_GulpMissileNoDmgGulping_StasisGazePreventedContraryDo
+	goto BattleScript_GulpMissileNoDmgGulping_AfterStasisGazeContraryCheck
+BattleScript_GulpMissileNoDmgGulping_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_GulpMissileGulpingEnd
 
 BattleScript_SeedSowerActivates::
 	pause B_WAIT_TIME_SHORT
@@ -5214,11 +5839,25 @@ BattleScript_BerserkActivates::
 	saveattacker
 	copybyte gBattlerAttacker, gEffectBattler
 	call BattleScript_AbilityPopUp
+	jumpifability BS_EFFECT_BATTLER, ABILITY_CONTRARY, BattleScript_BerserkActivates_StasisGazePreventedContrary
+BattleScript_BerserkActivates_AfterStasisGazeContraryCheck:
 	statbuffchange BS_EFFECT_BATTLER, STAT_CHANGE_CERTAIN, BattleScript_BerserkActivatesTryBerry
 	call BattleScript_StatUp
 BattleScript_BerserkActivatesTryBerry:
 	restoreattacker
 	return
+BattleScript_BerserkActivates_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_EFFECT_BATTLER, ABILITY_STASIS_GAZE, BattleScript_BerserkActivates_StasisGazePreventedContraryDo
+	goto BattleScript_BerserkActivates_AfterStasisGazeContraryCheck
+BattleScript_BerserkActivates_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_EFFECT_BATTLER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_BerserkActivatesTryBerry
 
 BattleScript_AngerShellActivates::
 	call BattleScript_AbilityPopUp
@@ -5228,10 +5867,14 @@ BattleScript_AngerShellActivates::
 	jumpifstat BS_EFFECT_BATTLER, CMP_GREATER_THAN, STAT_DEF, MIN_STAT_STAGE, BattleScript_AngerShellTryDef
 	jumpifstat BS_EFFECT_BATTLER, CMP_EQUAL, STAT_SPDEF, MIN_STAT_STAGE, BattleScript_RestoreAttackerButItFailed
 BattleScript_AngerShellTryDef::
+	jumpifability BS_EFFECT_BATTLER, ABILITY_CONTRARY, BattleScript_AngerShell_StasisGazePreventedContrary
+BattleScript_AngerShellTryDef_AfterStasisGazeContraryCheck:
 	modifybattlerstatstage BS_EFFECT_BATTLER, STAT_DEF, DECREASE, 1, BattleScript_AngerShellTrySpDef, ANIM_ON
 BattleScript_AngerShellTrySpDef:
 	modifybattlerstatstage BS_EFFECT_BATTLER, STAT_SPDEF, DECREASE, 1, BattleScript_AngerShellTryAttack, ANIM_ON
 BattleScript_AngerShellTryAttack:
+	checkopposingbattlerabilitysetbattler BS_EFFECT_BATTLER, ABILITY_STASIS_GAZE, BattleScript_EffectSpicyExtract_StasisGazePrevented
+BattleScript_AngerShellTryAttack_AfterStasisGazeCheck:
 	modifybattlerstatstage BS_EFFECT_BATTLER, STAT_ATK, INCREASE, 1, BattleScript_AngerShellTrySpAtk, ANIM_ON
 BattleScript_AngerShellTrySpAtk:
 	modifybattlerstatstage BS_EFFECT_BATTLER, STAT_SPATK, INCREASE, 1, BattleScript_AngerShellTrySpeed, ANIM_ON
@@ -5239,6 +5882,28 @@ BattleScript_AngerShellTrySpeed:
 	modifybattlerstatstage BS_EFFECT_BATTLER, STAT_SPEED, INCREASE, 1, BattleScript_AngerShellRet, ANIM_ON
 BattleScript_AngerShellRet:
 	return
+BattleScript_AngerShell_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_EFFECT_BATTLER, ABILITY_STASIS_GAZE, BattleScript_AngerShell_StasisGazePreventedContraryDo
+	goto BattleScript_AngerShellTryDef_AfterStasisGazeContraryCheck
+BattleScript_AngerShell_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_EFFECT_BATTLER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_AngerShellTryAttack
+BattleScript_AngerShell_StasisGazePrevented:
+	jumpifability BS_EFFECT_BATTLER, ABILITY_CONTRARY, BattleScript_AngerShellTryAttack_AfterStasisGazeCheck
+	stasisgazesetbattler BS_EFFECT_BATTLER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_AngerShellRet
 
 BattleScript_WindPowerActivates::
 	call BattleScript_AbilityPopUp
@@ -5284,6 +5949,8 @@ BattleScript_AllStatsUp::
 	jumpifstat BS_ATTACKER, CMP_LESS_THAN, STAT_SPATK, MAX_STAT_STAGE, BattleScript_AllStatsUpAtk
 	jumpifstat BS_ATTACKER, CMP_EQUAL, STAT_SPDEF, MAX_STAT_STAGE, BattleScript_AllStatsUpRet
 BattleScript_AllStatsUpAtk::
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_AllStatsUp_StasisGazePrevent
+BattleScript_AllStatsUpAtk_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_AllStatsUpDef, BIT_DEF | BIT_SPEED | BIT_SPATK | BIT_SPDEF
 	printfromtable gStatUpStringIds
@@ -5310,6 +5977,16 @@ BattleScript_AllStatsUpSpDef::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_AllStatsUpRet::
 	return
+BattleScript_AllStatsUp_StasisGazePrevent:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_AllStatsUpAtk_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_AllStatsUpRet
 
 BattleScript_RapidSpinAway::
 	rapidspinfree
@@ -5544,6 +6221,8 @@ BattleScript_PrintMonIsRootedRet::
 	return
 
 BattleScript_AtkDefDown::
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_AtkDefDown_StasisGazePreventedContrary
+BattleScript_AtkDefDown_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_ATK, 1, TRUE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_CERTAIN | STAT_CHANGE_ALLOW_PTR, BattleScript_AtkDefDownTryDef, BIT_DEF
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_AtkDefDownTryDef
@@ -5556,8 +6235,22 @@ BattleScript_AtkDefDownTryDef:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_AtkDefDownRet:
 	return
+BattleScript_AtkDefDown_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_EffectSpicyExtract_StasisGazePreventedContraryDefDownDo
+	goto BattleScript_AtkDefDown_AfterStasisGazeContraryCheck
+BattleScript_AtkDefDown_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_AtkDefDownRet
 
 BattleScript_DefSpDefDown::
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_DefSpDefDown_StasisGazePreventedContrary
+BattleScript_DefSpDefDown_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_DEF, 1, TRUE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_CERTAIN | STAT_CHANGE_ALLOW_PTR, BattleScript_DefSpDefDownTrySpDef, BIT_SPDEF
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_DefSpDefDownTrySpDef
@@ -5571,17 +6264,33 @@ BattleScript_DefSpDefDownTrySpDef::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_DefSpDefDownRet::
 	return
+BattleScript_DefSpDefDown_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_DefSpDefDown_StasisGazePreventedContraryDo
+	goto BattleScript_DefSpDefDown_AfterStasisGazeContraryCheck
+BattleScript_DefSpDefDown_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_DefSpDefDownRet
 
 BattleScript_DefDownSpeedUp::
 	jumpifstat BS_ATTACKER, CMP_GREATER_THAN, STAT_DEF, MIN_STAT_STAGE, BattleScript_DefDownSpeedUpTryDef
 	jumpifstat BS_ATTACKER, CMP_EQUAL, STAT_SPEED, MAX_STAT_STAGE, BattleScript_DefDownSpeedUpRet
 BattleScript_DefDownSpeedUpTryDef::
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_DefDownSpeedUpTryDef_AfterStasisGazeContrary
+BattleScript_DefDownSpeedUpTryDef_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_DEF, 1, TRUE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_CERTAIN, BattleScript_DefDownSpeedUpTrySpeed
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_DefDownSpeedUpTrySpeed
 	printfromtable gStatDownStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_DefDownSpeedUpTrySpeed:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_DefDownSpeedUp_StasisGazePrevented
+BattleScript_DefDownSpeedUpTrySpeed_AfterStasisGazeCheck:
 	setstatchanger STAT_SPEED, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_CERTAIN, BattleScript_DefDownSpeedUpRet
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_DefDownSpeedUpRet
@@ -5589,6 +6298,28 @@ BattleScript_DefDownSpeedUpTrySpeed:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_DefDownSpeedUpRet::
 	return
+BattleScript_DefDownSpeedUp_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_DefDownSpeedUpTrySpeed_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_DefDownSpeedUpRet
+BattleScript_DefDownSpeedUpTryDef_AfterStasisGazeContrary:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_DefDownSpeedUpTryDef_AfterStasisGazeContraryDo
+	goto BattleScript_DefDownSpeedUpTryDef_AfterStasisGazeContraryCheck
+BattleScript_DefDownSpeedUpTryDef_AfterStasisGazeContraryDo:
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_DefDownSpeedUpTrySpeed
 
 BattleScript_KnockedOff::
 	playanimation BS_TARGET, B_ANIM_ITEM_KNOCKOFF
@@ -5878,6 +6609,8 @@ BattleScript_CottonDownLoop:
 	jumpifabsent BS_TARGET, BattleScript_CottonDownLoopIncrement
 	setstatchanger STAT_SPEED, 1, TRUE
 	jumpifbyteequal gBattlerTarget, gEffectBattler, BattleScript_CottonDownLoopIncrement
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_CottonDown_StasisGazePreventedContrary
+BattleScript_CottonDownLoop_AfterStasisGazeContraryCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_ALLOW_PTR, BattleScript_CottonDownLoopIncrement
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_CottonDownTargetSpeedCantGoLower
 	printfromtable gStatDownStringIds
@@ -5893,6 +6626,18 @@ BattleScript_CottonDownLoopIncrement:
 	restoreattacker
 	restoretarget
 	return
+BattleScript_CottonDown_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_CottonDown_StasisGazePreventedContraryDo
+	goto BattleScript_CottonDownLoop_AfterStasisGazeContraryCheck
+BattleScript_CottonDown_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_CottonDownLoopIncrement
 
 BattleScript_AnticipationActivates::
 	pause 5
@@ -6042,12 +6787,26 @@ BattleScript_TryActivateSteadFast:
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_MoveUsedFlinchedEnd
 	copybyte gBattlerAbility, gBattlerAttacker
 	call BattleScript_AbilityPopUp
+	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_TryActivateSteadFast_StasisGazePrevented
+BattleScript_TryActivateSteadFast_AfterStasisGazeCheck:
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_MoveUsedFlinchedEnd
 	setbyte gBattleCommunication, STAT_SPEED
 	stattextbuffer
 	printstring STRINGID_ATTACKERABILITYSTATRAISE
 	waitmessage B_WAIT_TIME_LONG
+BattleScript_TryActivateSteadFastEnd:
 	goto BattleScript_MoveUsedFlinchedEnd
+BattleScript_TryActivateSteadFast_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_TryActivateSteadFast_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_TryActivateSteadFastEnd
 
 BattleScript_PrintUproarOverTurns::
 	printfromtable gUproarOverTurnStringIds
@@ -6528,8 +7287,10 @@ BattleScript_ActivateWeatherAbilities_Loop:
 BattleScript_TryIntimidateHoldEffects:
 	jumpifnoholdeffect BS_TARGET, HOLD_EFFECT_ADRENALINE_ORB, BattleScript_TryIntimidateHoldEffectsRet
 	jumpifstat BS_TARGET, CMP_EQUAL, STAT_SPEED, MAX_STAT_STAGE, BattleScript_TryIntimidateHoldEffectsRet
-	setstatchanger STAT_SPEED, 1, FALSE
 	playanimation BS_TARGET, B_ANIM_HELD_ITEM_EFFECT
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_TryIntimidateHoldEffects_StasisGazePrevented
+BattleScript_TryIntimidateHoldEffects_AfterStasisGazeCheck:
+	setstatchanger STAT_SPEED, 1, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_CERTAIN | STAT_CHANGE_ALLOW_PTR, BattleScript_TryIntimidateHoldEffectsRet
 	copybyte sBATTLER, gBattlerTarget
 	setlastuseditem BS_TARGET
@@ -6538,6 +7299,16 @@ BattleScript_TryIntimidateHoldEffects:
 	removeitem BS_TARGET
 BattleScript_TryIntimidateHoldEffectsRet:
 	return
+BattleScript_TryIntimidateHoldEffects_StasisGazePrevented:
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_TryIntimidateHoldEffects_AfterStasisGazeCheck
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_TryIntimidateHoldEffectsRet
 
 BattleScript_IntimidateActivates::
 	savetarget
@@ -6550,6 +7321,8 @@ BattleScript_IntimidateLoop:
 	jumpifintimidateabilityprevented
 BattleScript_IntimidateEffect:
 	copybyte sBATTLER, gBattlerAttacker
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_Intimidate_StasisGazePreventedContrary
+BattleScript_IntimidateEffect_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_ATK, 1, TRUE
 	statbuffchange BS_TARGET, STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_ALLOW_PTR, BattleScript_IntimidateLoopIncrement
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_IntimidateWontDecrease
@@ -6571,6 +7344,18 @@ BattleScript_IntimidateLoopIncrement:
 	restoreattacker
 	pause B_WAIT_TIME_MED
 	return
+BattleScript_Intimidate_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_Intimidate_StasisGazePreventedContraryDo
+	goto BattleScript_IntimidateEffect_AfterStasisGazeContraryCheck
+BattleScript_Intimidate_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_IntimidateLoopIncrement
 
 BattleScript_IntimidatePrevented::
 	copybyte sBATTLER, gBattlerTarget
@@ -6602,6 +7387,8 @@ BattleScript_SupersweetSyrupLoop:
 	jumpifvolatile BS_TARGET, VOLATILE_SUBSTITUTE, BattleScript_SupersweetSyrupLoopIncrement
 BattleScript_SupersweetSyrupEffect:
 	copybyte sBATTLER, gBattlerAttacker
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_SupersweetSyrup_StasisGazePreventedContrary
+BattleScript_SupersweetSyrupEffect_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_EVASION, 1, TRUE
 	statbuffchange BS_TARGET, STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_ALLOW_PTR, BattleScript_SupersweetSyrupLoopIncrement
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_SupersweetSyrupWontDecrease
@@ -6623,6 +7410,18 @@ BattleScript_SupersweetSyrupLoopIncrement:
 	restoreattacker
 	pause B_WAIT_TIME_MED
 	return
+BattleScript_SupersweetSyrup_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_SupersweetSyrup_StasisGazePreventedContraryDo
+	goto BattleScript_SupersweetSyrupEffect_AfterStasisGazeContraryCheck
+BattleScript_SupersweetSyrup_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_SupersweetSyrupLoopIncrement
 
 BattleScript_SupersweetSyrupWontDecrease:
 	printstring STRINGID_STATSWONTDECREASE
@@ -6683,6 +7482,8 @@ BattleScript_CommanderActivates::
 	printstring STRINGID_COMMANDERACTIVATES
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_CommanderAtkIncrease:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattlerScript_Commander_StasisGazePrevented
+BattleScript_CommanderAtkIncrease_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 2, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_CommanderDefIncrease, BIT_DEF | BIT_SPATK | BIT_SPDEF | BIT_SPEED
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_CommanderDefIncrease
@@ -6715,6 +7516,16 @@ BattleScript_CommanderSpeedIncrease:
 BattleScript_CommanderEnd:
 	restoreattacker
 	return
+BattlerScript_Commander_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_CommanderAtkIncrease_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_CommanderEnd
 
 BattleScript_HospitalityActivates::
 	pause B_WAIT_TIME_SHORT
@@ -7109,6 +7920,8 @@ BattleScript_ScriptingAbilityStatRaiseRet:
 
 BattleScript_WeakArmorActivates::
 	call BattleScript_AbilityPopUp
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_WeakArmorActivates_StasisGazePreventedContrary
+BattleScript_WeakArmorActivates_AfterStasisGazeContraryCheck:
 	setstatchanger STAT_DEF, 1, TRUE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_WeakArmorActivatesSpeed
 	jumpifbyte CMP_LESS_THAN, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_WeakArmorDefPrintString
@@ -7122,6 +7935,8 @@ BattleScript_WeakArmorDefPrintString:
 	printstring STRINGID_TARGETABILITYSTATLOWER
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_WeakArmorActivatesSpeed:
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattlerScript_Commander_StasisGazePrevented
+BattleScript_WeakArmorActivatesSpeed_AfterStasisGazeCheck:
 	jumpifgenconfiglowerthan CONFIG_WEAK_ARMOR_SPEED, GEN_7, BattleScript_WeakArmorSetSpeedGen6
 	setstatchanger STAT_SPEED, 2, FALSE
 	goto BattleScript_WeakArmorDoSpeed
@@ -7141,16 +7956,50 @@ BattleScript_WeakArmorSpeedPrintString:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_WeakArmorActivatesEnd:
 	return
+BattleScript_WeakArmorActivates_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_WeakArmorActivatesSpeed_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_WeakArmorActivatesEnd
+BattleScript_WeakArmorActivates_StasisGazePreventedContrary:
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_WeakArmorActivates_StasisGazePreventedContraryDo
+	goto BattleScript_WeakArmorActivates_AfterStasisGazeContraryCheck
+BattleScript_WeakArmorActivates_StasisGazePreventedContraryDo:
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_WeakArmorActivatesSpeed
 
 BattleScript_RaiseStatOnFaintingTarget::
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_ONLY_CHECKING, BattleScript_RaiseStatOnFaintingTarget_End
 	copybyte gBattlerAbility, gBattlerAttacker
 	call BattleScript_AbilityPopUp
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_RaiseStatOnFaintingTarget_StasisGazePrevented
+BattleScript_RaiseStatOnFaintingTarget_AfterStasisGazeCheck:
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_RaiseStatOnFaintingTarget_End
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_RaiseStatOnFaintingTarget_End:
 	return
+BattleScript_RaiseStatOnFaintingTarget_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_RaiseStatOnFaintingTarget_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_RaiseStatOnFaintingTarget_End
 
 BattleScript_AttackerAbilityStatRaise::
 	statbuffchange BS_SCRIPTING, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_ONLY_CHECKING, BattleScript_AttackerAbilityStatRaise_End
@@ -7162,12 +8011,24 @@ BattleScript_AttackerAbilityStatRaise_End:
 	return
 
 BattleScript_FellStingerRaisesStat::
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_FellStingerRaisesStat_StasisGazePrevented
+BattleScript_FellStingerRaisesStat_AfterStasisGazeCheck:
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_FellStingerRaisesAtkEnd
 	jumpifbyte CMP_GREATER_THAN, cMULTISTRING_CHOOSER, B_MSG_DEFENDER_STAT_CHANGED, BattleScript_FellStingerRaisesAtkEnd
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_FellStingerRaisesAtkEnd:
 	return
+BattleScript_FellStingerRaisesStat_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_FellStingerRaisesStat_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_FellStingerRaisesAtkEnd
 
 BattleScript_AttackerAbilityStatRaiseEnd3::
 	call BattleScript_AttackerAbilityStatRaise
@@ -7367,6 +8228,9 @@ BattleScript_BattleBondActivatesOnMoveEndAttacker::
 
 BattleScript_EffectBattleBondStatIncrease::
 	call BattleScript_AbilityPopUp
+	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_EffectBattleBondStatIncreas_StasisGazePrevented
+BattleScript_EffectBattleBondStatIncrease_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectBattleBondStatIncreaseTrySpAtk, BIT_SPATK | BIT_SPEED
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_EffectBattleBondStatIncreaseTrySpAtk
@@ -7386,6 +8250,16 @@ BattleScript_EffectBattleBondStatIncreaseTrySpeed:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_EffectBattleBondStatIncreaseRet:
 	return
+BattleScript_EffectBattleBondStatIncreas_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_EffectBattleBondStatIncrease_AfterStasisGazeCheck
+	stasisgazesetbattler BS_ATTACKER
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_EffectBattleBondStatIncreaseRet
 
 BattleScript_DancerActivates::
 	call BattleScript_AbilityPopUp
@@ -7652,15 +8526,28 @@ BattleScript_ConsumableStatRaiseRet_AbilityPopup:
 BattleScript_ConsumableStatRaiseRet_Anim:
 	statbuffchange BS_SCRIPTING, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_ONLY_CHECKING, BattleScript_ConsumableStatRaiseRet_End
 	playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT, sB_ANIM_ARG1
+	checkopposingbattlerabilitysetbattler BS_SCRIPTING, ABILITY_STASIS_GAZE, BattleScript_ConsumableStatRaiseRet_StasisGazePrevented
+BattleScript_ConsumableStatRaiseRet_Anim_AfterStasisGazeCheck:
 	statbuffchange BS_SCRIPTING, STAT_CHANGE_ALLOW_PTR, BattleScript_ConsumableStatRaiseRet_End
 	setbyte cMULTISTRING_CHOOSER, B_MSG_STAT_CHANGED_ITEM
 	savetarget
 	copybyte gBattlerTarget, sBATTLER @ BattleScript_StatUp uses target as a message arg
 	call BattleScript_StatUp
 	restoretarget
+BattleScript_ConsumableStatRaiseRet_RemoveItem:
 	removeitem BS_SCRIPTING
 BattleScript_ConsumableStatRaiseRet_End:
 	return
+BattleScript_ConsumableStatRaiseRet_StasisGazePrevented:
+	jumpifability BS_SCRIPTING, ABILITY_CONTRARY, BattleScript_ConsumableStatRaiseRet_Anim_AfterStasisGazeCheck
+	stasisgazesetbattler BS_SCRIPTING
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_ConsumableStatRaiseRet_RemoveItem
 
 BattleScript_BerryFocusEnergy::
 	playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT
@@ -7980,6 +8867,8 @@ BattleScript_RecoverHPZMove::
 	return
 
 BattleScript_StatUpZMove::
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_StatUpZMove_StasisGazePrevented
+BattleScript_StatUpZMove_AfterStasisGazeCheck:
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_StatUpZMoveEnd
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_StatUpZMoveEnd
 	printstring STRINGID_ZMOVESTATUP
@@ -7988,6 +8877,16 @@ BattleScript_StatUpZMove::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_StatUpZMoveEnd:
 	return
+BattleScript_StatUpZMove_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_StatUpZMove_AfterStasisGazeCheck
+	stasisgazesetbattler BS_TARGET
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_StatUpZMoveEnd
 
 BattleScript_HealReplacementZMove::
 	playanimation BS_SCRIPTING, B_ANIM_WISH_HEAL, 0x0
@@ -8008,6 +8907,8 @@ BattleScript_EffectExtremeEvoboost::
 BattleScript_ExtremeEvoboostAnim:
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_ExtremeEvoboostEnd_StasisGazePrevented
+BattleScript_ExtremeEvoboostAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 2, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_ExtremeEvoboostDef, BIT_DEF | BIT_SPEED | BIT_SPATK | BIT_SPDEF
 	printfromtable gStatUpStringIds
@@ -8034,6 +8935,9 @@ BattleScript_ExtremeEvoboostSpDef::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_ExtremeEvoboostEnd::
 	goto BattleScript_MoveEnd
+BattleScript_ExtremeEvoboostEnd_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_ExtremeEvoboostAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_RemoveTerrain::
 	removeterrain
@@ -9046,6 +9950,8 @@ BattleScript_AllStatsUpOnTarget::
 BattleScript_AllStatsUpOnTargetAtk::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_AllStatsUpOnTarget_StasisGazePrevented
+BattleScript_AllStatsUpOnTargetAtk_AfterStasisGazeCheck:
 	setstatchanger STAT_ATK, 1, FALSE
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_AllStatsUpOnTargetDef, BIT_DEF | BIT_SPEED | BIT_SPATK | BIT_SPDEF
 	printfromtable gStatUpStringIds
@@ -9074,6 +9980,9 @@ BattleScript_AllStatsUpOnTargetSuccess::
 	goto BattleScript_MoveEnd
 BattleScript_AllStatsUpOnTargetFailed::
 	goto BattleScript_ButItFailed
+BattleScript_AllStatsUpOnTarget_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_AllStatsUpOnTargetAtk_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectGrimoireCall::
 	attackcanceler
@@ -9116,6 +10025,8 @@ BattleScript_UltraMedicineAllStatsUpActivatesTryAcc:
 	pause B_WAIT_TIME_SHORT
 	playanimation BS_SCRIPTING, B_ANIM_ULTRA_MEDICINE
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_SCRIPTING, ABILITY_STASIS_GAZE, BattleScript_UltraMedicineAllStatsUpActivates_StasisGazePrevented
+BattleScript_UltraMedicineAllStatsUpActivatesTryAcc_AfterStasisGazeCheck:
 	setstatchanger STAT_ACC, MAX_STAT_STAGE, FALSE
 	statbuffchange BS_SCRIPTING, STAT_CHANGE_ALLOW_PTR, BattleScript_UltraMedicineAllStatsUpActivatesTryEvasion, BIT_ATK | BIT_DEF | BIT_SPEED | BIT_SPATK | BIT_SPDEF | BIT_EVASION
 	printfromtable gStatUpStringIds
@@ -9152,6 +10063,16 @@ BattleScript_UltraMedicineAllStatsUpActivatesTrySpeed:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_UltraMedicineAllStatsUpActivatesRet:
 	return
+BattleScript_UltraMedicineAllStatsUpActivates_StasisGazePrevented:
+	jumpifability BS_SCRIPTING, ABILITY_CONTRARY, BattleScript_UltraMedicineAllStatsUpActivatesTryAcc_AfterStasisGazeCheck
+	stasisgazesetbattler BS_SCRIPTING
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_UltraMedicineAllStatsUpActivatesRet
 
 BattleScript_UltraMedicineV2Activates::
 	call BattleScript_AbilityPopUpScripting
@@ -9201,6 +10122,8 @@ BattleScript_EffectSpAtkSpDefUp2FromStatUp::
 BattleScript_SpAtkSpDefUp2DoMoveAnim::
 	attackanimation
 	waitanimation
+	checkopposingbattlerabilitysetbattler BS_ATTACKER, ABILITY_STASIS_GAZE, BattleScript_EffectSpAtkSpDefUp2_StasisGazePrevented
+BattleScript_SpAtkSpDefUp2DoMoveAnim_AfterStasisGazeCheck:
 	setstatchanger STAT_SPATK, 2, FALSE
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_SpAtkSpDefUp2TrySpDef, BIT_SPDEF
 	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_SpAtkSpDefUp2TrySpDef
@@ -9214,6 +10137,9 @@ BattleScript_SpAtkSpDefUp2TrySpDef::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_EffectSpAtkSpDefUp2End::
 	goto BattleScript_MoveEnd
+BattleScript_EffectSpAtkSpDefUp2_StasisGazePrevented:
+	jumpifability BS_ATTACKER, ABILITY_CONTRARY, BattleScript_SpAtkSpDefUp2DoMoveAnim_AfterStasisGazeCheck
+	goto BattleScript_StasisGazeActivatesMove
 
 BattleScript_EffectGaiaForce::
 	jumpiftype BS_ATTACKER, TYPE_NEW_DARK, BattleScript_EffectGaiaForceChangeDark
@@ -9435,4 +10361,34 @@ BattleScript_DevourHealMultiTarget_LoopIncrement:
 BattleScript_DevourHealMultiTarget_Return:
 	restoretarget
 	restoreattacker
+	return
+
+BattleScript_StasisGazeActivatesMove::
+	stasisgazesetbattler BS_SCRIPTING
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	goto BattleScript_MoveEnd
+
+BattleScript_StasisGazeActivatesAbilitySwitchIn::
+	call BattleScript_AbilityPopUp
+	waitanimation
+BattleScript_StasisGazeActivatesAbility::
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	return
+
+BattleScript_StasisGazeActivatesMoveEffect::
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
 	return

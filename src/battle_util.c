@@ -4841,6 +4841,10 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
     u32 side = 0;
     u32 i = 0, j = 0;
     u32 partner = 0;
+    u32 attakerSide;
+    u32 oppositeSide;
+    u32 oppositeDef;
+    u32 oppositeDefPartner;
 
     if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
         return 0;
@@ -5549,36 +5553,128 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             }
             break;
         case ABILITY_GRIMOIRE_USER:
-            if (shouldAbilityTrigger && CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+            if (shouldAbilityTrigger)
             {
-                SET_STATCHANGER(STAT_SPATK, 1, FALSE);
-                BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
-                effect++;
+                attakerSide = GetBattlerSide(gBattlerAttacker);
+                oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                oppositeDefPartner = GetPartnerBattler(oppositeDef);
+
+                if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDef;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDefPartner;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+                {
+                    SET_STATCHANGER(STAT_SPATK, 1, FALSE);
+                    BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                    effect++;
+                }
+                break;
             }
             break;
         case ABILITY_SKILLED_MAGICIAN:
         case ABILITY_KALEID_RUBY:
-            if (shouldAbilityTrigger && CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+            if (shouldAbilityTrigger)
             {
-                SET_STATCHANGER(STAT_SPATK, 1, FALSE);
-                BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
-                effect++;
+                attakerSide = GetBattlerSide(gBattlerAttacker);
+                oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                oppositeDefPartner = GetPartnerBattler(oppositeDef);
+
+                if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDef;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDefPartner;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+                {
+                    SET_STATCHANGER(STAT_SPATK, 1, FALSE);
+                    BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                    effect++;
+                }
+                break;
             }
             break;
         case ABILITY_KALEID_SAPPHIRE:
-            if (shouldAbilityTrigger && CompareStat(battler, STAT_SPEED, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+            if (shouldAbilityTrigger)
             {
-                SET_STATCHANGER(STAT_SPEED, 1, FALSE);
-                BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
-                effect++;
+                attakerSide = GetBattlerSide(gBattlerAttacker);
+                oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                oppositeDefPartner = GetPartnerBattler(oppositeDef);
+
+                if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDef;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDefPartner;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (CompareStat(battler, STAT_SPEED, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+                {
+                    SET_STATCHANGER(STAT_SPEED, 1, FALSE);
+                    BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                    effect++;
+                }
+                break;
             }
             break;
         case ABILITY_POWER_LEAK:
-            if (shouldAbilityTrigger && CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+            if (shouldAbilityTrigger)
             {
-                SET_STATCHANGER(STAT_SPATK, 2, FALSE);
-                BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
-                effect++;
+                attakerSide = GetBattlerSide(gBattlerAttacker);
+                oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                oppositeDefPartner = GetPartnerBattler(oppositeDef);
+
+                if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDef;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDefPartner;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+                {
+                    SET_STATCHANGER(STAT_SPATK, 2, FALSE);
+                    BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                    effect++;
+                }
+                break;
             }
             break;
         case ABILITY_LUNACY:
@@ -5586,26 +5682,47 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             {            
                 u32 validToRaise = 0;
                 u32 statsNum = NUM_BATTLE_STATS;
+                attakerSide = GetBattlerSide(gBattlerAttacker);
+                oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                oppositeDefPartner = GetPartnerBattler(oppositeDef);
 
-                for (i = STAT_ATK; i < statsNum; i++)
+                if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE)
                 {
-                    if (CompareStat(battler, i, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
-                        validToRaise |= 1u << i;
-                }
-
-                if (validToRaise != 0) // Can raise one stat
-                {
-                    gBattleScripting.statChanger = gBattleScripting.savedStatChanger = 0; // for raising and lowering stat respectively
-                    if (validToRaise != 0) // Find stat to raise
-                    {
-                        do
-                        {
-                            i = (Random() % statsNum) + STAT_ATK;
-                        } while (!(validToRaise & (1u << i)));
-                        SET_STATCHANGER(i, 1, FALSE);
-                    }
-                    BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDef;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
                     effect++;
+                }
+                else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDefPartner;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else
+                {
+                    for (i = STAT_ATK; i < statsNum; i++)
+                    {
+                        if (CompareStat(battler, i, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+                            validToRaise |= 1u << i;
+                    }
+
+                    if (validToRaise != 0) // Can raise one stat
+                    {
+                        gBattleScripting.statChanger = gBattleScripting.savedStatChanger = 0; // for raising and lowering stat respectively
+                        if (validToRaise != 0) // Find stat to raise
+                        {
+                            do
+                            {
+                                i = (Random() % statsNum) + STAT_ATK;
+                            } while (!(validToRaise & (1u << i)));
+                            SET_STATCHANGER(i, 1, FALSE);
+                        }
+                        BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                        effect++;
+                    }
                 }
             }
             break;
@@ -5635,40 +5752,102 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             break;
         case ABILITY_INTREPID_SWORD:
             if (shouldAbilityTrigger && !GetBattlerPartyState(battler)->intrepidSwordBoost)
-            {
+            {   
+                attakerSide = GetBattlerSide(gBattlerAttacker);
+                oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                oppositeDefPartner = GetPartnerBattler(oppositeDef);
+
                 if (GetConfig(CONFIG_INTREPID_SWORD) == GEN_9)
                     GetBattlerPartyState(battler)->intrepidSwordBoost = TRUE;
 
-                if (CompareStat(battler, STAT_ATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+                if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDef;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDefPartner;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (CompareStat(battler, STAT_ATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
                 {
                     SET_STATCHANGER(STAT_ATK, 1, FALSE);
                     BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
                     effect++;
                 }
+                break;
             }
             break;
         case ABILITY_DAUNTLESS_SHIELD:
             if (shouldAbilityTrigger && !GetBattlerPartyState(battler)->dauntlessShieldBoost)
-            {
+            {   
+                attakerSide = GetBattlerSide(gBattlerAttacker);
+                oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                oppositeDefPartner = GetPartnerBattler(oppositeDef);
+
                 if (GetConfig(CONFIG_DAUNTLESS_SHIELD) == GEN_9)
                     GetBattlerPartyState(battler)->dauntlessShieldBoost = TRUE;
 
-                if (CompareStat(battler, STAT_DEF, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+                if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDef;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDefPartner;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (CompareStat(battler, STAT_DEF, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
                 {
                     SET_STATCHANGER(STAT_DEF, 1, FALSE);
                     BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
                     effect++;
                 }
+                break;
             }
             break;
         case ABILITY_WIND_RIDER:
             if (shouldAbilityTrigger
-             && CompareStat(battler, STAT_ATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility)
              && gSideStatuses[GetBattlerSide(battler)] & SIDE_STATUS_TAILWIND)
             {
-                SET_STATCHANGER(STAT_ATK, 1, FALSE);
-                BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
-                effect++;
+                attakerSide = GetBattlerSide(gBattlerAttacker);
+                oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                oppositeDefPartner = GetPartnerBattler(oppositeDef);
+
+                if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDef;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDefPartner;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (CompareStat(battler, STAT_ATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+                {
+                    SET_STATCHANGER(STAT_ATK, 1, FALSE);
+                    BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                    effect++;
+                }
+                break;
             }
             break;
         case ABILITY_DESOLATE_LAND:
@@ -5761,6 +5940,10 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             if (shouldAbilityTrigger)
             {
                 enum Stat stat;
+                attakerSide = GetBattlerSide(gBattlerAttacker);
+                oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                oppositeDefPartner = GetPartnerBattler(oppositeDef);
 
                 if (gLastUsedAbility == ABILITY_EMBODY_ASPECT_HEARTHFLAME_MASK)
                     stat = STAT_ATK;
@@ -5774,9 +5957,26 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 if (CompareStat(battler, stat, MAX_STAT_STAGE, CMP_EQUAL, gLastUsedAbility))
                     break;
 
-                SET_STATCHANGER(stat, 1, FALSE);
-                BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
-                effect++;
+                if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDef;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE)
+                {
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattleScripting.battler = oppositeDefPartner;
+                    BattleScriptCall(BattleScript_StasisGazeActivatesAbilitySwitchIn);
+                    effect++;
+                }
+                else
+                {
+                    SET_STATCHANGER(stat, 1, FALSE);
+                    BattleScriptCall(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                    effect++;   
+                }
             }
             break;
         default:
@@ -5904,13 +6104,35 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 }
                 break;
             case ABILITY_SPEED_BOOST:
-                if (CompareStat(battler, STAT_SPEED, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility) && gBattleStruct->battlerState[battler].isFirstTurn != 2)
                 {
-                    SaveBattlerAttacker(gBattlerAttacker);
-                    SET_STATCHANGER(STAT_SPEED, 1, FALSE);
-                    BattleScriptExecute(BattleScript_AttackerAbilityStatRaiseEnd2);
-                    gBattleScripting.battler = battler;
-                    effect++;
+                    attakerSide = GetBattlerSide(gBattlerAttacker);
+                    oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                    oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                    oppositeDefPartner = GetPartnerBattler(oppositeDef);
+
+                    if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE && gBattleStruct->battlerState[battler].isFirstTurn != 2)
+                    {
+                        SaveBattlerAttacker(gBattlerAttacker);
+                        gBattleScripting.battler = oppositeDef;
+                        BattleScriptExecute(BattleScript_StasisGazeActivatesAbility);
+                        effect++;
+                    }
+                    else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE && gBattleStruct->battlerState[battler].isFirstTurn != 2)
+                    {
+                        SaveBattlerAttacker(gBattlerAttacker);
+                        gBattleScripting.battler = oppositeDefPartner;
+                        BattleScriptExecute(BattleScript_StasisGazeActivatesAbility);
+                        effect++;
+                    }
+                    else if (CompareStat(battler, STAT_SPEED, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility) && gBattleStruct->battlerState[battler].isFirstTurn != 2)
+                    {
+                        SaveBattlerAttacker(gBattlerAttacker);
+                        SET_STATCHANGER(STAT_SPEED, 1, FALSE);
+                        BattleScriptExecute(BattleScript_AttackerAbilityStatRaiseEnd2);
+                        gBattleScripting.battler = battler;
+                        effect++;
+                    }
+                    break;
                 }
                 break;
             case ABILITY_POWER_LEAK:
@@ -5936,23 +6158,67 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 }
                 break;
             case ABILITY_FLORA_ELVIS:
-                if (CompareStat(battler, STAT_ATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility) && gBattleStruct->battlerState[battler].isFirstTurn != 2)
                 {
-                    SaveBattlerAttacker(gBattlerAttacker);
-                    SET_STATCHANGER(STAT_ATK, 1, FALSE);
-                    BattleScriptExecute(BattleScript_AttackerAbilityStatRaiseEnd2);
-                    gBattleScripting.battler = battler;
-                    effect++;
+                    attakerSide = GetBattlerSide(gBattlerAttacker);
+                    oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                    oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                    oppositeDefPartner = GetPartnerBattler(oppositeDef);
+
+                    if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE && gBattleStruct->battlerState[battler].isFirstTurn != 2)
+                    {
+                        SaveBattlerAttacker(gBattlerAttacker);
+                        gBattleScripting.battler = oppositeDef;
+                        BattleScriptExecute(BattleScript_StasisGazeActivatesAbility);
+                        effect++;
+                    }
+                    else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE && gBattleStruct->battlerState[battler].isFirstTurn != 2)
+                    {
+                        SaveBattlerAttacker(gBattlerAttacker);
+                        gBattleScripting.battler = oppositeDefPartner;
+                        BattleScriptExecute(BattleScript_StasisGazeActivatesAbility);
+                        effect++;
+                    }
+                    else if (CompareStat(battler, STAT_ATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility) && gBattleStruct->battlerState[battler].isFirstTurn != 2)
+                    {
+                        SaveBattlerAttacker(gBattlerAttacker);
+                        SET_STATCHANGER(STAT_ATK, 1, FALSE);
+                        BattleScriptExecute(BattleScript_AttackerAbilityStatRaiseEnd2);
+                        gBattleScripting.battler = battler;
+                        effect++;
+                    }
+                    break;
                 }
                 break;
             case ABILITY_SHICHININ_MISAKI:
-                if (CompareStat(battler, STAT_EVASION, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility) && gBattleStruct->battlerState[battler].isFirstTurn != 2)
                 {
-                    SaveBattlerAttacker(gBattlerAttacker);
-                    SET_STATCHANGER(STAT_EVASION, 1, FALSE);
-                    BattleScriptExecute(BattleScript_AttackerAbilityStatRaiseEnd2);
-                    gBattleScripting.battler = battler;
-                    effect++;
+                    attakerSide = GetBattlerSide(gBattlerAttacker);
+                    oppositeSide = GetOpposingSideBattler(gBattlerAttacker);
+                    oppositeDef = GetOppositeBattler(gBattlerAttacker);
+                    oppositeDefPartner = GetPartnerBattler(oppositeDef);
+
+                    if (GetBattlerAbility(oppositeDef) == ABILITY_STASIS_GAZE && gBattleStruct->battlerState[battler].isFirstTurn != 2)
+                    {
+                        SaveBattlerAttacker(gBattlerAttacker);
+                        gBattleScripting.battler = oppositeDef;
+                        BattleScriptExecute(BattleScript_StasisGazeActivatesAbility);
+                        effect++;
+                    }
+                    else if (GetBattlerAbility(oppositeDefPartner) == ABILITY_STASIS_GAZE && gBattleStruct->battlerState[battler].isFirstTurn != 2)
+                    {
+                        SaveBattlerAttacker(gBattlerAttacker);
+                        gBattleScripting.battler = oppositeDefPartner;
+                        BattleScriptExecute(BattleScript_StasisGazeActivatesAbility);
+                        effect++;
+                    }
+                    else if (CompareStat(battler, STAT_EVASION, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility) && gBattleStruct->battlerState[battler].isFirstTurn != 2)
+                    {
+                        SaveBattlerAttacker(gBattlerAttacker);
+                        SET_STATCHANGER(STAT_EVASION, 1, FALSE);
+                        BattleScriptExecute(BattleScript_AttackerAbilityStatRaiseEnd2);
+                        gBattleScripting.battler = battler;
+                        effect++;
+                    }
+                    break;
                 }
                 break;
             case ABILITY_GRIMOIRE_USER:
