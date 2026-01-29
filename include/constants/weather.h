@@ -20,7 +20,7 @@
 #define WEATHER_LIGHT_ORB_UP            19
 #define WEATHER_ROUTE119_CYCLE          20
 #define WEATHER_ROUTE123_CYCLE          21
-#define WEATHER_FOG                     22  // Aggregate of WEATHER_FOG_HORIZONTAL and WEATHER_FOG_DIAGONAL 
+#define WEATHER_FOG                     22  // Aggregate of WEATHER_FOG_HORIZONTAL and WEATHER_FOG_DIAGONAL
 #define WEATHER_COUNT                   23
 
 // These are used in maps' coord_weather_event entries.

@@ -686,6 +686,7 @@ extern const u8 EventScript_LostSignal[];
 extern const u8 EventScript_TooDark[];
 extern const u8 EventScript_MovedTooFast[];
 
+extern const u8 MoveTutor_AfterChooseBoxMon[];
 
 extern const u8 EventScript_StartsLightOrbsUp[];
 extern const u8 EventScript_TrimmedGensokyoWaterEncounter[];

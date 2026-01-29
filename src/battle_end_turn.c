@@ -15,7 +15,7 @@
 
 static u32 GetBattlerSideForMessage(enum BattleSide side)
 {
-    u32 battler = 0;
+    enum BattlerId battler = 0;
 
     for (battler = 0; battler < gBattlersCount; battler++)
     {
@@ -26,23 +26,22 @@ static u32 GetBattlerSideForMessage(enum BattleSide side)
     return battler;
 }
 
-static bool32 HandleEndTurnOrder(u32 battler)
+static bool32 HandleEndTurnOrder(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
     gBattleTurnCounter++;
     gBattleStruct->eventState.endTurn++;
 
-    for (u32 i = 0; i < gBattlersCount; i++)
+    for (enum BattlerId i = 0; i < gBattlersCount; i++)
         gBattlerByTurnOrder[i] = i;
     SortBattlersBySpeed(gBattlerByTurnOrder, FALSE);
 
     return effect;
 }
 
-static bool32 HandleEndTurnVarious(u32 battler)
+static bool32 HandleEndTurnVarious(enum BattlerId battler)
 {
-    u32 i;
     bool32 effect = FALSE;
 
     gBattleStruct->eventState.endTurn++;
@@ -50,13 +49,13 @@ static bool32 HandleEndTurnVarious(u32 battler)
     if (gFieldTimers.fairyLockTimer > 0 && --gFieldTimers.fairyLockTimer == 0)
         gFieldStatuses &= ~STATUS_FIELD_FAIRY_LOCK;
 
-    for (i = 0; i < NUM_BATTLE_SIDES; i++)
+    for (enum BattleSide i = 0; i < NUM_BATTLE_SIDES; i++)
     {
         if (gSideTimers[i].damageNonTypesTimer > 0 && --gSideTimers[i].damageNonTypesTimer == 0)
             gSideStatuses[i] &= ~SIDE_STATUS_DAMAGE_NON_TYPES;
     }
 
-    for (i = 0; i < gBattlersCount; i++)
+    for (enum BattlerId i = 0; i < gBattlersCount; i++)
     {
         if (gBattleMons[i].volatiles.throatChopTimer > 0)
             gBattleMons[i].volatiles.throatChopTimer--;
@@ -87,13 +86,13 @@ static bool32 HandleEndTurnVarious(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnWeather(u32 battler)
+static bool32 HandleEndTurnWeather(enum BattlerId battler)
 {
     gBattleStruct->eventState.endTurn++;
     return EndOrContinueWeather();
 }
 
-static bool32 HandleEndTurnWeatherDamage(u32 battler)
+static bool32 HandleEndTurnWeatherDamage(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -239,7 +238,7 @@ static bool32 HandleEndTurnWeatherDamage(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnEmergencyExit(u32 battler)
+static bool32 HandleEndTurnEmergencyExit(enum BattlerId battler)
 {
     bool32 effect = FALSE;
     enum Ability ability = GetBattlerAbility(battler);
@@ -258,7 +257,7 @@ static bool32 HandleEndTurnEmergencyExit(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnAffection(u32 battler)
+static bool32 HandleEndTurnAffection(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -281,7 +280,7 @@ static bool32 HandleEndTurnAffection(u32 battler)
 
 // Note: Technically Future Sight, Doom Desire and Wish need a queue but
 // I think we should accept this slight inconsistency so custom moves don't have to touch this code
-static bool32 HandleEndTurnFutureSight(u32 battler)
+static bool32 HandleEndTurnFutureSight(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -315,7 +314,7 @@ static bool32 HandleEndTurnFutureSight(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnWish(u32 battler)
+static bool32 HandleEndTurnWish(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -345,7 +344,7 @@ static bool32 HandleEndTurnWish(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnFirstEventBlock(u32 battler)
+static bool32 HandleEndTurnFirstEventBlock(enum BattlerId battler)
 {
     bool32 effect = FALSE;
     enum BattleSide side;
@@ -450,7 +449,7 @@ static bool32 HandleEndTurnFirstEventBlock(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnAquaRing(u32 battler)
+static bool32 HandleEndTurnAquaRing(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -469,7 +468,7 @@ static bool32 HandleEndTurnAquaRing(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnIngrain(u32 battler)
+static bool32 HandleEndTurnIngrain(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -488,7 +487,7 @@ static bool32 HandleEndTurnIngrain(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnLeechSeed(u32 battler)
+static bool32 HandleEndTurnLeechSeed(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -542,7 +541,7 @@ static bool32 HandleEndTurnLeechSeed(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnPoison(u32 battler)
+static bool32 HandleEndTurnPoison(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -611,7 +610,7 @@ static bool32 HandleEndTurnPoison(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnBurn(u32 battler)
+static bool32 HandleEndTurnBurn(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -638,7 +637,7 @@ static bool32 HandleEndTurnBurn(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnFrostbite(u32 battler)
+static bool32 HandleEndTurnFrostbite(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -656,7 +655,7 @@ static bool32 HandleEndTurnFrostbite(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnNightmare(u32 battler)
+static bool32 HandleEndTurnNightmare(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -681,7 +680,7 @@ static bool32 HandleEndTurnNightmare(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnCurse(u32 battler)
+static bool32 HandleEndTurnCurse(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -699,7 +698,7 @@ static bool32 HandleEndTurnCurse(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnWrap(u32 battler)
+static bool32 HandleEndTurnWrap(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -736,7 +735,7 @@ static bool32 HandleEndTurnWrap(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnSaltCure(u32 battler)
+static bool32 HandleEndTurnSaltCure(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -760,7 +759,7 @@ static bool32 HandleEndTurnSaltCure(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnOctolock(u32 battler)
+static bool32 HandleEndTurnOctolock(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -777,7 +776,7 @@ static bool32 HandleEndTurnOctolock(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnSyrupBomb(u32 battler)
+static bool32 HandleEndTurnSyrupBomb(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -796,7 +795,7 @@ static bool32 HandleEndTurnSyrupBomb(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnTaunt(u32 battler)
+static bool32 HandleEndTurnTaunt(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -813,7 +812,7 @@ static bool32 HandleEndTurnTaunt(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnTorment(u32 battler)
+static bool32 HandleEndTurnTorment(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -830,7 +829,7 @@ static bool32 HandleEndTurnTorment(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnEncore(u32 battler)
+static bool32 HandleEndTurnEncore(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -857,7 +856,7 @@ static bool32 HandleEndTurnEncore(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnDisable(u32 battler)
+static bool32 HandleEndTurnDisable(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -888,7 +887,7 @@ static bool32 HandleEndTurnDisable(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnMagnetRise(u32 battler)
+static bool32 HandleEndTurnMagnetRise(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -905,7 +904,7 @@ static bool32 HandleEndTurnMagnetRise(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnTelekinesis(u32 battler)
+static bool32 HandleEndTurnTelekinesis(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -921,7 +920,7 @@ static bool32 HandleEndTurnTelekinesis(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnHealBlock(u32 battler)
+static bool32 HandleEndTurnHealBlock(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -939,7 +938,7 @@ static bool32 HandleEndTurnHealBlock(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnEmbargo(u32 battler)
+static bool32 HandleEndTurnEmbargo(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -955,7 +954,7 @@ static bool32 HandleEndTurnEmbargo(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnYawn(u32 battler)
+static bool32 HandleEndTurnYawn(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1019,7 +1018,7 @@ static bool32 HandleEndTurnYawn(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnPerishSong(u32 battler)
+static bool32 HandleEndTurnPerishSong(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1045,7 +1044,7 @@ static bool32 HandleEndTurnPerishSong(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnRoost(u32 battler)
+static bool32 HandleEndTurnRoost(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1057,7 +1056,7 @@ static bool32 HandleEndTurnRoost(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnSecondEventBlock(u32 battler)
+static bool32 HandleEndTurnSecondEventBlock(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1178,7 +1177,7 @@ static bool32 HandleEndTurnSecondEventBlock(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnTrickRoom(u32 battler)
+static bool32 HandleEndTurnTrickRoom(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1194,7 +1193,7 @@ static bool32 HandleEndTurnTrickRoom(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnGravity(u32 battler)
+static bool32 HandleEndTurnGravity(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1210,7 +1209,7 @@ static bool32 HandleEndTurnGravity(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnWaterSport(u32 battler)
+static bool32 HandleEndTurnWaterSport(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1226,7 +1225,7 @@ static bool32 HandleEndTurnWaterSport(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnMudSport(u32 battler)
+static bool32 HandleEndTurnMudSport(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1242,7 +1241,7 @@ static bool32 HandleEndTurnMudSport(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnWonderRoom(u32 battler)
+static bool32 HandleEndTurnWonderRoom(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1258,7 +1257,7 @@ static bool32 HandleEndTurnWonderRoom(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnMagicRoom(u32 battler)
+static bool32 HandleEndTurnMagicRoom(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1288,7 +1287,7 @@ static bool32 EndTurnTerrain(u32 terrainFlag, u32 stringTableId)
     return FALSE;
 }
 
-static bool32 HandleEndTurnTerrain(u32 battler)
+static bool32 HandleEndTurnTerrain(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1312,7 +1311,7 @@ static bool32 HandleEndTurnTerrain(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnThirdEventBlock(u32 battler)
+static bool32 HandleEndTurnThirdEventBlock(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1423,7 +1422,7 @@ static bool32 HandleEndTurnThirdEventBlock(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnFormChangeAbilities(u32 battler)
+static bool32 HandleEndTurnFormChangeAbilities(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1447,13 +1446,13 @@ static bool32 HandleEndTurnFormChangeAbilities(u32 battler)
     return effect;
 }
 
-static bool32 HandleEndTurnEjectPack(u32 battler)
+static bool32 HandleEndTurnEjectPack(enum BattlerId battler)
 {
     gBattleStruct->eventState.endTurn++;
     return TrySwitchInEjectPack(END_TURN);
 }
 
-static bool32 HandleEndTurnDynamax(u32 battler)
+static bool32 HandleEndTurnDynamax(enum BattlerId battler)
 {
     bool32 effect = FALSE;
 
@@ -1470,7 +1469,7 @@ static bool32 HandleEndTurnDynamax(u32 battler)
     return effect;
 }
 
-static bool32 TryEndTurnTrainerSlide(u32 battler)
+static bool32 TryEndTurnTrainerSlide(enum BattlerId battler)
 {
     return ((ShouldDoTrainerSlide(battler, TRAINER_SLIDE_LAST_LOW_HP) != TRAINER_SLIDE_TARGET_NONE)
          || (ShouldDoTrainerSlide(battler, TRAINER_SLIDE_LAST_HALF_HP) != TRAINER_SLIDE_TARGET_NONE)
@@ -1481,7 +1480,7 @@ static bool32 TryEndTurnTrainerSlide(u32 battler)
          || (ShouldDoTrainerSlide(battler, TRAINER_SLIDE_ENEMY_MON_UNAFFECTED) != TRAINER_SLIDE_TARGET_NONE));
 }
 
-static bool32 HandleEndTurnTrainerASlides(u32 battler)
+static bool32 HandleEndTurnTrainerASlides(enum BattlerId battler)
 {
     gBattleStruct->eventState.endTurnBattler++;
     bool32 slide = TryEndTurnTrainerSlide(B_BATTLER_1);
@@ -1490,7 +1489,7 @@ static bool32 HandleEndTurnTrainerASlides(u32 battler)
     return slide;
 }
 
-static bool32 HandleEndTurnTrainerBSlides(u32 battler)
+static bool32 HandleEndTurnTrainerBSlides(enum BattlerId battler)
 {
     gBattleStruct->eventState.endTurnBattler++;
 
@@ -1501,7 +1500,7 @@ static bool32 HandleEndTurnTrainerBSlides(u32 battler)
 
     if (slide == TRUE)
     {
-        if ((TRAINER_BATTLE_PARAM.opponentB == TRAINER_BATTLE_PARAM.opponentA) 
+        if ((TRAINER_BATTLE_PARAM.opponentB == TRAINER_BATTLE_PARAM.opponentA)
         || (TRAINER_BATTLE_PARAM.opponentB == TRAINER_NONE)
         || (TRAINER_BATTLE_PARAM.opponentB == 0xFFFF))
             BattleScriptExecute(BattleScript_TrainerASlideMsgEnd2);
@@ -1512,7 +1511,7 @@ static bool32 HandleEndTurnTrainerBSlides(u32 battler)
     return slide;
 }
 
-static bool32 HandleEndTurnTrainerPartnerSlides(u32 battler)
+static bool32 HandleEndTurnTrainerPartnerSlides(enum BattlerId battler)
 {
     gBattleStruct->eventState.endTurnBattler++;
 
@@ -1540,7 +1539,7 @@ static bool32 HandleEndTurnTrainerPartnerSlides(u32 battler)
             some commands
             end2
  */
-static bool32 (*const sEndTurnEffectHandlers[])(u32 battler) =
+static bool32 (*const sEndTurnEffectHandlers[])(enum BattlerId battler) =
 {
     [ENDTURN_ORDER] = HandleEndTurnOrder,
     [ENDTURN_VARIOUS] = HandleEndTurnVarious,

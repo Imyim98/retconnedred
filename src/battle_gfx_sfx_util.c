@@ -32,8 +32,8 @@
 #include "event_data.h"
 
 // this file's functions
-static u8 GetBattlePalaceMoveGroup(u8 battler, enum Move move);
-static u16 GetBattlePalaceTarget(u32 battler);
+static u8 GetBattlePalaceMoveGroup(enum BattlerId battler, enum Move move);
+static u16 GetBattlePalaceTarget(enum BattlerId battler);
 static void SpriteCB_TrainerSlideVertical(struct Sprite *sprite);
 static bool8 ShouldAnimBeDoneRegardlessOfSubstitute(u8 animId);
 static void Task_ClearBitWhenBattleTableAnimDone(u8 taskId);
@@ -141,7 +141,7 @@ void FreeBattleSpritesData(void)
 }
 
 // Pokémon chooses move to use in Battle Palace rather than player
-u16 ChooseMoveAndTargetInBattlePalace(u32 battler)
+u16 ChooseMoveAndTargetInBattlePalace(enum BattlerId battler)
 {
     s32 i, var1, var2;
     s32 chosenMoveIndex = -1;
@@ -318,7 +318,7 @@ u16 ChooseMoveAndTargetInBattlePalace(u32 battler)
 #undef numMultipleMoveGroups
 #undef randSelectGroup
 
-static u8 GetBattlePalaceMoveGroup(u8 battler, enum Move move)
+static u8 GetBattlePalaceMoveGroup(enum BattlerId battler, enum Move move)
 {
     switch (GetBattlerMoveTargetType(battler, move))
     {
@@ -348,11 +348,11 @@ static u8 GetBattlePalaceMoveGroup(u8 battler, enum Move move)
     }
 }
 
-static u16 GetBattlePalaceTarget(u32 battler)
+static u16 GetBattlePalaceTarget(enum BattlerId battler)
 {
     if (IsDoubleBattle())
     {
-        u8 opposing1, opposing2;
+        enum BattlerId opposing1, opposing2;
 
         if (IsOnPlayerSide(battler))
         {
@@ -461,7 +461,7 @@ static void SpriteCB_TrainerSlideVertical(struct Sprite *sprite)
 
 #undef sSpeedX
 
-void InitAndLaunchChosenStatusAnimation(u32 battler, bool32 isVolatile, u32 status)
+void InitAndLaunchChosenStatusAnimation(enum BattlerId battler, bool32 isVolatile, u32 status)
 {
     gBattleSpritesDataPtr->healthBoxesData[battler].statusAnimActive = 1;
     if (!isVolatile)
@@ -568,7 +568,7 @@ static bool8 ShouldAnimBeDoneRegardlessOfSubstitute(u8 animId)
 
 #define tBattlerId data[0]
 
-void InitAndLaunchSpecialAnimation(u8 activeBattler, u8 atkBattler, u8 defBattler, u8 tableId)
+void InitAndLaunchSpecialAnimation(enum BattlerId activeBattler, enum BattlerId atkBattler, enum BattlerId defBattler, u8 tableId)
 {
     u8 taskId;
 
@@ -593,7 +593,7 @@ static void Task_ClearBitWhenSpecialAnimDone(u8 taskId)
 #undef tBattlerId
 
 // Check if SE has finished or 30 calls, whichever comes first
-bool8 IsBattleSEPlaying(u8 battler)
+bool8 IsBattleSEPlaying(enum BattlerId battler)
 {
     u8 zero = 0;
 
@@ -616,7 +616,7 @@ bool8 IsBattleSEPlaying(u8 battler)
     return TRUE;
 }
 
-void BattleLoadMonSpriteGfx(struct Pokemon *mon, u32 battler)
+void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
 {
     u32 personalityValue, isShiny, species, paletteOffset;
     enum BattlerPosition position;
@@ -694,7 +694,7 @@ void BattleGfxSfxDummy2(u16 species)
 {
 }
 
-void DecompressTrainerFrontPic(u16 frontPicId, u8 battler)
+void DecompressTrainerFrontPic(u16 frontPicId, enum BattlerId battler)
 {
     enum BattlerPosition position = GetBattlerPosition(battler);
     DecompressPicFromTable(&gTrainerSprites[frontPicId].frontPic,
@@ -702,7 +702,7 @@ void DecompressTrainerFrontPic(u16 frontPicId, u8 battler)
     LoadSpritePalette(&gTrainerSprites[frontPicId].palette);
 }
 
-void DecompressTrainerBackPic(enum TrainerPicID backPicId, u8 battler)
+void DecompressTrainerBackPic(enum TrainerPicID backPicId, enum BattlerId battler)
 {
     enum BattlerPosition position = GetBattlerPosition(battler);
     CopyTrainerBackspriteFramesToDest(backPicId, gMonSpritesGfxPtr->spritesGfx[position]);
@@ -785,7 +785,7 @@ bool8 BattleLoadAllHealthBoxesGfx(u8 state)
         {
             if (state == 2)
             {
-                switch (GetBattlerCoordsIndex(B_POSITION_PLAYER_LEFT))
+                switch (GetBattlerCoordsIndex(GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)))
                 {
                 default:
                     LoadCompressedSpriteSheet(&sSpriteSheets_DoublesPlayerHealthbox[0]);
@@ -908,19 +908,16 @@ static void ClearSpritesBattlerHealthboxAnimData(void)
 
 void CopyAllBattleSpritesInvisibilities(void)
 {
-    s32 i;
-
-    for (i = 0; i < gBattlersCount; i++)
+    for (enum BattlerId i = 0; i < gBattlersCount; i++)
         gBattleSpritesDataPtr->battlerData[i].invisible = gSprites[gBattlerSpriteIds[i]].invisible;
 }
 
-void CopyBattleSpriteInvisibility(u8 battler)
+void CopyBattleSpriteInvisibility(enum BattlerId battler)
 {
     gBattleSpritesDataPtr->battlerData[battler].invisible = gSprites[gBattlerSpriteIds[battler]].invisible;
 }
 
-// Check Fluffication and A-Trance
-void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
+void HandleSpeciesGfxDataChange(enum BattlerId battlerAtk, enum BattlerId battlerDef, u8 changeType)
 {
     u32 personalityValue, paletteOffset, targetSpecies;
     enum BattlerPosition position;
@@ -1156,7 +1153,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, u8 changeType)
     }
 }
 
-void BattleLoadSubstituteOrMonSpriteGfx(u8 battler, bool8 loadMonSprite)
+void BattleLoadSubstituteOrMonSpriteGfx(enum BattlerId battler, bool8 loadMonSprite)
 {
     s32 i, palOffset;
     enum BattlerPosition position;
@@ -1190,7 +1187,7 @@ void BattleLoadSubstituteOrMonSpriteGfx(u8 battler, bool8 loadMonSprite)
     }
 }
 
-void LoadBattleMonGfxAndAnimate(u8 battler, bool8 loadMonSprite, u8 spriteId)
+void LoadBattleMonGfxAndAnimate(enum BattlerId battler, bool8 loadMonSprite, u8 spriteId)
 {
     BattleLoadSubstituteOrMonSpriteGfx(battler, loadMonSprite);
     StartSpriteAnim(&gSprites[spriteId], 0);
@@ -1201,19 +1198,19 @@ void LoadBattleMonGfxAndAnimate(u8 battler, bool8 loadMonSprite, u8 spriteId)
         gSprites[spriteId].y = GetBattlerSpriteDefault_Y(battler);
 }
 
-void TrySetBehindSubstituteSpriteBit(u8 battler, enum Move move)
+void TrySetBehindSubstituteSpriteBit(enum BattlerId battler, enum Move move)
 {
     enum BattleMoveEffects effect = GetMoveEffect(move);
     if (effect == EFFECT_SUBSTITUTE || effect == EFFECT_SHED_TAIL)
         gBattleSpritesDataPtr->battlerData[battler].behindSubstitute = 1;
 }
 
-void ClearBehindSubstituteBit(u8 battler)
+void ClearBehindSubstituteBit(enum BattlerId battler)
 {
     gBattleSpritesDataPtr->battlerData[battler].behindSubstitute = 0;
 }
 
-void HandleLowHpMusicChange(struct Pokemon *mon, u8 battler)
+void HandleLowHpMusicChange(struct Pokemon *mon, enum BattlerId battler)
 {
     u16 hp = GetMonData(mon, MON_DATA_HP);
     u16 maxHP = GetMonData(mon, MON_DATA_MAX_HP);
@@ -1245,7 +1242,7 @@ void HandleLowHpMusicChange(struct Pokemon *mon, u8 battler)
 
 void BattleStopLowHpSound(void)
 {
-    u8 playerBattler = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+    enum BattlerId playerBattler = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
 
     gBattleSpritesDataPtr->battlerData[playerBattler].lowHpSong = 0;
     if (IsDoubleBattle())
@@ -1266,8 +1263,8 @@ void HandleBattleLowHpMusicChange(void)
 {
     if (gMain.inBattle)
     {
-        u8 playerBattler1 = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
-        u8 playerBattler2 = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
+        enum BattlerId playerBattler1 = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+        enum BattlerId playerBattler2 = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
         u8 battler1PartyId = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[playerBattler1]);
         u8 battler2PartyId = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[playerBattler2]);
 
@@ -1280,9 +1277,7 @@ void HandleBattleLowHpMusicChange(void)
 
 void SetBattlerSpriteAffineMode(u8 affineMode)
 {
-    s32 i;
-
-    for (i = 0; i < gBattlersCount; i++)
+    for (enum BattlerId i = 0; i < gBattlersCount; i++)
     {
         if (IsBattlerSpritePresent(i))
         {
@@ -1307,7 +1302,7 @@ void SetBattlerSpriteAffineMode(u8 affineMode)
 #define SPRITE_SIDE_LEFT    0
 #define SPRITE_SIDE_RIGHT   1
 
-void CreateEnemyShadowSprite(u32 battler)
+void CreateEnemyShadowSprite(enum BattlerId battler)
 {
     if (B_ENEMY_MON_SHADOW_STYLE >= GEN_4 && P_GBA_STYLE_SPECIES_GFX == FALSE)
     {
@@ -1360,8 +1355,8 @@ void CreateEnemyShadowSprite(u32 battler)
 
 void LoadAndCreateEnemyShadowSprites(void)
 {
-    u8 battler;
-    u32 i;
+    enum BattlerId battler;
+    enum BattlerId i;
 
     if (B_ENEMY_MON_SHADOW_STYLE >= GEN_4 && P_GBA_STYLE_SPECIES_GFX == FALSE)
     {
@@ -1398,7 +1393,7 @@ void LoadAndCreateEnemyShadowSprites(void)
 void SpriteCB_EnemyShadow(struct Sprite *shadowSprite)
 {
     bool8 invisible = FALSE;
-    u8 battler = shadowSprite->tBattlerId;
+    enum BattlerId battler = shadowSprite->tBattlerId;
     struct Sprite *battlerSprite = &gSprites[gBattlerSpriteIds[battler]];
     u16 transformSpecies = SanitizeSpeciesId(gBattleSpritesDataPtr->battlerData[battler].transformSpecies);
 
@@ -1455,7 +1450,7 @@ void SpriteCB_SetInvisible(struct Sprite *sprite)
     sprite->invisible = TRUE;
 }
 
-void SetBattlerShadowSpriteCallback(u8 battler, u16 species)
+void SetBattlerShadowSpriteCallback(enum BattlerId battler, u16 species)
 {
     if (B_ENEMY_MON_SHADOW_STYLE >= GEN_4 && P_GBA_STYLE_SPECIES_GFX == FALSE)
     {
@@ -1505,7 +1500,7 @@ void SetBattlerShadowSpriteCallback(u8 battler, u16 species)
     }
 }
 
-void HideBattlerShadowSprite(u8 battler)
+void HideBattlerShadowSprite(enum BattlerId battler)
 {
     gSprites[gBattleSpritesDataPtr->healthBoxesData[battler].shadowSpriteIdPrimary].callback = SpriteCB_SetInvisible;
     if (B_ENEMY_MON_SHADOW_STYLE >= GEN_4 && P_GBA_STYLE_SPECIES_GFX == FALSE)
@@ -1536,7 +1531,7 @@ void FillAroundBattleWindows(void)
     }
 }
 
-void ClearTemporarySpeciesSpriteData(u32 battler, bool32 dontClearTransform, bool32 dontClearSubstitute)
+void ClearTemporarySpeciesSpriteData(enum BattlerId battler, bool32 dontClearTransform, bool32 dontClearSubstitute)
 {
     if (!dontClearTransform)
         gBattleSpritesDataPtr->battlerData[battler].transformSpecies = SPECIES_NONE;

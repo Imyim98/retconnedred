@@ -105,11 +105,6 @@ void HandleIntroSlide(u8 environment)
     {
         taskId = CreateTask(BattleIntroSlide3, 0);
     }
-    else if (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES) == SPECIES_KYOGRE)
-    {
-        environment = BATTLE_ENVIRONMENT_UNDERWATER;
-        taskId = CreateTask(BattleIntroSlide2, 0);
-    }
     else
     {
         if (environment >= NELEMS(gBattleEnvironmentInfo)
@@ -292,6 +287,7 @@ void BattleIntroSlide2(u8 taskId)
         gBattle_BG1_X += 8;
         break;
     case BATTLE_ENVIRONMENT_UNDERWATER:
+    case BATTLE_ENVIRONMENT_KYOGRE:
         gBattle_BG1_X += 6;
         break;
     }
