@@ -556,8 +556,6 @@ static void Cmd_trysetsnatch(void);
 static void Cmd_switchoutabilities(void);
 static void Cmd_jumpifhasnohp(void);
 static void Cmd_pickup(void);
-static void Cmd_tryreducefoespartyhptozero(void); // Cmd_unused_0xE6(void);
-static void Cmd_ishplessthanquarter(void); // Cmd_unused_0xE7(void);
 static void Cmd_settypebasedhalvers(void);
 static void Cmd_jumpifsubstituteblocks(void);
 static void Cmd_tryrecycleitem(void);
@@ -788,8 +786,6 @@ void (*const gBattleScriptingCommandsTable[])(void) =
     [B_SCR_OP_SWITCHOUTABILITIES]                    = Cmd_switchoutabilities,
     [B_SCR_OP_JUMPIFHASNOHP]                         = Cmd_jumpifhasnohp,
     [B_SCR_OP_PICKUP]                                = Cmd_pickup,
-    [B_SCR_OP_TRYREDUCEFOESPARTYTOZERO]              = Cmd_tryreducefoespartyhptozero,
-    [B_SCR_OP_ISHPLESSTHANQUARTER]                   = Cmd_ishplessthanquarter,
     [B_SCR_OP_SETTYPEBASEDHALVERS]                   = Cmd_settypebasedhalvers,
     [B_SCR_OP_JUMPIFSUBSTITUTEBLOCKS]                = Cmd_jumpifsubstituteblocks,
     [B_SCR_OP_TRYRECYCLEITEM]                        = Cmd_tryrecycleitem,
@@ -11976,39 +11972,6 @@ static void Cmd_pickup(void)
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
-static void Cmd_tryreducefoespartyhptozero(void)
-{
-    CMD_ARGS();
-
-    u16 setHP;
-
-    if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
-    {
-        setHP = 0;
-        SetMonData(&gEnemyParty[0], MON_DATA_HP, &setHP);
-        SetMonData(&gEnemyParty[1], MON_DATA_HP, &setHP);
-        SetMonData(&gEnemyParty[2], MON_DATA_HP, &setHP);
-        SetMonData(&gEnemyParty[3], MON_DATA_HP, &setHP);
-        SetMonData(&gEnemyParty[4], MON_DATA_HP, &setHP);
-        SetMonData(&gEnemyParty[5], MON_DATA_HP, &setHP);
-        gBattleMons[gBattlerTarget].hp = 0;
-    }
-    else
-    {
-        setHP = 0;
-        SetMonData(&gPlayerParty[0], MON_DATA_HP, &setHP);
-        SetMonData(&gPlayerParty[1], MON_DATA_HP, &setHP);
-        SetMonData(&gPlayerParty[2], MON_DATA_HP, &setHP);
-        SetMonData(&gPlayerParty[3], MON_DATA_HP, &setHP);
-        SetMonData(&gPlayerParty[4], MON_DATA_HP, &setHP);
-        SetMonData(&gPlayerParty[5], MON_DATA_HP, &setHP);
-        gBattleMons[gBattlerTarget].hp = 0;
-    }
-    BtlController_EmitSetMonData(gBattlerTarget, B_COMM_TO_CONTROLLER, REQUEST_HP_BATTLE, 0, sizeof(gBattleMons[gBattlerTarget].hp), &gBattleMons[gBattlerTarget].hp);
-    MarkBattlerForControllerExec(gBattlerTarget);
-    gBattlescriptCurrInstr = cmd->nextInstr;
-}
-
 static void Cmd_unused_0xE7(void)
 {
 }
@@ -13220,22 +13183,6 @@ static void Cmd_setnonvolatilestatus(void)
     case TRIGGER_ON_PROTECT:
         SetNonVolatileStatus(gBattlerAttacker, gBattleScripting.moveEffect, cmd->nextInstr, TRIGGER_ON_PROTECT);
         break;
-    }
-}
-
-static void Cmd_ishplessthanquarter(void)
-{
-    CMD_ARGS(const u8 *failInstr);
-
-    u32 quarterHP = GetNonDynamaxMaxHP(gBattlerAttacker) * 1 / 4;
-
-    if (gBattleMons[gBattlerAttacker].hp <= quarterHP)
-    {
-        gBattlescriptCurrInstr = cmd->nextInstr;
-    }
-    else
-    {
-        gBattlescriptCurrInstr = cmd->failInstr;
     }
 }
 
@@ -15950,6 +15897,51 @@ void BS_SetSpriteBehindSubstitute(void)
 
     gBattleSpritesDataPtr->battlerData[gBattlerAttacker].behindSubstitute = 1;
     gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
+void BS_TryReduceFoesPartyHpToZero(void)
+{
+    NATIVE_ARGS();
+
+    u16 setHP;
+
+    if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
+    {
+        setHP = 0;
+        SetMonData(&gEnemyParty[0], MON_DATA_HP, &setHP);
+        SetMonData(&gEnemyParty[1], MON_DATA_HP, &setHP);
+        SetMonData(&gEnemyParty[2], MON_DATA_HP, &setHP);
+        SetMonData(&gEnemyParty[3], MON_DATA_HP, &setHP);
+        SetMonData(&gEnemyParty[4], MON_DATA_HP, &setHP);
+        SetMonData(&gEnemyParty[5], MON_DATA_HP, &setHP);
+        gBattleMons[gBattlerTarget].hp = 0;
+    }
+    else
+    {
+        setHP = 0;
+        SetMonData(&gPlayerParty[0], MON_DATA_HP, &setHP);
+        SetMonData(&gPlayerParty[1], MON_DATA_HP, &setHP);
+        SetMonData(&gPlayerParty[2], MON_DATA_HP, &setHP);
+        SetMonData(&gPlayerParty[3], MON_DATA_HP, &setHP);
+        SetMonData(&gPlayerParty[4], MON_DATA_HP, &setHP);
+        SetMonData(&gPlayerParty[5], MON_DATA_HP, &setHP);
+        gBattleMons[gBattlerTarget].hp = 0;
+    }
+    BtlController_EmitSetMonData(gBattlerTarget, B_COMM_TO_CONTROLLER, REQUEST_HP_BATTLE, 0, sizeof(gBattleMons[gBattlerTarget].hp), &gBattleMons[gBattlerTarget].hp);
+    MarkBattlerForControllerExec(gBattlerTarget);
+    gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
+void BS_IsHpLessThanQuarter(void)
+{
+    NATIVE_ARGS(const u8 *failInstr);
+
+    u32 quarterHP = GetNonDynamaxMaxHP(gBattlerAttacker) * 1 / 4;
+
+    if (gBattleMons[gBattlerAttacker].hp <= quarterHP)
+        gBattlescriptCurrInstr = cmd->nextInstr;
+    else
+        gBattlescriptCurrInstr = cmd->failInstr;
 }
 
 void BS_SetMiasmaTerrainFromAbility(void)

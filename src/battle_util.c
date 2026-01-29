@@ -3747,25 +3747,6 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                     gBattlerTarget = BATTLE_OPPOSITE(battler);
                     if (gBattleStruct->futureSight[gBattlerTarget].counter == 0)
                     {
-                        if (gBattlerAttacker == B_POSITION_PLAYER_LEFT)
-                        {
-                            gBattlerTarget = B_POSITION_OPPONENT_LEFT;
-                        }
-                        else if (gBattlerAttacker == B_POSITION_OPPONENT_LEFT)
-                        {
-                            gBattlerTarget = B_POSITION_PLAYER_LEFT;
-
-                        }
-                        else if (gBattlerAttacker == B_POSITION_PLAYER_RIGHT)
-                        {
-                            gBattlerTarget = B_POSITION_OPPONENT_RIGHT;
-
-                        }
-                        else
-                        {
-                            gBattlerTarget = B_POSITION_PLAYER_RIGHT;
-
-                        }
                         gCurrentMove = MOVE_DOOM_DESIRE;
                         gBattleStruct->futureSight[gBattlerTarget].move = gCurrentMove;
                         gBattleStruct->futureSight[gBattlerTarget].battlerIndex = gBattlerAttacker;
@@ -6262,7 +6243,7 @@ bool32 IsMiasmaTerrainAffected(enum BattlerId battler, enum Ability ability, enu
 {
     return IsBattlerTerrainAffected(battler, ability, holdEffect, fieldStatuses, STATUS_FIELD_MIASMA_TERRAIN);
 }
-W
+
 bool32 IsAnyTerrainAffected(enum BattlerId battler, enum Ability ability, enum HoldEffect holdEffect, u32 fieldStatuses)
 {
     return IsBattlerTerrainAffected(battler, ability, holdEffect, fieldStatuses, STATUS_FIELD_TERRAIN_ANY);

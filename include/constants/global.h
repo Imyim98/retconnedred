@@ -37,6 +37,7 @@
 // In Gen 4 and up, migrated Pokémon with HeartGold or SoulSilver's ID show the otherwise unused "Johto" string.
 enum __attribute__((packed)) GameVersion
 {
+    VERSION_ZERO = 0,
     VERSION_SAPPHIRE = 1,
     VERSION_RUBY = 2,
     VERSION_EMERALD = 3,
@@ -45,6 +46,7 @@ enum __attribute__((packed)) GameVersion
     VERSION_IDENTIFIER_NEGA = 6,
     VERSION_HEART_GOLD = 7,
     VERSION_SOUL_SILVER = 8,
+    VERSION_IDENTIFIER_DEBUG = 9,
     VERSION_DIAMOND = 10,
     VERSION_PEARL = 11,
     VERSION_PLATINUM = 12,

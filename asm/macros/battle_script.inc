@@ -1112,15 +1112,6 @@
 	.byte B_SCR_OP_PICKUP
 	.endm
 
-	.macro tryreducefoespartyhptozero
-	.byte B_SCR_OP_TRYREDUCEFOESPARTYTOZERO
-	.endm
-
-	.macro ishplessthanquarter failInstr:req
-	.byte B_SCR_OP_ISHPLESSTHANQUARTER
-	.4byte \failInstr
-	.endm
-
 	.macro settypebasedhalvers failInstr:req
 	.byte B_SCR_OP_SETTYPEBASEDHALVERS
 	.4byte \failInstr
@@ -1779,6 +1770,15 @@
 
 	.macro setspritebehindsubstitute
 	callnative BS_SetSpriteBehindSubstitute
+	.endm
+
+	.macro tryreducefoespartyhptozero
+	callnative BS_TryReduceFoesPartyHpToZero
+	.endm
+
+	.macro ishplessthanquarter failInstr:req
+	callnative BS_IsHpLessThanQuarter
+	.4byte \failInstr
 	.endm
 
 	.macro jumpifroarfails jumpInstr:req

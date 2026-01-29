@@ -3,7 +3,7 @@
 
 u32 ScriptGiveMon(u16 species, u8 level, enum Item item);
 u32 ScriptGiveMonParameterized(u16, u8, u16, u8, u8, u8, u8, u8 *, u8 *, u16 *, bool8, bool8, u8); // Deleted on 1.9.0 ?
-u32 ScriptGiveMonDebugSimple(u16 species, u8 level, u16 item); // Added
+u32 ScriptGiveMonDebugSimple(u16 species, u8 level, enum Item item); // Added
 u32 ScriptGiveMonParameterizedGift1(u16, u8, u16, u8, u8, u8, u8, u8 *, u8 *, u16 *, bool8, bool8, u8); // Added
 u8 ScriptGiveEgg(u16 species);
 u8 ScriptGiveEggMiracle(u16 species);

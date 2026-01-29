@@ -1,11 +1,5 @@
 #include "battle_anim_scripts.h"
 
-const u32 gBattleEnvironmentTiles_BlankGBC[] = INCBIN_U32("graphics/battle_terrain/blank/tiles.4bpp.smol");
-const u16 gBattleEnvironmentPalette_BlankGBC[] = INCBIN_U16("graphics/battle_terrain/blank/palette.gbapal");
-const u32 gBattleEnvironmentTilemap_BlankGBC[] = INCBIN_U32("graphics/battle_terrain/blank/map.bin.smolTM");
-const u32 gBattleEnvironmentAnimTiles_BlankGBC[] = INCBIN_U32("graphics/battle_terrain/blank/anim_tiles.4bpp.smol");
-const u32 gBattleEnvironmentAnimTilemap_BlankGBC[] = INCBIN_U32("graphics/battle_terrain/blank/anim_map.bin.smolTM");
-
 #define ENVIRONMENT_BACKGROUND(Background)             \
 {                                                      \
     .tileset = gBattleEnvironmentTiles_##Background,   \
@@ -225,7 +219,7 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
 
     [BATTLE_ENVIRONMENT_BLANK_GBC] =
     {
-        .name = _("Blank - GBC              "),
+        .name = _("Blank - GBC"),
     #if B_NATURE_POWER_MOVES >= GEN_6
         .naturePower = MOVE_TRI_ATTACK,
     #elif B_NATURE_POWER_MOVES >= GEN_4
@@ -236,20 +230,15 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .secretPowerEffect = MOVE_EFFECT_PARALYSIS,
         .camouflageType = TYPE_NEW_ILLUSION,
         .camouflageBlend = PLAIN_CAMOUFLAGE_BLEND,
-        .background =
-        {
-            .tileset = gBattleEnvironmentTiles_BlankGBC,
-            .tilemap = gBattleEnvironmentTilemap_BlankGBC,
-            .entryTileset = gBattleEnvironmentAnimTiles_BlankGBC,
-            .entryTilemap = gBattleEnvironmentAnimTilemap_BlankGBC,
-            .palette = gBattleEnvironmentPalette_BlankGBC,
-        },
+        .entry = ENVIRONMENT_ENTRY(BlankGBC),
+        .background = ENVIRONMENT_BACKGROUND(BlankGBC),
+        .palette = gBattleEnvironmentPalette_BlankGBC,
         .battleIntroSlide = PLAIN_BATTLE_INTRO_SLIDE,
     },
 
     [BATTLE_ENVIRONMENT_GRASS_MONO] =
     {
-        .name = _("Grass - Mono             "),
+        .name = _("Grass - Mono"),
     #if B_NATURE_POWER_MOVES >= GEN_6
         .naturePower = MOVE_ENERGY_BALL,
     #elif B_NATURE_POWER_MOVES >= GEN_4
@@ -261,20 +250,15 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .secretPowerEffect = B_SECRET_POWER_EFFECT >= GEN_4 ? MOVE_EFFECT_SLEEP : MOVE_EFFECT_POISON,
         .camouflageType = TYPE_NEW_NATURE,
         .camouflageBlend = RGB(12, 24, 2),
-        .background =
-        {
-            .tileset = gBattleEnvironmentTiles_TallGrass,
-            .tilemap = gBattleEnvironmentTilemap_TallGrass,
-            .entryTileset = gBattleEnvironmentAnimTiles_TallGrass,
-            .entryTilemap = gBattleEnvironmentAnimTilemap_TallGrass,
-            .palette = gBattleEnvironmentPalette_TallGrassMono,
-        },
+        .entry = ENVIRONMENT_ENTRY(TallGrass),
+        .background = ENVIRONMENT_BACKGROUND(TallGrass),
+        .palette = gBattleEnvironmentPalette_TallGrassMono,
         .battleIntroSlide = BattleIntroSlide1,
     },
 
     [BATTLE_ENVIRONMENT_LONG_GRASS_MONO] =
     {
-        .name = _("Long Grass - Mono        "),
+        .name = _("Long Grass - Mono"),
     #if B_NATURE_POWER_MOVES >= GEN_6
         .naturePower = MOVE_ENERGY_BALL,
     #elif B_NATURE_POWER_MOVES >= GEN_4
@@ -286,96 +270,71 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .secretPowerEffect = MOVE_EFFECT_SLEEP,
         .camouflageType = TYPE_NEW_NATURE,
         .camouflageBlend = RGB(0, 15, 2),
-        .background =
-        {
-            .tileset = gBattleEnvironmentTiles_LongGrass,
-            .tilemap = gBattleEnvironmentTilemap_LongGrass,
-            .entryTileset = gBattleEnvironmentAnimTiles_LongGrass,
-            .entryTilemap = gBattleEnvironmentAnimTilemap_LongGrass,
-            .palette = gBattleEnvironmentPalette_LongGrassMono,
-        },
+        .entry = ENVIRONMENT_ENTRY(LongGrass),
+        .background = ENVIRONMENT_BACKGROUND(LongGrass),
+        .palette = gBattleEnvironmentPalette_LongGrassMono,
         .battleIntroSlide = BattleIntroSlide1,
     },
 
     [BATTLE_ENVIRONMENT_SAND_MONO] =
     {
-        .name = _("Sand - Mono              "),
+        .name = _("Sand - Mono"),
         .naturePower = B_NATURE_POWER_MOVES >= GEN_6 ? MOVE_EARTH_POWER : MOVE_EARTHQUAKE,
         .secretPowerAnimation = B_SECRET_POWER_ANIMATION >= GEN_4 ? gBattleAnimMove_MudSlap : gBattleAnimMove_MudShot,
         .secretPowerEffect = MOVE_EFFECT_ACC_MINUS_1,
         .camouflageType = TYPE_NEW_EARTH,
         .camouflageBlend = RGB(30, 24, 11),
-        .background =
-        {
-            .tileset = gBattleEnvironmentTiles_Sand,
-            .tilemap = gBattleEnvironmentTilemap_Sand,
-            .entryTileset = gBattleEnvironmentAnimTiles_Sand,
-            .entryTilemap = gBattleEnvironmentAnimTilemap_Sand,
-            .palette = gBattleEnvironmentPalette_SandMono,
-        },
+        .entry = ENVIRONMENT_ENTRY(Sand),
+        .background = ENVIRONMENT_BACKGROUND(Sand),
+        .palette = gBattleEnvironmentPalette_SandMono,
         .battleIntroSlide = BattleIntroSlide2,
     },
 
     [BATTLE_ENVIRONMENT_UNDERWATER_MONO] =
     {
-        .name = _("Underwater - Mono        "),
+        .name = _("Underwater - Mono"),
         .naturePower = MOVE_HYDRO_PUMP,
         .secretPowerAnimation = B_SECRET_POWER_ANIMATION >= GEN_6 ? gBattleAnimMove_WaterPulse : gBattleAnimMove_Waterfall,
         .secretPowerEffect = B_SECRET_POWER_EFFECT >= GEN_6 ? MOVE_EFFECT_ATK_MINUS_1 : MOVE_EFFECT_DEF_MINUS_1,
         .camouflageType = TYPE_NEW_WATER,
         .camouflageBlend = RGB(0, 0, 18),
-        .background =
-        {
-            .tileset = gBattleEnvironmentTiles_Underwater,
-            .tilemap = gBattleEnvironmentTilemap_Underwater,
-            .entryTileset = gBattleEnvironmentAnimTiles_Underwater,
-            .entryTilemap = gBattleEnvironmentAnimTilemap_Underwater,
-            .palette = gBattleEnvironmentPalette_UnderwaterMono,
-        },
+        .entry = ENVIRONMENT_ENTRY(Underwater),
+        .background = ENVIRONMENT_BACKGROUND(Underwater),
+        .palette = gBattleEnvironmentPalette_UnderwaterMono,
         .battleIntroSlide = BattleIntroSlide2,
     },
 
     [BATTLE_ENVIRONMENT_WATER_MONO] =
     {
-        .name = _("Water - Mono             "),
+        .name = _("Water - Mono"),
         .naturePower = B_NATURE_POWER_MOVES >= GEN_4 ? MOVE_HYDRO_PUMP : MOVE_SURF,
         .secretPowerAnimation = B_SECRET_POWER_ANIMATION >= GEN_4 ? gBattleAnimMove_WaterPulse : gBattleAnimMove_Surf,
         .secretPowerEffect = MOVE_EFFECT_ATK_MINUS_1,
         .camouflageType = TYPE_NEW_WATER,
         .camouflageBlend = RGB(11, 22, 31),
-        .background =
-        {
-            .tileset = gBattleEnvironmentTiles_Water,
-            .tilemap = gBattleEnvironmentTilemap_Water,
-            .entryTileset = gBattleEnvironmentAnimTiles_Water,
-            .entryTilemap = gBattleEnvironmentAnimTilemap_Water,
-            .palette = gBattleEnvironmentPalette_WaterMono,
-        },
+        .entry = ENVIRONMENT_ENTRY(Water),
+        .background = ENVIRONMENT_BACKGROUND(Water),
+        .palette = gBattleEnvironmentPalette_WaterMono,
         .battleIntroSlide = BattleIntroSlide2,
     },
 
     [BATTLE_ENVIRONMENT_POND_MONO] =
     {
-        .name = _("Pond - Mono              "),
+        .name = _("Pond - Mono"),
         .naturePower = B_NATURE_POWER_MOVES >= GEN_4 ? MOVE_HYDRO_PUMP : MOVE_BUBBLE_BEAM,
         .secretPowerAnimation = B_SECRET_POWER_ANIMATION >= GEN_4 ? gBattleAnimMove_WaterPulse : gBattleAnimMove_BubbleBeam,
         .secretPowerEffect = B_SECRET_POWER_EFFECT >= GEN_4 ? MOVE_EFFECT_ATK_MINUS_1 : MOVE_EFFECT_SPD_MINUS_1,
         .camouflageType = TYPE_NEW_WATER,
         .camouflageBlend = RGB(11, 22, 31),
-        .background =
-        {
-            .tileset = gBattleEnvironmentTiles_PondWater,
-            .tilemap = gBattleEnvironmentTilemap_PondWater,
-            .entryTileset = gBattleEnvironmentAnimTiles_PondWater,
-            .entryTilemap = gBattleEnvironmentAnimTilemap_PondWater,
-            .palette = gBattleEnvironmentPalette_PondWaterMono,
-        },
+        .entry = ENVIRONMENT_ENTRY(PondWater),
+        .background = ENVIRONMENT_BACKGROUND(PondWater),
+        .palette = gBattleEnvironmentPalette_PondWaterMono,
         .battleIntroSlide = BattleIntroSlide1,
     },
 
     [BATTLE_ENVIRONMENT_MOUNTAIN_MONO] =
     {
-        .name = _("Mountain - Mono        "),
+        .name = _("Mountain - Mono"),
     #if B_NATURE_POWER_MOVES >= GEN_6
         .naturePower = MOVE_EARTH_POWER,
     #elif B_NATURE_POWER_MOVES >= GEN_5
@@ -393,71 +352,51 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
     #endif
         .camouflageType = B_CAMOUFLAGE_TYPES >= GEN_5 ? TYPE_NEW_EARTH : TYPE_NEW_EARTH,
         .camouflageBlend = RGB(22, 16, 10),
-        .background =
-        {
-            .tileset = gBattleEnvironmentTiles_Rock,
-            .tilemap = gBattleEnvironmentTilemap_Rock,
-            .entryTileset = gBattleEnvironmentAnimTiles_Rock,
-            .entryTilemap = gBattleEnvironmentAnimTilemap_Rock,
-            .palette = gBattleEnvironmentPalette_RockMono,
-        },
+        .entry = ENVIRONMENT_ENTRY(Rock),
+        .background = ENVIRONMENT_BACKGROUND(Rock),
+        .palette = gBattleEnvironmentPalette_RockMono,
         .battleIntroSlide = BattleIntroSlide1,
     },
 
     [BATTLE_ENVIRONMENT_CAVE_MONO] =
     {
-        .name = _("Cave - Mono              "),
+        .name = _("Cave - Mono"),
         .naturePower = CAVE_NATURE_POWER,
         .secretPowerAnimation = CAVE_SECRET_POWER_ANIMATION,
         .secretPowerEffect = CAVE_SECRET_POWER_EFFECT,
         .camouflageType = CAVE_CAMOUFLAGE_TYPE,
         .camouflageBlend = CAVE_CAMOUFLAGE_BLEND,
-        .background =
-        {
-            .tileset = gBattleEnvironmentTiles_Cave,
-            .tilemap = gBattleEnvironmentTilemap_Cave,
-            .entryTileset = gBattleEnvironmentAnimTiles_Cave,
-            .entryTilemap = gBattleEnvironmentAnimTilemap_Cave,
-            .palette = gBattleEnvironmentPalette_CaveMono,
-        },
+        .entry = ENVIRONMENT_ENTRY(Cave),
+        .background = ENVIRONMENT_BACKGROUND(Cave),
+        .palette = gBattleEnvironmentPalette_CaveMono,
         .battleIntroSlide = CAVE_BATTLE_INTRO_SLIDE,
     },
 
     [BATTLE_ENVIRONMENT_BUILDING_MONO] =
     {
-        .name = _("Building - Mono          "),
+        .name = _("Building - Mono"),
         .naturePower = BUILDING_NATURE_POWER,
         .secretPowerAnimation = BUILDING_SECRET_POWER_ANIMATION,
         .secretPowerEffect = BUILDING_SECRET_POWER_EFFECT,
         .camouflageType = BUILDING_CAMOUFLAGE_TYPE,
         .camouflageBlend = BUILDING_CAMOUFLAGE_BLEND,
-        .background =
-        {
-            .tileset = gBattleEnvironmentTiles_Building,
-            .tilemap = gBattleEnvironmentTilemap_Building,
-            .entryTileset = gBattleEnvironmentAnimTiles_Building,
-            .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-            .palette = gBattleEnvironmentPalette_Plain,
-        },
+        .entry = ENVIRONMENT_ENTRY(Building),
+        .background = ENVIRONMENT_BACKGROUND(Building),
+        .palette = gBattleEnvironmentPalette_BuildingMono,
         .battleIntroSlide = BUILDING_BATTLE_INTRO_SLIDE,
     },
 
     [BATTLE_ENVIRONMENT_PLAIN_MONO] =
     {
-        .name = _("Plain - Mono             "),
+        .name = _("Plain - Mono"),
         .naturePower = PLAIN_NATURE_POWER,
         .secretPowerAnimation = PLAIN_SECRET_POWER_ANIMATION,
         .secretPowerEffect = PLAIN_SECRET_POWER_EFFECT,
         .camouflageType = PLAIN_CAMOUFLAGE_TYPE,
         .camouflageBlend = PLAIN_CAMOUFLAGE_BLEND,
-        .background =
-        {
-            .tileset = gBattleEnvironmentTiles_Building,
-            .tilemap = gBattleEnvironmentTilemap_Building,
-            .entryTileset = gBattleEnvironmentAnimTiles_Building,
-            .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-            .palette = gBattleEnvironmentPalette_Plain,
-        },
+        .entry = ENVIRONMENT_ENTRY(Building),
+        .background = ENVIRONMENT_BACKGROUND(Building),
+        .palette = gBattleEnvironmentPalette_Plain,
         .battleIntroSlide = PLAIN_BATTLE_INTRO_SLIDE,
     },
 

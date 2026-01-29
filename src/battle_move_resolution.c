@@ -2642,7 +2642,7 @@ static enum MoveEndResult MoveEndMoveBlock(void)
         {
             SetPassiveDamageAmount(gBattlerAttacker, gBattleScripting.savedDmg * max(1, GetMoveRecoil(gCurrentMove)) / 100);
             BattleScriptCall(BattleScript_MoveEffectRecoil);
-            result = MOVEEND_STEP_RUN_SCRIPT;
+            result = MOVEEND_RESULT_RUN_SCRIPT;
         }
         break;
     case EFFECT_EX_SHADOW_MOVE_RECOIL_CURRENT_HP:
@@ -2651,7 +2651,7 @@ static enum MoveEndResult MoveEndMoveBlock(void)
             s32 recoilCurrentHP = (GetNonDynamaxHP(gBattlerAttacker) + 1) / 2; // Half of Max HP Rounded UP
             SetPassiveDamageAmount(gBattlerAttacker, recoilCurrentHP);
             BattleScriptCall(BattleScript_MoveEffectRecoil);
-            result = MOVEEND_STEP_RUN_SCRIPT;
+            result = MOVEEND_RESULT_RUN_SCRIPT;
         }
         break;
     case EFFECT_CHLOROBLAST:
@@ -2677,7 +2677,7 @@ static enum MoveEndResult MoveEndMoveBlock(void)
             s32 damage = (GetNonDynamaxHP(gBattlerAttacker) + 1) / 2; // Half of Max HP Rounded UP
             SetMoveDamageAmount(gBattlerAttacker, damage);
             BattleScriptCall(BattleScript_ExShadowHalfAttackerDamage);
-            result = MOVEEND_STEP_RUN_SCRIPT;
+            result = MOVEEND_RESULT_RUN_SCRIPT;
         }
         break;
     case EFFECT_RAPID_SPIN:
@@ -3681,6 +3681,12 @@ enum Move GetNaturePowerMove(void)
         move = MOVE_ENERGY_BALL;
     else if (gFieldStatuses & STATUS_FIELD_PSYCHIC_TERRAIN)
         move = MOVE_PSYCHIC;
+    else if (gFieldStatuses & STATUS_FIELD_UBW)
+        move = MOVE_FLASH_CANNON;
+    else if (gFieldStatuses & STATUS_FIELD_DARKNESS_TERRAIN)
+        move = MOVE_DARK_PULSE;
+    else if (gFieldStatuses & STATUS_FIELD_MIASMA_TERRAIN)
+        move = MOVE_SLUDGE_BOMB;
     else if (gBattleEnvironmentInfo[gBattleEnvironment].naturePower == MOVE_NONE)
         move = B_NATURE_POWER_MOVES >= GEN_4 ? MOVE_TRI_ATTACK : MOVE_SWIFT;
 

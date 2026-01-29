@@ -60,9 +60,7 @@ BattleScript_EffectTransformHit::
 	jumpifspecies SPECIES_LATIOS, BattleScript_EffectTransformHitDoTransformFirstReiMari
 	jumpifspecies SPECIES_LATIAS, BattleScript_EffectTransformHitDoTransformFirstYorigamiSisters
 BattleScript_EffectTransformHitBeatingUp:
-@	critcalc
 	damagecalc
-	adjustdamage
 	playmoveanimation MOVE_CLOSE_COMBAT
 	waitanimation
 	effectivenesssound

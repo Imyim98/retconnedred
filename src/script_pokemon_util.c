@@ -473,7 +473,7 @@ static u32 ScriptGiveMonParameterized(u8 side, u8 slot, u16 species, u8 level, e
     return MON_GIVEN_TO_PARTY;
 }
 
-static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 level, u16 item, enum PokeBall ball, u8 nature, u8 abilityNum, u8 gender, u16 *evs, u16 *ivs, u16 *moves, enum ShinyMode shinyMode, bool8 gmaxFactor, enum Type teraType, u8 dmaxLevel)
+static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 level, enum Item item, enum PokeBall ball, u8 nature, u8 abilityNum, u8 gender, u16 *evs, u16 *ivs, u16 *moves, enum ShinyMode shinyMode, bool8 gmaxFactor, enum Type teraType, u8 dmaxLevel)
 {
     struct Pokemon mon;
     u32 i;
@@ -575,7 +575,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 255;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -588,7 +588,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 254;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -601,7 +601,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 253;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -614,7 +614,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 252;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -627,7 +627,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 251;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -640,7 +640,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 250;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -655,7 +655,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 249;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -670,7 +670,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 248;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -685,7 +685,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 247;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -698,7 +698,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 246;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -711,7 +711,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 245;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -724,7 +724,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 244;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -739,7 +739,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 243;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -752,7 +752,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 242;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -765,7 +765,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 241;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -780,7 +780,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 240;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON1_IDENTIFIER, 254);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -793,7 +793,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 1;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON2_IDENTIFIER, 10);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -806,7 +806,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 2;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON2_IDENTIFIER, 10);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -819,7 +819,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 3;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON2_IDENTIFIER, 10);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -832,7 +832,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 4;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON2_IDENTIFIER, 10);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -845,7 +845,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 5;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON2_IDENTIFIER, 10);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -858,7 +858,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 6;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON2_IDENTIFIER, 10);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -871,7 +871,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 7;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON2_IDENTIFIER, 10);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -884,7 +884,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             u8 location = 10;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
             VarSet(VAR_GIFTMON2_IDENTIFIER, 10);
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -895,7 +895,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             SetMonData(&mon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
             u8 location = 222;
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);
-            ball = ITEM_BEAST_BALL;
+            ball = BALL_BEAST;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -917,7 +917,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
             VarSet(VAR_GIFTMON2_IDENTIFIER, 10);
             u8 location = VarGet(VAR_GIFTMON_OT_SETTING);
             SetMonData(&mon, MON_DATA_MET_LOCATION, &location);            
-            ball = ITEM_CHERISH_BALL;
+            ball = BALL_CHERISH;
             SetMonData(&mon, MON_DATA_POKEBALL, &ball);
             u8 gameMet = VERSION_IDENTIFIER_SPECIAL_GIFT;
             SetMonData(&mon, MON_DATA_MET_GAME, &gameMet);
@@ -973,7 +973,7 @@ u32 ScriptGiveMon(u16 species, u8 level, enum Item item)
     return GiveScriptedMonToPlayer(&mon, PARTY_SIZE);
 }
 
-u32 ScriptGiveMonDebugSimple(u16 species, u8 level, u16 item)
+u32 ScriptGiveMonDebugSimple(u16 species, u8 level, enum Item item)
 {
     u16 evs[NUM_STATS]        = {0, 0, 0, 0, 0, 0};
     u16 ivs[NUM_STATS]        = {MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1,   // We pass "MAX_PER_STAT_IVS + 1" here to ensure that
@@ -982,7 +982,7 @@ u32 ScriptGiveMonDebugSimple(u16 species, u8 level, u16 item)
     u8 slot                  = gPlayerPartyCount;
     
     VarSet(VAR_GIFTMON_VERSION_SETTING, VERSION_IDENTIFIER_DEBUG);
-    return ScriptGiveMonParameterizedGift1(B_SIDE_PLAYER, slot, species, level, item, ITEM_MASTER_BALL, NATURE_RANDOM, NUM_ABILITY_PERSONALITY, MON_GENDER_RANDOM, evs, ivs, moves, SHINY_MODE_RANDOM, FALSE, NUMBER_OF_MON_TYPES, 10);
+    return ScriptGiveMonParameterizedGift1(B_SIDE_PLAYER, slot, species, level, item, BALL_MASTER, NATURE_RANDOM, NUM_ABILITY_PERSONALITY, MON_GENDER_RANDOM, evs, ivs, moves, SHINY_MODE_RANDOM, FALSE, NUMBER_OF_MON_TYPES, 10);
 }
 
 #define PARSE_FLAG(n, default_) (flags & (1 << (n))) ? VarGet(ScriptReadHalfword(ctx)) : (default_)

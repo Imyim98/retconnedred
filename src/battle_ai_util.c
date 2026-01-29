@@ -1973,6 +1973,12 @@ u32 AI_GetSwitchinFieldStatus(enum BattlerId battler)
         return SwitchinChangeBattleTerrain(STATUS_FIELD_MISTY_TERRAIN, startingFieldStatus);
     case ABILITY_PSYCHIC_SURGE:
         return SwitchinChangeBattleTerrain(STATUS_FIELD_PSYCHIC_TERRAIN, startingFieldStatus);
+    case ABILITY_BLADE_WORKS:
+        return SwitchinChangeBattleTerrain(STATUS_FIELD_UBW, startingFieldStatus);
+    case ABILITY_DARKNESS_SURGE:
+        return SwitchinChangeBattleTerrain(STATUS_FIELD_DARKNESS_TERRAIN, startingFieldStatus);
+    case ABILITY_MIASMA_SURGE:
+        return SwitchinChangeBattleTerrain(STATUS_FIELD_MIASMA_TERRAIN, startingFieldStatus);
     default:
         return startingFieldStatus;
     }
