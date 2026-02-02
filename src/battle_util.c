@@ -10208,7 +10208,7 @@ bool32 CanMegaEvolve(enum BattlerId battler)
         return TRUE;
 
     // Check if there is an entry in the form change table for Level Mega Evolution.
-    if (GetBattleFormChangeTargetSpecies(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_LEVEL) != gBattleMons[battler].species)
+    if (GetBattleFormChangeTargetSpecies(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_LEVEL, ability) != gBattleMons[battler].species)
         return TRUE;
 
     // No checks passed, the mon CAN'T mega evolve.

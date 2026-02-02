@@ -7790,6 +7790,10 @@ u32 GetFormChangeTargetSpecies_Internal(struct FormChangeContext ctx)
                 || ctx.moves[3] == formChanges[i].param1)
                 targetSpecies = formChanges[i].targetSpecies;
             break;
+        case FORM_CHANGE_BATTLE_MEGA_EVOLUTION_LEVEL:
+            if (ctx.level == formChanges[i].param1)
+                targetSpecies = formChanges[i].targetSpecies;
+            break;
         case FORM_CHANGE_BATTLE_SWITCH_OUT:
             if (formChanges[i].param1 == ctx.ability || formChanges[i].param1 == ABILITY_NONE)
                 targetSpecies = formChanges[i].targetSpecies;

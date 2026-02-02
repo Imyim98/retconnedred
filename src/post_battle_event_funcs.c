@@ -113,7 +113,13 @@ bool8 EnterHallOfFame(void)
         SetGameStat(GAME_STAT_FIRST_HOF_PLAY_TIME, (gSaveBlock2Ptr->playTimeHours << 16) | (gSaveBlock2Ptr->playTimeMinutes << 8) | gSaveBlock2Ptr->playTimeSeconds);
     }
     SetContinueGameWarpStatus();
-    SetContinueGameWarpToHealLocation(HEAL_LOCATION_PALLET_TOWN);
+//    SetContinueGameWarpToHealLocation(HEAL_LOCATION_PALLET_TOWN);
+
+    if (gSaveBlock2Ptr->playerGender == MALE)
+        SetContinueGameWarpToHealLocation(HEAL_LOCATION_JOHTO_TWINRIVER_CITY_MC_HOUSE_2F_MALE);
+    else
+        SetContinueGameWarpToHealLocation(HEAL_LOCATION_JOHTO_TWINRIVER_CITY_MC_HOUSE_2F_FEMALE);
+
     gaveAtLeastOneRibbon = FALSE;
     for (i = 0, r7 = &ribbonState; i < PARTY_SIZE; i++)
     {

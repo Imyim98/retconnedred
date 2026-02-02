@@ -6400,10 +6400,10 @@ BattleScript_WishMegaEvolutionIllya::
 	trytrainerslidemegaevolutionmsg
 	printstring STRINGID_FERVENTWISHREACHED
 	waitmessage B_WAIT_TIME_LONG
-	handlemegaevo BS_SCRIPTING, 0
+	handleformchange BS_SCRIPTING, 0
 	playanimation BS_SCRIPTING, B_ANIM_MEGA_EVOLUTION
 	waitanimation
-	handlemegaevo BS_SCRIPTING, 1
+	handleformchange BS_SCRIPTING, 1
 	printstring STRINGID_TRANSFORMEDINTOZWEIFORM
 	waitmessage B_WAIT_TIME_LONG
 	switchinabilities BS_SCRIPTING

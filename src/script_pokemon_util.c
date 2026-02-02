@@ -558,9 +558,7 @@ static u32 ScriptGiveMonParameterizedGift1(u8 side, u8 slot, u16 species, u8 lev
     SetMonData(&mon, MON_DATA_HELD_ITEM, &item);
 
     // In case a mon with a form changing item is given. Eg: SPECIES_ARCEUS_NORMAL with ITEM_SPLASH_PLATE will transform into SPECIES_ARCEUS_WATER upon gifted.
-    targetSpecies = GetFormChangeTargetSpecies(&mon, FORM_CHANGE_ITEM_HOLD, 0);
-    if (targetSpecies != SPECIES_NONE)
-        SetMonData(&mon, MON_DATA_SPECIES, &targetSpecies);
+    TryFormChange(&mon, FORM_CHANGE_ITEM_HOLD);
 
     // assign gift parameters
     if(VarGet(VAR_GIFTMON_VERSION_SETTING) == VERSION_IDENTIFIER_SPECIAL_GIFT)
