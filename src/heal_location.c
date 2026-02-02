@@ -70,7 +70,8 @@ bool32 IsLastHealLocationPlayerHouse()
     if (IsLastHealLocation(HEAL_LOCATION_JOHTO_TWINRIVER_CITY_MC_HOUSE_FEMALE)
         || IsLastHealLocation(HEAL_LOCATION_JOHTO_TWINRIVER_CITY_MC_HOUSE_2F_FEMALE)
         || IsLastHealLocation(HEAL_LOCATION_JOHTO_TWINRIVER_CITY_MC_HOUSE_MALE)
-        || IsLastHealLocation(HEAL_LOCATION_JOHTO_TWINRIVER_CITY_MC_HOUSE_2F_MALE))
+        || IsLastHealLocation(HEAL_LOCATION_JOHTO_TWINRIVER_CITY_MC_HOUSE_2F_MALE)
+        || IsLastHealLocation(HEAL_LOCATION_PALLET_TOWN))
         return TRUE;
 
     return FALSE;

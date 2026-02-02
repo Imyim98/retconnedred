@@ -423,8 +423,9 @@
 #define ANIM_TAG_TATSUGIRI_CURLY            (ANIM_SPRITES_START + 409)
 #define ANIM_TAG_TATSUGIRI_DROOPY           (ANIM_SPRITES_START + 410)
 #define ANIM_TAG_TATSUGIRI_STRETCHY         (ANIM_SPRITES_START + 411)
+#define ANIM_TAG_SAFARI_BAIT                (ANIM_SPRITES_START + 412)
 
-#define LAST_ANIM_TAG_EXPANSION             ANIM_TAG_TATSUGIRI_STRETCHY
+#define LAST_ANIM_TAG_EXPANSION             ANIM_TAG_SAFARI_BAIT
 #define ANIM_TAG_FLOWER_LYCORIS             (LAST_ANIM_TAG_EXPANSION + 1)
 #define ANIM_TAG_APOLLON_ARROW              (LAST_ANIM_TAG_EXPANSION + 2)
 #define ANIM_TAG_HEXAGRAM                   (LAST_ANIM_TAG_EXPANSION + 3)
@@ -625,11 +626,19 @@ enum AnimBattler
 #define B_ANIM_POWER_CONSTRUCT          53
 #define B_ANIM_SWAP_TO_SUBSTITUTE       54
 #define B_ANIM_SWAP_FROM_SUBSTITUTE     55
-#define B_ANIM_COUNTER_SLASH            56
-#define B_ANIM_EX_SHADOW_SKY_CONTINUES  57
-#define B_ANIM_ULTRA_MEDICINE           58
-#define B_ANIM_RIDE_SUMMON              59
-#define B_ANIM_ULTRA_SEIGA              60
+#define B_ANIM_MON_SCARED               56
+#define B_ANIM_GHOST_GET_OUT            57
+#define B_ANIM_SILPH_SCOPED             58
+#define B_ANIM_ROCK_THROW               59
+#define B_ANIM_SAFARI_REACTION          60
+#define B_ANIM_FORM_CHANGE_INSTANT      61
+#define B_ANIM_FORM_CHANGE_DISGUISE     62
+#define NUM_B_ANIMS_GENERAL             63
+#define B_ANIM_COUNTER_SLASH            64
+#define B_ANIM_EX_SHADOW_SKY_CONTINUES  65
+#define B_ANIM_ULTRA_MEDICINE           66
+#define B_ANIM_RIDE_SUMMON              67
+#define B_ANIM_ULTRA_SEIGA              68
 
 #define LAST_B_ANIMS_GENERAL            B_ANIM_ULTRA_SEIGA
 #define NUM_B_ANIMS_GENERAL             (LAST_B_ANIMS_GENERAL + 1)
@@ -720,7 +729,9 @@ enum SpeciesGfxChange
 {
     SPECIES_GFX_CHANGE_TRANSFORM,
     SPECIES_GFX_CHANGE_FORM_CHANGE,
+    SPECIES_GFX_CHANGE_FORM_CHANGE_INSTANT,
     SPECIES_GFX_CHANGE_ILLUSION_OFF,
+    SPECIES_GFX_CHANGE_GHOST_UNVEIL,
 };
 
 // Flags given to various functions to indicate which palettes to consider.

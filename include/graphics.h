@@ -3362,6 +3362,9 @@ extern const u32 gBattleIcons_Gfx2[];
 extern const u16 gBattleIcons_Pal1[];
 extern const u16 gBattleIcons_Pal2[];
 
+extern const u32 gGhostFrontPic[];
+extern const u16 gGhostPalette[];
+
 // custom
 
 extern const u32 gBattleAnimBgImage_UBWField[];

@@ -2441,6 +2441,13 @@ void AnimTask_TransformMon(u8 taskId)
     switch (gTasks[taskId].data[0])
     {
     case 0:
+        gTasks[taskId].data[10] = gBattleAnimArgs[0];
+        if (gTasks[taskId].data[10] == SPECIES_GFX_CHANGE_FORM_CHANGE_INSTANT)
+        {
+            // Skip mosaic animation
+            gTasks[taskId].data[0] = 2;
+            break;
+        }
         if (gCurrentMove == MOVE_FLUFFICATION)
         {
             SetGpuReg(REG_OFFSET_MOSAIC, 0);
@@ -2449,7 +2456,6 @@ void AnimTask_TransformMon(u8 taskId)
             else
                 SetAnimBgAttribute(2, BG_ANIM_MOSAIC, 1);
 
-            gTasks[taskId].data[10] = gBattleAnimArgs[0];
             gTasks[taskId].data[0]++;
         }
         else
@@ -2460,7 +2466,6 @@ void AnimTask_TransformMon(u8 taskId)
             else
                 SetAnimBgAttribute(2, BG_ANIM_MOSAIC, 1);
 
-            gTasks[taskId].data[10] = gBattleAnimArgs[0];
             gTasks[taskId].data[0]++;
         }
         break;
@@ -2570,6 +2575,12 @@ void AnimTask_TransformMon(u8 taskId)
             }
         }
 
+        if (gTasks[taskId].data[10] == SPECIES_GFX_CHANGE_FORM_CHANGE_INSTANT)
+        {
+            // Skip mosaic animation
+            DestroyAnimVisualTask(taskId);
+            break;
+        }
         gTasks[taskId].data[0]++;
         break;
     case 3:

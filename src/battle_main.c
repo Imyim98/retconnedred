@@ -69,6 +69,7 @@
 #include "constants/battle_move_effects.h"
 #include "constants/battle_string_ids.h"
 #include "constants/battle_partner.h"
+#include "constants/battle_setup.h"
 #include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/party_menu.h"
@@ -303,122 +304,122 @@ static const s8 sCenterToCornerVecXs[8] ={-32, -16, -16, -32, -32};
 // [TRAINER_CLASS_XYZ] = { _("name"), <money=5>, <ball=BALL_POKE> }
 const struct TrainerClass gTrainerClasses[TRAINER_CLASS_COUNT] =
 {
-    [TRAINER_CLASS_PKMN_TRAINER_1] = { _("{PKMN} TRAINER") },
-    [TRAINER_CLASS_PKMN_TRAINER_2] = { _("{PKMN} TRAINER") },
-    [TRAINER_CLASS_HIKER] = { _("HIKER"), 10, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_ULTRA : BALL_POKE },
-    [TRAINER_CLASS_TEAM_AQUA] = { _("TEAM AQUA") },
-    [TRAINER_CLASS_PKMN_BREEDER] = { _("{PKMN} BREEDER"), 10, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_HEAL : BALL_FRIEND },
-    [TRAINER_CLASS_COOLTRAINER] = { _("COOLTRAINER"), 12, BALL_ULTRA },
-    [TRAINER_CLASS_BIRD_KEEPER] = { _("BIRD KEEPER"), 8 },
-    [TRAINER_CLASS_COLLECTOR] = { _("COLLECTOR"), 15, BALL_PREMIER },
-    [TRAINER_CLASS_SWIMMER_M] = { _("SWIMMER♂"), 2, BALL_DIVE },
-    [TRAINER_CLASS_TEAM_MAGMA] = { _("TEAM MAGMA") },
-    [TRAINER_CLASS_EXPERT] = { _("EXPERT"), 10 },
-    [TRAINER_CLASS_AQUA_ADMIN] = { _("AQUA ADMIN"), 10 },
-    [TRAINER_CLASS_BLACK_BELT] = { _("BLACK BELT"), 8, BALL_ULTRA },
-    [TRAINER_CLASS_AQUA_LEADER] = { _("AQUA LEADER"), 20, BALL_MASTER },
-    [TRAINER_CLASS_HEX_MANIAC] = { _("HEX MANIAC"), 6 },
-    [TRAINER_CLASS_AROMA_LADY] = { _("AROMA LADY"), 10 },
-    [TRAINER_CLASS_RUIN_MANIAC] = { _("RUIN MANIAC"), 15 },
-    [TRAINER_CLASS_INTERVIEWER] = { _("INTERVIEWER"), 12 },
-    [TRAINER_CLASS_TUBER_F] = { _("TUBER"), 1 },
-    [TRAINER_CLASS_TUBER_M] = { _("TUBER"), 1 },
-    [TRAINER_CLASS_LADY] = { _("LADY"), 50 },
-    [TRAINER_CLASS_BEAUTY] = { _("BEAUTY"), 20, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_GREAT : BALL_POKE },
-    [TRAINER_CLASS_RICH_BOY] = { _("RICH BOY"), 50 },
-    [TRAINER_CLASS_POKEMANIAC] = { _("POKéMANIAC"), 15 },
-    [TRAINER_CLASS_GUITARIST] = { _("GUITARIST"), 8 },
-    [TRAINER_CLASS_KINDLER] = { _("KINDLER"), 8 },
-    [TRAINER_CLASS_CAMPER] = { _("CAMPER"), 4 },
-    [TRAINER_CLASS_PICNICKER] = { _("PICNICKER"), 4 },
-    [TRAINER_CLASS_BUG_MANIAC] = { _("BUG MANIAC"), 15 },
-    [TRAINER_CLASS_PSYCHIC] = { _("PSYCHIC"), 6 },
-    [TRAINER_CLASS_GENTLEMAN] = { _("GENTLEMAN"), 20, BALL_LUXURY },
-    [TRAINER_CLASS_ELITE_FOUR] = { _("ELITE FOUR"), 25, BALL_ULTRA },
-    [TRAINER_CLASS_LEADER] = { _("LEADER"), 25, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_ULTRA : BALL_POKE },
-    [TRAINER_CLASS_SCHOOL_KID] = { _("SCHOOL KID") },
-    [TRAINER_CLASS_SR_AND_JR] = { _("SR. AND JR."), 4 },
-    [TRAINER_CLASS_WINSTRATE] = { _("WINSTRATE"), 10 },
-    [TRAINER_CLASS_POKEFAN] = { _("POKéFAN"), 20 },
-    [TRAINER_CLASS_YOUNGSTER] = { _("YOUNGSTER"), 4 },
-    [TRAINER_CLASS_CHAMPION] = { _("CHAMPION"), 50, BALL_ULTRA },
-    [TRAINER_CLASS_FISHERMAN] = { _("FISHERMAN"), 10, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_DIVE : BALL_LURE },
-    [TRAINER_CLASS_TRIATHLETE] = { _("TRIATHLETE"), 10 },
-    [TRAINER_CLASS_DRAGON_TAMER] = { _("DRAGON TAMER"), 12 },
-    [TRAINER_CLASS_NINJA_BOY] = { _("NINJA BOY"), 3 },
-    [TRAINER_CLASS_BATTLE_GIRL] = { _("BATTLE GIRL"), 6 },
-    [TRAINER_CLASS_PARASOL_LADY] = { _("PARASOL LADY"), 10 },
-    [TRAINER_CLASS_SWIMMER_F] = { _("SWIMMER♀"), 2, BALL_DIVE },
-    [TRAINER_CLASS_TWINS] = { _("TWINS"), 3 },
-    [TRAINER_CLASS_SAILOR] = { _("SAILOR"), 8 },
-    [TRAINER_CLASS_COOLTRAINER_2] = { _("COOLTRAINER"), 5, BALL_ULTRA },
-    [TRAINER_CLASS_MAGMA_ADMIN] = { _("MAGMA ADMIN"), 10 },
-    [TRAINER_CLASS_RIVAL] = { _("{PKMN} TRAINER"), 15 },
-    [TRAINER_CLASS_BUG_CATCHER] = { _("BUG CATCHER"), 4 },
-    [TRAINER_CLASS_PKMN_RANGER] = { _("{PKMN} RANGER"), 12 },
-    [TRAINER_CLASS_MAGMA_LEADER] = { _("MAGMA LEADER"), 20, BALL_MASTER },
-    [TRAINER_CLASS_LASS] = { _("LASS"), 4 },
-    [TRAINER_CLASS_YOUNG_COUPLE] = { _("YOUNG COUPLE"), 8 },
-    [TRAINER_CLASS_OLD_COUPLE] = { _("OLD COUPLE"), 10 },
-    [TRAINER_CLASS_SIS_AND_BRO] = { _("SIS AND BRO"), 3 },
-    [TRAINER_CLASS_SALON_MAIDEN] = { _("SALON MAIDEN"), 5, BALL_ULTRA },
-    [TRAINER_CLASS_DOME_ACE] = { _("DOME ACE") },
-    [TRAINER_CLASS_PALACE_MAVEN] = { _("PALACE MAVEN") },
-    [TRAINER_CLASS_ARENA_TYCOON] = { _("ARENA TYCOON") },
-    [TRAINER_CLASS_FACTORY_HEAD] = { _("FACTORY HEAD") },
-    [TRAINER_CLASS_PIKE_QUEEN] = { _("PIKE QUEEN") },
-    [TRAINER_CLASS_PYRAMID_KING] = { _("PYRAMID KING") },
-    [TRAINER_CLASS_RS_PROTAG] = { _("{PKMN} TRAINER") },
-    [TRAINER_CLASS_0X42] = { _("Trainer 0x42") },
-    [TRAINER_CLASS_0X43] = { _("Trainer 0x43") },
-    [TRAINER_CLASS_0X44] = { _("Trainer 0x44") },
-    [TRAINER_CLASS_0X45] = { _("Trainer 0x45") },
-    [TRAINER_CLASS_0X46] = { _("Trainer 0x46") },
-    [TRAINER_CLASS_0X47] = { _("Trainer 0x47") },
-    [TRAINER_CLASS_0X48] = { _("Trainer 0x48") },
-    [TRAINER_CLASS_0X49] = { _("Trainer 0x49") },
-    [TRAINER_CLASS_0X4A] = { _("Trainer 0x4A") },
-    [TRAINER_CLASS_0X4B] = { _("Trainer 0x4B") },
-    [TRAINER_CLASS_0X4C] = { _("Trainer 0x4C") },
-    [TRAINER_CLASS_0X4D] = { _("Trainer 0x4D") },
-    [TRAINER_CLASS_0X4E] = { _("Trainer 0x4E") },
-    [TRAINER_CLASS_0X4F] = { _("Trainer 0x4F") },
-    [TRAINER_CLASS_0X50] = { _("Trainer 0x50") },
-    [TRAINER_CLASS_0X51] = { _("Trainer 0x51") },
-    [TRAINER_CLASS_0X52] = { _("Trainer 0x52") },
-    [TRAINER_CLASS_0X53] = { _("Trainer 0x53") },
-    [TRAINER_CLASS_0X54] = { _("Trainer 0x54") },
-    [TRAINER_CLASS_0X55] = { _("Trainer 0x55") },
-    [TRAINER_CLASS_0X56] = { _("Trainer 0x56") },
-    [TRAINER_CLASS_0X57] = { _("Trainer 0x57") },
-    [TRAINER_CLASS_0X58] = { _("Trainer 0x58") },
-    [TRAINER_CLASS_0X59] = { _("Trainer 0x59") },
-    [TRAINER_CLASS_0X5A] = { _("Trainer 0x5A") },
-    [TRAINER_CLASS_0X5B] = { _("Trainer 0x5B") },
-    [TRAINER_CLASS_0X5C] = { _("Trainer 0x5C") },
-    [TRAINER_CLASS_0X5D] = { _("Trainer 0x5D") },
-    [TRAINER_CLASS_0X5E] = { _("Trainer 0x5E") },
-    [TRAINER_CLASS_0X5F] = { _("Trainer 0x5F") },
-    [TRAINER_CLASS_0X60] = { _("Trainer 0x60") },
-    [TRAINER_CLASS_0X61] = { _("Trainer 0x61") },
-    [TRAINER_CLASS_0X62] = { _("Trainer 0x62") },
-    [TRAINER_CLASS_0X63] = { _("Trainer 0x63") },
-    [TRAINER_CLASS_0X64] = { _("Trainer 0x64") },
-    [TRAINER_CLASS_0X65] = { _("Trainer 0x65") },
-    [TRAINER_CLASS_0X66] = { _("Trainer 0x66") },
-    [TRAINER_CLASS_0X67] = { _("Trainer 0x67") },
-    [TRAINER_CLASS_0X68] = { _("Trainer 0x68") },
-    [TRAINER_CLASS_0X69] = { _("Trainer 0x69") },
-    [TRAINER_CLASS_0X6A] = { _("Trainer 0x6A") },
-    [TRAINER_CLASS_0X6B] = { _("Trainer 0x6B") },
-    [TRAINER_CLASS_0X6C] = { _("Trainer 0x6C") },
-    [TRAINER_CLASS_0X6D] = { _("Trainer 0x6D") },
-    [TRAINER_CLASS_0X6E] = { _("Trainer 0x6E") },
-    [TRAINER_CLASS_0X6F] = { _("Trainer 0x6F") },
-    [TRAINER_CLASS_0X70] = { _("Trainer 0x70") },
-    [TRAINER_CLASS_0X71] = { _("Trainer 0x71") },
-    [TRAINER_CLASS_0X72] = { _("Trainer 0x72") },
-    [TRAINER_CLASS_0X73] = { _("Trainer 0x73") },
+    [TRAINER_CLASS_PKMN_TRAINER_1] = { _("Trainer") },
+    [TRAINER_CLASS_PKMN_TRAINER_2] = { _("Trainer") },
+    [TRAINER_CLASS_HIKER] = { _("Hiker"), 10, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_ULTRA : BALL_POKE },
+    [TRAINER_CLASS_TEAM_AQUA] = { _("Team Aqua") },
+    [TRAINER_CLASS_PKMN_BREEDER] = { _("Caretaker"), 10, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_HEAL : BALL_FRIEND },
+    [TRAINER_CLASS_COOLTRAINER] = { _("Elite Trainer"), 12, BALL_ULTRA },
+    [TRAINER_CLASS_BIRD_KEEPER] = { _("Bird Keeper"), 8 },
+    [TRAINER_CLASS_COLLECTOR] = { _("Collector"), 15, BALL_PREMIER },
+    [TRAINER_CLASS_SWIMMER_M] = { _("Swimmer"), 2, BALL_DIVE },
+    [TRAINER_CLASS_TEAM_MAGMA] = { _("Team Magma") },
+    [TRAINER_CLASS_EXPERT] = { _("Expert"), 10 },
+    [TRAINER_CLASS_AQUA_ADMIN] = { _("Aqua Admin"), 10 },
+    [TRAINER_CLASS_BLACK_BELT] = { _("Black Belt"), 8, BALL_ULTRA },
+    [TRAINER_CLASS_AQUA_LEADER] = { _("Aqua Leader"), 20, BALL_MASTER },
+    [TRAINER_CLASS_HEX_MANIAC] = { _("Hex Maniac"), 6 },
+    [TRAINER_CLASS_AROMA_LADY] = { _("Aroma Lady"), 10 },
+    [TRAINER_CLASS_RUIN_MANIAC] = { _("Ruin Maniac"), 15 },
+    [TRAINER_CLASS_INTERVIEWER] = { _("Interviewer"), 12 },
+    [TRAINER_CLASS_TUBER_F] = { _("Tuber"), 1 },
+    [TRAINER_CLASS_TUBER_M] = { _("Tuber"), 1 },
+    [TRAINER_CLASS_LADY] = { _("Lady"), 50 },
+    [TRAINER_CLASS_BEAUTY] = { _("Beauty"), 20, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_GREAT : BALL_POKE },
+    [TRAINER_CLASS_RICH_BOY] = { _("Rich Boy"), 50 },
+    [TRAINER_CLASS_POKEMANIAC] = { _("Super Nerd"), 15 },
+    [TRAINER_CLASS_GUITARIST] = { _("Guitarist"), 8 },
+    [TRAINER_CLASS_KINDLER] = { _("Kindler"), 8 },
+    [TRAINER_CLASS_CAMPER] = { _("Camper"), 4 },
+    [TRAINER_CLASS_PICNICKER] = { _("Picnicker"), 4 },
+    [TRAINER_CLASS_BUG_MANIAC] = { _("Bug Maniac"), 15 },
+    [TRAINER_CLASS_PSYCHIC] = { _("Psychic"), 6 },
+    [TRAINER_CLASS_GENTLEMAN] = { _("Gentleman"), 20, BALL_LUXURY },
+    [TRAINER_CLASS_ELITE_FOUR] = { _("Elite Four"), 25, BALL_ULTRA },
+    [TRAINER_CLASS_LEADER] = { _("Leader"), 25, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_ULTRA : BALL_POKE },
+    [TRAINER_CLASS_SCHOOL_KID] = { _("School Kid") },
+    [TRAINER_CLASS_SR_AND_JR] = { _("Sr. and Jr."), 4 },
+    [TRAINER_CLASS_WINSTRATE] = { _("Winstrate"), 10 },
+    [TRAINER_CLASS_POKEFAN] = { _("Fan"), 20 },
+    [TRAINER_CLASS_YOUNGSTER] = { _("Youngster"), 4 },
+    [TRAINER_CLASS_CHAMPION] = { _("Champion"), 50, BALL_ULTRA },
+    [TRAINER_CLASS_FISHERMAN] = { _("Fisherman"), 10, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_DIVE : BALL_LURE },
+    [TRAINER_CLASS_TRIATHLETE] = { _("Triathlete"), 10 },
+    [TRAINER_CLASS_DRAGON_TAMER] = { _("Tamer"), 12 },
+    [TRAINER_CLASS_NINJA_BOY] = { _("Ninja Boy"), 3 },
+    [TRAINER_CLASS_BATTLE_GIRL] = { _("Battle Girl"), 6 },
+    [TRAINER_CLASS_PARASOL_LADY] = { _("Parasol Lady"), 10 },
+    [TRAINER_CLASS_SWIMMER_F] = { _("Swimmer"), 2, BALL_DIVE },
+    [TRAINER_CLASS_TWINS] = { _("Twins"), 3 },
+    [TRAINER_CLASS_SAILOR] = { _("Sailor"), 8 },
+    [TRAINER_CLASS_COOLTRAINER_2] = { _("Elite Trainer"), 5, BALL_ULTRA },
+    [TRAINER_CLASS_MAGMA_ADMIN] = { _("Magma Admin"), 10 },
+    [TRAINER_CLASS_RIVAL] = { _("Trainer"), 15 },
+    [TRAINER_CLASS_BUG_CATCHER] = { _("Bug Catcher"), 4 },
+    [TRAINER_CLASS_PKMN_RANGER] = { _("Ranger"), 12 },
+    [TRAINER_CLASS_MAGMA_LEADER] = { _("Magma Leader"), 20, BALL_MASTER },
+    [TRAINER_CLASS_LASS] = { _("Lass"), 4 },
+    [TRAINER_CLASS_YOUNG_COUPLE] = { _("Young Couple"), 8 },
+    [TRAINER_CLASS_OLD_COUPLE] = { _("Old Couple"), 10 },
+    [TRAINER_CLASS_SIS_AND_BRO] = { _("Sis and Bro"), 3 },
+    [TRAINER_CLASS_SALON_MAIDEN] = { _("Salon Maiden"), 5, BALL_ULTRA },
+    [TRAINER_CLASS_DOME_ACE] = { _("Dome AcE") },
+    [TRAINER_CLASS_PALACE_MAVEN] = { _("Palace Maven") },
+    [TRAINER_CLASS_ARENA_TYCOON] = { _("Arena Tycoon") },
+    [TRAINER_CLASS_FACTORY_HEAD] = { _("Factory Head") },
+    [TRAINER_CLASS_PIKE_QUEEN] = { _("Pike Queen") },
+    [TRAINER_CLASS_PYRAMID_KING] = { _("Pyramid King") },
+    [TRAINER_CLASS_RS_PROTAG] = { _("Trainer") },
+    [TRAINER_CLASS_YOUNGSTER_FRLG] =       { _("Youngster"), 4 },
+    [TRAINER_CLASS_BUG_CATCHER_FRLG] =     { _("Bug Catcher"), 3 },
+    [TRAINER_CLASS_LASS_FRLG] =            { _("Lass"), 4 },
+    [TRAINER_CLASS_SAILOR_FRLG] =          { _("Sailor"), 8 },
+    [TRAINER_CLASS_CAMPER_FRLG] =          { _("Camper"), 5 },
+    [TRAINER_CLASS_PICNICKER_FRLG] =       { _("Picnicker"), 5 },
+    [TRAINER_CLASS_POKEMANIAC_FRLG] =      { _("Maniac"), 12 },
+    [TRAINER_CLASS_SUPER_NERD_FRLG] =      { _("Super Nerd"), 6 },
+    [TRAINER_CLASS_HIKER_FRLG] =           { _("Hiker"), 9 },
+    [TRAINER_CLASS_BIKER_FRLG] =           { _("Biker"), 5 },
+    [TRAINER_CLASS_BURGLAR_FRLG] =         { _("Burglar"), 22 },
+    [TRAINER_CLASS_ENGINEER_FRLG] =        { _("Engineer"), 12 },
+    [TRAINER_CLASS_FISHERMAN_FRLG] =       { _("Fisherman"), 9, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_DIVE : BALL_LURE },
+    [TRAINER_CLASS_SWIMMER_M_FRLG] =       { _("Swimmer"), 1 },
+    [TRAINER_CLASS_CUE_BALL_FRLG] =        { _("Cue Ball"), 6 },
+    [TRAINER_CLASS_GAMER_FRLG] =           { _("Gambler"), 18 },
+    [TRAINER_CLASS_BEAUTY_FRLG] =          { _("Beauty"), 18 },
+    [TRAINER_CLASS_SWIMMER_F_FRLG] =       { _("Swimmer"), 1, BALL_DIVE },
+    [TRAINER_CLASS_PSYCHIC_FRLG] =         { _("Psychic"), 5 },
+    [TRAINER_CLASS_ROCKER_FRLG] =          { _("Rocker"), 6 },
+    [TRAINER_CLASS_JUGGLER_FRLG] =         { _("Jugler"), 10 },
+    [TRAINER_CLASS_TAMER_FRLG] =           { _("Tamer"), 10 },
+    [TRAINER_CLASS_BIRD_KEEPER_FRLG] =     { _("Bird Keeper"), 6 },
+    [TRAINER_CLASS_BLACK_BELT_FRLG] =      { _("Black Belt"), 6, BALL_ULTRA },
+    [TRAINER_CLASS_RIVAL_EARLY_FRLG] =     { _("Rival"), 4 },
+    [TRAINER_CLASS_SCIENTIST_FRLG] =       { _("Scientist"), 12 },
+    [TRAINER_CLASS_BOSS_FRLG] =            { _("Boss"), 25 },
+    [TRAINER_CLASS_LEADER_FRLG] =          { _("Leader"), 25 },
+    [TRAINER_CLASS_TEAM_ROCKET_FRLG] =     { _("Team Rocket"), 8 },
+    [TRAINER_CLASS_COOLTRAINER_FRLG] =     { _("Elite Trainer"), 9, BALL_ULTRA },
+    [TRAINER_CLASS_ELITE_FOUR_FRLG] =      { _("Elite Four"), 25, BALL_ULTRA },
+    [TRAINER_CLASS_GENTLEMAN_FRLG] =       { _("Gentleman"), 18, BALL_LUXURY },
+    [TRAINER_CLASS_RIVAL_LATE_FRLG] =      { _("Rival"), 9 },
+    [TRAINER_CLASS_CHAMPION_FRLG] =        { _("Champion"), 25 },
+    [TRAINER_CLASS_CHANNELER_FRLG] =       { _("Channeler"), 8 },
+    [TRAINER_CLASS_TWINS_FRLG] =           { _("Twins"), 3 },
+    [TRAINER_CLASS_COOL_COUPLE_FRLG] =     { _("Elite Couple"), 6 },
+    [TRAINER_CLASS_YOUNG_COUPLE_FRLG] =    { _("Toung Couple"), 7 },
+    [TRAINER_CLASS_CRUSH_KIN_FRLG] =       { _("Crush Kin"), 6 },
+    [TRAINER_CLASS_SIS_AND_BRO_FRLG] =     { _("Sis and Bro"), 1 },
+    [TRAINER_CLASS_PKMN_PROF_FRLG] =       { _("Professor"), 25 },
+    [TRAINER_CLASS_PLAYER_FRLG] =          { _("Trainer"), 1 },
+    [TRAINER_CLASS_CRUSH_GIRL_FRLG] =      { _("Crush Girl"), 6 },
+    [TRAINER_CLASS_TUBER_FRLG] =           { _("Tuber"), 1 },
+    [TRAINER_CLASS_PKMN_BREEDER_FRLG] =    { _("Caretaker"), 7, B_TRAINER_CLASS_POKE_BALLS >= GEN_8 ? BALL_HEAL : BALL_FRIEND },
+    [TRAINER_CLASS_PKMN_RANGER_FRLG] =     { _("Ranger"), 9 },
+    [TRAINER_CLASS_AROMA_LADY_FRLG] =      { _("Aroma Lady"), 7 },
+    [TRAINER_CLASS_RUIN_MANIAC_FRLG] =     { _("Ruin Maniac"), 12 },
+    [TRAINER_CLASS_LADY_FRLG] =            { _("Lady"), 50 },
+    [TRAINER_CLASS_PAINTER_FRLG] =         { _("Painter"), 4 },
     [TRAINER_CLASS_0X74] = { _("Trainer 0x74") },
     [TRAINER_CLASS_0X75] = { _("Trainer 0x75") },
     [TRAINER_CLASS_0X76] = { _("Trainer 0x76") },
@@ -756,8 +757,8 @@ static void CB2_InitBattleInternal(void)
         AdjustFriendship(&gPlayerParty[i], FRIENDSHIP_EVENT_LEAGUE_BATTLE);
 
         // Apply party-wide start-of-battle form changes for both sides.
-        TryFormChange(i, B_SIDE_PLAYER, FORM_CHANGE_BEGIN_BATTLE);
-        TryFormChange(i, B_SIDE_OPPONENT, FORM_CHANGE_BEGIN_BATTLE);
+        TryFormChange(&gPlayerParty[i], FORM_CHANGE_BEGIN_BATTLE);
+        TryFormChange(&gEnemyParty[i], FORM_CHANGE_BEGIN_BATTLE);
     }
 
     #if TESTING
@@ -3615,7 +3616,7 @@ const u8* FaintClearSetData(enum BattlerId battler)
     gBattleMons[battler].types[2] = TYPE_MYSTERY;
 
     Ai_UpdateFaintData(battler);
-    TryBattleFormChange(battler, FORM_CHANGE_FAINT);
+    TryBattleFormChange(battler, FORM_CHANGE_FAINT, GetBattlerAbility(battler));
 
     // If the fainted mon was involved in a Sky Drop
     if (gBattleStruct->skyDropTargets[battler] != SKY_DROP_NO_TARGET)
@@ -3899,7 +3900,14 @@ static void DoBattleIntro(void)
         break;
     case BATTLE_INTRO_STATE_WAIT_FOR_WILD_BATTLE_TEXT:
         if (!IsBattlerMarkedForControllerExec(GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)))
+        {
+            if (gBattleTypeFlags & BATTLE_TYPE_GHOST && CheckBagHasItem(ITEM_SILPH_SCOPE, 1))
+            {
+                gBattleScripting.battler = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+                BattleScriptExecute(BattleScript_SilphScopeUnveiled);
+            }
             gBattleStruct->eventState.battleIntro++;
+        }
         break;
     case BATTLE_INTRO_STATE_PRINT_PLAYER_SEND_OUT_TEXT:
         if (!(gBattleTypeFlags & BATTLE_TYPE_SAFARI))
@@ -4528,8 +4536,11 @@ static void HandleTurnActionSelectionState(void)
                     }
                     break;
                 case B_ACTION_SAFARI_POKEBLOCK:
-                    BtlController_EmitChooseItem(battler, B_COMM_TO_CONTROLLER, gBattleStruct->battlerPartyOrders[battler]);
-                    MarkBattlerForControllerExec(battler);
+                    if (!IS_FRLG)
+                    {
+                        BtlController_EmitChooseItem(battler, B_COMM_TO_CONTROLLER, gBattleStruct->battlerPartyOrders[battler]);
+                        MarkBattlerForControllerExec(battler);
+                    }
                     break;
                 case B_ACTION_CANCEL_PARTNER:
                     gBattleCommunication[battler] = STATE_WAIT_SET_BEFORE_ACTION;
@@ -4734,10 +4745,17 @@ static void HandleTurnActionSelectionState(void)
                     gBattleCommunication[battler]++;
                     break;
                 case B_ACTION_SAFARI_POKEBLOCK:
-                    if ((gBattleResources->bufferB[battler][1] | (gBattleResources->bufferB[battler][2] << 8)) != 0)
+                    if (IS_FRLG)
+                    {
                         gBattleCommunication[battler]++;
+                    }
                     else
-                        gBattleCommunication[battler] = STATE_BEFORE_ACTION_CHOSEN;
+                    {
+                        if ((gBattleResources->bufferB[battler][1] | (gBattleResources->bufferB[battler][2] << 8)) != 0)
+                            gBattleCommunication[battler]++;
+                        else
+                            gBattleCommunication[battler] = STATE_BEFORE_ACTION_CHOSEN;
+                    }
                     break;
                 case B_ACTION_SAFARI_GO_NEAR:
                     gBattleCommunication[battler]++;
@@ -5721,6 +5739,18 @@ static void HandleEndTurn_BattleLost(void)
     }
     else
     {
+        if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL)
+        {
+            if (GetRivalBattleFlags() & RIVAL_BATTLE_HEAL_AFTER)
+                gBattleCommunication[MULTISTRING_CHOOSER] = 1; // Dont do white out text
+            else
+                gBattleCommunication[MULTISTRING_CHOOSER] = 2; // Do white out text
+            gBattlerAttacker = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+        }
+        else
+        {
+            gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+        }
         gBattlescriptCurrInstr = BattleScript_LocalBattleLost;
     }
 
@@ -5785,8 +5815,9 @@ static void HandleEndTurn_FinishBattle(void)
                                   | BATTLE_TYPE_FIRST_BATTLE
                                   | BATTLE_TYPE_SAFARI
                                   | BATTLE_TYPE_EREADER_TRAINER
-                                  | BATTLE_TYPE_WALLY_TUTORIAL
-                                  | BATTLE_TYPE_FRONTIER)))
+                                  | BATTLE_TYPE_CATCH_TUTORIAL
+                                  | BATTLE_TYPE_FRONTIER))
+            && !(gBattleTypeFlags & BATTLE_TYPE_GHOST && IsGhostBattleWithoutScope()))
         {
             for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
             {
@@ -5835,7 +5866,7 @@ static void HandleEndTurn_FinishBattle(void)
                                   | BATTLE_TYPE_SAFARI
                                   | BATTLE_TYPE_FRONTIER
                                   | BATTLE_TYPE_EREADER_TRAINER
-                                  | BATTLE_TYPE_WALLY_TUTORIAL))
+                                  | BATTLE_TYPE_CATCH_TUTORIAL))
             && gBattleResults.shinyWildMon)
         {
             TryPutBreakingNewsOnAir();
@@ -5905,7 +5936,7 @@ static void FreeResetData_ReturnToOvOrDoEvolutions(void)
                                   | BATTLE_TYPE_SAFARI
                                   | BATTLE_TYPE_FRONTIER
                                   | BATTLE_TYPE_EREADER_TRAINER
-                                  | BATTLE_TYPE_WALLY_TUTORIAL))
+                                  | BATTLE_TYPE_CATCH_TUTORIAL))
             && (B_EVOLUTION_AFTER_WHITEOUT >= GEN_6
                 || gBattleOutcome == B_OUTCOME_WON
                 || gBattleOutcome == B_OUTCOME_CAUGHT))

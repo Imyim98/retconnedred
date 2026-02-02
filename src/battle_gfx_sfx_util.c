@@ -1599,3 +1599,14 @@ bool32 ShouldPlayNormalMonCry(struct Pokemon *mon)
 
     return TRUE;
 }
+
+void DecompressGhostFrontPic(u32 battler)
+{
+    u16 palOffset;
+    enum BattlerPosition position = GetBattlerPosition(battler);
+
+    DecompressDataWithHeaderWram(gGhostFrontPic, gMonSpritesGfxPtr->spritesGfx[position]);
+    palOffset = OBJ_PLTT_ID(battler);
+    LoadPalette(gGhostPalette, palOffset, PLTT_SIZE_4BPP);
+    LoadPalette(gGhostPalette, BG_PLTT_ID(8) + BG_PLTT_ID(battler), PLTT_SIZE_4BPP);
+}

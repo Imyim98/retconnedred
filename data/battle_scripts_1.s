@@ -269,14 +269,13 @@ BattleScript_Terastallization::
 BattleScript_TeraFormChange::
 	@ TODO: no string prints in S/V, but right now this helps with clarity
 	printstring STRINGID_PKMNSTORINGENERGY
-	handleformchange BS_ATTACKER, 0
+	handleformchange BS_ATTACKER, 0, FALSE @ Prevent species name from overriting type name
 	handleformchange BS_ATTACKER, 1
 	playanimation BS_ATTACKER, B_ANIM_TERA_CHARGE
 	waitanimation
 	applyterastallization
 	playanimation BS_ATTACKER, B_ANIM_TERA_ACTIVATE
 	waitanimation
-	handleformchange BS_ATTACKER, 2
 	printstring STRINGID_PKMNTERASTALLIZEDINTO
 	waitmessage B_WAIT_TIME_LONG
 	switchinabilities BS_ATTACKER
@@ -3513,7 +3512,7 @@ BattleScript_PowerHerbActivation::
 	printstring STRINGID_POWERHERB
 	waitmessage B_WAIT_TIME_LONG
 	removeitem BS_ATTACKER
-	trygulpmissile @ Edge case for Cramorant ability Gulp Missile
+	trytwoturnmovespowerherbformchange @ Edge case for Cramorant ability Gulp Missile
 	return
 
 BattleScript_EffectGeomancy::
@@ -3555,9 +3554,6 @@ BattleScript_TwoTurnMoveCharging::
 	setadditionaleffects @ only onChargeTurnOnly effects will work here
 	return
 
-BattleScript_TwoTurnMovesSecondPowerHerbActivates:
-	call BattleScript_PowerHerbActivation
-	trygulpmissile @ Edge case for Cramorant ability Gulp Missile
 BattleScript_FromTwoTurnMovesSecondTurnRet:
 	call BattleScript_TwoTurnMovesSecondTurnRet
 	accuracycheck BattleScript_MoveMissedPause
@@ -4823,7 +4819,6 @@ BattleScript_EffectCamouflage::
 
 BattleScript_FaintBattler::
 	tryillusionoff BS_FAINTED
-	tryactivategulpmissile
 	playfaintcry BS_FAINTED
 	pause B_WAIT_TIME_LONG
 	dofaintanimation BS_FAINTED
@@ -4984,12 +4979,26 @@ BattleScript_PayDayMoneyAndPickUpItems::
 	pickup
 	end2
 
+BattleScript_RivalBattleLost::
+	jumpifhasnohp BS_ATTACKER, BattleScript_RivalBattleLostSkipMonRecall
+	printstring STRINGID_TRAINER1MON1COMEBACK
+	waitmessage B_WAIT_TIME_LONG
+	returnatktoball
+	waitstate
+BattleScript_RivalBattleLostSkipMonRecall::
+	trainerslidein BS_ATTACKER
+	waitstate
+	printstring STRINGID_TRAINER1WINTEXT
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, 2, BattleScript_LocalBattleLostPrintWhiteOut
+	end2
+
 BattleScript_LocalBattleLost::
 	jumpifbattletype BATTLE_TYPE_DOME, BattleScript_CheckDomeDrew
 	jumpifbattletype BATTLE_TYPE_FRONTIER, BattleScript_LocalBattleLostPrintTrainersWinText
 	jumpifbattletype BATTLE_TYPE_TRAINER_HILL, BattleScript_LocalBattleLostPrintTrainersWinText
 	jumpifbattletype BATTLE_TYPE_EREADER_TRAINER, BattleScript_LocalBattleLostEnd
 	jumpifhalfword CMP_EQUAL, gTrainerBattleParameter + 2, TRAINER_SECRET_BASE, BattleScript_LocalBattleLostEnd
+	jumpifbyte CMP_NOT_EQUAL, cMULTISTRING_CHOOSER, 0, BattleScript_RivalBattleLost
 	jumpifnowhiteout BattleScript_LocalBattleLostEnd_
 	jumpifbattletype BATTLE_TYPE_INGAME_PARTNER, BattleScript_LocalBattleLostPrintWhiteOut
 BattleScript_LocalBattleLostPrintWhiteOut::
@@ -5722,6 +5731,9 @@ BattleScript_PerishBodyActivates::
 
 BattleScript_GulpMissileGorging::
 	call BattleScript_AbilityPopUp
+	handleformchange BS_TARGET, 0
+	playanimation BS_TARGET, B_ANIM_FORM_CHANGE_INSTANT
+	waitanimation
 	playanimation BS_ATTACKER, B_ANIM_GULP_MISSILE
 	waitanimation
 	effectivenesssound
@@ -5734,21 +5746,17 @@ BattleScript_GulpMissileGorging::
 	tryfaintmon BS_ATTACKER
 	jumpiffainted BS_ATTACKER, TRUE, BattleScript_GulpMissileNoSecondEffectGorging
 BattleScript_GulpMissileNoDmgGorging:
-	handleformchange BS_TARGET, 0
-	playanimation BS_TARGET, B_ANIM_FORM_CHANGE
-	waitanimation
 	swapattackerwithtarget
 	seteffectprimary BS_ATTACKER, BS_TARGET, MOVE_EFFECT_PARALYSIS
 	swapattackerwithtarget
-	return
 BattleScript_GulpMissileNoSecondEffectGorging:
-	handleformchange BS_TARGET, 0
-	playanimation BS_TARGET, B_ANIM_FORM_CHANGE
-	waitanimation
 	return
 
 BattleScript_GulpMissileGulping::
 	call BattleScript_AbilityPopUp
+	handleformchange BS_TARGET, 0
+	playanimation BS_TARGET, B_ANIM_FORM_CHANGE_INSTANT
+	waitanimation
 	playanimation BS_ATTACKER, B_ANIM_GULP_MISSILE
 	waitanimation
 	effectivenesssound
@@ -5761,9 +5769,6 @@ BattleScript_GulpMissileGulping::
 	tryfaintmon BS_ATTACKER
 	jumpiffainted BS_ATTACKER, TRUE, BattleScript_GulpMissileNoSecondEffectGulping
 BattleScript_GulpMissileNoDmgGulping:
-	handleformchange BS_TARGET, 0
-	playanimation BS_TARGET, B_ANIM_FORM_CHANGE
-	waitanimation
 	swapattackerwithtarget @ to make gStatDownStringIds down below print the right battler
 	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_GulpMissileNoDmgGulping_StasisGazePreventedContrary
 BattleScript_GulpMissileNoDmgGulping_AfterStasisGazeContraryCheck:
@@ -5773,11 +5778,7 @@ BattleScript_GulpMissileNoDmgGulping_AfterStasisGazeContraryCheck:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_GulpMissileGulpingEnd:
 	swapattackerwithtarget @ restore the battlers, just in case
-	return
 BattleScript_GulpMissileNoSecondEffectGulping:
-	handleformchange BS_TARGET, 0
-	playanimation BS_TARGET, B_ANIM_FORM_CHANGE
-	waitanimation
 	return
 BattleScript_GulpMissileNoDmgGulping_StasisGazePreventedContrary:
 	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_GulpMissileNoDmgGulping_StasisGazePreventedContraryDo
@@ -6379,10 +6380,10 @@ BattleScript_MegaEvolution::
 	printstring STRINGID_MEGAEVOREACTING
 BattleScript_MegaEvolutionAfterString:
 	waitmessage B_WAIT_TIME_LONG
-	handlemegaevo BS_SCRIPTING, 0
+	handleformchange BS_SCRIPTING, 0
 	playanimation BS_SCRIPTING, B_ANIM_MEGA_EVOLUTION
 	waitanimation
-	handlemegaevo BS_SCRIPTING, 1
+	handleformchange BS_SCRIPTING, 1
 	printstring STRINGID_MEGAEVOEVOLVED
 	waitmessage B_WAIT_TIME_LONG
 	switchinabilities BS_SCRIPTING
@@ -6410,11 +6411,10 @@ BattleScript_WishMegaEvolutionIllya::
 
 BattleScript_PrimalReversion::
 	flushtextbox
-	handleprimalreversion BS_SCRIPTING, 0
-	handleprimalreversion BS_SCRIPTING, 1
+	handleformchange BS_SCRIPTING, 0
 	playanimation BS_SCRIPTING, B_ANIM_PRIMAL_REVERSION
 	waitanimation
-	handleprimalreversion BS_SCRIPTING, 2
+	handleformchange BS_SCRIPTING, 1
 	printstring STRINGID_PKMNREVERTEDTOPRIMAL
 	waitmessage B_WAIT_TIME_LONG
 	switchinabilities BS_SCRIPTING
@@ -6426,10 +6426,9 @@ BattleScript_PowerConstruct::
 	waitmessage B_WAIT_TIME_SHORT
 	call BattleScript_AbilityPopUpScripting
 	handleformchange BS_SCRIPTING, 0
-	handleformchange BS_SCRIPTING, 1
 	playanimation BS_SCRIPTING, B_ANIM_POWER_CONSTRUCT
 	waitanimation
-	handleformchange BS_SCRIPTING, 2
+	handleformchange BS_SCRIPTING, 1
 	printstring STRINGID_POWERCONSTRUCTTRANSFORM
 	waitmessage B_WAIT_TIME_SHORT
 	end2
@@ -6439,30 +6438,48 @@ BattleScript_UltraBurst::
 	trytrainerslidezmovemsg
 	printstring STRINGID_ULTRABURSTREACTING
 	waitmessage B_WAIT_TIME_LONG
-	handleultraburst BS_SCRIPTING, 0
+	handleformchange BS_SCRIPTING, 0
 	playanimation BS_SCRIPTING, B_ANIM_ULTRA_BURST
 	waitanimation
-	handleultraburst BS_SCRIPTING, 1
+	handleformchange BS_SCRIPTING, 1
 	printstring STRINGID_ULTRABURSTCOMPLETED
 	waitmessage B_WAIT_TIME_LONG
 	switchinabilities BS_SCRIPTING
 	end3
 
-BattleScript_GulpMissileFormChange::
-	call BattleScript_BattlerFormChange
+BattleScript_TwoTurnMovesSecondTurnFormChange::
+	call BattleScript_BattlerFormChangeInstant
 	goto BattleScript_FromTwoTurnMovesSecondTurnRet
 
 BattleScript_BattlerFormChange::
 	pause 5
 	call BattleScript_AbilityPopUpScripting
 	flushtextbox
-BattleScript_BattlerFormChangeNoPopup:
+BattleScript_BattlerFormChangeNoPopup::
 	handleformchange BS_SCRIPTING, 0
-	handleformchange BS_SCRIPTING, 1
 	playanimation BS_SCRIPTING, B_ANIM_FORM_CHANGE
 	waitanimation
-	handleformchange BS_SCRIPTING, 2
+BattleScript_BattlerFormChangeFromAfterAnimation::
+	handleformchange BS_SCRIPTING, 1
+	switchinabilities BS_SCRIPTING
+	jumpifability BS_TARGET, ABILITY_DISGUISE, BattleScript_ApplyDisguiseFormChangeHPLoss
 	return
+
+BattleScript_BattlerFormChangeInstant::
+	handleformchange BS_SCRIPTING, 0
+	playanimation BS_SCRIPTING, B_ANIM_FORM_CHANGE_INSTANT
+	waitanimation
+	goto BattleScript_BattlerFormChangeFromAfterAnimation
+
+BattleScript_BattlerFormChangeDisguise::
+	call BattleScript_AbilityPopUpScripting
+	pause B_WAIT_TIME_LONG
+	handleformchange BS_SCRIPTING, 0
+	playanimation BS_SCRIPTING, B_ANIM_FORM_CHANGE_DISGUISE
+	waitanimation
+	printstring STRINGID_PKMNDISGUISEWASBUSTED
+	waitmessage B_WAIT_TIME_SHORT
+	goto BattleScript_BattlerFormChangeFromAfterAnimation
 
 BattleScript_BattlerFormChangeEnd3NoPopup::
 	call BattleScript_BattlerFormChangeNoPopup
@@ -6477,24 +6494,23 @@ BattleScript_BattlerFormChangeWithString::
 	call BattleScript_AbilityPopUpScripting
 	flushtextbox
 	handleformchange BS_SCRIPTING, 0
-	handleformchange BS_SCRIPTING, 1
 	playanimation BS_SCRIPTING, B_ANIM_FORM_CHANGE
 	waitanimation
-	handleformchange BS_SCRIPTING, 2
+	handleformchange BS_SCRIPTING, 1
 	printstring STRINGID_PKMNTRANSFORMED
 	waitmessage B_WAIT_TIME_LONG
+	switchinabilities BS_SCRIPTING
 	return
 
 BattleScript_AttackerFormChangeMoveEffect::
 	waitmessage 1
 	handleformchange BS_ATTACKER, 0
-	handleformchange BS_ATTACKER, 1
 	playanimation BS_ATTACKER, B_ANIM_FORM_CHANGE
 	waitanimation
+	handleformchange BS_ATTACKER, 1
 	copybyte sBATTLER, gBattlerAttacker
 	printstring STRINGID_PKMNTRANSFORMED
 	waitmessage B_WAIT_TIME_LONG
-	handleformchange BS_ATTACKER, 2
 	return
 
 BattleScript_BallFetch::
@@ -6521,12 +6537,9 @@ BattleScript_ApplyDisguiseFormChangeHPLossReturn:
 BattleScript_TargetFormChangeNoPopup:
 	flushtextbox
 	handleformchange BS_SCRIPTING, 0
-	handleformchange BS_SCRIPTING, 1
 	playanimation BS_TARGET, B_ANIM_FORM_CHANGE
 	waitanimation
-	handleformchange BS_SCRIPTING, 2
-	jumpifability BS_TARGET, ABILITY_DISGUISE, BattleScript_ApplyDisguiseFormChangeHPLoss
-	return
+	goto BattleScript_BattlerFormChangeFromAfterAnimation
 
 BattleScript_TargetFormChange::
 	pause 5
@@ -6537,11 +6550,6 @@ BattleScript_TargetFormChange::
 BattleScript_TargetFormChangeWithString::
 	pause 5
 	call BattleScript_AbilityPopUpTarget
-	call BattleScript_TargetFormChangeNoPopup
-	printstring STRINGID_PKMNTRANSFORMED
-	waitmessage B_WAIT_TIME_LONG
-	return
-
 BattleScript_TargetFormChangeWithStringNoPopup::
 	call BattleScript_TargetFormChangeNoPopup
 	printstring STRINGID_PKMNTRANSFORMED
@@ -6809,7 +6817,7 @@ BattleScript_DoSelfConfusionDmg::
 	effectivenesssound
 	hitanimation BS_ATTACKER
 	waitstate
-	isdmgblockedbydisguise
+	tryselfconfusiondmgformchange
 	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	resultmessage
@@ -8189,10 +8197,9 @@ BattleScript_BattleBondActivatesOnMoveEndAttacker::
 	call BattleScript_AbilityPopUp
 	printstring STRINGID_ATTACKERBECAMEFULLYCHARGED
 	handleformchange BS_ATTACKER, 0
-	handleformchange BS_ATTACKER, 1
 	playanimation BS_ATTACKER, B_ANIM_FORM_CHANGE
 	waitanimation
-	handleformchange BS_ATTACKER, 2
+	handleformchange BS_ATTACKER, 1
 	printstring STRINGID_ATTACKERBECAMEASHSPECIES
 	return
 
@@ -9552,6 +9559,36 @@ BattleScript_SwapToSubstituteContinue:
 BattleScript_SwapToSubstituteReturn:
 	return
 
+BattleScript_StasisGazeActivatesMoveEffect::
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	restoretarget
+	return
+BattleScript_TooScaredToMove::
+	printstring STRINGID_MONTOOSCAREDTOMOVE
+	waitmessage B_WAIT_TIME_LONG
+	playanimation BS_ATTACKER, B_ANIM_MON_SCARED
+	goto BattleScript_MoveEnd
+
+BattleScript_GhostGetOutGetOut::
+	printstring STRINGID_GHOSTGETOUTGETOUT
+	playanimation BS_ATTACKER, B_ANIM_GHOST_GET_OUT
+	goto BattleScript_MoveEnd
+
+BattleScript_SilphScopeUnveiled::
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_SILPHSCOPEUNVEILED
+	waitstate
+	playanimation BS_OPPONENT1, B_ANIM_SILPH_SCOPED
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_GHOSTWASMAROWAK
+	waitmessage B_WAIT_TIME_LONG
+	end2
+
+
 BattleScript_WinningCombination3Activates::
 	savetarget
 	call BattleScript_AbilityPopUp
@@ -10350,13 +10387,4 @@ BattleScript_StasisGazeActivatesAbility::
 	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
 	waitmessage B_WAIT_TIME_LONG
 	restoreattacker
-	return
-
-BattleScript_StasisGazeActivatesMoveEffect::
-	call BattleScript_AbilityPopUpScripting
-	waitanimation
-	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
-	waitmessage B_WAIT_TIME_LONG
-	restoreattacker
-	restoretarget
 	return

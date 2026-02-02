@@ -346,6 +346,8 @@ extern const u8 BattleScript_DancerActivates[];
 extern const u8 BattleScript_AftermathDmg[];
 extern const u8 BattleScript_BattlerFormChange[];
 extern const u8 BattleScript_BattlerFormChangeEnd2[];
+extern const u8 BattleScript_BattlerFormChangeNoPopup[];
+extern const u8 BattleScript_BattlerFormChangeDisguise[];
 extern const u8 BattleScript_AttackerFormChangeWithString[];
 extern const u8 BattleScript_TargetFormChange[];
 extern const u8 BattleScript_AnticipationActivates[];
@@ -398,7 +400,7 @@ extern const u8 BattleScript_DoesntAffectTargetAtkString[];
 extern const u8 BattleScript_DoesntAffectScripting[];
 extern const u8 BattleScript_GulpMissileGorging[];
 extern const u8 BattleScript_GulpMissileGulping[];
-extern const u8 BattleScript_GulpMissileFormChange[];
+extern const u8 BattleScript_TwoTurnMovesSecondTurnFormChange[];
 extern const u8 BattleScript_BattleBondActivatesOnMoveEndAttacker[];
 extern const u8 BattleScript_EffectBattleBondStatIncrease[];
 extern const u8 BattleScript_PrimalWeatherBlocksMove[];
@@ -849,6 +851,10 @@ extern const u8 BattleScript_EffectFilletAway[];
 extern const u8 BattleScript_EffectShedTail[];
 extern const u8 BattleScript_EffectTidyUp[];
 extern const u8 BattleScript_EffectSpicyExtract[];
+extern const u8 BattleScript_GhostBallDodge[];
+extern const u8 BattleScript_GhostGetOutGetOut[];
+extern const u8 BattleScript_TooScaredToMove[];
+extern const u8 BattleScript_SilphScopeUnveiled[];
 
 // Custom added
 extern const u8 BattleScript_EffectUltraInstinct[];
