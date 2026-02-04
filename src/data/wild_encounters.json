@@ -36646,6 +36646,190 @@
               }
             ]
           }
+        },
+        {
+          "map": "MAP_LITTLEROOT_TOWN",
+          "base_label": "gLittlerootTown",
+          "land_mons": {
+            "encounter_rate": 7,
+            "mons": [
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_CELEBI"
+              },
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_MEW"
+              },
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_ALTARIA"
+              },
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_LATIOS"
+              },
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_JIRACHI"
+              },
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_RAYQUAZA"
+              },
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_MEWTWO"
+              },
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_JIRACHI"
+              },
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_RAYQUAZA"
+              },
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_JIRACHI"
+              },
+              {
+                "min_level": 100,
+                "max_level": 100,
+                "species": "SPECIES_RAYQUAZA"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 2,
+            "mons": [
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              }
+            ]
+          },
+          "rock_smash_mons": {
+            "encounter_rate": 50,
+            "mons": [
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_NONE"
+              }
+            ]
+          }
         }
       ]
     },
