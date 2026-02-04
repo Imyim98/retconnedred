@@ -429,6 +429,7 @@ static bool32 HandleEndTurnFirstEventBlock(enum BattlerId battler)
         case ABILITY_HYDRATION:
         case ABILITY_SHED_SKIN:
         case ABILITY_MAINTENANCE:
+        case ABILITY_HEALING_GRACE:
             if (AbilityBattleEffects(ABILITYEFFECT_ENDTURN, battler, ability, MOVE_NONE, TRUE))
                 effect = TRUE;
             break;
@@ -1329,7 +1330,7 @@ static bool32 HandleEndTurnThirdEventBlock(enum BattlerId battler)
             for (gEffectBattler = 0; gEffectBattler < gBattlersCount; gEffectBattler++)
             {
                 if ((gBattleMons[gEffectBattler].status1 & STATUS1_SLEEP)
-                 && GetBattlerAbility(gEffectBattler) != ABILITY_SOUNDPROOF)
+                 && !(GetBattlerAbility(gEffectBattler) == ABILITY_SOUNDPROOF || GetBattlerAbility(gEffectBattler) == ABILITY_LAST_CADENZA))
                 {
                     gBattleMons[gEffectBattler].status1 &= ~STATUS1_SLEEP;
                     gBattleMons[gEffectBattler].volatiles.nightmare = FALSE;

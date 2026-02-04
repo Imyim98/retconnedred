@@ -674,6 +674,9 @@ static enum CancelerResult CancelerPPDeduction(struct BattleContext *ctx)
              ppToDeduct++;
     }
 
+    if (GetBattlerAbility(ctx->battlerAtk) == ABILITY_GRIMOIRE_USER)
+        ppToDeduct = 0;
+
     // For item Metronome, echoed voice
     if (ctx->move != gLastResultingMoves[ctx->battlerAtk] || gBattleStruct->unableToUseMove)
         gBattleMons[ctx->battlerAtk].volatiles.metronomeItemCounter = 0;
@@ -1112,6 +1115,14 @@ static enum CancelerResult CancelerCharging(struct BattleContext *ctx)
             BattleScriptCall(BattleScript_PowerHerbActivation);
             result = CANCELER_RESULT_BREAK;
         }
+        else if (GetBattlerAbility(ctx->battlerAtk) == ABILITY_BRIGHTY_BLOOM)
+        {
+            gBattleScripting.animTurn = 1;
+            gBattleScripting.animTargetsHit = 0;
+            gProtectStructs[ctx->battlerAtk].chargingTurn = FALSE;
+            BattleScriptCall(BattleScript_NoChargingAbilityActivates);
+            result = CANCELER_RESULT_BREAK;
+        }
         else // Use move next turn
         {
             gBattleMons[ctx->battlerAtk].volatiles.multipleTurns = TRUE;
@@ -1478,7 +1489,7 @@ static enum CancelerResult CancelerNotFullyProtected(struct BattleContext *ctx)
 
 static bool32 IsMoveParentalBondAffected(struct BattleContext *ctx)
 {
-    if (ctx->abilityAtk != ABILITY_PARENTAL_BOND
+    if (!(ctx->abilityAtk == ABILITY_PARENTAL_BOND || ctx->abilityAtk == ABILITY_TWIN_BODY || ctx->abilityAtk == ABILITY_SIBLINGS_BOND)
      || gBattleStruct->numSpreadTargets > 1
      || IsMoveParentalBondBanned(ctx->move)
      || GetMoveCategory(ctx->move) == DAMAGE_CATEGORY_STATUS

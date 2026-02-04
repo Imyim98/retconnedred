@@ -9734,6 +9734,7 @@ BattleScript_DimensionWallInitiate::
 	setreflect
 	setsafeguard
 	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
 	return
 
 BattleScript_HakureiBarrierInitiate::
@@ -10389,4 +10390,22 @@ BattleScript_StasisGazeActivatesAbility::
 	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
 	waitmessage B_WAIT_TIME_LONG
 	restoreattacker
+	return
+
+BattleScript_WindyEgretActivates::
+	call BattleScript_AbilityPopUpTarget
+	printstring STRINGID_TAILWINDBLEW
+	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_NoChargingAbilityActivates::
+	call BattleScript_AbilityPopUp
+	printstring STRINGID_FULLYCHARGEDABILITY
+	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_EffectTryReducePPPrevented::
+	call BattleScript_AbilityPopUpTarget
+	printstring STRINGID_ABILITYPREVENTPPREDUCTION
+	waitmessage B_WAIT_TIME_LONG
 	return

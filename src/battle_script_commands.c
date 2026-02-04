@@ -4168,7 +4168,9 @@ void SetMoveEffect(enum BattlerId battlerAtk, enum BattlerId effectBattler, enum
             recoil = 1;
         if (abilities[gEffectBattler] == ABILITY_PARENTAL_BOND)
             recoil *= 2;
-        if (GetBattlerAbility(gEffectBattler) == ABILITY_TWIN_BODY)
+        if (abilities[gEffectBattler] == ABILITY_TWIN_BODY)
+            recoil *= 2;
+        if (abilities[gEffectBattler] == ABILITY_SIBLINGS_BOND)
             recoil *= 2;
         SetPassiveDamageAmount(gEffectBattler, recoil);
         TryUpdateEvolutionTracker(IF_RECOIL_DAMAGE_GE, gBattleStruct->passiveHpUpdate[gBattlerAttacker], MOVE_NONE);
@@ -4822,7 +4824,10 @@ void SetMoveEffect(enum BattlerId battlerAtk, enum BattlerId effectBattler, enum
             && gLastMoves[gBattlerTarget] != MOVE_UNAVAILABLE)
         {
             BattleScriptPush(battleScript);
-            gBattlescriptCurrInstr = BattleScript_EffectTryReducePP;
+            if (GetBattlerAbility(gBattlerTarget) == ABILITY_GRIMOIRE_USER)
+                gBattlescriptCurrInstr = BattleScript_EffectTryReducePPPrevented;
+            else
+                gBattlescriptCurrInstr = BattleScript_EffectTryReducePP;
         }
         break;
     case MOVE_EFFECT_PARALYZE_SIDE:
@@ -9067,7 +9072,7 @@ static void Cmd_trysetrest(void)
 bool8 UproarWakeUpCheck(enum BattlerId battler)
 {
     enum BattlerId i;
-    bool32 hasSoundproof = (B_UPROAR_IGNORE_SOUNDPROOF < GEN_5 && GetBattlerAbility(battler) == ABILITY_SOUNDPROOF);
+    bool32 hasSoundproof = (B_UPROAR_IGNORE_SOUNDPROOF < GEN_5 && (GetBattlerAbility(battler) == ABILITY_SOUNDPROOF || GetBattlerAbility(battler) == ABILITY_LAST_CADENZA));
 
     for (i = 0; i < gBattlersCount; i++)
     {
@@ -10672,7 +10677,7 @@ static void Cmd_healpartystatus(void)
 
     if (GetConfig(CONFIG_HEAL_BELL_SOUNDPROOF) == GEN_5
      || GetConfig(CONFIG_HEAL_BELL_SOUNDPROOF) >= GEN_8
-     || !(isSoundMove && GetBattlerAbility(gBattlerAttacker) == ABILITY_SOUNDPROOF))
+     || !(isSoundMove && (GetBattlerAbility(gBattlerAttacker) == ABILITY_SOUNDPROOF || GetBattlerAbility(gBattlerAttacker) == ABILITY_LAST_CADENZA)))
     {
         if (isSoundMove)
             gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_BELL;
@@ -10692,7 +10697,7 @@ static void Cmd_healpartystatus(void)
     if (IsBattlerAlive(partner))
     {
         if (GetConfig(CONFIG_HEAL_BELL_SOUNDPROOF) == GEN_5
-         || !(isSoundMove && GetBattlerAbility(partner) == ABILITY_SOUNDPROOF))
+         || !(isSoundMove && (GetBattlerAbility(partner) == ABILITY_SOUNDPROOF || GetBattlerAbility(partner) == ABILITY_LAST_CADENZA)))
         {
             gBattleMons[partner].status1 = 0;
             gBattleMons[partner].volatiles.nightmare = FALSE;
@@ -10739,7 +10744,7 @@ static void Cmd_healpartystatus(void)
                 #endif
             }
 
-            if (!(isSoundMove && ability == ABILITY_SOUNDPROOF))
+            if (!(isSoundMove && (ability == ABILITY_SOUNDPROOF || ability == ABILITY_LAST_CADENZA)))
             {
                 toHeal |= (1 << i);
                 TryDeactivateSleepClause(GetBattlerSide(gBattlerAttacker), i);
@@ -14399,6 +14404,13 @@ void BS_JumpIfBlockedBySoundproof(void)
         RecordAbilityBattle(battler, gLastUsedAbility);
         gBattlerAbility = battler;
     }
+    else if (IsSoundMove(gCurrentMove) && GetBattlerAbility(battler) == ABILITY_LAST_CADENZA)
+    {
+        gLastUsedAbility = ABILITY_LAST_CADENZA;
+        gBattlescriptCurrInstr = cmd->jumpInstr;
+        RecordAbilityBattle(battler, gLastUsedAbility);
+        gBattlerAbility = battler;
+    }
     else
     {
         gBattlescriptCurrInstr = cmd->nextInstr;
@@ -14586,7 +14598,7 @@ static void UpdatePokeFlutePartyStatus(struct Pokemon* party, u8 position)
         if (species != SPECIES_NONE
             && species != SPECIES_EGG
             && status & AILMENT_FNT
-            && GetAbilityBySpecies(species, abilityNum) != ABILITY_SOUNDPROOF)
+            && !(GetAbilityBySpecies(species, abilityNum) == ABILITY_SOUNDPROOF || GetAbilityBySpecies(species, abilityNum) == ABILITY_LAST_CADENZA))
             monToCheck |= (1 << i);
     }
     if (monToCheck)
@@ -14606,7 +14618,7 @@ void BS_CheckPokeFlute(void)
 
     for (enum BattlerId i = 0; i < gBattlersCount; i++)
     {
-        if (GetBattlerAbility(i) != ABILITY_SOUNDPROOF)
+        if (!(GetBattlerAbility(i) == ABILITY_SOUNDPROOF || GetBattlerAbility(i) == ABILITY_LAST_CADENZA))
         {
             gBattleMons[i].status1 &= ~STATUS1_SLEEP;
             gBattleMons[i].volatiles.nightmare = FALSE;

@@ -245,6 +245,8 @@ enum RandomTag
     RNG_TRANSFORM_DECADE,
     RNG_FIVE_ELEMENT,
     RNG_STRAWBERRY_CROSS,
+    RNG_HEAVY_BLOW,
+    RNG_ELEGANT_BLOW,
 };
 
 #define RandomWeighted(tag, ...) \

@@ -3387,4 +3387,103 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .description = COMPOUND_STRING("All moves get STAB."),
         .aiRating = 5,
     },
+
+    [ABILITY_SIBLINGS_BOND] =
+    {
+        .name = _("Siblings Bond"),
+        .description = COMPOUND_STRING("Moves hit twice."),
+        .aiRating = 10,
+    },
+
+    [ABILITY_LAST_CADENZA] =
+    {
+        .name = _("Last Cadenza"),
+        .description = COMPOUND_STRING("All sound-related abilities."),
+        .aiRating = 7,
+    },
+
+    [ABILITY_STORM_WIND] =
+    {
+        .name = _("Storm Wind"),
+        .description = COMPOUND_STRING("Powers up Wind moves."),
+        .aiRating = 7,
+    },
+
+    [ABILITY_FASHIONIST] =
+    {
+        .name = _("Fashionist"),
+        .description = COMPOUND_STRING("Lowers foe's accuracy."),
+        .aiRating = 4,
+    },
+
+    [ABILITY_EMISSARY_OF_LIGHT] =
+    {
+        .name = _("Light Emissary"),
+        .description = COMPOUND_STRING("---"),
+        .aiRating = 6,
+    },
+
+    [ABILITY_ILLUSIONARY_PRECURE] =
+    {
+        .name = _("Illusionary Cure"),
+        .description = COMPOUND_STRING("---"),
+        .aiRating = 6,
+    },
+
+    [ABILITY_FALSE_EXISTENCE] =
+    {
+        .name = _("False Existence"),
+        .description = COMPOUND_STRING("---"),
+        .aiRating = 6,
+    },
+
+    [ABILITY_PHOENIX_DOWN] =
+    {
+        .name = _("Phoenix Down"),
+        .description = COMPOUND_STRING("Revives user when KO'ed"),
+        .aiRating = 8,
+    },
+
+    [ABILITY_HEALING_GRACE] =
+    {
+        .name = _("Healing Grace"),
+        .description = COMPOUND_STRING("End turn, heals status."),
+        .aiRating = 7,
+    },
+
+    [ABILITY_HEAVY_BLOW] =
+    {
+        .name = _("Heavy Blow"),
+        .description = COMPOUND_STRING("Moves may cause flinching."),
+        .aiRating = 7,
+    },
+
+    [ABILITY_ELEGANT_BLOW] =
+    {
+        .name = _("Elegant Blow"),
+        .description = COMPOUND_STRING("Moves may cause paralyzing."),
+        .aiRating = 7,
+    },
+
+    [ABILITY_BRIGHTY_BLOOM] =
+    {
+        .name = _("Brighty Bloom"),
+        .description = COMPOUND_STRING("Nature Field & no charge."),
+        .aiRating = 7,
+    },
+
+    [ABILITY_WINDY_EGRET] =
+    {
+        .name = _("Windy Egret"),
+        .description = COMPOUND_STRING("Tailwind & Flying/Wind priority."),
+        .aiRating = 7,
+    },
+
+    [ABILITY_WIND_FIELD] =
+    {
+        .name = _("Wind Field"),
+        .description = COMPOUND_STRING("Tailwind when entering battle."),
+        .aiRating = 7,
+    },
+
 };

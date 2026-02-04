@@ -2337,6 +2337,7 @@ const struct BattleMoveEffect gBattleMoveEffects[NUM_BATTLE_MOVE_EFFECTS] =
     {
         .battleScript = BattleScript_EffectAstromancy,
         .battleTvScore = 0, // TODO: Assign points
+        .twoTurnEffect = TRUE,
     },
 
     [EFFECT_SPATK_SPDEF_UP2] =

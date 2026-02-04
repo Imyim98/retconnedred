@@ -620,6 +620,7 @@ static bool32 FindMonThatAbsorbsOpponentsMove(enum BattlerId battler)
     if (IsSoundMove(incomingMove) || (isOpposingBattlerChargingOrInvulnerable && IsSoundMove(incomingMove)))
     {
         absorbingTypeAbilities[numAbsorbingAbilities++] = ABILITY_SOUNDPROOF;
+        absorbingTypeAbilities[numAbsorbingAbilities++] = ABILITY_LAST_CADENZA;
     }
     if (IsBallisticMove(incomingMove) || (isOpposingBattlerChargingOrInvulnerable && IsBallisticMove(incomingMove)))
     {
@@ -745,6 +746,7 @@ static bool32 ShouldSwitchIfBadlyStatused(enum BattlerId battler)
     if (gBattleMons[battler].volatiles.perishSong
         && gBattleMons[battler].volatiles.perishSongTimer == 0
         && monAbility != ABILITY_SOUNDPROOF
+        && monAbility != ABILITY_LAST_CADENZA
         && monAbility != ABILITY_FANTASY_BREAKER
         && RandomPercentage(RNG_AI_SWITCH_PERISH_SONG, GetSwitchChance(SHOULD_SWITCH_PERISH_SONG)))
         return SetSwitchinAndSwitch(battler, PARTY_SIZE);
@@ -772,6 +774,7 @@ static bool32 ShouldSwitchIfBadlyStatused(enum BattlerId battler)
             if ((monAbility == ABILITY_NATURAL_CURE
                 || monAbility == ABILITY_SHED_SKIN
                 || monAbility == ABILITY_MAINTENANCE
+                || monAbility == ABILITY_HEALING_GRACE
                 || monAbility == ABILITY_EARLY_BIRD)
                 || holdEffect == (HOLD_EFFECT_CURE_SLP | HOLD_EFFECT_CURE_STATUS)
                 || HasMoveWithEffect(battler, EFFECT_SLEEP_TALK)

@@ -947,6 +947,8 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_WALLMASTERALSOCALLEDMIST]             = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX}'s {B_SCR_ABILITY} allowed {B_ATK_NAME_WITH_PREFIX} to use White Mist!"),
     [STRINGID_DEVOURHEAL]                           = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} recovered HP from the devoured foe!"),
     [STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE]    = COMPOUND_STRING("Stasis Gaze prevented the stat raise!"),
+    [STRINGID_FULLYCHARGEDABILITY]                  = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} became fully charged due to its {B_SCR_ABILITY}!"),
+    [STRINGID_ABILITYPREVENTPPREDUCTION]            = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX}'s {B_SCR_ABILITY} prevented PP reduction!"),
 };
 
 const u16 gTrainerUsedItemStringIds[] =

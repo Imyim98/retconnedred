@@ -559,6 +559,8 @@ extern const u8 BattleScript_ExShadowHalfAttackerDamage[];
 extern const u8 BattleScript_EffectCardInclude[];
 extern const u8 BattleScript_MadeLastWish[];
 extern const u8 BattleScript_LastWishRecover[];
+extern const u8 BattleScript_WindyEgretActivates[];
+extern const u8 BattleScript_NoChargingAbilityActivates[];
 
 // zmoves
 extern const u8 BattleScript_ZMoveActivateDamaging[];
@@ -889,5 +891,6 @@ extern const u8 BattleScript_StasisGazeActivatesMove[];
 extern const u8 BattleScript_StasisGazeActivatesAbilitySwitchIn[];
 extern const u8 BattleScript_StasisGazeActivatesAbility[];
 extern const u8 BattleScript_StasisGazeActivatesMoveEffect[];
+extern const u8 BattleScript_EffectTryReducePPPrevented[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

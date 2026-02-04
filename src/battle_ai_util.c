@@ -819,7 +819,7 @@ static inline void CalcDynamicMoveDamage(struct BattleContext *ctx, u16 *medianD
             maximum *= 5;
         }
     }
-    else if ((ctx->abilityAtk == ABILITY_PARENTAL_BOND || ctx->abilityAtk == ABILITY_TWIN_BODY)
+    else if ((ctx->abilityAtk == ABILITY_PARENTAL_BOND || ctx->abilityAtk == ABILITY_TWIN_BODY || ctx->abilityAtk == ABILITY_SIBLINGS_BOND)
           && strikeCount == 0
           && !AI_IsDoubleSpreadMove(ctx->battlerAtk, ctx->move))
     {
@@ -1510,6 +1510,8 @@ bool32 CanEndureHit(enum BattlerId battler, enum BattlerId battlerTarget, enum M
         return FALSE;
     if (!AI_BattlerAtMaxHp(battlerTarget) || IsMultiHitMove(move) || gAiLogicData->abilities[battler]  == ABILITY_TWIN_BODY)
         return FALSE;
+    if (!AI_BattlerAtMaxHp(battlerTarget) || IsMultiHitMove(move) || gAiLogicData->abilities[battler]  == ABILITY_SIBLINGS_BOND)
+        return FALSE;
     if (GetMoveStrikeCount(move) > 1 && !(AI_GetBattlerMoveTargetType(battler, move) == TARGET_SMART && !HasTwoOpponents(battler)))
         return FALSE;
     if (gAiLogicData->holdEffects[battlerTarget] == HOLD_EFFECT_FOCUS_SASH)
@@ -1968,6 +1970,7 @@ u32 AI_GetSwitchinFieldStatus(enum BattlerId battler)
     case ABILITY_HADRON_ENGINE:
         return SwitchinChangeBattleTerrain(STATUS_FIELD_ELECTRIC_TERRAIN, startingFieldStatus);
     case ABILITY_GRASSY_SURGE:
+    case ABILITY_BRIGHTY_BLOOM:
         return SwitchinChangeBattleTerrain(STATUS_FIELD_GRASSY_TERRAIN, startingFieldStatus);
     case ABILITY_MISTY_SURGE:
         return SwitchinChangeBattleTerrain(STATUS_FIELD_MISTY_TERRAIN, startingFieldStatus);
@@ -3896,6 +3899,7 @@ bool32 AnyPartyMemberStatused(enum BattlerId battlerId, bool32 checkSoundproof)
         // Check partner's status
         if ((GetConfig(CONFIG_HEAL_BELL_SOUNDPROOF) == GEN_5
             || gAiLogicData->abilities[BATTLE_PARTNER(battlerId)] != ABILITY_SOUNDPROOF
+            || gAiLogicData->abilities[BATTLE_PARTNER(battlerId)] != ABILITY_LAST_CADENZA
             || !checkSoundproof)
          && GetMonData(&party[battlerOnField2], MON_DATA_STATUS) != STATUS1_NONE
          && ShouldCureStatus(battlerId, BATTLE_PARTNER(battlerId), gAiLogicData))
@@ -3910,7 +3914,7 @@ bool32 AnyPartyMemberStatused(enum BattlerId battlerId, bool32 checkSoundproof)
     // Check attacker's status
     if ((GetConfig(CONFIG_HEAL_BELL_SOUNDPROOF) == GEN_5
       || GetConfig(CONFIG_HEAL_BELL_SOUNDPROOF) >= GEN_8
-      || gAiLogicData->abilities[battlerId] != ABILITY_SOUNDPROOF || !checkSoundproof)
+      || !(gAiLogicData->abilities[battlerId] == ABILITY_SOUNDPROOF || gAiLogicData->abilities[battlerId] == ABILITY_LAST_CADENZA) || !checkSoundproof)
      && GetMonData(&party[battlerOnField1], MON_DATA_STATUS) != STATUS1_NONE
      && ShouldCureStatus(battlerId, battlerId, gAiLogicData))
         hasStatusToCure = TRUE;
@@ -3922,7 +3926,7 @@ bool32 AnyPartyMemberStatused(enum BattlerId battlerId, bool32 checkSoundproof)
             continue;
         if (GetConfig(CONFIG_HEAL_BELL_SOUNDPROOF) < GEN_5
          && checkSoundproof
-         && GetMonAbility(&party[monIndex]) == ABILITY_SOUNDPROOF)
+         && (GetMonAbility(&party[monIndex]) == ABILITY_SOUNDPROOF || GetMonAbility(&party[monIndex]) == ABILITY_LAST_CADENZA))
             continue;
         if (GetMonData(&party[monIndex], MON_DATA_STATUS) != STATUS1_NONE)
             return TRUE;
@@ -6182,6 +6186,7 @@ enum AIScore BattlerBenefitsFromAbilityScore(enum BattlerId battler, enum Abilit
         return GOOD_EFFECT;
     // Conditional ability logic goes here.
     case ABILITY_COMPOUND_EYES:
+    case ABILITY_FOCUS:
         if (HasMoveWithLowAccuracy(battler, LEFT_FOE(battler), 90, FALSE)
          || HasMoveWithLowAccuracy(battler, RIGHT_FOE(battler), 90, FALSE))
             return GOOD_EFFECT;

@@ -5047,6 +5047,12 @@ s32 GetBattleMovePriority(enum BattlerId battler, enum Ability ability, enum Mov
     {
         priority++;
     }
+    else if (ability == ABILITY_WINDY_EGRET
+          && IsBattlerAtMaxHp(battler)
+          && (GetMoveType(move) == TYPE_NEW_FLYING || GetMoveType(move) == TYPE_NEW_WIND))
+    {
+        priority++;
+    }
     else if (IsBattleMoveStatus(move) && IsAbilityAndRecord(battler, ability, ABILITY_PRANKSTER))
     {
         gProtectStructs[battler].pranksterElevated = 1;
@@ -6355,7 +6361,7 @@ enum Type GetDynamicMoveType(struct Pokemon *mon, enum Move move, enum BattlerId
     {
         return TYPE_NEW_WATER;
     }
-    else if (IsSoundMove(move) && ability == ABILITY_FORTISSIMO)
+    else if (IsSoundMove(move) && (ability == ABILITY_FORTISSIMO || ability == ABILITY_LAST_CADENZA))
     {
         u32 teraType;
         if (GetActiveGimmick(battler) == GIMMICK_TERA && ((teraType = GetMonData(mon, MON_DATA_TERA_TYPE)) != TYPE_STELLAR))

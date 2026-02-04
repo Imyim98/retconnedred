@@ -1987,15 +1987,15 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
             if (!isBattle1v1)
             {
                 if (CountUsablePartyMons(battlerAtk) == 0
-                  && !(aiData->abilities[battlerAtk] == ABILITY_SOUNDPROOF || aiData->abilities[battlerAtk] == ABILITY_FANTASY_BREAKER)
+                  && !(aiData->abilities[battlerAtk] == ABILITY_SOUNDPROOF || aiData->abilities[battlerAtk] == ABILITY_FANTASY_BREAKER || aiData->abilities[battlerAtk] == ABILITY_LAST_CADENZA)
                   && CountUsablePartyMons(battlerDef) >= 1
-                  && (aiData->abilities[BATTLE_PARTNER(battlerAtk)] != ABILITY_SOUNDPROOF || !IsBattlerAlive(BATTLE_PARTNER(battlerAtk))))
+                  && (!(aiData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_SOUNDPROOF || aiData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_FANTASY_BREAKER || aiData->abilities[BATTLE_PARTNER(battlerAtk)] == ABILITY_LAST_CADENZA) || !IsBattlerAlive(BATTLE_PARTNER(battlerAtk))))
                 {
                     ADJUST_SCORE(-10); //Don't wipe your team if you're going to lose
                 }
-                else if ((!IsBattlerAlive(LEFT_FOE(battlerAtk)) || aiData->abilities[LEFT_FOE(battlerAtk)] == ABILITY_SOUNDPROOF || aiData->abilities[LEFT_FOE(battlerAtk)] == ABILITY_FANTASY_BREAKER
+                else if ((!IsBattlerAlive(LEFT_FOE(battlerAtk)) || aiData->abilities[LEFT_FOE(battlerAtk)] == ABILITY_SOUNDPROOF || aiData->abilities[LEFT_FOE(battlerAtk)] == ABILITY_FANTASY_BREAKER || aiData->abilities[LEFT_FOE(battlerAtk)] == ABILITY_LAST_CADENZA
                   || gBattleMons[LEFT_FOE(battlerAtk)].volatiles.perishSong)
-                  && (!IsBattlerAlive(RIGHT_FOE(battlerAtk)) || aiData->abilities[RIGHT_FOE(battlerAtk)] == ABILITY_SOUNDPROOF || aiData->abilities[RIGHT_FOE(battlerAtk)] == ABILITY_FANTASY_BREAKER
+                  && (!IsBattlerAlive(RIGHT_FOE(battlerAtk)) || aiData->abilities[RIGHT_FOE(battlerAtk)] == ABILITY_SOUNDPROOF || aiData->abilities[RIGHT_FOE(battlerAtk)] == ABILITY_FANTASY_BREAKER || aiData->abilities[LEFT_FOE(battlerAtk)] == ABILITY_LAST_CADENZA
                   || gBattleMons[RIGHT_FOE(battlerAtk)].volatiles.perishSong))
                 {
                     ADJUST_SCORE(-10); //Both enemies are perish songed
@@ -2007,10 +2007,10 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
             }
             else
             {
-                if (CountUsablePartyMons(battlerAtk) == 0 && !(aiData->abilities[battlerAtk] == ABILITY_SOUNDPROOF || aiData->abilities[battlerAtk] == ABILITY_FANTASY_BREAKER)
+                if (CountUsablePartyMons(battlerAtk) == 0 && !(aiData->abilities[battlerAtk] == ABILITY_SOUNDPROOF || aiData->abilities[battlerAtk] == ABILITY_FANTASY_BREAKER || aiData->abilities[battlerAtk] == ABILITY_LAST_CADENZA)
                   && CountUsablePartyMons(battlerDef) >= 1)
                     ADJUST_SCORE(-10);
-                if (gBattleMons[battlerDef].volatiles.perishSong || aiData->abilities[battlerDef] == ABILITY_SOUNDPROOF || aiData->abilities[battlerDef] == ABILITY_FANTASY_BREAKER)
+                if (gBattleMons[battlerDef].volatiles.perishSong || aiData->abilities[battlerDef] == ABILITY_SOUNDPROOF || aiData->abilities[battlerDef] == ABILITY_FANTASY_BREAKER || aiData->abilities[battlerAtk] == ABILITY_LAST_CADENZA)
                     ADJUST_SCORE(-10);
             }
             break;
@@ -4613,7 +4613,7 @@ static s32 AI_CalcMoveEffectScore(enum BattlerId battlerAtk, enum BattlerId batt
         score += AI_TryToClearStats(battlerAtk, battlerDef, moveTargetsBothOpponents);
         break;
     case EFFECT_ROAR:
-        if ((gMovesInfo[move].soundMove && aiData->abilities[battlerDef] == ABILITY_SOUNDPROOF)
+        if ((gMovesInfo[move].soundMove && (aiData->abilities[battlerDef] == ABILITY_SOUNDPROOF || aiData->abilities[battlerDef] == ABILITY_LAST_CADENZA))
           || aiData->abilities[battlerDef] == ABILITY_SUCTION_CUPS
           || aiData->abilities[battlerDef] == ABILITY_FANTASY_BREAKER
           || aiData->abilities[battlerDef] == ABILITY_GATE_KEEPER)
@@ -4696,6 +4696,7 @@ static s32 AI_CalcMoveEffectScore(enum BattlerId battlerAtk, enum BattlerId batt
               || HasUsableWhileAsleepMove(battlerAtk)
               || aiData->abilities[battlerAtk] == ABILITY_SHED_SKIN
               || aiData->abilities[battlerAtk] == ABILITY_MAINTENANCE
+              || aiData->abilities[battlerAtk] == ABILITY_HEALING_GRACE
               || aiData->abilities[battlerAtk] == ABILITY_EARLY_BIRD
               || (AI_GetWeather() & B_WEATHER_RAIN && gBattleStruct->weatherDuration != 1 && aiData->abilities[battlerAtk] == ABILITY_HYDRATION && aiData->holdEffects[battlerAtk] != HOLD_EFFECT_UTILITY_UMBRELLA))
                 ADJUST_SCORE(GOOD_EFFECT);
