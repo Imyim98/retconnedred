@@ -10393,9 +10393,10 @@ BattleScript_StasisGazeActivatesAbility::
 	return
 
 BattleScript_WindyEgretActivates::
-	call BattleScript_AbilityPopUpTarget
+	call BattleScript_AbilityPopUpScripting
 	printstring STRINGID_TAILWINDBLEW
 	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
 	return
 
 BattleScript_NoChargingAbilityActivates::

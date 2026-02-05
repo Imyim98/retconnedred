@@ -4217,6 +4217,8 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
             {
                 gSideStatuses[side] |= SIDE_STATUS_TAILWIND;
                 gSideTimers[side].tailwindTimer = (GetConfig(CONFIG_TAILWIND_TURNS) >= GEN_5 ? 4 : 3);
+                SaveBattlerAttacker(gBattlerAttacker);
+                gBattleScripting.battler = gBattlerAttacker;
                 BattleScriptCall(BattleScript_WindyEgretActivates);
                 effect++;
             }

@@ -4823,11 +4823,16 @@ void SetMoveEffect(enum BattlerId battlerAtk, enum BattlerId effectBattler, enum
         if (gLastMoves[gBattlerTarget] != MOVE_NONE
             && gLastMoves[gBattlerTarget] != MOVE_UNAVAILABLE)
         {
-            BattleScriptPush(battleScript);
             if (GetBattlerAbility(gBattlerTarget) == ABILITY_GRIMOIRE_USER)
+            {
+                BattleScriptPush(battleScript);
                 gBattlescriptCurrInstr = BattleScript_EffectTryReducePPPrevented;
+            }
             else
+            {
+                BattleScriptPush(battleScript);
                 gBattlescriptCurrInstr = BattleScript_EffectTryReducePP;
+            }
         }
         break;
     case MOVE_EFFECT_PARALYZE_SIDE:
