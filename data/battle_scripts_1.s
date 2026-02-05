@@ -10399,9 +10399,10 @@ BattleScript_WindyEgretActivates::
 	return
 
 BattleScript_NoChargingAbilityActivates::
-	call BattleScript_AbilityPopUp
+	call BattleScript_AbilityPopUpScripting
 	printstring STRINGID_FULLYCHARGEDABILITY
 	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
 	return
 
 BattleScript_EffectTryReducePPPrevented::

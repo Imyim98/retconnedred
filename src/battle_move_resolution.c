@@ -1066,6 +1066,7 @@ static bool32 CanTwoTurnMoveFireThisTurn(struct BattleContext *ctx)
 {
     if (gBattleMoveEffects[GetMoveEffect(ctx->move)].semiInvulnerableEffect
      || GetMoveEffect(ctx->move) == EFFECT_GEOMANCY
+     || GetMoveEffect(ctx->move) == EFFECT_ASTROMANCY
      || !IsBattlerWeatherAffected(ctx->battlerAtk, GetMoveTwoTurnAttackWeather(ctx->move)))
         return FALSE;
     return TRUE;
@@ -1120,6 +1121,8 @@ static enum CancelerResult CancelerCharging(struct BattleContext *ctx)
             gBattleScripting.animTurn = 1;
             gBattleScripting.animTargetsHit = 0;
             gProtectStructs[ctx->battlerAtk].chargingTurn = FALSE;
+            SaveBattlerAttacker(gBattlerAttacker);
+            gBattleScripting.battler = gBattlerAttacker;
             BattleScriptCall(BattleScript_NoChargingAbilityActivates);
             result = CANCELER_RESULT_BREAK;
         }
