@@ -1293,7 +1293,7 @@ BattleScript_StrengthSap_StasisGazePreventedContraryDo:
 	waitmessage B_WAIT_TIME_LONG
 	restoreattacker
 	restoretarget
-	goto BattleScript_StrengthSapHp
+	goto BattleScript_MoveEnd
 BattleScript_EffectStrengthSap_StasisGazePreventedContrary:
 	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_EffectStrengthSap_StasisGazePreventedContraryDo
 	goto BattleScript_EffectStrengthSap_AfterStasisGazeContraryCheck
