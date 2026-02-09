@@ -3,7 +3,7 @@
   "name": "JavaNaturePreserve1",
   "layout": "LAYOUT_JAVA_NATURE_PRESERVE1",
   "music": "MUS_THPPZGSK_371A_FAIRY_WARS",
-  "region_map_section": "MAPSEC_0XDC",
+  "region_map_section": "MAPSEC_JAVA_NATURE_PRESERVE",
   "requires_flash": false,
   "weather": "WEATHER_SHADE",
   "map_type": "MAP_TYPE_ROUTE",
@@ -25,7 +25,22 @@
     }
   ],
   "object_events": [],
-  "warp_events": [],
+  "warp_events": [
+    {
+      "x": 26,
+      "y": 24,
+      "elevation": 0,
+      "dest_map": "MAP_JAVA_NATURE_PRESERVE1",
+      "dest_warp_id": "1"
+    },
+    {
+      "x": 41,
+      "y": 24,
+      "elevation": 0,
+      "dest_map": "MAP_JAVA_NATURE_PRESERVE1",
+      "dest_warp_id": "0"
+    }
+  ],
   "coord_events": [],
   "bg_events": []
 }

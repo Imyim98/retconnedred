@@ -13184,10 +13184,10 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #endif //P_GEN_4_CROSS_EVOS
 
 #if !P_GBA_STYLE_SPECIES_GFX
-    const u32 gMonFrontPic_Chimecho[] = INCBIN_U32("graphics/pokemon/chimecho/anim_front.4bpp.smol");
-    const u16 gMonPalette_Chimecho[] = INCBIN_U16("graphics/pokemon/chimecho/normal.gbapal");
-    const u32 gMonBackPic_Chimecho[] = INCBIN_U32("graphics/pokemon/chimecho/back.4bpp.smol");
-    const u16 gMonShinyPalette_Chimecho[] = INCBIN_U16("graphics/pokemon/chimecho/shiny.gbapal");
+    const u32 gMonFrontPic_Chimecho[] = INCBIN_U32("graphics/pokemon/_add/etc/vt/foxyria/anim_front.4bpp.smol");
+    const u16 gMonPalette_Chimecho[] = INCBIN_U16("graphics/pokemon/_add/etc/vt/foxyria/normal.gbapal");
+    const u32 gMonBackPic_Chimecho[] = INCBIN_U32("graphics/pokemon/_add/etc/vt/foxyria/back.4bpp.smol");
+    const u16 gMonShinyPalette_Chimecho[] = INCBIN_U16("graphics/pokemon/_add/etc/vt/foxyria/shiny.gbapal");
 #else
     const u32 gMonFrontPic_Chimecho[] = INCBIN_U32("graphics/pokemon/chimecho/anim_front_gba.4bpp.smol");
     const u16 gMonPalette_Chimecho[] = INCBIN_U16("graphics/pokemon/chimecho/normal_gba.gbapal");
@@ -13195,12 +13195,12 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u16 gMonShinyPalette_Chimecho[] = INCBIN_U16("graphics/pokemon/chimecho/shiny_gba.gbapal");
 #endif //P_GBA_STYLE_SPECIES_GFX
 #if !P_GBA_STYLE_SPECIES_ICONS
-    const u8 gMonIcon_Chimecho[] = INCBIN_U8("graphics/pokemon/chimecho/icon.4bpp");
+    const u8 gMonIcon_Chimecho[] = INCBIN_U8("graphics/pokemon/_add/etc/vt/foxyria/icon.4bpp");
 #else
     const u8 gMonIcon_Chimecho[] = INCBIN_U8("graphics/pokemon/chimecho/icon_gba.4bpp");
 #endif //P_GBA_STYLE_SPECIES_ICONS
 #if P_FOOTPRINTS
-    const u8 gMonFootprint_Chimecho[] = INCBIN_U8("graphics/pokemon/chimecho/footprint.1bpp");
+    const u8 gMonFootprint_Chimecho[] = INCBIN_U8("graphics/pokemon/_add/etc/vt/foxyria/footprint.1bpp");
 #endif //P_FOOTPRINTS
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_Chimecho[] = INCBIN_COMP("graphics/pokemon/chimecho/overworld.4bpp");

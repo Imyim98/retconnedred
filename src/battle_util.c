@@ -10874,7 +10874,7 @@ void SetDynamicMoveCategory(enum BattlerId battlerAtk, enum BattlerId battlerDef
             gBattleStruct->swapDamageCategory = GetCategoryBasedOnStats(battlerAtk) == DAMAGE_CATEGORY_PHYSICAL;
         break;
     case EFFECT_TERA_STARSTORM:
-        if (GetActiveGimmick(battlerAtk) == GIMMICK_TERA && GET_BASE_SPECIES_ID(GetMonData(GetBattlerMon(battlerAtk), MON_DATA_SPECIES)) == SPECIES_TERAPAGOS)
+        if (GetActiveGimmick(battlerAtk) == GIMMICK_TERA && GET_BASE_SPECIES_ID(GetMonData(GetBattlerMon(battlerAtk), MON_DATA_SPECIES)) == SPECIES_CHIMECHO)
             gBattleStruct->swapDamageCategory = GetCategoryBasedOnStats(battlerAtk) == DAMAGE_CATEGORY_PHYSICAL;
         break;
     default:
@@ -11221,7 +11221,7 @@ enum MoveTarget GetBattlerMoveTargetType(enum BattlerId battler, enum Move move)
         return TARGET_USER;
     if (CanBattlerHitBothFoesInTerrain(battler, move, effect))
         return TARGET_BOTH;
-    if (effect == EFFECT_TERA_STARSTORM && gBattleMons[battler].species == SPECIES_TERAPAGOS_STELLAR)
+    if (effect == EFFECT_TERA_STARSTORM && gBattleMons[battler].species == SPECIES_CHIMECHO)
         return TARGET_BOTH;
 
     return GetMoveTarget(move);

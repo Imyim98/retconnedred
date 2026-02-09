@@ -2,7 +2,7 @@
   "id": "MAP_JAVA_WESTERN_PASS",
   "name": "JavaWesternPass",
   "layout": "LAYOUT_JAVA_WESTERN_PASS",
-  "music": "MUS_DGMN_STORY2_DARKMOON_CITY",
+  "music": "MUS_HG_ROUTE38",
   "region_map_section": "MAPSEC_JAVA_WESTERN_PASS",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",

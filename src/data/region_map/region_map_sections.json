@@ -849,7 +849,7 @@
     },
     {
       "id": "MAPSEC_JOHTO_GTS",
-      "name": "Global Wonder Station",
+      "name": "Goldenrod Plaza",
       "x": 7,
       "y": 7,
       "width": 2,
@@ -1760,16 +1760,16 @@
       "height": 1
     },
     {
-      "id": "MAPSEC_0XDC",
-      "name": "Unknown Place",
+      "id": "MAPSEC_JAVA_NATURE_PRESERVE",
+      "name": "Nature Preserve",
       "x": 0,
       "y": 0,
       "width": 1,
       "height": 1
     },
     {
-      "id": "MAPSEC_0XDD",
-      "name": "Unknown Place",
+      "id": "MAPSEC_JAVA_SEA_OF_SAND",
+      "name": "Sea of Sand",
       "x": 0,
       "y": 0,
       "width": 1,

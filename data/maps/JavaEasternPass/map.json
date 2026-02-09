@@ -35,7 +35,22 @@
     }
   ],
   "object_events": [],
-  "warp_events": [],
+  "warp_events": [
+    {
+      "x": 41,
+      "y": 21,
+      "elevation": 0,
+      "dest_map": "MAP_JAVA_EASTERN_PASS",
+      "dest_warp_id": "1"
+    },
+    {
+      "x": 76,
+      "y": 30,
+      "elevation": 0,
+      "dest_map": "MAP_JAVA_EASTERN_PASS",
+      "dest_warp_id": "0"
+    }
+  ],
   "coord_events": [],
   "bg_events": []
 }

@@ -2,6 +2,7 @@
 
         .equ    mus_etc_stasiun_balapan_solo_grp, voicegroup201
         .equ    mus_etc_stasiun_balapan_solo_pri, 0
+        .equ    mus_etc_stasiun_balapan_solo_mvl, 80
         .equ    mus_etc_stasiun_balapan_solo_rev, reverb_set+50
         .equ    mus_etc_stasiun_balapan_solo_key, 0
 
@@ -16,7 +17,7 @@ mus_etc_stasiun_balapan_solo_1:
 @ 000   ----------------------------------------
         .byte   TEMPO , 130/2
         .byte           VOICE , 38 @ Accoustic Bass
-        .byte           VOL   , 100
+        .byte           VOL   , 100*mus_etc_stasiun_balapan_solo_mvl/mxv
 @ 001   ----------------------------------------
 @ 002   ----------------------------------------
         .byte   W05
@@ -566,7 +567,7 @@ mus_etc_stasiun_balapan_solo_2:
         .byte   KEYSH , mus_etc_stasiun_balapan_solo_key+0
 @ 000   ----------------------------------------
         .byte           VOICE , 48 @ Strings
-        .byte           VOL   , 103
+        .byte           VOL   , 103*mus_etc_stasiun_balapan_solo_mvl/mxv
 @ 001   ----------------------------------------
         .byte   W96
 @ 002   ----------------------------------------
@@ -717,7 +718,7 @@ mus_etc_stasiun_balapan_solo_3:
         .byte   KEYSH , mus_etc_stasiun_balapan_solo_key+0
 @ 000   ----------------------------------------
         .byte           VOICE , 95 @ Voice Ahhs
-        .byte           VOL   , 127
+        .byte           VOL   , 127*mus_etc_stasiun_balapan_solo_mvl/mxv
         .byte           MOD   , 0
 @ 001   ----------------------------------------
 @ 002   ----------------------------------------
@@ -1298,7 +1299,7 @@ mus_etc_stasiun_balapan_solo_4:
         .byte   KEYSH , mus_etc_stasiun_balapan_solo_key+0
 @ 000   ----------------------------------------
         .byte           VOICE , 4 @ Square lead
-        .byte           VOL   , 127
+        .byte           VOL   , 127*mus_etc_stasiun_balapan_solo_mvl/mxv
         .byte           BENDR , 64
 @ 001   ----------------------------------------
 @ 002   ----------------------------------------
@@ -1751,7 +1752,7 @@ mus_etc_stasiun_balapan_solo_5:
         .byte   KEYSH , mus_etc_stasiun_balapan_solo_key+0
 @ 000   ----------------------------------------
         .byte           VOICE , 26 @ Accoustic Guitar
-        .byte           VOL   , 103
+        .byte           VOL   , 103*mus_etc_stasiun_balapan_solo_mvl/mxv
 @ 001   ----------------------------------------
 @ 002   ----------------------------------------
         .byte   W05
@@ -2515,7 +2516,7 @@ mus_etc_stasiun_balapan_solo_6:
         .byte   KEYSH , mus_etc_stasiun_balapan_solo_key+0
 @ 000   ----------------------------------------
         .byte           VOICE , 80 @ Electric Piano
-        .byte           VOL   , 60
+        .byte           VOL   , 60*mus_etc_stasiun_balapan_solo_mvl/mxv
 @ 001   ----------------------------------------
 @ 002   ----------------------------------------
         .byte   W05
@@ -3295,7 +3296,7 @@ mus_etc_stasiun_balapan_solo_7:
         .byte   KEYSH , mus_etc_stasiun_balapan_solo_key+0
 @ 000   ----------------------------------------
         .byte           VOICE , 73 @ Flute
-        .byte           VOL   , 103
+        .byte           VOL   , 103*mus_etc_stasiun_balapan_solo_mvl/mxv
 @ 001   ----------------------------------------
 @ 002   ----------------------------------------
         .byte   W05
@@ -3509,7 +3510,7 @@ mus_etc_stasiun_balapan_solo_7_LOOP:
 mus_etc_stasiun_balapan_solo_8:
         .byte   KEYSH , mus_etc_stasiun_balapan_solo_key+0
 @ 000   ----------------------------------------
-        .byte           VOL   , 103
+        .byte           VOL   , 103*mus_etc_stasiun_balapan_solo_mvl/mxv
 @ 001   ----------------------------------------
 @ 002   ----------------------------------------
         .byte   W05
@@ -4066,7 +4067,7 @@ mus_etc_stasiun_balapan_solo_9:
         .byte   KEYSH , mus_etc_stasiun_balapan_solo_key+0
 @ 000   ----------------------------------------
         .byte           VOICE , 120 @ Drum
-        .byte           VOL   , 116
+        .byte           VOL   , 116*mus_etc_stasiun_balapan_solo_mvl/mxv
 @ 001   ----------------------------------------
 @ 002   ----------------------------------------
         .byte   W05

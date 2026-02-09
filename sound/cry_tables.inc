@@ -1011,7 +1011,7 @@ gCryTable::
 .if P_GEN_4_CROSS_EVOS == TRUE
 	cry Cry_Unown @ Cry_Chingling
 .endif @ P_GEN_4_CROSS_EVOS
-	cry Cry_Unown @ Cry_Chimecho
+	cry Cry_THRanLine @ Cry_Chimecho
 .if P_MODIFIED_MEGA_CRIES == TRUE
 	cry Cry_Unown @ Cry_ChimechoMega
 .endif @ P_MODIFIED_MEGA_CRIES
@@ -3567,7 +3567,7 @@ gCryTable_Reverse::
 .if P_GEN_4_CROSS_EVOS == TRUE
 	cry_reverse Cry_Unown @ Cry_Chingling
 .endif @ P_GEN_4_CROSS_EVOS
-	cry_reverse Cry_Unown @ Cry_Chimecho
+	cry_reverse Cry_THRanLine @ Cry_Chimecho
 .if P_MODIFIED_MEGA_CRIES == TRUE
 	cry_reverse Cry_Unown @ Cry_ChimechoMega
 .endif @ P_MODIFIED_MEGA_CRIES
