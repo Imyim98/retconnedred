@@ -1262,56 +1262,26 @@ BattleScript_EffectStrengthSap::
 	attackcanceler
 	jumpifsubstituteblocks BattleScript_ButItFailed
 	accuracycheck BattleScript_MoveMissedPause
-	jumpifstat BS_TARGET, CMP_NOT_EQUAL, STAT_ATK, MIN_STAT_STAGE, BattleScript_StrengthSapTryLower
+	jumpifstatignorecontrary BS_TARGET, CMP_EQUAL, STAT_ATK, MIN_STAT_STAGE, BattleScript_StrengthSapPrintStatMessage
+	attackanimation
+	waitanimation
+	getstatvalue STAT_ATK
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_StrengthSap_StasisGazePreventedContrary
+	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_MoveEnd
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_CHANGE_EMPTY, BattleScript_MoveEnd
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_StrengthSapAnimation_AfterStasisGazeContraryCheck:
+	goto BattleScript_MoveEnd
+BattleScript_StrengthSapPrintStatMessage:
 	pause B_WAIT_TIME_SHORT
-	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_SpicyExtract_SkipAttackAnim_AfterStasisGazeCheck
+	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_EffectStrengthSap_StasisGazePreventedContrary
 BattleScript_EffectStrengthSap_AfterStasisGazeContraryCheck:
 	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_MoveEnd
 	printfromtable gStatDownStringIds
 	waitmessage B_WAIT_TIME_LONG
-	setmoveresultflags MOVE_RESULT_MISSED @ TODO: Is this even necessary?
 	goto BattleScript_MoveEnd
-BattleScript_StrengthSapTryLower:
-	getstatvalue STAT_ATK
-	jumpiffullhp BS_ATTACKER, BattleScript_StrengthSapMustLower
-BattleScript_StrengthSapAnimation:
-	attackanimation
-	waitanimation
-	jumpifability BS_TARGET, ABILITY_CONTRARY, BattleScript_SpicyExtract_SkipAttackAnim_AfterStasisGazeCheck
-BattleScript_StrengthSapAnimation_AfterStasisGazeContraryCheck:
-	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR, BattleScript_StrengthSapHp
-	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_CHANGE_EMPTY, BattleScript_StrengthSapHp
-	printfromtable gStatDownStringIds
-	waitmessage B_WAIT_TIME_LONG
-@ Drain HP without lowering a stat
-BattleScript_StrengthSapHp:
-	jumpifability BS_TARGET, ABILITY_LIQUID_OOZE, BattleScript_StrengthSapManipulateDmg
-	jumpifability BS_TARGET, ABILITY_STRANGE_MIST, BattleScript_StrengthSapManipulateDmg
-	jumpifvolatile BS_ATTACKER, VOLATILE_HEAL_BLOCK, BattleScript_MoveEnd
-	jumpiffullhp BS_ATTACKER, BattleScript_MoveEnd
-BattleScript_StrengthSapManipulateDmg:
-	manipulatedamage DMG_BIG_ROOT
-	jumpifability BS_TARGET, ABILITY_LIQUID_OOZE, BattleScript_StrengthSapLiquidOoze
-	jumpifability BS_TARGET, ABILITY_STRANGE_MIST, BattleScript_StrengthSapLiquidOoze
-	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
-	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
-	printstring STRINGID_PKMNENERGYDRAINED
-	waitmessage B_WAIT_TIME_LONG
-	goto BattleScript_MoveEnd
-BattleScript_StrengthSapLiquidOoze:
-	call BattleScript_AbilityPopUpTarget
-	manipulatedamage DMG_CHANGE_SIGN
-	setbyte cMULTISTRING_CHOOSER, B_MSG_ABSORB_OOZE
-	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
-	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
-	printfromtable gAbsorbDrainStringIds
-	waitmessage B_WAIT_TIME_LONG
-	tryfaintmon BS_ATTACKER
-	goto BattleScript_MoveEnd
-BattleScript_StrengthSapMustLower:
-	statbuffchange BS_TARGET, STAT_CHANGE_ALLOW_PTR | STAT_CHANGE_ONLY_CHECKING, BattleScript_MoveEnd
-	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_CHANGE_EMPTY, BattleScript_MoveEnd
-	goto BattleScript_StrengthSapAnimation
+
 BattleScript_StrengthSap_StasisGazePreventedContrary:
 	checkopposingbattlerabilitysetbattler BS_TARGET, ABILITY_STASIS_GAZE, BattleScript_StrengthSap_StasisGazePreventedContraryDo
 	goto BattleScript_StrengthSapAnimation_AfterStasisGazeContraryCheck
