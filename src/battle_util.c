@@ -10214,7 +10214,14 @@ uq4_12_t GetOverworldTypeEffectiveness(struct Pokemon *mon, enum Type moveType)
 
 uq4_12_t GetTypeModifier(enum Type atkType, enum Type defType)
 {
-    if (B_FLAG_INVERSE_BATTLE != 0 && FlagGet(B_FLAG_INVERSE_BATTLE))
+    if ((B_FLAG_INVERSE_BATTLE != 0 && FlagGet(B_FLAG_INVERSE_BATTLE)) && 
+      ((GetBattlerAbility(gBattlerAttacker) == ABILITY_FALSE_EXISTENCE && GetBattlerAbility(gBattlerTarget) != ABILITY_FALSE_EXISTENCE)
+      || (GetBattlerAbility(gBattlerAttacker) != ABILITY_FALSE_EXISTENCE && GetBattlerAbility(gBattlerTarget) == ABILITY_FALSE_EXISTENCE)))
+        return gTypeEffectivenessTable[atkType][defType];
+    else if ((GetBattlerAbility(gBattlerAttacker) == ABILITY_FALSE_EXISTENCE && GetBattlerAbility(gBattlerTarget) != ABILITY_FALSE_EXISTENCE)
+      || (GetBattlerAbility(gBattlerAttacker) != ABILITY_FALSE_EXISTENCE && GetBattlerAbility(gBattlerTarget) == ABILITY_FALSE_EXISTENCE))
+        return GetInverseTypeMultiplier(gTypeEffectivenessTable[atkType][defType]);
+    else if (B_FLAG_INVERSE_BATTLE != 0 && FlagGet(B_FLAG_INVERSE_BATTLE))
         return GetInverseTypeMultiplier(gTypeEffectivenessTable[atkType][defType]);
     return gTypeEffectivenessTable[atkType][defType];
 }

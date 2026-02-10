@@ -3433,7 +3433,7 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_FALSE_EXISTENCE] =
     {
         .name = _("False Existence"),
-        .description = COMPOUND_STRING("---"),
+        .description = COMPOUND_STRING("Inverts type effectiveness."),
         .aiRating = 6,
     },
 
