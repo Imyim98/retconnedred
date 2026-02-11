@@ -3583,7 +3583,6 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
             }
             break;
         case ABILITY_DOWNLOAD:
-        case ABILITY_SADISTIC_MIND:
             if (shouldAbilityTrigger)
             {
                 enum Stat statId;
@@ -3605,6 +3604,54 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                 }
 
                 if (opposingDef < opposingSpDef)
+                    statId = STAT_ATK;
+                else
+                    statId = STAT_SPATK;
+
+                if (CompareStat(battler, statId, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility))
+                {
+                    SET_STATCHANGER(statId, 1, FALSE);
+                    SaveBattlerAttacker(gBattlerAttacker);
+                    gBattlerAttacker = battler;
+                    PREPARE_STAT_BUFFER(gBattleTextBuff1, statId);
+                    BattleScriptCall(BattleScript_AttackerAbilityStatRaiseEnd3);
+                    effect++;
+                }
+            }
+            break;
+        case ABILITY_SADISTIC_MIND:
+            if (shouldAbilityTrigger)
+            {
+                enum Stat statId;
+                enum BattlerId opposingBattler;
+                u32 opposingDef = 0, opposingSpDef = 0, userAtk = 0, userSpAtk = 0, physicalRatio = 0, specialRatio = 0;
+
+                opposingBattler = BATTLE_OPPOSITE(battler);
+                for (i = 0; i < 2; opposingBattler ^= BIT_FLANK, i++)
+                {
+                    if (IsBattlerAlive(opposingBattler))
+                    {
+                        opposingDef += gBattleMons[opposingBattler].defense
+                                    * gStatStageRatios[gBattleMons[opposingBattler].statStages[STAT_DEF]][0]
+                                    / gStatStageRatios[gBattleMons[opposingBattler].statStages[STAT_DEF]][1];
+                        opposingSpDef += gBattleMons[opposingBattler].spDefense
+                                      * gStatStageRatios[gBattleMons[opposingBattler].statStages[STAT_SPDEF]][0]
+                                      / gStatStageRatios[gBattleMons[opposingBattler].statStages[STAT_SPDEF]][1];
+                    }
+                }
+
+                userAtk += gBattleMons[battler].attack
+                        * gStatStageRatios[gBattleMons[battler].statStages[STAT_ATK]][0]
+                        / gStatStageRatios[gBattleMons[battler].statStages[STAT_ATK]][1];
+
+                userSpAtk += gBattleMons[battler].spAttack
+                          * gStatStageRatios[gBattleMons[battler].statStages[STAT_SPATK]][0]
+                          / gStatStageRatios[gBattleMons[battler].statStages[STAT_SPATK]][1];
+
+                physicalRatio = (userAtk * 100) / opposingDef;
+                specialRatio = (userSpAtk * 100) / opposingSpDef;
+
+                if (specialRatio < physicalRatio)
                     statId = STAT_ATK;
                 else
                     statId = STAT_SPATK;
