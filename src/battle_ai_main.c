@@ -4001,7 +4001,7 @@ static bool32 DoesAbilityBenefitFromSunOrRain(enum BattlerId battler, enum Abili
             return FALSE;
         }
     case ABILITY_CHLOROPHYLL:
-    case ABILITY_FLOWER_GIFT:
+//    case ABILITY_FLOWER_GIFT:
     case ABILITY_LEAF_GUARD:
     case ABILITY_SOLAR_POWER:
     case ABILITY_ORICHALCUM_PULSE:

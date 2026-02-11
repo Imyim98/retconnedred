@@ -178,7 +178,7 @@ static bool32 DoesAbilityBenefitFromWeather(enum Ability ability, u32 weather)
     case ABILITY_SWIFT_SWIM:
         return (weather & B_WEATHER_RAIN);
     case ABILITY_CHLOROPHYLL:
-    case ABILITY_FLOWER_GIFT:
+//    case ABILITY_FLOWER_GIFT:
     case ABILITY_HARVEST:
     case ABILITY_LEAF_GUARD:
     case ABILITY_ORICHALCUM_PULSE:
