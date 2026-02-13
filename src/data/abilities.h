@@ -836,8 +836,8 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_SLOW_START] =
     {
         .name = _("Slow Start"),
-        .description = COMPOUND_STRING("Takes a while to get going."),
-        .aiRating = -2,
+        .description = COMPOUND_STRING("Stronger after 2 turns."),
+        .aiRating = 7,
     },
 
     [ABILITY_SCRAPPY] =

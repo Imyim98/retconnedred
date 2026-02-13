@@ -892,5 +892,6 @@ extern const u8 BattleScript_StasisGazeActivatesAbilitySwitchIn[];
 extern const u8 BattleScript_StasisGazeActivatesAbility[];
 extern const u8 BattleScript_StasisGazeActivatesMoveEffect[];
 extern const u8 BattleScript_EffectTryReducePPPrevented[];
+extern const u8 BattleScript_HealingGraceActivates[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

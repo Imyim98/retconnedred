@@ -4605,9 +4605,11 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                 }
                 break;
             case ABILITY_HEALING_GRACE:
-                if (gBattleMons[battler].status1 & STATUS1_ANY)
+                if (gBattleMons[battler].status1 & STATUS1_ANY || gBattleMons[BATTLE_PARTNER(battler)].status1 & STATUS1_ANY)
                 {
-                    goto ABILITY_HEAL_MON_STATUS;
+                    BattleScriptExecute(BattleScript_HealingGraceActivates);
+                    gBattleScripting.battler = battler;
+                    effect++;
                 }
                 break;
             case ABILITY_SHED_SKIN:
@@ -5543,7 +5545,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                 effect++;
             }
             break;
-        case ABILITY_ELEGANT_BLOW:
+        case ABILITY_HEAVY_BLOW:
             if (IsBattlerAlive(gBattlerTarget)
              && !gBattleStruct->unableToUseMove
              && RandomChance(RNG_HEAVY_BLOW, 1, 4)
@@ -5554,7 +5556,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                 effect++;
             }
             break;
-        case ABILITY_HEAVY_BLOW:
+        case ABILITY_ELEGANT_BLOW:
             if (IsBattlerAlive(gBattlerTarget)
              && !gBattleStruct->unableToUseMove
              && RandomChance(RNG_ELEGANT_BLOW, 1, 4)
@@ -8493,8 +8495,8 @@ static inline u32 CalcAttackStat(struct BattleContext *ctx)
         modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(4.0));
         break;
     case ABILITY_SLOW_START:
-        if (gBattleMons[battlerAtk].volatiles.slowStartTimer > 0)
-            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(0.5));
+        if (gBattleMons[battlerAtk].volatiles.slowStartTimer == 0)
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(2.0));
         break;
     case ABILITY_SOLAR_POWER:
         if (IsBattleMoveSpecial(move) && IsBattlerWeatherAffected(battlerAtk, B_WEATHER_SUN))

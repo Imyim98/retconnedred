@@ -10381,3 +10381,13 @@ BattleScript_EffectTryReducePPPrevented::
 	printstring STRINGID_ABILITYPREVENTPPREDUCTION
 	waitmessage B_WAIT_TIME_LONG
 	return
+
+BattleScript_HealingGraceActivates::
+	call BattleScript_AbilityPopUpScripting
+	healpartystatus
+	waitstate
+	printfromtable gPartyStatusHealStringIds
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_ATTACKER_WITH_PARTNER
+	waitstate
+	end2
