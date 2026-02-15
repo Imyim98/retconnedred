@@ -5387,9 +5387,22 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
              && !gBattleStruct->unableToUseMove
              && RandomChance(RNG_ELEGANT_BLOW, 1, 4)
              && IsBattlerTurnDamaged(gBattlerTarget)
+             && CanBeParalyzed(gBattlerAttacker, gBattlerTarget, GetBattlerAbility(gBattlerTarget))
              && !MoveHasAdditionalEffect(gCurrentMove, MOVE_EFFECT_PARALYSIS))
             {
                 SetMoveEffect(gBattlerAttacker, gBattlerTarget, MOVE_EFFECT_PARALYSIS, gBattlescriptCurrInstr, EFFECT_PRIMARY);
+                effect++;
+            }
+            break;
+        case ABILITY_BAD_DREAMS:
+            if (IsBattlerAlive(gBattlerTarget)
+             && !gBattleStruct->unableToUseMove
+             && RandomChance(RNG_BAD_DREAMS_SLEEP, 1, 10)
+             && IsBattlerTurnDamaged(gBattlerTarget)
+             && CanBeSlept(gBattlerAttacker, gBattlerTarget, GetBattlerAbility(gBattlerTarget), BLOCKED_BY_SLEEP_CLAUSE)
+             && !MoveHasAdditionalEffect(gCurrentMove, MOVE_EFFECT_SLEEP))
+            {
+                SetMoveEffect(gBattlerAttacker, gBattlerTarget, MOVE_EFFECT_SLEEP, gBattlescriptCurrInstr, EFFECT_PRIMARY);
                 effect++;
             }
             break;

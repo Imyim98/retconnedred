@@ -247,6 +247,7 @@ enum RandomTag
     RNG_STRAWBERRY_CROSS,
     RNG_HEAVY_BLOW,
     RNG_ELEGANT_BLOW,
+    RNG_BAD_DREAMS_SLEEP,
 };
 
 #define RandomWeighted(tag, ...) \
