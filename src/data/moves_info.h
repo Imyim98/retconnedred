@@ -13742,7 +13742,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
             "High critical-hit ratio."),
         .effect = EFFECT_HIT,
         .power = 80,
-        .type = TYPE_GROUND,
+        .type = TYPE_NEW_EARTH,
         .accuracy = 95,
         .criticalHitStage = 2,
         .pp = 10,

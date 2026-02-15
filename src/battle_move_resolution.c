@@ -563,7 +563,7 @@ static enum CancelerResult CancelerThaw(struct BattleContext *ctx)
 
     if (gBattleMons[ctx->battlerAtk].status1 & STATUS1_FREEZE)
     {
-        if (!(IsMoveEffectRemoveSpeciesType(ctx->move, MOVE_EFFECT_REMOVE_ARG_TYPE, TYPE_FIRE) && !IS_BATTLER_OF_TYPE(ctx->battlerAtk, TYPE_FIRE)))
+        if (!(IsMoveEffectRemoveSpeciesType(ctx->move, MOVE_EFFECT_REMOVE_ARG_TYPE, TYPE_NEW_FIRE) && !IS_BATTLER_OF_TYPE(ctx->battlerAtk, TYPE_NEW_FIRE)))
         {
             gBattleMons[ctx->battlerAtk].status1 &= ~STATUS1_FREEZE;
             result = CANCELER_RESULT_BREAK;
@@ -578,7 +578,7 @@ static enum CancelerResult CancelerThaw(struct BattleContext *ctx)
     }
     else if (gBattleMons[ctx->battlerAtk].status1 & STATUS1_FROSTBITE && MoveThawsUser(ctx->move))
     {
-        if (!(IsMoveEffectRemoveSpeciesType(ctx->move, MOVE_EFFECT_REMOVE_ARG_TYPE, TYPE_FIRE) && !IS_BATTLER_OF_TYPE(ctx->battlerAtk, TYPE_FIRE)))
+        if (!(IsMoveEffectRemoveSpeciesType(ctx->move, MOVE_EFFECT_REMOVE_ARG_TYPE, TYPE_NEW_FIRE) && !IS_BATTLER_OF_TYPE(ctx->battlerAtk, TYPE_NEW_FIRE)))
         {
             gBattleMons[ctx->battlerAtk].status1 &= ~STATUS1_FROSTBITE;
             result = CANCELER_RESULT_BREAK;
@@ -796,8 +796,8 @@ static bool32 HandleMoveTargetRedirection(enum MoveTarget moveTarget)
 
     enum Type moveType = GetBattleMoveType(gCurrentMove);
     enum Ability ability = GetBattlerAbility(gBattlerTarget);
-    bool32 currTargetCantAbsorb = ((ability != ABILITY_LIGHTNING_ROD && moveType == TYPE_ELECTRIC)
-                                || (ability != ABILITY_STORM_DRAIN && moveType == TYPE_WATER));
+    bool32 currTargetCantAbsorb = ((ability != ABILITY_LIGHTNING_ROD && moveType == TYPE_NEW_ELECTRIC)
+                                || (ability != ABILITY_STORM_DRAIN && moveType == TYPE_NEW_WATER));
 
     if (currTargetCantAbsorb
      && IsDoubleBattle()
@@ -818,8 +818,8 @@ static bool32 HandleMoveTargetRedirection(enum MoveTarget moveTarget)
             if ((B_REDIRECT_ABILITY_ALLIES >= GEN_4 || !IsBattlerAlly(gBattlerAttacker, battler))
                 && battler != gBattlerAttacker
                 && gBattlerTarget != battler
-                && ((ability == ABILITY_LIGHTNING_ROD && moveType == TYPE_ELECTRIC)
-                 || (ability == ABILITY_STORM_DRAIN && moveType == TYPE_WATER))
+                && ((ability == ABILITY_LIGHTNING_ROD && moveType == TYPE_NEW_ELECTRIC)
+                 || (ability == ABILITY_STORM_DRAIN && moveType == TYPE_NEW_WATER))
                 && GetBattlerTurnOrderNum(battler) < redirectorOrderNum
                 && !IsAbilityAndRecord(gBattlerAttacker, abilityAtk, ABILITY_PROPELLER_TAIL)
                 && !IsAbilityAndRecord(gBattlerAttacker, abilityAtk, ABILITY_STALWART))
@@ -1022,12 +1022,12 @@ static enum CancelerResult CancelerWeatherPrimal(struct BattleContext *ctx)
     if (GetMovePower(ctx->move) > 0 && HasWeatherEffect())
     {
         enum Type moveType = GetBattleMoveType(ctx->move);
-        if (moveType == TYPE_FIRE && gBattleWeather & B_WEATHER_RAIN_PRIMAL && (GetConfig(CONFIG_POWDER_STATUS_HEAVY_RAIN) >= GEN_7 || !TryActivatePowderStatus(ctx->move)))
+        if (moveType == TYPE_NEW_FIRE && gBattleWeather & B_WEATHER_RAIN_PRIMAL && (GetConfig(CONFIG_POWDER_STATUS_HEAVY_RAIN) >= GEN_7 || !TryActivatePowderStatus(ctx->move)))
         {
             gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_PRIMAL_WEATHER_FIZZLED_BY_RAIN;
             result = CANCELER_RESULT_FAILURE;
         }
-        else if (moveType == TYPE_WATER && gBattleWeather & B_WEATHER_SUN_PRIMAL)
+        else if (moveType == TYPE_NEW_WATER && gBattleWeather & B_WEATHER_SUN_PRIMAL)
         {
             gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_PRIMAL_WEATHER_EVAPORATED_IN_SUN;
             result = CANCELER_RESULT_FAILURE;
@@ -4150,7 +4150,7 @@ static bool32 TryActivatePowderStatus(enum Move move)
     enum Move partnerMove = GetBattlerChosenMove(BATTLE_PARTNER(gBattlerAttacker));
     if (!gBattleMons[gBattlerAttacker].volatiles.powder)
         return FALSE;
-    if (GetBattleMoveType(move) == TYPE_FIRE && !gBattleStruct->pledgeMove)
+    if (GetBattleMoveType(move) == TYPE_NEW_FIRE && !gBattleStruct->pledgeMove)
         return TRUE;
     if (move == MOVE_FIRE_PLEDGE && partnerMove == MOVE_GRASS_PLEDGE)
         return TRUE;

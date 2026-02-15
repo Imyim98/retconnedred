@@ -12333,7 +12333,7 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
         ball->guaranteedCapture = TRUE;
         break;
     case BALL_NET:
-        if (IS_BATTLER_ANY_TYPE(wildMonBattler, TYPE_WATER, TYPE_BUG))
+        if (IS_BATTLER_ANY_TYPE(wildMonBattler, TYPE_NEW_WATER, TYPE_NEW_BEAST))
             ball->multiplier = B_NET_BALL_MODIFIER >= GEN_7 ? 350 : 300;
         break;
     case BALL_NEST:
@@ -17409,7 +17409,7 @@ static bool32 IsRototillerAffected(enum BattlerId battler, u32 move)
         return FALSE;
     if (!IsBattlerGrounded(battler, GetBattlerAbility(battler), GetBattlerHoldEffect(battler)))
         return FALSE;   // Only grounded battlers affected
-    if (!IS_BATTLER_OF_TYPE(battler, TYPE_GRASS))
+    if (!IS_BATTLER_OF_TYPE(battler, TYPE_NEW_NATURE))
         return FALSE;   // Only grass types affected
     return TRUE;
 }

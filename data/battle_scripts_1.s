@@ -6712,7 +6712,7 @@ BattleScript_MoveUsedIsParalyzed::
 
 BattleScript_PowderMoveNoEffect::
 	pause B_WAIT_TIME_SHORT
-	jumpiftype BS_SCRIPTING, TYPE_GRASS, BattleScript_PowderMoveNoEffectPrint
+	jumpiftype BS_SCRIPTING, TYPE_NEW_NATURE, BattleScript_PowderMoveNoEffectPrint
 	jumpifability BS_SCRIPTING, ABILITY_OVERCOAT, BattleScript_PowderMoveNoEffectOvercoat
 	jumpifability BS_SCRIPTING, ABILITY_OVERCOAT, BattleScript_PowderMoveNoEffectOvercoat
 	jumpifability BS_SCRIPTING, ABILITY_WIDE_HAT, BattleScript_PowderMoveNoEffectOvercoat
