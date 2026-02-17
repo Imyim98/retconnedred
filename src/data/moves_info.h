@@ -12179,11 +12179,10 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
             "Drags the foes into total\n"
             "darkness, inducing Sleep."),
         .effect = EFFECT_DOUBLE_POWER_ON_ARG_STATUS,
-        .power = 0,
+        .power = 80,
         .type = TYPE_NEW_DARK,
         .accuracy = B_UPDATED_MOVE_DATA >= GEN_7 ? 90 : 80,
         .pp = 10,
-        .power = 80,
         .target = TARGET_BOTH,
         .priority = 0,
         .category = DAMAGE_CATEGORY_SPECIAL,
