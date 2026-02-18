@@ -3572,6 +3572,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
         case ABILITY_AUTUMN_GODDESSES:
         case ABILITY_ORICHALCUM_PULSE:
         case ABILITY_DROUGHT:
+        case ABILITY_ULTRA_FORM_SUNNY:
             if (!shouldAbilityTrigger)
                 break;
             if (TryChangeBattleWeather(battler, BATTLE_WEATHER_SUN, gLastUsedAbility))
@@ -3586,6 +3587,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
             }
             break;
         case ABILITY_SNOW_WARNING:
+        case ABILITY_ULTRA_FORM_BEAUTY:
             if (!shouldAbilityTrigger)
                 break;
             {
@@ -3604,6 +3606,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
             break;
         case ABILITY_ELECTRIC_SURGE:
         case ABILITY_HADRON_ENGINE:
+        case ABILITY_ULTRA_FORM_PEACE:
             if (!shouldAbilityTrigger)
                 break;
             if (TryChangeBattleTerrain(battler, STATUS_FIELD_ELECTRIC_TERRAIN))
@@ -4089,6 +4092,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
             break;
         case ABILITY_WINDY_EGRET:
         case ABILITY_WIND_FIELD:
+        case ABILITY_ULTRA_FORM_MARCH:
             if (shouldAbilityTrigger && !(gSideStatuses[side] & SIDE_STATUS_TAILWIND))
             {
                 gSideStatuses[side] |= SIDE_STATUS_TAILWIND;
@@ -5391,6 +5395,66 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
              && !MoveHasAdditionalEffect(gCurrentMove, MOVE_EFFECT_PARALYSIS))
             {
                 SetMoveEffect(gBattlerAttacker, gBattlerTarget, MOVE_EFFECT_PARALYSIS, gBattlescriptCurrInstr, EFFECT_PRIMARY);
+                effect++;
+            }
+            break;
+        case ABILITY_ULTRA_FORM_HAPPY:
+            if (IsBattlerAlive(gBattlerTarget)
+             && !gBattleStruct->unableToUseMove
+             && RandomChance(RNG_ULTRA_HAPPY, 1, 3)
+             && IsBattlerTurnDamaged(gBattlerTarget)
+             && !MoveHasAdditionalEffect(gCurrentMove, MOVE_EFFECT_INFATUATE))
+            {
+                SetMoveEffect(gBattlerAttacker, gBattlerTarget, MOVE_EFFECT_INFATUATE, gBattlescriptCurrInstr, EFFECT_PRIMARY);
+                effect++;
+            }
+            break;
+        case ABILITY_ULTRA_FORM_SUNNY:
+            if (IsBattlerAlive(gBattlerTarget)
+             && !gBattleStruct->unableToUseMove
+             && RandomChance(RNG_ULTRA_SUNNY, 1, 10)
+             && IsBattlerTurnDamaged(gBattlerTarget)
+             && CanBeBurned(gBattlerAttacker, gBattlerTarget, GetBattlerAbility(gBattlerTarget))
+             && !MoveHasAdditionalEffect(gCurrentMove, MOVE_EFFECT_BURN))
+            {
+                SetMoveEffect(gBattlerAttacker, gBattlerTarget, MOVE_EFFECT_BURN, gBattlescriptCurrInstr, EFFECT_PRIMARY);
+                effect++;
+            }
+            break;
+        case ABILITY_ULTRA_FORM_PEACE:
+            if (IsBattlerAlive(gBattlerTarget)
+             && !gBattleStruct->unableToUseMove
+             && RandomChance(RNG_ULTRA_PEACE, 1, 10)
+             && IsBattlerTurnDamaged(gBattlerTarget)
+             && CanBeParalyzed(gBattlerAttacker, gBattlerTarget, GetBattlerAbility(gBattlerTarget))
+             && !MoveHasAdditionalEffect(gCurrentMove, MOVE_EFFECT_PARALYSIS))
+            {
+                SetMoveEffect(gBattlerAttacker, gBattlerTarget, MOVE_EFFECT_PARALYSIS, gBattlescriptCurrInstr, EFFECT_PRIMARY);
+                effect++;
+            }
+            break;
+        case ABILITY_ULTRA_FORM_MARCH:
+            if (IsBattlerAlive(gBattlerTarget)
+             && !gBattleStruct->unableToUseMove
+             && RandomChance(RNG_ULTRA_MARCH, 1, 2)
+             && IsBattlerTurnDamaged(gBattlerTarget)
+             && CanBeParalyzed(gBattlerAttacker, gBattlerTarget, GetBattlerAbility(gBattlerTarget))
+             && !MoveHasAdditionalEffect(gCurrentMove, MOVE_EFFECT_SPD_MINUS_1)
+             && CompareStat(gBattlerTarget, STAT_SPEED, MIN_STAT_STAGE, CMP_GREATER_THAN, GetBattlerAbility(gBattlerTarget)))
+            {
+                SetMoveEffect(gBattlerAttacker, gBattlerTarget, MOVE_EFFECT_SPD_MINUS_1, gBattlescriptCurrInstr, EFFECT_PRIMARY);
+                effect++;
+            }
+            break;
+        case ABILITY_ULTRA_FORM_BEAUTY:
+            if (IsBattlerAlive(gBattlerTarget)
+             && !gBattleStruct->unableToUseMove
+             && RandomChance(RNG_ULTRA_BEAUTY, 1, 10)
+             && IsBattlerTurnDamaged(gBattlerTarget)
+             && CanBeFrozen(gBattlerAttacker, gBattlerTarget, GetBattlerAbility(gBattlerTarget))
+             && !MoveHasAdditionalEffect(gCurrentMove, MOVE_EFFECT_FREEZE_OR_FROSTBITE))
+            {
+                SetMoveEffect(gBattlerAttacker, gBattlerTarget, MOVE_EFFECT_FREEZE_OR_FROSTBITE, gBattlescriptCurrInstr, EFFECT_PRIMARY);
                 effect++;
             }
             break;

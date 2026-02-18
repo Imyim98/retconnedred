@@ -3484,4 +3484,39 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 7,
     },
 
+    [ABILITY_ULTRA_FORM_HAPPY] =
+    {
+        .name = _("Ultra Happy"),
+        .description = COMPOUND_STRING("Attacks may infatuate."),
+        .aiRating = 8,
+    },
+
+    [ABILITY_ULTRA_FORM_SUNNY] =
+    {
+        .name = _("Ultra Sunny"),
+        .description = COMPOUND_STRING("Attacks may burn."),
+        .aiRating = 8,
+    },
+
+    [ABILITY_ULTRA_FORM_PEACE] =
+    {
+        .name = _("Ultra Peace"),
+        .description = COMPOUND_STRING("Attacks may paralyze."),
+        .aiRating = 8,
+    },
+
+    [ABILITY_ULTRA_FORM_MARCH] =
+    {
+        .name = _("Ultra March"),
+        .description = COMPOUND_STRING("Attacks may lower speed."),
+        .aiRating = 8,
+    },
+
+    [ABILITY_ULTRA_FORM_BEAUTY] =
+    {
+        .name = _("Ultra Beauty"),
+        .description = COMPOUND_STRING("Attacks may freeze."),
+        .aiRating = 8,
+    },
+
 };

@@ -473,6 +473,11 @@ enum __attribute__((packed)) Ability
     ABILITY_BRIGHTY_BLOOM = (ABILITY_OFFICIAL_END + 137), // Grassy Surge + Passive Mental Herb
     ABILITY_WINDY_EGRET = (ABILITY_OFFICIAL_END + 138), // Tailwind on entry + (Gen 6 Gale Wings)
     ABILITY_WIND_FIELD = (ABILITY_OFFICIAL_END + 139), // Tailwind on entry
+    ABILITY_ULTRA_FORM_HAPPY = (ABILITY_OFFICIAL_END + 140), // Mold Breaker + May infatuate
+    ABILITY_ULTRA_FORM_SUNNY = (ABILITY_OFFICIAL_END + 141), // Drought + May Burn
+    ABILITY_ULTRA_FORM_PEACE = (ABILITY_OFFICIAL_END + 142), // Electruc Surge + May Parlz
+    ABILITY_ULTRA_FORM_MARCH = (ABILITY_OFFICIAL_END + 143), // Tail Wind + May Speed Down
+    ABILITY_ULTRA_FORM_BEAUTY = (ABILITY_OFFICIAL_END + 144), // Snow Warning + May Freeze
     ABILITIES_COUNT_GEN9,
     ABILITIES_COUNT = ABILITIES_COUNT_GEN9,
 };

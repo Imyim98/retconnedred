@@ -248,6 +248,11 @@ enum RandomTag
     RNG_HEAVY_BLOW,
     RNG_ELEGANT_BLOW,
     RNG_BAD_DREAMS_SLEEP,
+    RNG_ULTRA_HAPPY,
+    RNG_ULTRA_SUNNY,
+    RNG_ULTRA_PEACE,
+    RNG_ULTRA_MARCH,
+    RNG_ULTRA_BEAUTY,
 };
 
 #define RandomWeighted(tag, ...) \
