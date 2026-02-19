@@ -7856,6 +7856,40 @@ static inline u32 CalcMoveBasePower(struct BattleContext *ctx)
     case EFFECT_SPECIES_POWER_OVERRIDE:
         if (gBattleMons[battlerAtk].species == GetMoveSpeciesPowerOverride_Species(ctx->move))
             basePower = GetMoveSpeciesPowerOverride_Power(ctx->move);
+    case ABILITY_HARMONIZE:
+        {
+            u8 i = 0;
+            u8 boost = 0;
+            u8 partysize = 0;
+            struct Pokemon *party;
+            
+            if (GetBattlerSide(battlerAtk) != B_SIDE_PLAYER)
+            {
+                party = gEnemyParty;
+                partysize = gEnemyPartyCount;
+            }
+            else
+            {
+                party = gPlayerParty;
+                partysize = PARTY_SIZE;
+            }
+
+            for (i = 0; i < partysize; i++)
+            {
+                if (i != gBattlerPartyIndexes[battlerAtk])
+                {
+                    if (GetMonData(&party[i], MON_DATA_IS_EGG, NULL) || !GetMonData(&party[i], MON_DATA_SPECIES, NULL))
+                        continue;
+                    if (GetMonData(&party[i], MON_DATA_MOVE1, NULL) == move ||
+                        GetMonData(&party[i], MON_DATA_MOVE2, NULL) == move ||
+                        GetMonData(&party[i], MON_DATA_MOVE3, NULL) == move ||
+                        GetMonData(&party[i], MON_DATA_MOVE4, NULL) == move)
+                        boost += 10;
+                }
+            }
+            basePower = (basePower * (100 + boost)) / 100;
+        }
+        break;
     default:
         break;
     }
@@ -8070,6 +8104,42 @@ static inline u32 CalcMoveBasePowerAfterModifiers(struct BattleContext *ctx)
         if (IsSoundMove(move))
            modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));
         break;
+/*
+    case ABILITY_HARMONIZE:
+        {
+            u8 i = 0;
+            u8 boost = 0;
+            u8 partysize = 0;
+            struct Pokemon *party;
+            
+            if (GetBattlerSide(battlerAtk) != B_SIDE_PLAYER)
+            {
+                party = gEnemyParty;
+                partysize = gEnemyPartyCount;
+            }
+            else
+            {
+                party = gPlayerParty;
+                partysize = PARTY_SIZE;
+            }
+
+            for (i = 0; i < partysize; i++)
+            {
+                if (i != gBattlerPartyIndexes[battlerAtk])
+                {
+                    if (GetMonData(&party[i], MON_DATA_IS_EGG, NULL) || !GetMonData(&party[i], MON_DATA_SPECIES, NULL))
+                        continue;
+                    if (GetMonData(&party[i], MON_DATA_MOVE1, NULL) == move ||
+                        GetMonData(&party[i], MON_DATA_MOVE2, NULL) == move ||
+                        GetMonData(&party[i], MON_DATA_MOVE3, NULL) == move ||
+                        GetMonData(&party[i], MON_DATA_MOVE4, NULL) == move)
+                        boost += 10;
+                }
+            }
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1 + (boost/10)));
+        }
+        break;
+*/
     default:
         break;
     }

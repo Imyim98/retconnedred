@@ -414,7 +414,7 @@ enum __attribute__((packed)) Ability
     ABILITY_PURE_ENIGMA = (ABILITY_OFFICIAL_END + 78), // TO DO for Okina, for now 50% // Doubles Atk, Def, SAtk, SDef, and Speed. (+50% if user is not Okina).
     ABILITY_ABERRANT = (ABILITY_OFFICIAL_END + 79), // Switches own Atk and SAtk.
     ABILITY_STORM_SHAWL = (ABILITY_OFFICIAL_END + 80), // TO DO // During abnormal weather, +50% SDef. Blocks sand/hail damage.
-    ABILITY_HARMONIZE = (ABILITY_OFFICIAL_END + 81), // TO DO // Damaging moves do 10% more damage per ally that also knows them.
+    ABILITY_HARMONIZE = (ABILITY_OFFICIAL_END + 81), // Damaging moves do 10% more damage per ally that also knows them.
     ABILITY_CONTAGION = (ABILITY_OFFICIAL_END + 82), // (as Mummy)
     ABILITY_DOLL_SKEWER = (ABILITY_OFFICIAL_END + 83), // 1/8 damage on contact (as modern Rough Skin)
     ABILITY_LECTURE = (ABILITY_OFFICIAL_END + 84), // Lowers foe's Speed when damaged by any move and HP > 0. Blocked by Soundproof.
