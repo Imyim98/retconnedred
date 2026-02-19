@@ -26381,6 +26381,31 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_GaruruCannon,
     },
 
+    [MOVE_GRACE_OF_DREAM] =
+    {
+        .name = COMPOUND_STRING("Grace of Dream"),
+        .description = COMPOUND_STRING(
+            "Raises a stat sharply at the\n"
+            "end of turn for five turns."),
+        .effect = EFFECT_GRACE_OF_DREAM,
+        .power = 0,
+        .type = TYPE_NEW_DREAM,
+        .accuracy = 0,
+        .pp = 5,
+        .target = TARGET_USER,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_STATUS,
+        .zMove = { .effect = Z_EFFECT_ALL_STATS_UP_1 },
+        .snatchAffected = TRUE,
+        .ignoresProtect = TRUE,
+        .mirrorMoveBanned = TRUE,
+        .contestEffect = CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_GraceOfDream,
+    },
+
 // ============= Start Shadow Moves ===================
 
     [MOVE_EX_SHADOW_BLITZ] =

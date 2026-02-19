@@ -949,6 +949,8 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE]    = COMPOUND_STRING("Stasis Gaze prevented the stat raise!"),
     [STRINGID_FULLYCHARGEDABILITY]                  = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} became fully charged due to its {B_SCR_ABILITY}!"),
     [STRINGID_ABILITYPREVENTPPREDUCTION]            = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX}'s {B_SCR_ABILITY} prevented PP reduction!"),
+    [STRINGID_GRACEOFDREAMRAISEDSTAT]               = COMPOUND_STRING("The flowers of dream sharply raised {B_ATK_NAME_WITH_PREFIX}'s {B_BUFF1}!!"),
+    [STRINGID_PKMNSURROUNDEDWITHFLOWERSOFDREAM]     = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} surrounded itself with flowers of dream!"),
 };
 
 const u16 gTrainerUsedItemStringIds[] =

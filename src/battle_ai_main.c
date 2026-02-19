@@ -2070,6 +2070,7 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
                   || gBattleMons[battlerAtk].volatiles.magnetRise
                   || gBattleMons[battlerAtk].volatiles.aquaRing
                   || gBattleMons[battlerAtk].volatiles.root
+                  || gBattleMons[battlerAtk].volatiles.graceOfDream != 0
                   || AnyStatIsRaised(battlerAtk))
                 break;
             else
@@ -2174,6 +2175,10 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
             break;
         case EFFECT_AQUA_RING:
             if (gBattleMons[battlerAtk].volatiles.aquaRing)
+                ADJUST_SCORE(-10);
+            break;
+        case EFFECT_GRACE_OF_DREAM:
+            if (gBattleMons[battlerAtk].volatiles.graceOfDream != 0)
                 ADJUST_SCORE(-10);
             break;
         case EFFECT_RECYCLE:
@@ -4804,6 +4809,7 @@ static s32 AI_CalcMoveEffectScore(enum BattlerId battlerAtk, enum BattlerId batt
           || gBattleMons[battlerAtk].volatiles.magnetRise
           || gBattleMons[battlerAtk].volatiles.aquaRing
           || gBattleMons[battlerAtk].volatiles.root
+          || gBattleMons[battlerAtk].volatiles.graceOfDream != 0
           || AnyStatIsRaised(battlerAtk)))
             ADJUST_SCORE(BEST_EFFECT);
         break;
@@ -6587,6 +6593,10 @@ static s32 AI_PreferBatonPass(enum BattlerId battlerAtk, enum BattlerId battlerD
         if (!gBattleMons[battlerAtk].volatiles.aquaRing)
             ADJUST_SCORE(DECENT_EFFECT);
         break;
+    case EFFECT_GRACE_OF_DREAM:
+        if (gBattleMons[battlerAtk].volatiles.graceOfDream == 0)
+            ADJUST_SCORE(DECENT_EFFECT);
+        break;
     case EFFECT_PROTECT:
         if (GetProtectType(GetMoveProtectMethod(gAiLogicData->lastUsedMove[battlerAtk])) == PROTECT_TYPE_SINGLE)
             ADJUST_SCORE(-2);
@@ -6594,7 +6604,7 @@ static s32 AI_PreferBatonPass(enum BattlerId battlerAtk, enum BattlerId battlerD
             ADJUST_SCORE(DECENT_EFFECT);
         break;
     case EFFECT_BATON_PASS:
-        if (gBattleMons[battlerAtk].volatiles.root || gBattleMons[battlerAtk].volatiles.aquaRing)
+        if (gBattleMons[battlerAtk].volatiles.root || gBattleMons[battlerAtk].volatiles.aquaRing || gBattleMons[battlerAtk].volatiles.graceOfDream != 0)
             ADJUST_SCORE(DECENT_EFFECT);
         if (gBattleMons[battlerAtk].volatiles.leechSeed)
             ADJUST_SCORE(-3);
@@ -6997,6 +7007,7 @@ static s32 AI_PredictSwitch(enum BattlerId battlerAtk, enum BattlerId battlerDef
     case EFFECT_GRAVITY:
     case EFFECT_WEATHER:
     case EFFECT_AQUA_RING:
+    case EFFECT_GRACE_OF_DREAM:
     case EFFECT_ELECTRIC_TERRAIN:
     case EFFECT_PSYCHIC_TERRAIN:
     case EFFECT_GRASSY_TERRAIN:

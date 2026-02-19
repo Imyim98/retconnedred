@@ -2388,4 +2388,11 @@ const struct BattleMoveEffect gBattleMoveEffects[NUM_BATTLE_MOVE_EFFECTS] =
         .battleScript = BattleScript_EffectCardInclude,
         .battleTvScore = 0, // TODO: Assign points
     },
+
+    [EFFECT_GRACE_OF_DREAM] =
+    {
+        .battleScript = BattleScript_EffectGraceOfDream,
+        .battleTvScore = 0, // TODO: Assign points
+        .encourageEncore = TRUE,
+    },
 };

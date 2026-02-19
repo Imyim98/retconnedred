@@ -716,6 +716,7 @@ TEST("Battle strings fit on the battle message window")
     case STRINGID_TARGETABILITYSTATLOWER:
     case STRINGID_SCRIPTINGABILITYSTATRAISE:
     case STRINGID_STATWASHEIGHTENED:
+    case STRINGID_GRACEOFDREAMRAISEDSTAT:
         StringCopy(gBattleTextBuff1, gStatNamesTable[longStatName]);
         break;
     // Buffer Type name to B_BUFF1

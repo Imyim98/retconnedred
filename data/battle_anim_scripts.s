@@ -23234,6 +23234,57 @@ gBattleAnimMove_DoubleTorrent::
 	blendoff
 	end
 
+gBattleAnimGeneral_GraceOfDreamEndTurn::
+	loadspritegfx ANIM_TAG_FOCUS_ENERGY
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	call EndureEffect
+	delay 8
+	blend_color_cycle selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB_GREEN
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 32, 1
+	call EndureEffect
+	delay 8
+	call EndureEffect
+	waitforvisualfinish
+	end
+
+gBattleAnimMove_GraceOfDream::
+	loadspritegfx ANIM_TAG_FLOWER
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_PETAL_DANCE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 12, 6, 6, 3
+	create_petal_dance_big_flower_sprite ANIM_ATTACKER, 2, initial_x=0, initial_y=-24, target_y=8, duration=140
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=16, initial_y=-24, target_y=8, duration=100
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-16, initial_y=-24, target_y=8, duration=100
+	delay 15
+	create_petal_dance_big_flower_sprite ANIM_ATTACKER, 2, initial_x=0, initial_y=-24, target_y=8, duration=140
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=32, initial_y=-24, target_y=8, duration=100
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-32, initial_y=-24, target_y=8, duration=100
+	delay 15
+	create_petal_dance_big_flower_sprite ANIM_ATTACKER, 2, initial_x=0, initial_y=-24, target_y=8, duration=140
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=24, initial_y=-24, target_y=8, duration=100
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-24, initial_y=-24, target_y=8, duration=100
+	delay 30
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=16, initial_y=-24, target_y=0, duration=100
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-16, initial_y=-24, target_y=0, duration=100
+	delay 30
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=20, initial_y=-16, target_y=14, duration=80
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-20, initial_y=-14, target_y=16, duration=80
+	waitforvisualfinish
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, 24, 0, 0, 5
+	delay 3
+@	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+@	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+@	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 6, 0, 8, 1
+	waitforvisualfinish
+@	delay 8
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 7
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
 gBattleAnimMove_UnlimitedBladeWorks::
 	loadspritegfx ANIM_TAG_SWORDS_DIAGONAL @Swords
 	loadspritegfx ANIM_TAG_FAIRY_LOCK_CHAINS @Gray Colour

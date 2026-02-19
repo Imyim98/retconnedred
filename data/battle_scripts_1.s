@@ -10358,3 +10358,30 @@ BattleScript_HealingGraceActivates::
 	updatestatusicon BS_ATTACKER_WITH_PARTNER
 	waitstate
 	end2
+
+BattleScript_GraceOfDreamStatRaised::
+	playanimation BS_ATTACKER, B_ANIM_GRACE_OF_DREAM_END_TURN
+	waitanimation
+	statbuffchange BS_SCRIPTING, STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_CERTAIN | STAT_CHANGE_ALLOW_PTR, NULL
+	printstring STRINGID_GRACEOFDREAMRAISEDSTAT
+	waitmessage B_WAIT_TIME_LONG
+	end2
+
+BattleScript_GraceOfDreamStatRaisedPreventedStasisGaze::
+	playanimation BS_ATTACKER, B_ANIM_GRACE_OF_DREAM_END_TURN
+	waitanimation
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	end2
+
+BattleScript_EffectGraceOfDream::
+	attackcanceler
+	setvolatile BS_ATTACKER, VOLATILE_GRACE_OF_DREAM, 5
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNSURROUNDEDWITHFLOWERSOFDREAM
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd

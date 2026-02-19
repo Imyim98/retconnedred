@@ -638,8 +638,9 @@ enum AnimBattler
 #define B_ANIM_ULTRA_MEDICINE           65
 #define B_ANIM_RIDE_SUMMON              66
 #define B_ANIM_ULTRA_SEIGA              67
+#define B_ANIM_GRACE_OF_DREAM_END_TURN  68
 
-#define LAST_B_ANIMS_GENERAL            B_ANIM_ULTRA_SEIGA
+#define LAST_B_ANIMS_GENERAL            B_ANIM_GRACE_OF_DREAM_END_TURN
 #define NUM_B_ANIMS_GENERAL             (LAST_B_ANIMS_GENERAL + 1)
 
 // special animations table (sBattleAnims_Special)

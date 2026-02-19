@@ -905,6 +905,7 @@ extern const u8 gBattleAnimMove_MarblePhantasm[];
 extern const u8 gBattleAnimMove_ExcaliburGalatine[];
 extern const u8 gBattleAnimMove_SamadhiFlame[];
 extern const u8 gBattleAnimMove_UnlimitedBladeWorks[];
+extern const u8 gBattleAnimMove_GraceOfDream[];
 extern const u8 gBattleAnimMove_ShadowFire[];
 extern const u8 gBattleAnimMove_ShadowBolt[];
 extern const u8 gBattleAnimMove_ShadowChill[];
@@ -1080,6 +1081,7 @@ extern const u8 gBattleAnimGeneral_ShadowSky[];
 extern const u8 gBattleAnimGeneral_UltraMedicineBurstOut[];
 extern const u8 gBattleAnimGeneral_RideSummonSubstitute[];
 extern const u8 gBattleAnimGeneral_UltraSeigaBurstOut[];
+extern const u8 gBattleAnimGeneral_GraceOfDreamEndTurn[];
 
 // special animations
 extern const u8 gBattleAnimSpecial_LevelUp[];

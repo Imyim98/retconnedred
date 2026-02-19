@@ -360,6 +360,7 @@ enum __attribute__((packed)) BattleMoveEffects
     EFFECT_EX_SHADOW_MOVE_RECOIL_CURRENT_HP, // Shadow End
     EFFECT_KIRIFUDA,
     EFFECT_CARD_INCLUDE,
+    EFFECT_GRACE_OF_DREAM,
     NUM_BATTLE_MOVE_EFFECTS,
 };
 

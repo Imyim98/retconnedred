@@ -279,6 +279,7 @@ static const struct BitfieldInfo sStatus3Bitfield[] =
     {/*Aqua Ring*/ 1, 28},
     {/*Laser Focus*/ 1, 29},
     {/*Power Trick*/ 1, 30},
+    {/*Grace of Dream*/ 5, 31},
 };
 
 static const struct BitfieldInfo sAIBitfield[] =
@@ -398,6 +399,7 @@ static const struct ListMenuItem sVolatileStatusListItems[] =
     {COMPOUND_STRING("Aqua Ring"),          VOLATILE_AQUA_RING},
     {COMPOUND_STRING("Laser Focus"),        VOLATILE_LASER_FOCUS},
     {COMPOUND_STRING("Power Trick"),        VOLATILE_POWER_TRICK},
+    {COMPOUND_STRING("Grace of Dream"),     VOLATILE_GRACE_OF_DREAM},
 };
 
 static const struct ListMenuItem sHazardsListItems[] =
