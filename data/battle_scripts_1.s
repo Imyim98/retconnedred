@@ -10329,6 +10329,14 @@ BattleScript_StasisGazeActivatesAbility::
 	restoreattacker
 	return
 
+BattleScript_StasisGazeActivatesAbilityEnd2::
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_STATINCREASEPREVENTEDBYSTASISGAZE
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	end2
+
 BattleScript_WindyEgretActivates::
 	call BattleScript_AbilityPopUpScripting
 	printstring STRINGID_TAILWINDBLEW

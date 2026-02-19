@@ -879,6 +879,7 @@ extern const u8 BattleScript_DevourHealMultiTarget[];
 extern const u8 BattleScript_StasisGazeActivatesMove[];
 extern const u8 BattleScript_StasisGazeActivatesAbilitySwitchIn[];
 extern const u8 BattleScript_StasisGazeActivatesAbility[];
+extern const u8 BattleScript_StasisGazeActivatesAbilityEnd2[];
 extern const u8 BattleScript_StasisGazeActivatesMoveEffect[];
 extern const u8 BattleScript_EffectTryReducePPPrevented[];
 extern const u8 BattleScript_HealingGraceActivates[];

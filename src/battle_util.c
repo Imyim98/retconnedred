@@ -5685,6 +5685,44 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                 effect++;
             }
             break;
+        case ABILITY_GRAND_THEORY:
+            if (IsBattlerAlive(battler)
+             && gBattlerAttacker != battler
+             &&	CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, ability)
+             &&	(gBattleMons[battler].moves[0] == gCurrentMove
+             || gBattleMons[battler].moves[1] == gCurrentMove
+             || gBattleMons[battler].moves[2] == gCurrentMove
+             || gBattleMons[battler].moves[3] == gCurrentMove))
+            {
+                u32 oppositeBattler = GetOppositeBattler(battler);
+                u32 oppositeBattlerPartner = GetPartnerBattler(oppositeBattler);
+                gBattleMons[battler].volatiles.activateGrandTheory = FALSE;
+
+                if (GetBattlerAbility(oppositeBattler) == ABILITY_STASIS_GAZE && IsBattlerAlive(oppositeBattler))
+                {
+                    SaveBattlerAttacker(battler);
+                    gBattleScripting.battler = oppositeBattler;
+                    BattleScriptExecute(BattleScript_StasisGazeActivatesAbilityEnd2);
+                    effect++;
+                }
+                else if (GetBattlerAbility(oppositeBattlerPartner) == ABILITY_STASIS_GAZE && IsBattlerAlive(oppositeBattlerPartner))
+                {
+                    SaveBattlerAttacker(battler);
+                    gBattleScripting.battler = oppositeBattlerPartner;
+                    BattleScriptExecute(BattleScript_StasisGazeActivatesAbilityEnd2);
+                    effect++;
+                }
+                else
+                {
+                    SaveBattlerAttacker(battler);
+                    gBattleScripting.battler = battler;
+                    gBattlerAttacker = gBattlerAbility = battler;
+                    SET_STATCHANGER(STAT_SPATK, 1, FALSE);
+                    BattleScriptExecute(BattleScript_AttackerAbilityStatRaiseEnd2);
+                    effect++;
+                }
+            }
+            break;
         default:
             break;
         }

@@ -436,7 +436,7 @@ enum __attribute__((packed)) Ability
     ABILITY_LAST_GRUDGE = (ABILITY_OFFICIAL_END + 100), // TO DO // When knocked out by a move, lower move's PP to 1.
     ABILITY_SALVAGE = (ABILITY_OFFICIAL_END + 101), // When any mon faints, raise own Defense.
     ABILITY_TOXICOLOGIST = (ABILITY_OFFICIAL_END + 102), // Boosts Miasma damage by 50%.
-    ABILITY_GRAND_THEORY = (ABILITY_OFFICIAL_END + 103), // TO DO // Boosts Sp. Atk when another puppet uses a move it also knows.
+    ABILITY_GRAND_THEORY = (ABILITY_OFFICIAL_END + 103), // Boosts Sp. Atk when another puppet uses a move it also knows.
     ABILITY_CHARISMATIC = (ABILITY_OFFICIAL_END + 104), // (as Defeatist)
     ABILITY_BLACK_SMOKE = (ABILITY_OFFICIAL_END + 105), // TO DO // ---
     ABILITY_SONGBIRD = (ABILITY_OFFICIAL_END + 106), // TO DO // ---

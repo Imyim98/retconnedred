@@ -2306,6 +2306,34 @@ static enum MoveEndResult MoveEndQueueDancer(void)
     return MOVEEND_RESULT_CONTINUE;
 }
 
+static enum MoveEndResult MoveEndQueueGrandTheory(void)
+{
+    if (IsBattlerUnaffectedByMove(gBattlerTarget)
+     || gBattleStruct->unableToUseMove
+     || gBattleStruct->snatchedMoveIsUsed
+     || gBattleStruct->bouncedMoveIsUsed)
+    {
+        gBattleScripting.moveendState++;
+        return MOVEEND_RESULT_CONTINUE;
+    }
+
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (battler == gBattlerAttacker || !IsBattlerAlive(battler))
+            continue;
+
+        if (GetBattlerAbility(battler) == ABILITY_GRAND_THEORY
+         && (gBattleMons[battler].moves[0] == gCurrentMove 
+         || gBattleMons[battler].moves[1] == gCurrentMove
+         || gBattleMons[battler].moves[2] == gCurrentMove
+         || gBattleMons[battler].moves[3] == gCurrentMove))
+            gBattleMons[battler].volatiles.activateGrandTheory = TRUE;
+    }
+
+    gBattleScripting.moveendState++;
+    return MOVEEND_RESULT_CONTINUE;
+}
+
 static enum MoveEndResult MoveEndStatusImmunityAbilities(void)
 {
     enum MoveEndResult result = MOVEEND_RESULT_CONTINUE;
@@ -3798,6 +3826,35 @@ static enum MoveEndResult MoveEndDancer(void)
     return result;
 }
 
+static enum MoveEndResult MoveEndGrandTheory(void)
+{
+    enum MoveEndResult result = MOVEEND_RESULT_CONTINUE;
+    bool32 anyGrandTheoryQueued = FALSE;
+    enum BattlerId nextGrandTheory = 0;
+
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (gBattleMons[battler].volatiles.activateGrandTheory)
+        {
+            if (!anyGrandTheoryQueued)
+                nextGrandTheory = battler;
+            anyGrandTheoryQueued = TRUE;
+        }
+    }
+
+    if (!anyGrandTheoryQueued)
+    {
+        gBattleScripting.moveendState++;
+        return result;
+    }
+
+    if (AbilityBattleEffects(ABILITYEFFECT_MOVE_END_OTHER, nextGrandTheory, ABILITY_GRAND_THEORY, gCurrentMove, TRUE))
+        result = MOVEEND_RESULT_RUN_SCRIPT;
+
+    gBattleScripting.moveendState++;
+    return result;
+}
+
 static enum MoveEndResult MoveEndPursuitNextAction(void)
 {
     enum MoveEndResult result = MOVEEND_RESULT_CONTINUE;
@@ -3839,6 +3896,7 @@ static enum MoveEndResult (*const sMoveEndHandlers[])(void) =
     [MOVEEND_FORM_CHANGE_ON_HIT] = MoveEndFormChangeOnHit,
     [MOVEEND_ABILITIES_ATTACKER] = MoveEndAbilitiesAttacker,
     [MOVEEND_QUEUE_DANCER] = MoveEndQueueDancer,
+    [MOVEEND_QUEUE_GRAND_THEORY] = MoveEndQueueGrandTheory,
     [MOVEEND_STATUS_IMMUNITY_ABILITIES] = MoveEndStatusImmunityAbilities,
     [MOVEEND_SYNCHRONIZE_ATTACKER] = MoveEndSynchronizeAttacker,
     [MOVEEND_ATTACKER_INVISIBLE] = MoveEndAttackerInvisible,
@@ -3877,6 +3935,7 @@ static enum MoveEndResult (*const sMoveEndHandlers[])(void) =
     [MOVEEND_PICKPOCKET] = MoveEndPickpocket,
     [MOVEEND_CLEAR_BITS] = MoveEndClearBits,
     [MOVEEND_DANCER] = MoveEndDancer,
+    [MOVEEND_GRAND_THEORY] = MoveEndGrandTheory,
     [MOVEEND_PURSUIT_NEXT_ACTION] = MoveEndPursuitNextAction,
 };
 
