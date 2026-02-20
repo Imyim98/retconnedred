@@ -3519,4 +3519,11 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 8,
     },
 
+    [ABILITY_HEALING_SAINT] =
+    {
+        .name = _("Healing Saint"),
+        .description = COMPOUND_STRING("Heals if others heal."),
+        .aiRating = 4,
+    },
+
 };

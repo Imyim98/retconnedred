@@ -10393,3 +10393,23 @@ BattleScript_EffectGraceOfDream::
 	printstring STRINGID_PKMNSURROUNDEDWITHFLOWERSOFDREAM
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
+
+BattleScript_HealingSaintActivates::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	healthbarupdate BS_SCRIPTING, PASSIVE_HP_UPDATE
+	datahpupdate BS_SCRIPTING, PASSIVE_HP_UPDATE
+	printstring STRINGID_HEALINGSAINTHEALS
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	end2
+
+BattleScript_HealingSaintActivatesHealBlock::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUpScripting
+	waitanimation
+	printstring STRINGID_HEALINGSAINTHEALSBUTBLOCKED
+	waitmessage B_WAIT_TIME_LONG
+	restoreattacker
+	end2

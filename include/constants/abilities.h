@@ -478,6 +478,7 @@ enum __attribute__((packed)) Ability
     ABILITY_ULTRA_FORM_PEACE = (ABILITY_OFFICIAL_END + 142), // Electruc Surge + May Parlz
     ABILITY_ULTRA_FORM_MARCH = (ABILITY_OFFICIAL_END + 143), // Tail Wind + May Speed Down
     ABILITY_ULTRA_FORM_BEAUTY = (ABILITY_OFFICIAL_END + 144), // Snow Warning + May Freeze
+    ABILITY_HEALING_SAINT = (ABILITY_OFFICIAL_END + 145), // Heals when the foe heals
     ABILITIES_COUNT_GEN9,
     ABILITIES_COUNT = ABILITIES_COUNT_GEN9,
 };

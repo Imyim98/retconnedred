@@ -5723,6 +5723,32 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                 }
             }
             break;
+        case ABILITY_HEALING_SAINT:
+            if (IsBattlerAlive(battler)
+             && gBattlerAttacker != battler
+             &&	gMovesInfo[SanitizeMoveId(gCurrentMove)].healingMove
+             && !IsBattlerAtMaxHp(battler))
+            {
+                gBattleMons[battler].volatiles.activateHealingSaint = FALSE;
+
+                if (gBattleMons[battler].volatiles.healBlock)
+                {
+                    SaveBattlerAttacker(battler);
+                    gBattleScripting.battler = battler;
+                    BattleScriptExecute(BattleScript_HealingSaintActivatesHealBlock);
+                    effect++;
+                }
+                else
+                {
+                    u32 healAmount = GetNonDynamaxMaxHP(battler) / 4;
+                    SaveBattlerAttacker(battler);
+                    gBattleScripting.battler = battler;
+                    SetHealAmount(battler, healAmount);
+                    BattleScriptExecute(BattleScript_HealingSaintActivates);
+                    effect++;
+                }
+            }
+            break;
         default:
             break;
         }

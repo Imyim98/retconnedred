@@ -884,5 +884,7 @@ extern const u8 BattleScript_StasisGazeActivatesMoveEffect[];
 extern const u8 BattleScript_EffectTryReducePPPrevented[];
 extern const u8 BattleScript_HealingGraceActivates[];
 extern const u8 BattleScript_EffectGraceOfDream[];
+extern const u8 BattleScript_HealingSaintActivates[];
+extern const u8 BattleScript_HealingSaintActivatesHealBlock[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

@@ -951,6 +951,8 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_ABILITYPREVENTPPREDUCTION]            = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX}'s {B_SCR_ABILITY} prevented PP reduction!"),
     [STRINGID_GRACEOFDREAMRAISEDSTAT]               = COMPOUND_STRING("The flowers of dream sharply raised {B_ATK_NAME_WITH_PREFIX}'s {B_BUFF1}!!"),
     [STRINGID_PKMNSURROUNDEDWITHFLOWERSOFDREAM]     = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} surrounded itself with flowers of dream!"),
+    [STRINGID_HEALINGSAINTHEALS]                    = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} recovered HP due to its {B_SCR_ABILITY}!"),
+    [STRINGID_HEALINGSAINTHEALSBUTBLOCKED]          = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} got blocked from recovering HP!"),
 };
 
 const u16 gTrainerUsedItemStringIds[] =
