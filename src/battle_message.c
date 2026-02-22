@@ -907,7 +907,7 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_LEECHSEEDHEALSABILITYPUREWHITE]       = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} got healed from Mistletoe Seed due to {B_ATK_ABILITY}!"),
     [STRINGID_PKMNFLUFFIEDINTO]                     = COMPOUND_STRING("{B_DEF_NAME_WITH_PREFIX} got fluffied and\ntransformed into {B_BUFF1}!"),
     [STRINGID_PARTYGOTWIPEDOUT]                     = COMPOUND_STRING("The opposing party got wiped out."),
-    [STRINGID_PKMNCUTSSPATTACKWITH]                 = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX}'s {B_SCR_ABILITY}\ndisturbs {B_DEF_NAME_WITH_PREFIX}'s SP. ATK!"),
+    [STRINGID_PKMNCUTSSPATTACKWITH]                 = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX}'s {B_SCR_ABILITY} lowers {B_DEF_NAME_WITH_PREFIX2}'s Sp. Atk!"),
     [STRINGID_PKMNISWISHING]                        = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} is wishing!"),
     [STRINGID_SETUPDIMENSIONWALL]                   = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} set up Aurora Curtain!"),
     [STRINGID_UNLIMITEDKRISWORKS]                   = COMPOUND_STRING("Reality marble is deployed on the field!"),
@@ -953,6 +953,9 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_PKMNSURROUNDEDWITHFLOWERSOFDREAM]     = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} surrounded itself with flowers of dream!"),
     [STRINGID_HEALINGSAINTHEALS]                    = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} recovered HP due to its {B_SCR_ABILITY}!"),
     [STRINGID_HEALINGSAINTHEALSBUTBLOCKED]          = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} got blocked from recovering HP!"),
+    [STRINGID_PKMNRAISESATTACKWITH]                 = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX}'s {B_SCR_ABILITY} raises {B_DEF_NAME_WITH_PREFIX2}'s Attack!"), 
+    [STRINGID_PKMNRAISESSPATTACKWITH]               = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX}'s {B_SCR_ABILITY} raises {B_DEF_NAME_WITH_PREFIX2}'s Special Attack!"),
+    [STRINGID_FAINTINONE]                           = COMPOUND_STRING("{B_DEF_NAME_WITH_PREFIX} will faint in one turn!"),
 };
 
 const u16 gTrainerUsedItemStringIds[] =

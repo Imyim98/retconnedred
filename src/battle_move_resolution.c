@@ -2334,6 +2334,81 @@ static enum MoveEndResult MoveEndQueueGrandTheory(void)
     return MOVEEND_RESULT_CONTINUE;
 }
 
+static enum MoveEndResult MoveEndQueueEchoAbilitiesDour(void)
+{
+    if (!IsSoundMove(gCurrentMove))
+//     || IsBattlerUnaffectedByMove(gBattlerTarget)
+//     || gBattleStruct->unableToUseMove
+//     || gBattleStruct->snatchedMoveIsUsed
+//     || gBattleStruct->bouncedMoveIsUsed)
+    {
+        gBattleScripting.moveendState++;
+        return MOVEEND_RESULT_CONTINUE;
+    }
+
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (!IsBattlerAlive(battler))
+            continue;
+
+        if (GetBattlerAbility(battler) == ABILITY_DOUR_ECHO)
+            gBattleMons[battler].volatiles.activateEchoAbilitiesDour = TRUE;
+    }
+
+    gBattleScripting.moveendState++;
+    return MOVEEND_RESULT_CONTINUE;
+}
+
+static enum MoveEndResult MoveEndQueueEchoAbilitiesManic(void)
+{
+    if (!IsSoundMove(gCurrentMove))
+//     || IsBattlerUnaffectedByMove(gBattlerTarget)
+//     || gBattleStruct->unableToUseMove
+//     || gBattleStruct->snatchedMoveIsUsed
+//     || gBattleStruct->bouncedMoveIsUsed)
+    {
+        gBattleScripting.moveendState++;
+        return MOVEEND_RESULT_CONTINUE;
+    }
+
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (!IsBattlerAlive(battler))
+            continue;
+
+        if (GetBattlerAbility(battler) == ABILITY_MANIC_ECHO)
+            gBattleMons[battler].volatiles.activateEchoAbilitiesManic = TRUE;
+    }
+
+    gBattleScripting.moveendState++;
+    return MOVEEND_RESULT_CONTINUE;
+}
+
+static enum MoveEndResult MoveEndQueueEchoAbilitiesLastCadenza(void)
+{
+    if (!IsSoundMove(gCurrentMove))
+//     || IsBattlerUnaffectedByMove(gBattlerTarget)
+//     || gBattleStruct->unableToUseMove
+//     || gBattleStruct->snatchedMoveIsUsed
+//     || gBattleStruct->bouncedMoveIsUsed)
+    {
+        gBattleScripting.moveendState++;
+        return MOVEEND_RESULT_CONTINUE;
+    }
+
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (!IsBattlerAlive(battler))
+            continue;
+
+        if (GetBattlerAbility(battler) == ABILITY_LAST_CADENZA)
+            gBattleMons[battler].volatiles.activateEchoAbilitiesLastCadenza = TRUE;
+    }
+
+    gBattleScripting.moveendState++;
+    return MOVEEND_RESULT_CONTINUE;
+}
+
 static enum MoveEndResult MoveEndQueueHealingSaint(void)
 {
     if (IsBattlerUnaffectedByMove(gBattlerTarget)
@@ -3881,6 +3956,93 @@ static enum MoveEndResult MoveEndGrandTheory(void)
     return result;
 }
 
+static enum MoveEndResult MoveEndEchoAbilitiesDour(void)
+{
+    enum MoveEndResult result = MOVEEND_RESULT_CONTINUE;
+    bool32 anyEchoAbilitiesDourQueued = FALSE;
+    enum BattlerId nextEchoAbilitiesDour = 0;
+
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (gBattleMons[battler].volatiles.activateEchoAbilitiesDour)
+        {
+            if (!anyEchoAbilitiesDourQueued)
+                nextEchoAbilitiesDour = battler;
+            anyEchoAbilitiesDourQueued = TRUE;
+        }
+    }
+
+    if (!anyEchoAbilitiesDourQueued)
+    {
+        gBattleScripting.moveendState++;
+        return result;
+    }
+
+    if (AbilityBattleEffects(ABILITYEFFECT_MOVE_END_OTHER, nextEchoAbilitiesDour, ABILITY_DOUR_ECHO, gCurrentMove, TRUE))
+        result = MOVEEND_RESULT_RUN_SCRIPT;
+
+    gBattleScripting.moveendState++;
+    return result;
+}
+
+static enum MoveEndResult MoveEndEchoAbilitiesManic(void)
+{
+    enum MoveEndResult result = MOVEEND_RESULT_CONTINUE;
+    bool32 anyEchoAbilitiesManicQueued = FALSE;
+    enum BattlerId nextEchoAbilitiesManic = 0;
+
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (gBattleMons[battler].volatiles.activateEchoAbilitiesManic)
+        {
+            if (!anyEchoAbilitiesManicQueued)
+                nextEchoAbilitiesManic = battler;
+            anyEchoAbilitiesManicQueued = TRUE;
+        }
+    }
+
+    if (!anyEchoAbilitiesManicQueued)
+    {
+        gBattleScripting.moveendState++;
+        return result;
+    }
+
+    if (AbilityBattleEffects(ABILITYEFFECT_MOVE_END_OTHER, nextEchoAbilitiesManic, ABILITY_MANIC_ECHO, gCurrentMove, TRUE))
+        result = MOVEEND_RESULT_RUN_SCRIPT;
+
+    gBattleScripting.moveendState++;
+    return result;
+}
+
+static enum MoveEndResult MoveEndEchoAbilitiesLastCadenza(void)
+{
+    enum MoveEndResult result = MOVEEND_RESULT_CONTINUE;
+    bool32 anyEchoAbilitiesLastCadenzaQueued = FALSE;
+    enum BattlerId nextEchoAbilitiesLastCadenza = 0;
+
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (gBattleMons[battler].volatiles.activateEchoAbilitiesLastCadenza)
+        {
+            if (!anyEchoAbilitiesLastCadenzaQueued)
+                nextEchoAbilitiesLastCadenza = battler;
+            anyEchoAbilitiesLastCadenzaQueued = TRUE;
+        }
+    }
+
+    if (!anyEchoAbilitiesLastCadenzaQueued)
+    {
+        gBattleScripting.moveendState++;
+        return result;
+    }
+
+    if (AbilityBattleEffects(ABILITYEFFECT_MOVE_END_OTHER, nextEchoAbilitiesLastCadenza, ABILITY_LAST_CADENZA, gCurrentMove, TRUE))
+        result = MOVEEND_RESULT_RUN_SCRIPT;
+
+    gBattleScripting.moveendState++;
+    return result;
+}
+
 static enum MoveEndResult MoveEndHealingSaint(void)
 {
     enum MoveEndResult result = MOVEEND_RESULT_CONTINUE;
@@ -3952,6 +4114,9 @@ static enum MoveEndResult (*const sMoveEndHandlers[])(void) =
     [MOVEEND_ABILITIES_ATTACKER] = MoveEndAbilitiesAttacker,
     [MOVEEND_QUEUE_DANCER] = MoveEndQueueDancer,
     [MOVEEND_QUEUE_GRAND_THEORY] = MoveEndQueueGrandTheory,
+    [MOVEEND_QUEUE_ECHO_ABILITIES_DOUR] = MoveEndQueueEchoAbilitiesDour,
+    [MOVEEND_QUEUE_ECHO_ABILITIES_MANIC] = MoveEndQueueEchoAbilitiesManic,
+    [MOVEEND_QUEUE_ECHO_ABILITIES_LAST_CADENZA] = MoveEndQueueEchoAbilitiesLastCadenza,
     [MOVEEND_QUEUE_HEALING_SAINT] = MoveEndQueueHealingSaint,
     [MOVEEND_STATUS_IMMUNITY_ABILITIES] = MoveEndStatusImmunityAbilities,
     [MOVEEND_SYNCHRONIZE_ATTACKER] = MoveEndSynchronizeAttacker,
@@ -3992,6 +4157,9 @@ static enum MoveEndResult (*const sMoveEndHandlers[])(void) =
     [MOVEEND_CLEAR_BITS] = MoveEndClearBits,
     [MOVEEND_DANCER] = MoveEndDancer,
     [MOVEEND_GRAND_THEORY] = MoveEndGrandTheory,
+    [MOVEEND_ECHO_ABILITIES_DOUR] = MoveEndEchoAbilitiesDour,
+    [MOVEEND_ECHO_ABILITIES_MANIC] = MoveEndEchoAbilitiesManic,
+    [MOVEEND_ECHO_ABILITIES_LAST_CADENZA] = MoveEndEchoAbilitiesLastCadenza,
     [MOVEEND_HEALING_SAINT] = MoveEndHealingSaint,
     [MOVEEND_PURSUIT_NEXT_ACTION] = MoveEndPursuitNextAction,
 };

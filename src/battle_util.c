@@ -3778,6 +3778,15 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                 effect++;
             }
             break;
+        case ABILITY_LAST_CADENZA:
+            if (shouldAbilityTrigger && !IsOpposingSideEmpty(battler))
+            {
+                SaveBattlerAttacker(gBattlerAttacker);
+                gBattlerAttacker = battler;
+                BattleScriptCall(BattleScript_LastCadenzaSwitchInActivates);
+                effect++;
+            }
+            break;
         case ABILITY_POSTER_GIRL:
             if (shouldAbilityTrigger && !IsOpposingSideEmpty(battler))
             {
@@ -5482,100 +5491,6 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                 effect++;
             }
             break;
-        case ABILITY_DOUR_ECHO:
-            if (IsBattlerAlive(gBattlerTarget)
-             && (CompareStat(gBattlerTarget, STAT_ATK, MIN_STAT_STAGE, CMP_GREATER_THAN, gLastUsedAbility) || GetBattlerAbility(gBattlerTarget) == ABILITY_MIRROR_ARMOR)
-             && !gBattleStruct->unableToUseMove
-             && IsSoundMove(move)
-             && gBattleMons[gBattlerTarget].attack >= gBattleMons[gBattlerTarget].spAttack)
-            {
-                SET_STATCHANGER(STAT_ATK, 1, TRUE);
-                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
-                BattleScriptCall(BattleScript_DourEchoActivatesAttack);
-                effect++;
-            }
-            else if (IsBattlerAlive(gBattlerTarget)
-             && (CompareStat(gBattlerTarget, STAT_SPATK, MIN_STAT_STAGE, CMP_GREATER_THAN, gLastUsedAbility) || GetBattlerAbility(gBattlerTarget) == ABILITY_MIRROR_ARMOR)
-             && !gBattleStruct->unableToUseMove
-             && IsSoundMove(move)
-             && gBattleMons[gBattlerTarget].attack < gBattleMons[gBattlerTarget].spAttack)
-            {
-                SET_STATCHANGER(STAT_SPATK, 1, TRUE);
-                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
-                BattleScriptCall(BattleScript_DourEchoActivatesSpAttack);
-                effect++;
-            }
-            break;
-        case ABILITY_MANIC_ECHO:
-            if (IsBattlerAlive(gBattlerAttacker)
-             && CompareStat(gBattlerAttacker, STAT_ATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility)
-             && !gBattleStruct->unableToUseMove
-             && IsSoundMove(move)
-             && gBattleMons[gBattlerAttacker].attack >= gBattleMons[gBattlerAttacker].spAttack)
-            {
-                SET_STATCHANGER(STAT_ATK, 1, FALSE);
-                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
-                BattleScriptCall(BattleScript_ManicEchoActivatesAttack);
-                effect++;
-            }
-            else if (IsBattlerAlive(gBattlerAttacker)
-             && CompareStat(gBattlerAttacker, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility)
-             && !gBattleStruct->unableToUseMove
-             && IsSoundMove(move)
-             && gBattleMons[gBattlerAttacker].attack < gBattleMons[gBattlerAttacker].spAttack)
-            {
-                SET_STATCHANGER(STAT_SPATK, 1, FALSE);
-                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
-                BattleScriptCall(BattleScript_ManicEchoActivatesSpAttack);
-                effect++;
-            }
-            break;
-        case ABILITY_LAST_CADENZA:
-            if (IsBattlerAlive(gBattlerTarget)
-             && (CompareStat(gBattlerTarget, STAT_ATK, MIN_STAT_STAGE, CMP_GREATER_THAN, gLastUsedAbility) || GetBattlerAbility(gBattlerTarget) == ABILITY_MIRROR_ARMOR)
-             && !gBattleStruct->unableToUseMove
-             && IsSoundMove(move)
-             && gBattleMons[gBattlerTarget].attack >= gBattleMons[gBattlerTarget].spAttack)
-            {
-                SET_STATCHANGER(STAT_ATK, 1, TRUE);
-                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
-                BattleScriptCall(BattleScript_DourEchoActivatesAttack);
-                effect++;
-            }
-            else if (IsBattlerAlive(gBattlerTarget)
-             && (CompareStat(gBattlerTarget, STAT_SPATK, MIN_STAT_STAGE, CMP_GREATER_THAN, gLastUsedAbility) || GetBattlerAbility(gBattlerTarget) == ABILITY_MIRROR_ARMOR)
-             && !gBattleStruct->unableToUseMove
-             && IsSoundMove(move)
-             && gBattleMons[gBattlerTarget].attack < gBattleMons[gBattlerTarget].spAttack)
-            {
-                SET_STATCHANGER(STAT_SPATK, 1, TRUE);
-                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
-                BattleScriptCall(BattleScript_DourEchoActivatesSpAttack);
-                effect++;
-            }
-            if (IsBattlerAlive(gBattlerAttacker)
-             && CompareStat(gBattlerAttacker, STAT_ATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility)
-             && !gBattleStruct->unableToUseMove
-             && IsSoundMove(move)
-             && gBattleMons[gBattlerAttacker].attack >= gBattleMons[gBattlerAttacker].spAttack)
-            {
-                SET_STATCHANGER(STAT_ATK, 1, FALSE);
-                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
-                BattleScriptCall(BattleScript_ManicEchoActivatesAttack);
-                effect++;
-            }
-            else if (IsBattlerAlive(gBattlerAttacker)
-             && CompareStat(gBattlerAttacker, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, gLastUsedAbility)
-             && !gBattleStruct->unableToUseMove
-             && IsSoundMove(move)
-             && gBattleMons[gBattlerAttacker].attack < gBattleMons[gBattlerAttacker].spAttack)
-            {
-                SET_STATCHANGER(STAT_SPATK, 1, FALSE);
-                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
-                BattleScriptCall(BattleScript_ManicEchoActivatesSpAttack);
-                effect++;
-            }
-            break;
         case ABILITY_WALL_MASTER:
             if (!gBattleStruct->unableToUseMove
              && (gCurrentMove == MOVE_REFLECT
@@ -5721,6 +5636,36 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                     BattleScriptExecute(BattleScript_AttackerAbilityStatRaiseEnd2);
                     effect++;
                 }
+            }
+            break;
+        case ABILITY_DOUR_ECHO:
+            if (IsBattlerAlive(battler)
+             && IsSoundMove(gCurrentMove))
+            {
+                SaveBattlerAttacker(gBattlerAttacker);
+                gBattlerAttacker = battler;
+                BattleScriptCall(BattleScript_DourEchoActivates);
+                effect++;
+            }
+            break;
+        case ABILITY_MANIC_ECHO:
+            if (IsBattlerAlive(battler)
+             && IsSoundMove(gCurrentMove))
+            {
+                SaveBattlerAttacker(gBattlerAttacker);
+                gBattlerAttacker = battler;
+                BattleScriptCall(BattleScript_ManicEchoActivates);
+                effect++;
+            }
+            break;
+        case ABILITY_LAST_CADENZA:
+            if (IsBattlerAlive(battler)
+             && IsSoundMove(gCurrentMove))
+            {
+                SaveBattlerAttacker(gBattlerAttacker);
+                gBattlerAttacker = battler;
+                BattleScriptCall(BattleScript_LastCadenzaActivates);
+                effect++;
             }
             break;
         case ABILITY_HEALING_SAINT:

@@ -15168,6 +15168,30 @@ void BS_CheckOpposingBattlerAbilitySetBattler(void)
 
 }
 
+void BS_JumpIfAttackGESpAttack(void)
+{
+    NATIVE_ARGS(u8 battler, const u8 *jumpInstr);
+    enum BattlerId battler = GetBattlerForBattleScript(cmd->battler);
+
+    u32 statAtk = gBattleMons[battler].attack;
+    u32 statSpAtk = gBattleMons[battler].spAttack;
+
+    statAtk *= gStatStageRatios[gBattleMons[battler].statStages[STAT_ATK]][0];
+    statAtk /= gStatStageRatios[gBattleMons[battler].statStages[STAT_ATK]][1];
+
+    statSpAtk *= gStatStageRatios[gBattleMons[battler].statStages[STAT_SPATK]][0];
+    statSpAtk /= gStatStageRatios[gBattleMons[battler].statStages[STAT_SPATK]][1];
+
+    if (statAtk >= statSpAtk)
+    {
+        gBattlescriptCurrInstr = cmd->jumpInstr;
+    }
+    else
+    {
+        gBattlescriptCurrInstr = cmd->nextInstr;
+    }
+}
+
 void BS_StasisGazeSetBattler(void)
 {
     NATIVE_ARGS(u8 battler);
@@ -15195,6 +15219,26 @@ void BS_StasisGazeSetBattler(void)
         gBattleScripting.battler = oppositeBattlerPartner;
 
     gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
+void BS_TrySetPerishSongOnTarget(void)
+{
+    NATIVE_ARGS(u8 battler, const u8 *jumpInstr);
+    enum BattlerId battler = GetBattlerForBattleScript(cmd->battler);
+
+    if (gBattleMons[battler].volatiles.perishSong
+     || GetBattlerAbility(battler) == ABILITY_FANTASY_BREAKER
+     || gBattleMons[battler].volatiles.semiInvulnerable == STATE_COMMANDER)
+    {
+        gBattlescriptCurrInstr = cmd->jumpInstr;
+    }
+    else
+    {
+        gBattleMons[battler].volatiles.perishSong = TRUE;
+        gBattleMons[battler].volatiles.perishSongTimer = 1;
+
+        gBattlescriptCurrInstr = cmd->nextInstr;
+    }
 }
 
 // The order of this is assumed to be the same as the types

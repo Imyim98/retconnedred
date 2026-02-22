@@ -1726,6 +1726,18 @@
 	.byte \battler
 	.endm
 
+	.macro jumpifattackgespattack battler:req, jumpInstr:req
+	callnative BS_JumpIfAttackGESpAttack
+	.byte \battler
+	.4byte \jumpInstr
+	.endm
+
+	.macro trysetperishsongontarget battler:req, failInstr:req
+	callnative BS_TrySetPerishSongOnTarget
+	.byte \battler
+	.4byte \failInstr
+	.endm
+
 	.macro trygrimoirecall
 	callnative BS_TryGrimoireCall
 	.endm
