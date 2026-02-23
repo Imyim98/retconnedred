@@ -2407,6 +2407,32 @@ static enum MoveEndResult MoveEndQueueEchoAbilitiesLastCadenza(void)
     return MOVEEND_RESULT_CONTINUE;
 }
 
+static enum MoveEndResult MoveEndQueuePride(void)
+{
+    if (IsBattlerUnaffectedByMove(gBattlerTarget)
+     || gBattleStruct->unableToUseMove
+     || gBattleStruct->snatchedMoveIsUsed
+     || gBattleStruct->bouncedMoveIsUsed)
+    {
+        gBattleScripting.moveendState++;
+        return MOVEEND_RESULT_CONTINUE;
+    }
+
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (battler == gBattlerAttacker || !IsBattlerAlive(battler))
+            continue;
+
+        if (GetBattlerAbility(battler) == ABILITY_PRIDE
+         && gMovesInfo[SanitizeMoveId(gCurrentMove)].healingMove
+         && CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, GetBattlerAbility(battler)))
+            gBattleMons[battler].volatiles.activatePride = TRUE;
+    }
+
+    gBattleScripting.moveendState++;
+    return MOVEEND_RESULT_CONTINUE;
+}
+
 static enum MoveEndResult MoveEndQueueHealingSaint(void)
 {
     if (IsBattlerUnaffectedByMove(gBattlerTarget)
@@ -4060,6 +4086,35 @@ static enum MoveEndResult MoveEndEchoAbilitiesLastCadenza(void)
     return result;
 }
 
+static enum MoveEndResult MoveEndPride(void)
+{
+    enum MoveEndResult result = MOVEEND_RESULT_CONTINUE;
+    bool32 anyPrideQueued = FALSE;
+    enum BattlerId nextPride = 0;
+
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (gBattleMons[battler].volatiles.activatePride)
+        {
+            if (!anyPrideQueued)
+                nextPride = battler;
+            anyPrideQueued = TRUE;
+        }
+    }
+
+    if (!anyPrideQueued)
+    {
+        gBattleScripting.moveendState++;
+        return result;
+    }
+
+    if (AbilityBattleEffects(ABILITYEFFECT_MOVE_END_OTHER, nextPride, ABILITY_PRIDE, gCurrentMove, TRUE))
+        result = MOVEEND_RESULT_RUN_SCRIPT;
+
+    gBattleScripting.moveendState++;
+    return result;
+}
+
 static enum MoveEndResult MoveEndHealingSaint(void)
 {
     enum MoveEndResult result = MOVEEND_RESULT_CONTINUE;
@@ -4134,6 +4189,7 @@ static enum MoveEndResult (*const sMoveEndHandlers[])(void) =
     [MOVEEND_QUEUE_ECHO_ABILITIES_DOUR] = MoveEndQueueEchoAbilitiesDour,
     [MOVEEND_QUEUE_ECHO_ABILITIES_MANIC] = MoveEndQueueEchoAbilitiesManic,
     [MOVEEND_QUEUE_ECHO_ABILITIES_LAST_CADENZA] = MoveEndQueueEchoAbilitiesLastCadenza,
+    [MOVEEND_QUEUE_PRIDE] = MoveEndQueuePride,
     [MOVEEND_QUEUE_HEALING_SAINT] = MoveEndQueueHealingSaint,
     [MOVEEND_STATUS_IMMUNITY_ABILITIES] = MoveEndStatusImmunityAbilities,
     [MOVEEND_SYNCHRONIZE_ATTACKER] = MoveEndSynchronizeAttacker,
@@ -4177,6 +4233,7 @@ static enum MoveEndResult (*const sMoveEndHandlers[])(void) =
     [MOVEEND_ECHO_ABILITIES_DOUR] = MoveEndEchoAbilitiesDour,
     [MOVEEND_ECHO_ABILITIES_MANIC] = MoveEndEchoAbilitiesManic,
     [MOVEEND_ECHO_ABILITIES_LAST_CADENZA] = MoveEndEchoAbilitiesLastCadenza,
+    [MOVEEND_PRIDE] = MoveEndPride,
     [MOVEEND_HEALING_SAINT] = MoveEndHealingSaint,
     [MOVEEND_PURSUIT_NEXT_ACTION] = MoveEndPursuitNextAction,
 };

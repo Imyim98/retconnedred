@@ -298,7 +298,8 @@ enum VolatileFlags
     F(VOLATILE_ACTIVATE_HEALING_SAINT,      activateHealingSaint,          (u32, 1)) \
     F(VOLATILE_ACTIVATE_ECHO_ABILITIES_DOUR,         activateEchoAbilitiesDour,         (u32, 1)) \
     F(VOLATILE_ACTIVATE_ECHO_ABILITIES_MANIC,        activateEchoAbilitiesManic,        (u32, 1)) \
-    F(VOLATILE_ACTIVATE_ECHO_ABILITIES_LAST_CADENZA, activateEchoAbilitiesLastCadenza,  (u32, 1))
+    F(VOLATILE_ACTIVATE_ECHO_ABILITIES_LAST_CADENZA, activateEchoAbilitiesLastCadenza,  (u32, 1)) \
+    F(VOLATILE_ACTIVATE_PRIDE,              activatePride,                 (u32, 1))
 
 
 /* Use within a macro to get the maximum allowed value for a volatile. Requires _typeMaxValue as input. */

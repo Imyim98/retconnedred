@@ -141,6 +141,7 @@ static bool32 HandleEndTurnWeatherDamage(enum BattlerId battler)
          && ability != ABILITY_SAND_RUSH
          && ability != ABILITY_OVERCOAT
          && ability != ABILITY_WIDE_HAT
+         && ability != ABILITY_STORM_SHAWL
          && !IS_BATTLER_ANY_TYPE(battler, TYPE_NEW_EARTH, TYPE_NEW_METAL)
          && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERGROUND
          && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERWATER
@@ -165,6 +166,7 @@ static bool32 HandleEndTurnWeatherDamage(enum BattlerId battler)
             if (ability != ABILITY_SNOW_CLOAK
              && ability != ABILITY_OVERCOAT
              && ability != ABILITY_WIDE_HAT
+             && ability != ABILITY_STORM_SHAWL
              && !IS_BATTLER_OF_TYPE(battler, TYPE_NEW_ICE)
              && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERGROUND
              && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERWATER

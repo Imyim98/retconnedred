@@ -5609,6 +5609,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
         case ABILITY_GRAND_THEORY:
             if (IsBattlerAlive(battler)
              && gBattlerAttacker != battler
+             && gBattlerAttacker != GetPartnerBattler(battler)
              &&	CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, ability)
              &&	(gBattleMons[battler].moves[0] == gCurrentMove
              || gBattleMons[battler].moves[1] == gCurrentMove
@@ -5672,6 +5673,42 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                 gBattlerAttacker = battler;
                 BattleScriptCall(BattleScript_LastCadenzaActivates);
                 effect++;
+            }
+            break;
+        case ABILITY_PRIDE:
+            if (IsBattlerAlive(battler)
+             && gBattlerAttacker != battler
+             && gBattlerAttacker != GetPartnerBattler(battler)
+             &&	CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN, ability)
+             &&	IsHealingMove(gCurrentMove))
+            {
+                u32 oppositeBattler = GetOppositeBattler(battler);
+                u32 oppositeBattlerPartner = GetPartnerBattler(oppositeBattler);
+                gBattleMons[battler].volatiles.activatePride = FALSE;
+
+                if (GetBattlerAbility(oppositeBattler) == ABILITY_STASIS_GAZE && IsBattlerAlive(oppositeBattler))
+                {
+                    SaveBattlerAttacker(battler);
+                    gBattleScripting.battler = oppositeBattler;
+                    BattleScriptExecute(BattleScript_StasisGazeActivatesAbilityEnd2);
+                    effect++;
+                }
+                else if (GetBattlerAbility(oppositeBattlerPartner) == ABILITY_STASIS_GAZE && IsBattlerAlive(oppositeBattlerPartner))
+                {
+                    SaveBattlerAttacker(battler);
+                    gBattleScripting.battler = oppositeBattlerPartner;
+                    BattleScriptExecute(BattleScript_StasisGazeActivatesAbilityEnd2);
+                    effect++;
+                }
+                else
+                {
+                    SaveBattlerAttacker(battler);
+                    gBattleScripting.battler = battler;
+                    gBattlerAttacker = gBattlerAbility = battler;
+                    SET_STATCHANGER(STAT_SPATK, 1, FALSE);
+                    BattleScriptExecute(BattleScript_AttackerAbilityStatRaiseEnd2);
+                    effect++;
+                }
             }
             break;
         case ABILITY_HEALING_SAINT:
@@ -7867,6 +7904,41 @@ static inline u32 CalcMoveBasePower(struct BattleContext *ctx)
             basePower = (basePower * (100 + boost)) / 100;
         }
         break;
+    case ABILITY_MASTERMIND:
+        {
+            u8 i = 0;
+            u8 boost = 0;
+            u8 partysize = 0;
+            struct Pokemon *party;
+            //oh fuckin' boy here we go
+            if (GetBattlerSide(battlerAtk) != B_SIDE_PLAYER)
+            {
+                party = gEnemyParty;
+                partysize = gEnemyPartyCount;
+            }
+            else
+            {
+                party = gPlayerParty;
+                partysize = PARTY_SIZE;
+            }
+            for (i = 0; i < partysize && !boost; i++)
+            {
+                if (i != gBattlerPartyIndexes[battlerAtk])
+                {
+                    u16 monspecies = GetMonData(&party[i], MON_DATA_SPECIES, NULL);
+                    if (!monspecies || GetMonData(&party[i], MON_DATA_IS_EGG, NULL)
+                        || GetMonData(&party[i], MON_DATA_HP, NULL) != 0)
+                        continue;
+                    if (gSpeciesInfo[monspecies].types[0] == gMovesInfo[move].type ||
+                        gSpeciesInfo[monspecies].types[1] == gMovesInfo[move].type)
+                        boost = 33;
+                }
+            }
+            if (boost > 0 && gMovesInfo[move].type != gBattleMons[battlerAtk].types[0] && gMovesInfo[move].type != gBattleMons[battlerAtk].types[1])
+                    boost = 100;
+            basePower = (basePower * (100 + boost)) / 100;
+        }
+        break;
     default:
         break;
     }
@@ -8082,6 +8154,41 @@ static inline u32 CalcMoveBasePowerAfterModifiers(struct BattleContext *ctx)
            modifier = uq4_12_multiply(modifier, UQ_4_12(1.5));
         break;
 /*
+    case ABILITY_MASTERMIND:
+        {
+            u8 i = 0;
+            u8 boost = 0;
+            u8 partysize = 0;
+            struct Pokemon *party;
+            //oh fuckin' boy here we go
+            if (GetBattlerSide(battlerAtk) != B_SIDE_PLAYER)
+            {
+                party = gEnemyParty;
+                partysize = gEnemyPartyCount;
+            }
+            else
+            {
+                party = gPlayerParty;
+                partysize = PARTY_SIZE;
+            }
+            for (i = 0; i < partysize && !boost; i++)
+            {
+                if (i != gBattlerPartyIndexes[battlerAtk])
+                {
+                    u16 monspecies = GetMonData(&party[i], MON_DATA_SPECIES, NULL);
+                    if (!monspecies || GetMonData(&party[i], MON_DATA_IS_EGG, NULL)
+                        || GetMonData(&party[i], MON_DATA_HP, NULL) != 0)
+                        continue;
+                    if (gSpeciesInfo[monspecies].types[0] == moveType ||
+                        gSpeciesInfo[monspecies].types[1] == moveType)
+                        boost = 33;
+                }
+            }
+            if (boost > 0 && moveType != gBattleMons[battlerAtk].types[0] && moveType != gBattleMons[battlerAtk].types[1])
+                    boost = 100;
+            modifier = uq4_12_multiply(modifier, UQ_4_12((100 + boost) / 100));
+        }
+        break;
     case ABILITY_HARMONIZE:
         {
             u8 i = 0;
@@ -8876,11 +8983,23 @@ static inline u32 CalcDefenseStat(struct BattleContext *ctx)
         break;
     case ABILITY_ULTRA_MEDICINE_V2:
     case ABILITY_ULTRA_SEIGA:
-        modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(4.0));
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(4.0));
+        break;
+    case ABILITY_STORM_SHAWL:
+        if (!usesDefStat && gBattleWeather)
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
         break;
     case ABILITY_FLOWER_GIFT:
         if (!usesDefStat)
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+        break;
+    case ABILITY_PURE_SCALES:
+        if (!usesDefStat)
+        {
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(2.0));
+            if (ctx->updateFlags)
+                RecordAbilityBattle(battlerDef, ABILITY_PURE_SCALES);
+        }
         break;
     case ABILITY_PROTOSYNTHESIS:
         {

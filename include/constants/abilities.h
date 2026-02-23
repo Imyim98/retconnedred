@@ -413,7 +413,7 @@ enum __attribute__((packed)) Ability
     ABILITY_PURE_FURIES = (ABILITY_OFFICIAL_END + 77), // TO DO // --- (was mold breaker)
     ABILITY_PURE_ENIGMA = (ABILITY_OFFICIAL_END + 78), // TO DO for Okina, for now 50% // Doubles Atk, Def, SAtk, SDef, and Speed. (+50% if user is not Okina).
     ABILITY_ABERRANT = (ABILITY_OFFICIAL_END + 79), // Switches own Atk and SAtk.
-    ABILITY_STORM_SHAWL = (ABILITY_OFFICIAL_END + 80), // TO DO // During abnormal weather, +50% SDef. Blocks sand/hail damage.
+    ABILITY_STORM_SHAWL = (ABILITY_OFFICIAL_END + 80), // During abnormal weather, +50% SDef. Blocks sand/hail damage.
     ABILITY_HARMONIZE = (ABILITY_OFFICIAL_END + 81), // Damaging moves do 10% more damage per ally that also knows them.
     ABILITY_CONTAGION = (ABILITY_OFFICIAL_END + 82), // (as Mummy)
     ABILITY_DOLL_SKEWER = (ABILITY_OFFICIAL_END + 83), // 1/8 damage on contact (as modern Rough Skin)
@@ -421,7 +421,7 @@ enum __attribute__((packed)) Ability
     ABILITY_DOUR_ECHO = (ABILITY_OFFICIAL_END + 85), // Whenever a sound move is used, lower foe's higher attacking stat.
     ABILITY_MANIC_ECHO = (ABILITY_OFFICIAL_END + 86), // Whenever a sound move is used, raise own higher attacking stat.
     ABILITY_JEALOUSY = (ABILITY_OFFICIAL_END + 87), // If no held item, +50% Def/SDef against attackers with held items. Won't pick up items.
-    ABILITY_PRIDE = (ABILITY_OFFICIAL_END + 88), // TO DO // If foe uses a recovery status move, raise own SAtk.
+    ABILITY_PRIDE = (ABILITY_OFFICIAL_END + 88), // If foe uses a recovery status move, raise own SAtk.
     ABILITY_WALL_MASTER = (ABILITY_OFFICIAL_END + 89), // If multiple of Reflect, Light Screen, Mist, and Safeguard are known, uses all simultaneously.
     ABILITY_CATALYST = (ABILITY_OFFICIAL_END + 90), // Opponents take an additional 1/8 HP damage from poison/toxic status.
     ABILITY_WIDE_HAT = (ABILITY_OFFICIAL_END + 91), // (as Overcoat)
@@ -442,7 +442,7 @@ enum __attribute__((packed)) Ability
     ABILITY_SONGBIRD = (ABILITY_OFFICIAL_END + 106), // TO DO // ---
     ABILITY_YIN_AND_YANG = (ABILITY_OFFICIAL_END + 107), // When using weaker attacking stat, +30% power. Always takes effect if stats are tied.
     ABILITY_ARSONIST = (ABILITY_OFFICIAL_END + 108), // Boosts Fire move power by 50%.
-    ABILITY_MASTERMIND = (ABILITY_OFFICIAL_END + 109), // TO DO // Moves with types matching a fainted ally get +33% boost if STAB, +100% otherwise.
+    ABILITY_MASTERMIND = (ABILITY_OFFICIAL_END + 109), // Moves with types matching a fainted ally get +33% boost if STAB, +100% otherwise.
     ABILITY_RESTRAINT = (ABILITY_OFFICIAL_END + 110), // TO DO // ---
     ABILITY_LOGICIAN = (ABILITY_OFFICIAL_END + 111), // Boosts Reason move power by 50%.
     ABILITY_TIME_CONTROL = (ABILITY_OFFICIAL_END + 112), // All moves gain priority.
@@ -455,8 +455,8 @@ enum __attribute__((packed)) Ability
     ABILITY_DIAMOND_DUST = (ABILITY_OFFICIAL_END + 119), // TO DO // ---
     ABILITY_BUZZER = (ABILITY_OFFICIAL_END + 120), // TO DO // When taking resisted hit, lower foe's Atk or SAtk (matching move). Blocked by Soundproof.
     ABILITY_SAND_CASTLE = (ABILITY_OFFICIAL_END + 121), // TO DO // During sandstorm, doubles Defense.
-    ABILITY_STASIS_GAZE = (ABILITY_OFFICIAL_END + 122), // TO DO // Foe's stats cannot increase.
-    ABILITY_PURE_SCALES = (ABILITY_OFFICIAL_END + 123), // TO DO // Doubles Special Defense.
+    ABILITY_STASIS_GAZE = (ABILITY_OFFICIAL_END + 122), // *Re-check Again* // Foe's stats cannot increase.
+    ABILITY_PURE_SCALES = (ABILITY_OFFICIAL_END + 123), // Doubles Special Defense.
     ABILITY_VERSATILE = (ABILITY_OFFICIAL_END + 124), // TO DO // Moves always get same-type attack bonus.
     ABILITY_SIBLINGS_BOND = (ABILITY_OFFICIAL_END + 125), // Same as (Parental Bond)
     ABILITY_LAST_CADENZA = (ABILITY_OFFICIAL_END + 126), // All sound-related ability effects
