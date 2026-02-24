@@ -4769,6 +4769,7 @@ BattleScript_EffectCamouflage::
 
 BattleScript_FaintBattler::
 	tryillusionoff BS_FAINTED
+	undodynamax BS_FAINTED
 	playfaintcry BS_FAINTED
 	pause B_WAIT_TIME_LONG
 	dofaintanimation BS_FAINTED
@@ -6644,26 +6645,14 @@ BattleScript_MoveUsedIsFrozen::
 	statusanimation BS_ATTACKER
 	goto BattleScript_MoveEnd
 
-BattleScript_MoveUsedUnfroze::
+BattleScript_BattlerDefrosted::
 	printfromtable gGotDefrostedStringIds
-	waitmessage B_WAIT_TIME_LONG
-	updatestatusicon BS_ATTACKER
-	return
-
-BattleScript_MoveUsedUnfrostbite::
-	printfromtable gFrostbiteHealedStringIds
-	waitmessage B_WAIT_TIME_LONG
-	updatestatusicon BS_ATTACKER
-	return
-
-BattleScript_DefrostedViaFireMove::
-	printstring STRINGID_PKMNWASDEFROSTED
 	waitmessage B_WAIT_TIME_LONG
 	updatestatusicon BS_SCRIPTING
 	return
 
-BattleScript_FrostbiteHealedViaFireMove::
-	printstring STRINGID_PKMNFROSTBITEHEALED
+BattleScript_BattlerFrostbiteHealed::
+	printfromtable gFrostbiteHealedStringIds
 	waitmessage B_WAIT_TIME_LONG
 	updatestatusicon BS_SCRIPTING
 	return
@@ -8501,6 +8490,7 @@ BattleScript_ArenaDoJudgment::
 	erasearenareftextbox
 	printstring STRINGID_DEFEATEDOPPONENTBYREFEREE
 	waitmessage B_WAIT_TIME_LONG
+	undodynamax BS_OPPONENT1
 	playfaintcry BS_OPPONENT1
 	waitcry
 	dofaintanimation BS_OPPONENT1
@@ -8516,6 +8506,7 @@ BattleScript_ArenaJudgmentPlayerLoses:
 	erasearenareftextbox
 	printstring STRINGID_LOSTTOOPPONENTBYREFEREE
 	waitmessage B_WAIT_TIME_LONG
+	undodynamax BS_PLAYER1
 	playfaintcry BS_PLAYER1
 	waitcry
 	dofaintanimation BS_PLAYER1
@@ -8532,11 +8523,13 @@ BattleScript_ArenaJudgmentDraw:
 	printstring STRINGID_TIEDOPPONENTBYREFEREE
 	waitmessage B_WAIT_TIME_LONG
 	arenabothmonslost
+	undodynamax BS_PLAYER1
 	playfaintcry BS_PLAYER1
 	waitcry
 	dofaintanimation BS_PLAYER1
 	cleareffectsonfaint BS_PLAYER1
 	waitanimation
+	undodynamax BS_OPPONENT1
 	playfaintcry BS_OPPONENT1
 	waitcry
 	dofaintanimation BS_OPPONENT1
