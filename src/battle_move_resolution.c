@@ -574,7 +574,7 @@ static enum CancelerResult CancelerThaw(struct BattleContext *ctx)
     {
         if (gBattleMons[ctx->battlerAtk].status1 & STATUS1_FREEZE)
         {
-            if (!IsMoveEffectRemoveSpeciesType(ctx->move, MOVE_EFFECT_REMOVE_ARG_TYPE, TYPE_FIRE) || IS_BATTLER_OF_TYPE(ctx->battlerAtk, TYPE_FIRE))
+            if (!IsMoveEffectRemoveSpeciesType(ctx->move, MOVE_EFFECT_REMOVE_ARG_TYPE, TYPE_NEW_FIRE) || IS_BATTLER_OF_TYPE(ctx->battlerAtk, TYPE_NEW_FIRE))
             {
                 DefrostBattler(ctx->battlerAtk, STATUS1_FREEZE);
                 result = CANCELER_RESULT_BREAK;
@@ -588,7 +588,7 @@ static enum CancelerResult CancelerThaw(struct BattleContext *ctx)
         }
         else if (gBattleMons[ctx->battlerAtk].status1 & STATUS1_FROSTBITE)
         {
-            if (!IsMoveEffectRemoveSpeciesType(ctx->move, MOVE_EFFECT_REMOVE_ARG_TYPE, TYPE_FIRE) || IS_BATTLER_OF_TYPE(ctx->battlerAtk, TYPE_FIRE))
+            if (!IsMoveEffectRemoveSpeciesType(ctx->move, MOVE_EFFECT_REMOVE_ARG_TYPE, TYPE_NEW_FIRE) || IS_BATTLER_OF_TYPE(ctx->battlerAtk, TYPE_NEW_FIRE))
             {
                 DefrostBattler(ctx->battlerAtk, STATUS1_FROSTBITE);
                 result = CANCELER_RESULT_BREAK;
