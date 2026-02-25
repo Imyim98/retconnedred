@@ -7478,10 +7478,10 @@ static const u8 sFlailHpScaleToPowerTable[] =
 static const u16 sWeightToDamageTable[] =
 {
     100, 20,
-    250, 40,
-    500, 60,
-    1000, 80,
-    2000, 100,
+    200, 40,
+    300, 60,
+    400, 80,
+    500, 100,
     0xFFFF, 0xFFFF
 };
 
