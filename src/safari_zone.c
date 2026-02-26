@@ -68,7 +68,7 @@ void EnterSafariMode(void)
     else
     {
         gNumSafariBalls = 1;
-        sSafariZoneStepCounter = 2000;
+        gSafariZoneStepCounter = 2000;
     }
     sSafariZoneCaughtMons = 0;
     sSafariZonePkblkUses = 0;
@@ -125,7 +125,7 @@ void CB2_EndSafariBattle(void)
     }
     else if (gBattleOutcome == B_OUTCOME_NO_SAFARI_BALLS)
     {
-        VarSet(VAR_VARIOUS_TEMP, sSafariZoneStepCounter);
+        VarSet(VAR_VARIOUS_TEMP, gSafariZoneStepCounter);
         RunScriptImmediately(SafariZone_EventScript_OutOfBallsMidBattle);
         WarpIntoMap();
         gFieldCallback = FieldCB_ReturnToFieldNoScriptCheckMusic;
