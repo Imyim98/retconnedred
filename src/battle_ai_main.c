@@ -1553,7 +1553,7 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
     case EFFECT_CHARGE:
         if (gBattleMons[battlerAtk].volatiles.chargeTimer > 0)
             ADJUST_SCORE(-20);
-        else if (!HasMoveWithType(battlerAtk, TYPE_ELECTRIC))
+        else if (!HasMoveWithType(battlerAtk, TYPE_NEW_ELECTRIC))
             ADJUST_SCORE(-10);
         else if (B_CHARGE_SPDEF_RAISE >= GEN_5
           && !BattlerStatCanRise(battlerAtk, aiData->abilities[battlerAtk], STAT_SPDEF))
@@ -1571,6 +1571,7 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
             ADJUST_SCORE(-6);
         break;
     case EFFECT_VICTORY_DANCE:
+    case EFFECT_ASTROMANCY:
         if (gBattleMons[battlerAtk].statStages[STAT_ATK] >= MAX_STAT_STAGE || !HasMoveWithCategory(battlerAtk, DAMAGE_CATEGORY_PHYSICAL))
             ADJUST_SCORE(-10);
         else if (!BattlerStatCanRise(battlerAtk, aiData->abilities[battlerAtk], STAT_SPEED))
@@ -1611,10 +1612,10 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
     case EFFECT_ROTOTILLER:
         if (hasPartner)
         {
-            if (!(IS_BATTLER_OF_TYPE(battlerAtk, TYPE_GRASS)
+            if (!(IS_BATTLER_OF_TYPE(battlerAtk, TYPE_NEW_NATURE)
               && AI_IsBattlerGrounded(battlerAtk)
               && (BattlerStatCanRise(battlerAtk, aiData->abilities[battlerAtk], STAT_ATK) || BattlerStatCanRise(battlerAtk, aiData->abilities[battlerAtk], STAT_SPATK)))
-              && !(IS_BATTLER_OF_TYPE(BATTLE_PARTNER(battlerAtk), TYPE_GRASS)
+              && !(IS_BATTLER_OF_TYPE(BATTLE_PARTNER(battlerAtk), TYPE_NEW_NATURE)
               && AI_IsBattlerGrounded(BATTLE_PARTNER(battlerAtk))
               && aiData->abilities[BATTLE_PARTNER(battlerAtk)] != ABILITY_CONTRARY
               && (BattlerStatCanRise(BATTLE_PARTNER(battlerAtk), aiData->abilities[BATTLE_PARTNER(battlerAtk)], STAT_ATK)
@@ -1623,7 +1624,7 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
                 ADJUST_SCORE(-10);
             }
         }
-        else if (!(IS_BATTLER_OF_TYPE(battlerAtk, TYPE_GRASS)
+        else if (!(IS_BATTLER_OF_TYPE(battlerAtk, TYPE_NEW_NATURE)
           && AI_IsBattlerGrounded(battlerAtk)
           && (BattlerStatCanRise(battlerAtk, aiData->abilities[battlerAtk], STAT_ATK) || BattlerStatCanRise(battlerAtk, aiData->abilities[battlerAtk], STAT_SPATK))))
         {
@@ -1875,7 +1876,7 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
         break;
     case EFFECT_LEECH_SEED:
         if (gBattleMons[battlerDef].volatiles.leechSeed
-         || IS_BATTLER_OF_TYPE(battlerDef, TYPE_GRASS)
+         || IS_BATTLER_OF_TYPE(battlerDef, TYPE_NEW_NATURE)
          || DoesPartnerHaveSameMoveEffect(BATTLE_PARTNER(battlerAtk), battlerDef, move, aiData->partnerMove))
             ADJUST_SCORE(-10);
         else if (aiData->abilities[battlerDef] == ABILITY_LIQUID_OOZE)
@@ -2235,8 +2236,8 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
             ADJUST_SCORE(-10);
         break;
     case EFFECT_FLOWER_SHIELD:
-        if (!IS_BATTLER_OF_TYPE(battlerAtk, TYPE_GRASS)
-          && !(hasPartner && IS_BATTLER_OF_TYPE(BATTLE_PARTNER(battlerAtk), TYPE_GRASS)))
+        if (!IS_BATTLER_OF_TYPE(battlerAtk, TYPE_NEW_NATURE)
+          && !(hasPartner && IS_BATTLER_OF_TYPE(BATTLE_PARTNER(battlerAtk), TYPE_NEW_NATURE)))
             ADJUST_SCORE(-10);
         break;
     case EFFECT_AROMATIC_MIST:
@@ -4562,7 +4563,7 @@ static s32 AI_CalcMoveEffectScore(enum BattlerId battlerAtk, enum BattlerId batt
         ADJUST_SCORE(IncreaseStatUpScore(battlerAtk, battlerDef, STAT_CHANGE_SPATK));
         break;
     case EFFECT_ROTOTILLER:
-        if (IS_BATTLER_OF_TYPE(battlerAtk, TYPE_GRASS) && AI_IsBattlerGrounded(battlerAtk))
+        if (IS_BATTLER_OF_TYPE(battlerAtk, TYPE_NEW_NATURE) && AI_IsBattlerGrounded(battlerAtk))
         {
             ADJUST_SCORE(IncreaseStatUpScore(battlerAtk, battlerDef, STAT_CHANGE_ATK));
             ADJUST_SCORE(IncreaseStatUpScore(battlerAtk, battlerDef, STAT_CHANGE_SPATK));
@@ -4572,14 +4573,14 @@ static s32 AI_CalcMoveEffectScore(enum BattlerId battlerAtk, enum BattlerId batt
             ADJUST_SCORE(IncreaseStatUpScore(BATTLE_PARTNER(battlerAtk), battlerDef, STAT_CHANGE_ATK));
             ADJUST_SCORE(IncreaseStatUpScore(BATTLE_PARTNER(battlerAtk), battlerDef, STAT_CHANGE_SPATK));
         }
-        if (IS_BATTLER_OF_TYPE(LEFT_FOE(battlerAtk), TYPE_GRASS) && AI_IsBattlerGrounded(LEFT_FOE(battlerAtk)))
+        if (IS_BATTLER_OF_TYPE(LEFT_FOE(battlerAtk), TYPE_NEW_NATURE) && AI_IsBattlerGrounded(LEFT_FOE(battlerAtk)))
         {
             if (aiData->abilities[LEFT_FOE(battlerAtk)] == ABILITY_CONTRARY)
                 ADJUST_SCORE(WEAK_EFFECT);
             else
                 ADJUST_SCORE(AWFUL_EFFECT);
         }
-        if (IS_BATTLER_OF_TYPE(RIGHT_FOE(battlerAtk), TYPE_GRASS) && AI_IsBattlerGrounded(RIGHT_FOE(battlerAtk)))
+        if (IS_BATTLER_OF_TYPE(RIGHT_FOE(battlerAtk), TYPE_NEW_NATURE) && AI_IsBattlerGrounded(RIGHT_FOE(battlerAtk)))
         {
             if (aiData->abilities[RIGHT_FOE(battlerAtk)] == ABILITY_CONTRARY)
                 ADJUST_SCORE(WEAK_EFFECT);
