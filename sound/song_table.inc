@@ -1219,7 +1219,7 @@ gSongTable::
 	song mus_pc_ds8spc_seq_bgm_bgm_17, MUSIC_PLAYER_BGM, 0
 	song mus_pc_ds8spc_seq_bgm_bgm_19, MUSIC_PLAYER_BGM, 0
 	song mus_dcd_jtdorchestra_loop, MUSIC_PLAYER_BGM, 0
-	song dummy_song_header, MUSIC_PLAYER_BGM, 0
+	song mus_etc_semua_tentang_kita, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
 	song mus_dgmn_dw1_filecity_day, MUSIC_PLAYER_BGM, 0
