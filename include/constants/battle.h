@@ -556,6 +556,7 @@ enum __attribute__((packed)) MoveEffect
     MOVE_EFFECT_LIGHT_SCREEN,
     MOVE_EFFECT_SALT_CURE,
     MOVE_EFFECT_EERIE_SPELL,
+    MOVE_EFFECT_FLING, // If used without EFFECT_FLING, the move will be a regular damage move with fling as an additional effect without the failure and dmg modifier parts
     // Custom Added
     MOVE_EFFECT_SAFEGUARD,
     MOVE_EFFECT_MIST,
@@ -569,6 +570,7 @@ enum __attribute__((packed)) MoveEffect
     MOVE_EFFECT_EX_SHADOW_SKY,
     MOVE_EFFECT_INFATUATE,
     MOVE_EFFECT_STASIS_GAZE_PREVENTED,
+
     // Max move effects happen earlier in the execution chain.
     // For example stealth rock from G-Max Stonesurge is set up before abilities but from Stone Axe after.
     // Stone Axe can also fail to set up rocks if user faints where as Stonesurge will always go up.
