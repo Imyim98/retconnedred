@@ -883,5 +883,6 @@ extern const u8 BattleScript_NoChargingAbilityActivates[];
 extern const u8 BattleScript_GraceOfDreamStatRaised[];
 extern const u8 BattleScript_GraceOfDreamStatRaisedPreventedStasisGaze[];
 extern const u8 BattleScript_LastCadenzaSwitchInActivates[];
+extern const u8 BattleScript_StealStatsTreasureSniper[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

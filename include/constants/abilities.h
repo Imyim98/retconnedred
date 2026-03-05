@@ -479,6 +479,7 @@ enum __attribute__((packed)) Ability
     ABILITY_ULTRA_FORM_MARCH = (ABILITY_OFFICIAL_END + 143), // Tail Wind + May Speed Down
     ABILITY_ULTRA_FORM_BEAUTY = (ABILITY_OFFICIAL_END + 144), // Snow Warning + May Freeze
     ABILITY_HEALING_SAINT = (ABILITY_OFFICIAL_END + 145), // Heals when the foe heals
+    ABILITY_TREASURE_SNIPER = (ABILITY_OFFICIAL_END + 146), // adds secondary effect stealing stats for if using damaging moves
     ABILITIES_COUNT_GEN9,
     ABILITIES_COUNT = ABILITIES_COUNT_GEN9,
 };

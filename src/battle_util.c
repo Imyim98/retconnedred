@@ -5479,6 +5479,16 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                 effect++;
             }
             break;
+        case ABILITY_TREASURE_SNIPER:
+            if (IsBattlerAlive(gBattlerTarget)
+             && !gBattleStruct->unableToUseMove
+             && IsBattlerTurnDamaged(gBattlerTarget)
+             && !MoveHasAdditionalEffect(gCurrentMove, MOVE_EFFECT_STEAL_STATS))
+            {
+                SetMoveEffect(gBattlerAttacker, gBattlerTarget, MOVE_EFFECT_STEAL_STATS_TREASURE_SNIPER, gBattlescriptCurrInstr, EFFECT_PRIMARY);
+                effect++;
+            }
+            break;
         case ABILITY_BAD_DREAMS:
             if (IsBattlerAlive(gBattlerTarget)
              && !gBattleStruct->unableToUseMove

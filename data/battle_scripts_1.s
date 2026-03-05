@@ -4489,6 +4489,17 @@ BattleScript_StealStats::
 	flushtextbox
 	return
 
+BattleScript_StealStatsTreasureSniper::
+	call BattleScript_AbilityPopUp
+	waitanimation
+	playmoveanimation MOVE_SPECTRAL_THIEF
+	waitanimation
+	printstring STRINGID_SPECTRALTHIEFSTEAL
+	waitmessage B_WAIT_TIME_LONG
+	spectralthiefprintstats
+	flushtextbox
+	return
+
 BattleScript_EffectYawn::
 	attackcanceler
 	trynonvolatilestatus

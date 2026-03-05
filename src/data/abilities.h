@@ -3526,4 +3526,11 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 4,
     },
 
+    [ABILITY_TREASURE_SNIPER] =
+    {
+        .name = _("Treasure Sniper"),
+        .description = COMPOUND_STRING("Damaging moves steal buffs."),
+        .aiRating = 6,
+    },
+
 };

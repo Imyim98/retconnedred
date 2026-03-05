@@ -5132,6 +5132,54 @@ void SetMoveEffect(enum BattlerId battlerAtk, enum BattlerId effectBattler, enum
             }
         }
         break;
+    case MOVE_EFFECT_STEAL_STATS_TREASURE_SNIPER:
+        if (gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_NO_EFFECT)
+            break;
+
+        contrary = abilities[gBattlerAttacker] == ABILITY_CONTRARY;
+        gBattleStruct->stolenStats[0] = 0; // Stats to steal.
+        gBattleScripting.animArg1 = 0;
+        for (enum Stat stat = STAT_ATK; stat < NUM_BATTLE_STATS; stat++)
+        {
+            if (gBattleMons[gBattlerTarget].statStages[stat] > DEFAULT_STAT_STAGE && gBattleMons[gBattlerAttacker].statStages[stat] != MAX_STAT_STAGE)
+            {
+                bool32 byTwo = FALSE;
+
+                gBattleStruct->stolenStats[0] |= (1 << (stat));
+                // Store by how many stages to raise the stat.
+                gBattleStruct->stolenStats[stat] = gBattleMons[gBattlerTarget].statStages[stat] - DEFAULT_STAT_STAGE;
+
+                while (gBattleMons[gBattlerAttacker].statStages[stat] + gBattleStruct->stolenStats[stat] > MAX_STAT_STAGE)
+                    gBattleStruct->stolenStats[stat]--;
+
+                gBattleMons[gBattlerTarget].statStages[stat] = DEFAULT_STAT_STAGE;
+
+                if (gBattleStruct->stolenStats[stat] >= 2)
+                    byTwo++;
+
+                if (gBattleScripting.animArg1 == 0)
+                {
+                    if (byTwo)
+                        gBattleScripting.animArg1 = (contrary ? STAT_ANIM_MINUS2 : STAT_ANIM_PLUS2) + stat;
+                    else
+                        gBattleScripting.animArg1 = (contrary ? STAT_ANIM_MINUS1 : STAT_ANIM_PLUS1) + stat;
+                }
+                else
+                {
+                    if (byTwo)
+                        gBattleScripting.animArg1 = (contrary ? STAT_ANIM_MULTIPLE_MINUS2 : STAT_ANIM_MULTIPLE_PLUS2);
+                    else
+                        gBattleScripting.animArg1 = (contrary ? STAT_ANIM_MULTIPLE_MINUS1 : STAT_ANIM_MULTIPLE_PLUS1);
+                }
+            }
+
+            if (gBattleStruct->stolenStats[0] != 0)
+            {
+                BattleScriptPush(battleScript);
+                gBattlescriptCurrInstr = BattleScript_StealStatsTreasureSniper;
+            }
+        }
+        break;
     case MOVE_EFFECT_STASIS_GAZE_PREVENTED:
         {
             u32 oppositeBattler = FALSE;
