@@ -3551,9 +3551,9 @@ static inline bool32 TrySetLightScreen(enum BattlerId battler)
     return FALSE;
 }
 
-static inline bool32 TrySetSafeguard(u32 battler)
+static inline bool32 TrySetSafeguard(enum BattlerId battler)
 {
-    u32 side = GetBattlerSide(battler);
+    enum BattleSide side = GetBattlerSide(battler);
     if (!(gSideStatuses[side] & SIDE_STATUS_SAFEGUARD))
     {
         gSideStatuses[side] |= SIDE_STATUS_SAFEGUARD;
@@ -3569,9 +3569,9 @@ static inline bool32 TrySetSafeguard(u32 battler)
     return FALSE;
 }
 
-static inline bool32 TrySetMist(u32 battler)
+static inline bool32 TrySetMist(enum BattlerId battler)
 {
-    u32 side = GetBattlerSide(battler);
+    enum BattleSide side = GetBattlerSide(battler);
     if (!(gSideStatuses[side] & SIDE_STATUS_MIST))
     {
         gSideStatuses[side] |= SIDE_STATUS_MIST;
