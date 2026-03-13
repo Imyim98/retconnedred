@@ -3,7 +3,7 @@
   "name": "SafariZone_North",
   "layout": "LAYOUT_SAFARI_ZONE_NORTH",
   "music": "MUS_SAFARI_ZONE",
-  "region_map_section": "MAPSEC_SAFARI_ZONE",
+  "region_map_section": "MAPSEC_JOHTO_MT_SILVER_CAVE",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_ROUTE",
@@ -24,15 +24,15 @@
       "direction": "down"
     },
     {
-      "map": "MAP_SAFARI_ZONE_NORTHEAST",
-      "offset": 0,
+      "map": "MAP_LITTLEROOT_TOWN",
+      "offset": 10,
       "direction": "right"
     }
   ],
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
-      "x": 22,
+      "x": 27,
       "y": 9,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
@@ -58,8 +58,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 25,
-      "y": 10,
+      "x": 21,
+      "y": 14,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -71,8 +71,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 25,
-      "y": 13,
+      "x": 24,
+      "y": 16,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -84,8 +84,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 28,
-      "y": 14,
+      "x": 27,
+      "y": 17,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -97,8 +97,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 23,
-      "y": 6,
+      "x": 18,
+      "y": 9,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -110,7 +110,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 20,
+      "x": 16,
       "y": 7,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
@@ -123,7 +123,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
-      "x": 27,
+      "x": 19,
       "y": 7,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",

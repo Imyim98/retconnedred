@@ -22,6 +22,7 @@ u8 GetNumLevelsGainedFromDaycare(void);
 void TriggerPendingDaycareEgg(void);
 void RejectEggFromDayCare(void);
 void CreateEgg(struct Pokemon *mon, u16 species, bool8 setHotSpringsLocation);
+void CreateEggMiracle(struct Pokemon *mon, u16 species, bool8 setHotSpringsLocation);
 void GiveEggFromDaycare(void);
 bool8 ShouldEggHatch(void);
 u16 GetSelectedMonNicknameAndSpecies(void);
@@ -33,7 +34,7 @@ bool8 NameHasGenderSymbol(const u8 *name, u8 genderRatio);
 void ShowDaycareLevelMenu(void);
 void ChooseSendDaycareMon(void);
 u8 GetEggMovesBySpecies(u16 species, u16 *eggMoves);
-bool8 SpeciesCanLearnEggMove(u16 species, u16 move);
+bool8 SpeciesCanLearnEggMove(u16 species, enum Move move);
 void StorePokemonInDaycare(struct Pokemon *mon, struct DaycareMon *daycareMon);
 u8 GetEggMoves(struct Pokemon *pokemon, u16 *eggMoves);
 

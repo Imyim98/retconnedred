@@ -1,6 +1,8 @@
 #ifndef GUARD_CONSTANTS_VARS_H
 #define GUARD_CONSTANTS_VARS_H
 
+#include "constants/vars_frlg.h"
+
 #define VARS_START 0x4000
 
 // temporary vars
@@ -156,13 +158,13 @@
 #define VAR_CONTEST_TYPE                                 0x4088
 #define VAR_SECRET_BASE_INITIALIZED                      0x4089
 #define VAR_CONTEST_PRIZE_PICKUP                         0x408A
-#define VAR_UNUSED_0x408B                                0x408B // Unused Var
+#define VAR_BATTLE_SPEED                                 0x408B // Unused Var
 #define VAR_LITTLEROOT_HOUSES_STATE_BRENDAN              0x408C
 #define VAR_LITTLEROOT_RIVAL_STATE                       0x408D
 #define VAR_BOARD_BRINEY_BOAT_STATE                      0x408E
 #define VAR_DEVON_CORP_3F_STATE                          0x408F
 #define VAR_BRINEY_HOUSE_STATE                           0x4090
-#define VAR_UNUSED_0x4091                                0x4091 // Unused Var
+#define VAR_OVERWORLD_SPEED                              0x4091 // Unused Var
 #define VAR_LITTLEROOT_INTRO_STATE                       0x4092
 #define VAR_MAUVILLE_GYM_STATE                           0x4093
 #define VAR_LILYCOVE_MUSEUM_2F_STATE                     0x4094
@@ -178,7 +180,7 @@
 #define VAR_MOSSDEEP_SPACE_CENTER_STAIR_GUARD_STATE      0x409E
 #define VAR_MOSSDEEP_SPACE_CENTER_STATE                  0x409F
 #define VAR_SLATEPORT_HARBOR_STATE                       0x40A0
-#define VAR_UNUSED_0x40A1                                0x40A1 // Unused var
+#define VAR_STORY_MAIN                                   0x40A1
 #define VAR_SEAFLOOR_CAVERN_STATE                        0x40A2
 #define VAR_CABLE_CAR_STATION_STATE                      0x40A3
 #define VAR_SAFARI_ZONE_STATE                            0x40A4  // 0: In or out of SZ, 1: Player exiting SZ, 2: Player entering SZ
@@ -204,7 +206,7 @@
 #define VAR_UNUSED_0x40B8                                0x40B8 // Unused Var
 #define VAR_MT_PYRE_STATE                                0x40B9
 #define VAR_NEW_MAUVILLE_STATE                           0x40BA
-#define VAR_UNUSED_0x40BB                                0x40BB // Unused Var
+#define VAR_GLOBAL_TINT_SETTING                          0x40BB
 #define VAR_BRAVO_TRAINER_BATTLE_TOWER_ON                0x40BC
 #define VAR_JAGGED_PASS_ASH_WEATHER                      0x40BD
 #define VAR_GLASS_WORKSHOP_STATE                         0x40BE
@@ -237,7 +239,7 @@
 #define VAR_HAS_TALKED_TO_SEAFLOOR_CAVERN_ENTRANCE_GRUNT 0x40D9
 #define VAR_REGISTER_BIRCH_STATE                         0x40DA
 #define VAR_UNUSED_0x40DB                                0x40DB // Unused Var
-#define VAR_UNUSED_0x40DC                                0x40DC // Unused Var
+#define VAR_SECRET_BASE_PSEUDO_TRAINER_NUM               0x40DC
 #define VAR_GIFT_PICHU_SLOT                              0x40DD
 #define VAR_GIFT_UNUSED_1                                0x40DE // Var is written to, but never read
 #define VAR_GIFT_UNUSED_2                                0x40DF // Var is written to, but never read
@@ -246,7 +248,7 @@
 #define VAR_GIFT_UNUSED_5                                0x40E2 // Var is written to, but never read
 #define VAR_GIFT_UNUSED_6                                0x40E3 // Var is written to, but never read
 #define VAR_GIFT_UNUSED_7                                0x40E4 // var is written to, but never read
-#define VAR_UNUSED_0x40E5                                0x40E5 // Unused Var
+#define VAR_MAIN_STORY                                   0x40E5
 #define VAR_DAILY_SLOTS                                  0x40E6
 #define VAR_DAILY_WILDS                                  0x40E7
 #define VAR_DAILY_BLENDER                                0x40E8
@@ -264,17 +266,43 @@
 #define VAR_ROXANNE_CALL_STEP_COUNTER                    0x40F4
 #define VAR_SCOTT_BF_CALL_STEP_COUNTER                   0x40F5
 #define VAR_RIVAL_RAYQUAZA_CALL_STEP_COUNTER             0x40F6
-#define VAR_UNUSED_0x40F7                                0x40F7 // Unused Var
-#define VAR_UNUSED_0x40F8                                0x40F8 // Unused Var
-#define VAR_UNUSED_0x40F9                                0x40F9 // Unused Var
-#define VAR_UNUSED_0x40FA                                0x40FA // Unused Var
-#define VAR_UNUSED_0x40FB                                0x40FB // Unused Var
-#define VAR_UNUSED_0x40FC                                0x40FC // Unused Var
-#define VAR_UNUSED_0x40FD                                0x40FD // Unused Var
-#define VAR_UNUSED_0x40FE                                0x40FE // Unused Var
-#define VAR_UNUSED_0x40FF                                0x40FF // Unused Var
+#define VAR_SETTING_MUSIC                                0x40F7
+#define VAR_VARIOUS_TEMP                                 0x40F8
+#define VAR_GACHA_PITY_COUNT                             0x40F9
+#define VAR_GIFTMON_METLOC_SETTING                       0x40FA
+#define VAR_GIFTMON_VERSION_SETTING                      0x40FB
+#define VAR_GIFTMON_OT_SETTING                           0x40FC
+#define VAR_GIFTMON3_IDENTIFIER                          0x40FD
+#define VAR_GIFTMON2_IDENTIFIER                          0x40FE
+#define VAR_GIFTMON1_IDENTIFIER                          0x40FF
 
-#define VARS_END                                         0x40FF
+#define VARS_END_OFFICIAL                                VAR_GIFTMON1_IDENTIFIER
+
+#define VAR_GAME_CORNER_ID_CHECK                         (VARS_END_OFFICIAL + 1)
+#define VAR_GAME_CORNER_WINNINGS                         (VARS_END_OFFICIAL + 2)
+#define VAR_FLAPPY_HIGH_SCORE                            (VARS_END_OFFICIAL + 3)
+#define VAR_BLACKJACK_PLAYER                             (VARS_END_OFFICIAL + 4)
+#define VAR_BLACKJACK_DEALER                             (VARS_END_OFFICIAL + 5)
+#define VAR_BLACKJACK_BET                                (VARS_END_OFFICIAL + 6)
+#define VAR_BLACKJACK_OPTIONS                            (VARS_END_OFFICIAL + 7)
+#define VAR_BLACKJACK_OPTION1_TILE                       (VARS_END_OFFICIAL + 8)
+#define VAR_BLACKJACK_OPTION2_TILE                       (VARS_END_OFFICIAL + 9)
+#define VAR_BLACKJACK_OPTION3_TILE                       (VARS_END_OFFICIAL + 10)
+#define VAR_DERBY_RACER_NAME_1                           (VARS_END_OFFICIAL + 11)
+#define VAR_DERBY_RACER_NAME_2                           (VARS_END_OFFICIAL + 12)
+#define VAR_DERBY_RACER_NAME_3                           (VARS_END_OFFICIAL + 13)
+#define VAR_DERBY_RACER_NAME_4                           (VARS_END_OFFICIAL + 14)
+#define VAR_DERBY_RACER_NAME_5                           (VARS_END_OFFICIAL + 15)
+#define VAR_DERBY_RACER_NAME_6                           (VARS_END_OFFICIAL + 16)
+#define VAR_DERBY_RACER_1                                (VARS_END_OFFICIAL + 17)
+#define VAR_DERBY_RACER_2                                (VARS_END_OFFICIAL + 18)
+#define VAR_DERBY_RACER_3                                (VARS_END_OFFICIAL + 19)
+#define VAR_DERBY_RACER_4                                (VARS_END_OFFICIAL + 20)
+#define VAR_DERBY_RACER_5                                (VARS_END_OFFICIAL + 21)
+#define VAR_DERBY_RACER_6                                (VARS_END_OFFICIAL + 22)   
+#define VAR_FLIP_LEVEL                                   (VARS_END_OFFICIAL + 23)
+
+#define VARS_END                                         VAR_FLIP_LEVEL
 #define VARS_COUNT                                       (VARS_END - VARS_START + 1)
 
 #define SPECIAL_VARS_START            0x8000
@@ -325,15 +353,15 @@
 #define VAR_TEMP_TRANSFERRED_SPECIES  VAR_TEMP_1
 
 #if TESTING
-#define TESTING_VARS_START             0x9000
-#define TESTING_VAR_DIFFICULTY         (TESTING_VARS_START + 0x0)
-#define TESTING_VAR_UNUSED_1           (TESTING_VARS_START + 0x1)
-#define TESTING_VAR_UNUSED_2           (TESTING_VARS_START + 0x2)
-#define TESTING_VAR_UNUSED_3           (TESTING_VARS_START + 0x3)
-#define TESTING_VAR_UNUSED_4           (TESTING_VARS_START + 0x4)
-#define TESTING_VAR_UNUSED_5           (TESTING_VARS_START + 0x5)
-#define TESTING_VAR_UNUSED_6           (TESTING_VARS_START + 0x6)
-#define TESTING_VAR_UNUSED_7           (TESTING_VARS_START + 0x7)
+#define TESTING_VARS_START                  0x9000
+#define TESTING_VAR_DIFFICULTY              (TESTING_VARS_START + 0x0)
+#define TESTING_VAR_TRAINER_SLIDES          (TESTING_VARS_START + 0x1)
+#define TESTING_VAR_UNUSED_2                (TESTING_VARS_START + 0x2)
+#define TESTING_VAR_UNUSED_3                (TESTING_VARS_START + 0x3)
+#define TESTING_VAR_UNUSED_4                (TESTING_VARS_START + 0x4)
+#define TESTING_VAR_UNUSED_5                (TESTING_VARS_START + 0x5)
+#define TESTING_VAR_UNUSED_6                (TESTING_VARS_START + 0x6)
+#define TESTING_VAR_UNUSED_7                (TESTING_VARS_START + 0x7)
 #endif // TESTING
 
 #endif // GUARD_CONSTANTS_VARS_H

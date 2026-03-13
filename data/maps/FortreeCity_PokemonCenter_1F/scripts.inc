@@ -1,16 +1,14 @@
-.set LOCALID_NURSE, 1
-
 FortreeCity_PokemonCenter_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, FortreeCity_PokemonCenter_1F_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
 FortreeCity_PokemonCenter_1F_OnTransition:
-	setrespawn HEAL_LOCATION_FORTREE_CITY
+	setrespawn HEAL_LOCATION_JOHTO_BLACKTHORN_CITY
 	end
 
 FortreeCity_PokemonCenter_1F_EventScript_Nurse::
-	setvar VAR_0x800B, LOCALID_NURSE
+	setvar VAR_0x800B, LOCALID_FORTREE_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress

@@ -29,7 +29,7 @@ extern const u8 SafariZone_EventScript_OutOfBallsMidBattle[];
 extern const u8 SafariZone_EventScript_OutOfBalls[];
 
 EWRAM_DATA u8 gNumSafariBalls = 0;
-EWRAM_DATA static u16 sSafariZoneStepCounter = 0;
+EWRAM_DATA u16 gSafariZoneStepCounter = 0;
 EWRAM_DATA static u8 sSafariZoneCaughtMons = 0;
 EWRAM_DATA static u8 sSafariZonePkblkUses = 0;
 EWRAM_DATA static struct PokeblockFeeder sPokeblockFeeders[NUM_POKEBLOCK_FEEDERS] = {0};
@@ -57,8 +57,19 @@ void EnterSafariMode(void)
     IncrementGameStat(GAME_STAT_ENTERED_SAFARI_ZONE);
     SetSafariZoneFlag();
     ClearAllPokeblockFeeders();
-    gNumSafariBalls = 30;
-    sSafariZoneStepCounter = 500;
+    if (FlagGet(FLAG_FIRST_SAFARI_ZONE_EVENT_DONE))
+    {
+        gNumSafariBalls = 30;
+        if (IS_FRLG)
+            gSafariZoneStepCounter = 600;
+        else
+            gSafariZoneStepCounter = 500;
+    }
+    else
+    {
+        gNumSafariBalls = 1;
+        gSafariZoneStepCounter = 2000;
+    }
     sSafariZoneCaughtMons = 0;
     sSafariZonePkblkUses = 0;
 }
@@ -69,7 +80,7 @@ void ExitSafariMode(void)
     ResetSafariZoneFlag();
     ClearAllPokeblockFeeders();
     gNumSafariBalls = 0;
-    sSafariZoneStepCounter = 0;
+    gSafariZoneStepCounter = 0;
 }
 
 bool8 SafariZoneTakeStep(void)
@@ -80,11 +91,20 @@ bool8 SafariZoneTakeStep(void)
     }
 
     DecrementFeederStepCounters();
-    sSafariZoneStepCounter--;
-    if (sSafariZoneStepCounter == 0)
+    gSafariZoneStepCounter--;
+    if (gSafariZoneStepCounter == 0)
     {
-        ScriptContext_SetupScript(SafariZone_EventScript_TimesUp);
-        return TRUE;
+        if (FlagGet(FLAG_FIRST_SAFARI_ZONE_EVENT_DONE))
+        {
+            ScriptContext_SetupScript(SafariZone_EventScript_TimesUp);
+            return TRUE;
+        }
+        else
+        {
+            ScriptContext_SetupScript(SafariZone_EventScript_TimesUp);
+            VarSet(VAR_VARIOUS_TEMP, 0);
+            return TRUE;
+        }
     }
     return FALSE;
 }
@@ -105,6 +125,7 @@ void CB2_EndSafariBattle(void)
     }
     else if (gBattleOutcome == B_OUTCOME_NO_SAFARI_BALLS)
     {
+        VarSet(VAR_VARIOUS_TEMP, gSafariZoneStepCounter);
         RunScriptImmediately(SafariZone_EventScript_OutOfBallsMidBattle);
         WarpIntoMap();
         gFieldCallback = FieldCB_ReturnToFieldNoScriptCheckMusic;

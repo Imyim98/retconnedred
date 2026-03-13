@@ -1,12 +1,10 @@
-.set LOCALID_NURSE, 1
-
 LilycoveCity_PokemonCenter_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, LilycoveCity_PokemonCenter_1F_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
 LilycoveCity_PokemonCenter_1F_OnTransition:
-	setrespawn HEAL_LOCATION_LILYCOVE_CITY
+	setrespawn HEAL_LOCATION_JOHTO_MT_SILVER
 	goto LilycoveCity_PokemonCenter_1F_EventScript_SetLilycoveLadyGfx
 	end
 
@@ -26,7 +24,7 @@ LilycoveCity_PokemonCenter_1F_EventScript_ShowContestLadyMon::
 	end
 
 LilycoveCity_PokemonCenter_1F_EventScript_Nurse::
-	setvar VAR_0x800B, LOCALID_NURSE
+	setvar VAR_0x800B, LOCALID_LILYCOVE_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress

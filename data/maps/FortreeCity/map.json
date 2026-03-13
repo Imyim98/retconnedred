@@ -3,7 +3,7 @@
   "name": "FortreeCity",
   "layout": "LAYOUT_FORTREE_CITY",
   "music": "MUS_FORTREE",
-  "region_map_section": "MAPSEC_FORTREE_CITY",
+  "region_map_section": "MAPSEC_JOHTO_BLACKTHORN_CITY",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_CITY",
@@ -14,14 +14,14 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_ROUTE119",
+      "map": "MAP_JOHTO_ROUTE45",
       "offset": 0,
-      "direction": "left"
+      "direction": "down"
     },
     {
-      "map": "MAP_ROUTE120",
-      "offset": 0,
-      "direction": "right"
+      "map": "MAP_JOHTO_ROUTE44",
+      "offset": -54,
+      "direction": "up"
     }
   ],
   "object_events": [
@@ -119,8 +119,8 @@
   ],
   "warp_events": [
     {
-      "x": 5,
-      "y": 6,
+      "x": 20,
+      "y": 33,
       "elevation": 0,
       "dest_map": "MAP_FORTREE_CITY_POKEMON_CENTER_1F",
       "dest_warp_id": "0"
@@ -140,8 +140,8 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 4,
-      "y": 14,
+      "x": 16,
+      "y": 33,
       "elevation": 0,
       "dest_map": "MAP_FORTREE_CITY_MART",
       "dest_warp_id": "0"
@@ -194,16 +194,16 @@
     },
     {
       "type": "sign",
-      "x": 7,
-      "y": 6,
+      "x": 22,
+      "y": 33,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Common_EventScript_ShowPokemonCenterSign"
     },
     {
       "type": "sign",
-      "x": 5,
-      "y": 14,
+      "x": 17,
+      "y": 33,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Common_EventScript_ShowPokemartSign"
@@ -218,16 +218,16 @@
     },
     {
       "type": "sign",
-      "x": 6,
-      "y": 6,
+      "x": 21,
+      "y": 33,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Common_EventScript_ShowPokemonCenterSign"
     },
     {
       "type": "sign",
-      "x": 6,
-      "y": 14,
+      "x": 18,
+      "y": 33,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Common_EventScript_ShowPokemartSign"

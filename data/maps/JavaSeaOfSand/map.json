@@ -1,0 +1,26 @@
+{
+  "id": "MAP_JAVA_SEA_OF_SAND",
+  "name": "JavaSeaOfSand",
+  "layout": "LAYOUT_JAVA_SEA_OF_SAND",
+  "music": "MUS_DGMN_WORLD3_BADLANDS",
+  "region_map_section": "MAPSEC_JAVA_SEA_OF_SAND",
+  "requires_flash": false,
+  "weather": "WEATHER_SANDSTORM",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_JAVA_WESTERN_PASS",
+      "offset": -28,
+      "direction": "left"
+    }
+  ],
+  "object_events": [],
+  "warp_events": [],
+  "coord_events": [],
+  "bg_events": []
+}

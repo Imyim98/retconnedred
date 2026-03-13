@@ -4,6 +4,7 @@ Class: Pkmn Trainer 1
 Pic: Brendan
 Gender: Male
 Music: Male
+Back Pic: Brendan
 
 === PARTNER_STEVEN ===
 Name: STEVEN
@@ -11,6 +12,8 @@ Class: Rival
 Pic: Steven
 Gender: Male
 Music: Male
+Back Pic: Steven
+AI: Basic Trainer
 
 Metang
 Brave Nature
@@ -41,3 +44,51 @@ EVs: 252 Atk / 252 SpA / 6 SpD
 - Protect
 - Solar Beam
 - Dragon Claw
+
+=== PARTNER_TRAINER2 ===
+Name: ???
+Class: TRAINER_CLASS_PKMN_TRAINER_1
+Pic: May
+Gender: Female
+Music: Female
+Back Pic: May
+AI: Basic Trainer
+
+Miyu (SPECIES_MEW) @ ITEM_BRIGHT_POWDER
+Modest Nature
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 6 HP / 252 SpA / 252 Spe
+Shiny: Yes
+Dynamax Level: 10
+Tera Type: TYPE_NEW_DIVINE
+- MOVE_DIMENSION_KICK
+- MOVE_DIMENSION_SHOT
+- MOVE_FLUFFICATION
+- MOVE_TWIN_SPARK
+
+Asahina (SPECIES_CELEBI) @ ITEM_BRIGHT_POWDER
+Modest Nature
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 6 HP / 252 SpA / 252 Spe
+Shiny: Yes
+Dynamax Level: 10
+Tera Type: TYPE_NEW_DIVINE
+- MOVE_DIMENSION_KICK
+- MOVE_DIMENSION_SHOT
+- MOVE_FLUFFICATION
+- MOVE_TWIN_SPARK
+
+Wishmaker (SPECIES_JIRACHI) @ ITEM_BRIGHT_POWDER
+Modest Nature
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 6 HP / 252 SpA / 252 Spe
+Shiny: Yes
+Dynamax Level: 10
+Tera Type: TYPE_NEW_DIVINE
+- MOVE_DIMENSION_KICK
+- MOVE_DIMENSION_SHOT
+- MOVE_FLUFFICATION
+- MOVE_TWIN_SPARK

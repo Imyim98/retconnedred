@@ -3,7 +3,7 @@
   "name": "InsideOfTruck",
   "layout": "LAYOUT_INSIDE_OF_TRUCK",
   "music": "MUS_NONE",
-  "region_map_section": "MAPSEC_INSIDE_OF_TRUCK",
+  "region_map_section": "MAPSEC_JOHTO_SPROUT_TOWER",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
@@ -15,8 +15,9 @@
   "connections": null,
   "object_events": [
     {
+      "local_id": "LOCALID_TRUCK_BOX_TOP",
       "graphics_id": "OBJ_EVENT_GFX_MOVING_BOX",
-      "x": 0,
+      "x": 63,
       "y": 0,
       "elevation": 8,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -28,8 +29,9 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_TRUCK_BOX_BOTTOM_L",
       "graphics_id": "OBJ_EVENT_GFX_MOVING_BOX",
-      "x": 0,
+      "x": 63,
       "y": 3,
       "elevation": 8,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -41,8 +43,9 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_TRUCK_BOX_BOTTOM_R",
       "graphics_id": "OBJ_EVENT_GFX_MOVING_BOX",
-      "x": 2,
+      "x": 63,
       "y": 3,
       "elevation": 8,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",

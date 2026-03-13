@@ -239,7 +239,7 @@ static const u8 sVerticalShakeData[][2] =
     {-1,   0}
 };
 
-static void (* const sMonAnimFunctions[])(struct Sprite *sprite) =
+static void (*const sMonAnimFunctions[])(struct Sprite *sprite) =
 {
     [ANIM_V_SQUISH_AND_BOUNCE]               = Anim_VerticalSquishBounce,
     [ANIM_CIRCULAR_STRETCH_TWICE]            = Anim_CircularStretchTwice,
@@ -427,6 +427,7 @@ static const u8 sBackAnimationIds[] =
     [(BACK_ANIM_SHAKE_GLOW_RED - 1) * 3]          = ANIM_SHAKE_GLOW_RED_FAST, ANIM_SHAKE_GLOW_RED, ANIM_SHAKE_GLOW_RED_SLOW,
     [(BACK_ANIM_SHAKE_GLOW_GREEN - 1) * 3]        = ANIM_SHAKE_GLOW_GREEN_FAST, ANIM_SHAKE_GLOW_GREEN, ANIM_SHAKE_GLOW_GREEN_SLOW,
     [(BACK_ANIM_SHAKE_GLOW_BLUE - 1) * 3]         = ANIM_SHAKE_GLOW_BLUE_FAST, ANIM_SHAKE_GLOW_BLUE, ANIM_SHAKE_GLOW_BLUE_SLOW,
+    [(BACK_ANIM_SHAKE_GLOW_BLACK - 1) * 3]        = ANIM_SHAKE_GLOW_BLACK_SLOW, ANIM_SHAKE_GLOW_BLACK_SLOW, ANIM_SHAKE_GLOW_BLACK_SLOW,
 };
 
 static const union AffineAnimCmd sMonAffineAnim_0[] =
@@ -468,7 +469,7 @@ static void SetPosForRotation(struct Sprite *sprite, u16 index, s16 amplitudeX, 
     sprite->y2 = yAdder + amplitudeY;
 }
 
-u8 GetSpeciesBackAnimSet(u16 species)
+enum BackAnim GetSpeciesBackAnimSet(u16 species)
 {
     if (gSpeciesInfo[species].backAnimId != BACK_ANIM_NONE)
         return gSpeciesInfo[species].backAnimId - 1;
@@ -501,7 +502,7 @@ static void Task_HandleMonAnimation(u8 taskId)
 
     if (gTasks[taskId].tState == 0)
     {
-        gTasks[taskId].tBattlerId = sprite->data[0];
+        gTasks[taskId].tBattlerId = sprite->oam.paletteNum;
         gTasks[taskId].tSpeciesId = sprite->data[2];
         sprite->sDontFlip = TRUE;
         sprite->data[0] = 0;
@@ -523,11 +524,16 @@ static void Task_HandleMonAnimation(u8 taskId)
         sprite->data[2] = gTasks[taskId].tSpeciesId;
         sprite->data[1] = 0;
 
+        // Task_HandleMonAnimation handles more than just KO animations,
+        // but if the counter is non-zero then only KO animations are running.
+        // This assumption is not checked.
+        if (gBattleStruct->battlerKOAnimsRunning > 0)
+            gBattleStruct->battlerKOAnimsRunning--;
         DestroyTask(taskId);
     }
 }
 
-void LaunchAnimationTaskForFrontSprite(struct Sprite *sprite, u8 frontAnimId)
+void LaunchAnimationTaskForFrontSprite(struct Sprite *sprite, enum AnimFunctionIDs frontAnimId)
 {
     u8 taskId = CreateTask(Task_HandleMonAnimation, 128);
     gTasks[taskId].tPtrHi = (u32)(sprite) >> 16;
@@ -535,23 +541,24 @@ void LaunchAnimationTaskForFrontSprite(struct Sprite *sprite, u8 frontAnimId)
     gTasks[taskId].tAnimId = frontAnimId;
 }
 
-void StartMonSummaryAnimation(struct Sprite *sprite, u8 frontAnimId)
+void StartMonSummaryAnimation(struct Sprite *sprite, enum AnimFunctionIDs frontAnimId)
 {
     // sDontFlip is expected to still be FALSE here, not explicitly cleared
     sIsSummaryAnim = TRUE;
     sprite->callback = sMonAnimFunctions[frontAnimId];
 }
 
-void LaunchAnimationTaskForBackSprite(struct Sprite *sprite, u8 backAnimSet)
+void LaunchAnimationTaskForBackSprite(struct Sprite *sprite, enum BackAnim backAnimSet)
 {
-    u8 nature, taskId, animId, battlerId;
+    u8 nature, taskId, battler;
+    enum AnimFunctionIDs animId;
 
     taskId = CreateTask(Task_HandleMonAnimation, 128);
     gTasks[taskId].tPtrHi = (u32)(sprite) >> 16;
     gTasks[taskId].tPtrLo = (u32)(sprite);
 
-    battlerId = sprite->data[0];
-    nature = GetNature(&gPlayerParty[gBattlerPartyIndexes[battlerId]]);
+    battler = sprite->data[0];
+    nature = GetNature(GetBattlerMon(battler));
 
     // * 3 below because each back anim has 3 variants depending on nature
     animId = 3 * backAnimSet + gNaturesInfo[nature].backAnim;
@@ -1939,7 +1946,7 @@ static void FrontFlip_2(struct Sprite *sprite)
 {
     TryFlipX(sprite);
     sprite->x2++;
-    sprite->y2--;;
+    sprite->y2--;
 
     if (sprite->x2 >= 0)
     {

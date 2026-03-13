@@ -2,11 +2,11 @@
   "id": "MAP_ROUTE124",
   "name": "Route124",
   "layout": "LAYOUT_ROUTE124",
-  "music": "MUS_ROUTE120",
-  "region_map_section": "MAPSEC_ROUTE_124",
+  "music": "MUS_ETC_JOGJA_ISTIMEWA",
+  "region_map_section": "MAPSEC_JAVA_YOGYAKARTA",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
-  "map_type": "MAP_TYPE_OCEAN_ROUTE",
+  "map_type": "MAP_TYPE_CITY",
   "allow_cycling": true,
   "allow_escaping": false,
   "allow_running": true,
@@ -14,36 +14,31 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_ROUTE126",
-      "offset": 0,
-      "direction": "down"
-    },
-    {
-      "map": "MAP_LILYCOVE_CITY",
-      "offset": 10,
-      "direction": "left"
-    },
-    {
-      "map": "MAP_ROUTE125",
-      "offset": 0,
-      "direction": "right"
-    },
-    {
-      "map": "MAP_MOSSDEEP_CITY",
-      "offset": 40,
-      "direction": "right"
-    },
-    {
       "map": "MAP_UNDERWATER_ROUTE124",
       "offset": 0,
       "direction": "dive"
+    },
+    {
+      "map": "MAP_JAVA_MOUNT_MERAPI",
+      "offset": 16,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_JAVA_TEMPLE_RUINS",
+      "offset": 0,
+      "direction": "right"
+    },
+    {
+      "map": "MAP_JAVA_SOUTH_LINE_ROUTE",
+      "offset": 0,
+      "direction": "left"
     }
   ],
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
-      "x": 34,
-      "y": 25,
+      "x": 1,
+      "y": 1,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 5,
@@ -55,8 +50,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
-      "x": 61,
-      "y": 74,
+      "x": 1,
+      "y": 2,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_RIGHT",
       "movement_range_x": 5,
@@ -68,8 +63,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F",
-      "x": 49,
-      "y": 45,
+      "x": 1,
+      "y": 3,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_ROTATE_CLOCKWISE",
       "movement_range_x": 0,
@@ -81,8 +76,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F",
-      "x": 7,
-      "y": 23,
+      "x": 1,
+      "y": 4,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN_AND_RIGHT",
       "movement_range_x": 6,
@@ -94,8 +89,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
-      "x": 58,
-      "y": 58,
+      "x": 1,
+      "y": 5,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_WALK_RIGHT_AND_LEFT",
       "movement_range_x": 7,
@@ -107,8 +102,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 28,
-      "y": 12,
+      "x": 1,
+      "y": 6,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -120,8 +115,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 31,
-      "y": 53,
+      "x": 1,
+      "y": 7,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -133,8 +128,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 58,
-      "y": 11,
+      "x": 1,
+      "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -146,8 +141,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F",
-      "x": 18,
-      "y": 44,
+      "x": 1,
+      "y": 9,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 1,
@@ -159,8 +154,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_TUBER_M_SWIMMING",
-      "x": 17,
-      "y": 44,
+      "x": 1,
+      "y": 10,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 1,
@@ -172,8 +167,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
-      "x": 7,
-      "y": 29,
+      "x": 1,
+      "y": 11,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 1,
@@ -185,8 +180,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F",
-      "x": 69,
-      "y": 74,
+      "x": 1,
+      "y": 12,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_LEFT",
       "movement_range_x": 1,
@@ -199,8 +194,8 @@
   ],
   "warp_events": [
     {
-      "x": 70,
-      "y": 48,
+      "x": 57,
+      "y": 25,
       "elevation": 3,
       "dest_map": "MAP_ROUTE124_DIVING_TREASURE_HUNTERS_HOUSE",
       "dest_warp_id": "0"

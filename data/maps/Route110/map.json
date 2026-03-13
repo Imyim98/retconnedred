@@ -3,7 +3,7 @@
   "name": "Route110",
   "layout": "LAYOUT_ROUTE110",
   "music": "MUS_ROUTE110",
-  "region_map_section": "MAPSEC_ROUTE_110",
+  "region_map_section": "MAPSEC_GENSOKYO_SANZU_RIVER",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_ROUTE",
@@ -14,18 +14,8 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_MAUVILLE_CITY",
+      "map": "MAP_GENSOKYO_ROAD_OF_LIMINALITY2",
       "offset": 0,
-      "direction": "up"
-    },
-    {
-      "map": "MAP_SLATEPORT_CITY",
-      "offset": 0,
-      "direction": "down"
-    },
-    {
-      "map": "MAP_ROUTE103",
-      "offset": 60,
       "direction": "left"
     }
   ],
@@ -227,8 +217,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BERRY_TREE",
-      "x": 5,
-      "y": 11,
+      "x": 6,
+      "y": 13,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_BERRY_TREE_GROWTH",
       "movement_range_x": 0,
@@ -240,8 +230,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BERRY_TREE",
-      "x": 6,
-      "y": 11,
+      "x": 7,
+      "y": 13,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_BERRY_TREE_GROWTH",
       "movement_range_x": 0,
@@ -253,8 +243,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BERRY_TREE",
-      "x": 7,
-      "y": 11,
+      "x": 8,
+      "y": 13,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_BERRY_TREE_GROWTH",
       "movement_range_x": 0,
@@ -291,6 +281,7 @@
       "flag": "FLAG_ITEM_ROUTE_110_RARE_CANDY"
     },
     {
+      "local_id": "LOCALID_CHALLENGE_BIKER",
       "graphics_id": "OBJ_EVENT_GFX_CYCLING_TRIATHLETE_M",
       "x": 27,
       "y": 92,
@@ -382,6 +373,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_ROUTE110_RIVAL",
       "graphics_id": "OBJ_EVENT_GFX_VAR_0",
       "x": 34,
       "y": 54,
@@ -395,6 +387,7 @@
       "flag": "FLAG_HIDE_ROUTE_110_RIVAL"
     },
     {
+      "local_id": "LOCALID_ROUTE110_RIVAL_ON_BIKE",
       "graphics_id": "OBJ_EVENT_GFX_VAR_3",
       "x": 34,
       "y": 54,
@@ -486,6 +479,7 @@
       "flag": "FLAG_ITEM_ROUTE_110_ELIXIR"
     },
     {
+      "local_id": "LOCALID_ROUTE110_BIRCH",
       "graphics_id": "OBJ_EVENT_GFX_PROF_BIRCH",
       "x": 9,
       "y": 79,

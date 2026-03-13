@@ -1,17 +1,15 @@
-.set LOCALID_NURSE, 1
-
 RustboroCity_PokemonCenter_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, RustboroCity_PokemonCenter_1F_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
 RustboroCity_PokemonCenter_1F_OnTransition:
-	setrespawn HEAL_LOCATION_RUSTBORO_CITY
+	setrespawn HEAL_LOCATION_JOHTO_LAKE_OF_RAGE
 	call Common_EventScript_UpdateBrineyLocation
 	end
 
 RustboroCity_PokemonCenter_1F_EventScript_Nurse::
-	setvar VAR_0x800B, LOCALID_NURSE
+	setvar VAR_0x800B, LOCALID_RUSTBORO_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress

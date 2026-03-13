@@ -33,6 +33,7 @@
 #include "pokemon_sprite_visualizer.h"
 #include "pokemon_storage_system.h"
 #include "pokemon_summary_screen.h"
+#include "pokerus.h"
 #include "region_map.h"
 #include "scanline_effect.h"
 #include "sound.h"
@@ -44,13 +45,14 @@
 #include "tv.h"
 #include "window.h"
 #include "constants/battle_move_effects.h"
-#include "constants/hold_effects.h"
 #include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/party_menu.h"
 #include "constants/region_map_sections.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "constants/maps.h"
+#include "constants/map_groups.h"
 
 // Screen titles (upper left)
 #define PSS_LABEL_WINDOW_POKEMON_INFO_TITLE 0
@@ -90,6 +92,8 @@
 #define PSS_DATA_WINDOW_INFO_ID 1
 #define PSS_DATA_WINDOW_INFO_ABILITY 2
 #define PSS_DATA_WINDOW_INFO_MEMO 3
+#define PSS_DATA_WINDOW_SPECIAL_GIFT_MARK 4
+#define PSS_DATA_WINDOW_ANTI_WORLD_OR_SHADOW_MARK 5
 
 // Dynamic fields for the Pokémon Skills page
 #define PSS_DATA_WINDOW_SKILLS_HELD_ITEM 0
@@ -142,12 +146,12 @@ static EWRAM_DATA struct PokemonSummaryScreenData
         u8 ribbonCount; // 0x6
         u8 ailment; // 0x7
         u8 abilityNum; // 0x8
-        u8 metLocation; // 0x9
+        metloc_u8_t metLocation; // 0x9
         u8 metLevel; // 0xA
         u8 metGame; // 0xB
         u32 pid; // 0xC
         u32 exp; // 0x10
-        u16 moves[MAX_MON_MOVES]; // 0x14
+        enum Move moves[MAX_MON_MOVES]; // 0x14
         u8 pp[MAX_MON_MOVES]; // 0x1C
         u16 currentHP; // 0x20
         u16 maxHP; // 0x22
@@ -156,7 +160,7 @@ static EWRAM_DATA struct PokemonSummaryScreenData
         u16 spatk; // 0x28
         u16 spdef; // 0x2A
         u16 speed; // 0x2C
-        u16 item; // 0x2E
+        enum Item item; // 0x2E
         u16 friendship; // 0x30
         u8 OTGender; // 0x32
         u8 nature; // 0x33
@@ -164,8 +168,9 @@ static EWRAM_DATA struct PokemonSummaryScreenData
         u8 sanity; // 0x35
         u8 OTName[17]; // 0x36
         u32 OTID; // 0x48
-        u8 teraType;
+        enum Type teraType;
         u8 mintNature;
+        u8 isShadow;
     } summary;
     u16 bgTilemapBuffers[PSS_PAGE_COUNT][2][0x400];
     u8 mode;
@@ -182,10 +187,9 @@ static EWRAM_DATA struct PokemonSummaryScreenData
     u8 secondMoveIndex;
     bool8 lockMovesFlag; // This is used to prevent the player from changing position of moves in a battle or when trading.
     u8 bgDisplayOrder; // Determines the order page backgrounds are loaded while scrolling between them
-    u8 relearnableMovesNum;
+    bool8 hasRelearnableMoves;
     u8 windowIds[8];
     u8 spriteIds[SPRITE_ARR_ID_COUNT];
-    bool8 handleDeoxys;
     s16 switchCounter; // Used for various switch statement cases that decompress/load graphics or Pokémon data
     u8 unk_filler4[6];
     u8 categoryIconSpriteId;
@@ -233,16 +237,16 @@ static bool8 CanReplaceMove(void);
 static void ShowCantForgetHMsWindow(u8);
 static void Task_HandleInputCantForgetHMsMoves(u8);
 static void DrawPagination(void);
-static void HandlePowerAccTilemap(u16, s16);
-static void Task_ShowPowerAccWindow(u8);
-static void HandleAppealJamTilemap(u16, s16, u16);
-static void Task_ShowAppealJamWindow(u8);
-static void HandleStatusTilemap(u16, s16);
-static void Task_ShowStatusWindow(u8);
+static void PositionPowerAccSlidingWindow(u16, s16);
+static void Task_SlidePowerAccWindow(u8);
+static void PositionAppealJamSlidingWindow(u16, s16, enum Move move);
+static void Task_SlideAppealJamWindow(u8);
+static void PositionStatusSlidingWindow(u16, s16);
+static void Task_SlideStatusWindow(u8);
 static void TilemapFiveMovesDisplay(u16 *, u16, bool8);
 static void DrawPokerusCuredSymbol(struct Pokemon *);
 static void DrawExperienceProgressBar(struct Pokemon *);
-static void DrawContestMoveHearts(u16);
+static void DrawContestMoveHearts(enum Move move);
 static void LimitEggSummaryPageDisplay(void);
 static void ResetWindows(void);
 static void PrintMonInfo(void);
@@ -287,7 +291,7 @@ static void PrintMoveNameAndPP(u8);
 static void PrintContestMoves(void);
 static void Task_PrintContestMoves(u8);
 static void PrintContestMoveDescription(u8);
-static void PrintMoveDetails(u16);
+static void PrintMoveDetails(enum Move move);
 static void PrintNewMoveDetailsOrCancelText(void);
 static void AddAndFillMoveNamesWindow(void);
 static void SwapMovesNamesPP(u8, u8);
@@ -334,6 +338,13 @@ static const u8 *GetLetterGrade(u32 stat);
 static u8 AddWindowFromTemplateList(const struct WindowTemplate *template, u8 templateId);
 static u8 IncrementSkillsStatsMode(u8 mode);
 static void ClearStatLabel(u32 length, u32 statsCoordX, u32 statsCoordY);
+u32 GetAdjustedIvData(struct Pokemon *mon, u32 stat);
+static void TryUpdateRelearnType(enum IncrDecrUpdateValues delta);
+static void ShowRelearnPrompt(void);
+static struct BoxPokemon *GetCurrentBoxmon(void);
+
+static void PrintMonSpecialGiftMark(void);
+static void PrintMonAntiWorldOrShadowMark(void);
 
 static const struct BgTemplate sBgTemplates[] =
 {
@@ -375,32 +386,52 @@ static const struct BgTemplate sBgTemplates[] =
     },
 };
 
-struct TilemapCtrl
+struct SlidingWindow
 {
     const u16 *gfx;
-    u16 field_4;
-    u8 field_6;
-    u8 field_7;
-    u8 field_8;
-    u8 field_9;
+    u16 defaultTile;
+    u8 width;
+    u8 height;
+    u8 left;
+    u8 top;
 };
 
 static const u16 sStatusTilemap[] = INCBIN_U16("graphics/summary_screen/status_tilemap.bin");
-static const struct TilemapCtrl sStatusTilemapCtrl1 =
+static const struct SlidingWindow sStatusSlidingWindow1 =
 {
-    sStatusTilemap, 1, 10, 2, 0, 18
+    .gfx = sStatusTilemap,
+    .defaultTile = 1,
+    .width = 10,
+    .height = 2,
+    .left = 0,
+    .top = 18
 };
-static const struct TilemapCtrl sStatusTilemapCtrl2 =
+static const struct SlidingWindow sStatusSlidingWindow2 =
 {
-    sStatusTilemap, 1, 10, 2, 0, 50
+    .gfx = sStatusTilemap,
+    .defaultTile = 1,
+    .width = 10,
+    .height = 2,
+    .left = 0,
+    .top = 50
 };
-static const struct TilemapCtrl sBattleMoveTilemapCtrl =
+static const struct SlidingWindow sPowerAccSlidingWindow =
 {
-    gSummaryScreen_MoveEffect_Battle_Tilemap, 0, 10, 7, 0, 45
+    .gfx = gSummaryScreen_MoveEffect_Battle_Tilemap,
+    .defaultTile = 0,
+    .width = 10,
+    .height = 7,
+    .left = 0,
+    .top = 45
 };
-static const struct TilemapCtrl sContestMoveTilemapCtrl =
+static const struct SlidingWindow sAppealJamSlidingWindow =
 {
-    gSummaryScreen_MoveEffect_Contest_Tilemap, 0, 10, 7, 0, 45
+    .gfx = gSummaryScreen_MoveEffect_Contest_Tilemap,
+    .defaultTile = 0,
+    .width = 10,
+    .height = 7,
+    .left = 0,
+    .top = 45
 };
 static const s8 sMultiBattleOrder[] = {0, 2, 3, 1, 4, 5};
 static const struct WindowTemplate sSummaryTemplate[] =
@@ -551,12 +582,12 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_PROMPT_RELEARN] = {
         .bg = 0,
-        .tilemapLeft = 22,
+        .tilemapLeft = (P_ENABLE_MOVE_RELEARNERS) ? 18 : 22,
         .tilemapTop = 2,
-        .width = 8,
+        .width = 11,
         .height = 2,
         .paletteNum = 15,
-        .baseBlock = 387,
+        .baseBlock = 800,
     },
     [PSS_LABEL_WINDOW_PORTRAIT_DEX_NUMBER] = {
         .bg = 0,
@@ -624,6 +655,24 @@ static const struct WindowTemplate sPageInfoTemplate[] =
         .height = 6,
         .paletteNum = 6,
         .baseBlock = 575,
+    },
+    [PSS_DATA_WINDOW_SPECIAL_GIFT_MARK] = {
+        .bg = 0,
+        .tilemapLeft = 27,
+        .tilemapTop = 14,
+        .width = 1,
+        .height = 2,
+        .paletteNum = 6,
+        .baseBlock = 683,
+    },
+    [PSS_DATA_WINDOW_ANTI_WORLD_OR_SHADOW_MARK] = {
+        .bg = 0,
+        .tilemapLeft = 28,
+        .tilemapTop = 14,
+        .width = 1,
+        .height = 2,
+        .paletteNum = 6,
+        .baseBlock = 685,
     },
 };
 static const struct WindowTemplate sPageSkillsTemplate[] =
@@ -734,13 +783,19 @@ static void (*const sTextPrinterFunctions[])(void) =
     [PSS_PAGE_CONTEST_MOVES] = PrintContestMoves
 };
 
-static void (*const sTextPrinterTasks[])(u8 taskId) =
+static const TaskFunc sTextPrinterTasks[] =
 {
     [PSS_PAGE_INFO] = Task_PrintInfoPage,
     [PSS_PAGE_SKILLS] = Task_PrintSkillsPage,
     [PSS_PAGE_BATTLE_MOVES] = Task_PrintBattleMoves,
     [PSS_PAGE_CONTEST_MOVES] = Task_PrintContestMoves
 };
+
+static const u8 sText_Relearn[] = _("{START_BUTTON} RELEARN"); // future note: don't decap this, because it mimics the summary screen BG graphics which will not get decapped
+static const u8 sText_Relearn_LevelUp[] = _("{START_BUTTON} RELEARN LEVEL");
+static const u8 sText_Relearn_Egg[] = _("{START_BUTTON} RELEARN EGG");
+static const u8 sText_Relearn_TM[] = _("{START_BUTTON} RELEARN TM");
+static const u8 sText_Relearn_Tutor[] = _("{START_BUTTON} RELEARN TUTOR");
 
 static const u8 sMemoNatureTextColor[] = _("{COLOR LIGHT_RED}{SHADOW GREEN}");
 static const u8 sMemoMiscTextColor[] = _("{COLOR WHITE}{SHADOW DARK_GRAY}"); // This is also affected by palettes, apparently
@@ -806,9 +861,6 @@ const struct SpriteTemplate gSpriteTemplate_CategoryIcons =
     .paletteTag = TAG_CATEGORY_ICONS,
     .oam = &sOamData_CategoryIcons,
     .anims = sSpriteAnimTable_CategoryIcons,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
 };
 
 static const struct OamData sOamData_MoveTypes =
@@ -972,18 +1024,8 @@ const struct SpriteTemplate gSpriteTemplate_MoveTypes =
     .paletteTag = TAG_MOVE_TYPES,
     .oam = &sOamData_MoveTypes,
     .anims = sSpriteAnimTable_MoveTypes,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
 };
-static const u8 sContestCategoryToOamPaletteNum[CONTEST_CATEGORIES_COUNT] =
-{
-    [CONTEST_CATEGORY_COOL] = 13,
-    [CONTEST_CATEGORY_BEAUTY] = 14,
-    [CONTEST_CATEGORY_CUTE] = 14,
-    [CONTEST_CATEGORY_SMART] = 15,
-    [CONTEST_CATEGORY_TOUGH] = 13,
-};
+
 static const struct OamData sOamData_MoveSelector =
 {
     .y = 0,
@@ -1059,7 +1101,7 @@ static const struct CompressedSpriteSheet sMoveSelectorSpriteSheet =
     .size = 0x400,
     .tag = TAG_MOVE_SELECTOR
 };
-static const struct CompressedSpritePalette sMoveSelectorSpritePal =
+static const struct SpritePalette sMoveSelectorSpritePal =
 {
     .data = gSummaryMoveSelect_Pal,
     .tag = TAG_MOVE_SELECTOR
@@ -1070,9 +1112,6 @@ static const struct SpriteTemplate sMoveSelectorSpriteTemplate =
     .paletteTag = TAG_MOVE_SELECTOR,
     .oam = &sOamData_MoveSelector,
     .anims = sSpriteAnimTable_MoveSelector,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
 };
 static const struct OamData sOamData_StatusCondition =
 {
@@ -1138,7 +1177,7 @@ static const struct CompressedSpriteSheet sStatusIconsSpriteSheet =
     .size = 0x400,
     .tag = TAG_MON_STATUS
 };
-static const struct CompressedSpritePalette sStatusIconsSpritePalette =
+static const struct SpritePalette sStatusIconsSpritePalette =
 {
     .data = gStatusPal_Icons,
     .tag = TAG_MON_STATUS
@@ -1149,14 +1188,11 @@ static const struct SpriteTemplate sSpriteTemplate_StatusCondition =
     .paletteTag = TAG_MON_STATUS,
     .oam = &sOamData_StatusCondition,
     .anims = sSpriteAnimTable_StatusCondition,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
 };
 static const u16 sMarkings_Pal[] = INCBIN_U16("graphics/summary_screen/markings.gbapal");
 
 // code
-static u8 ShowCategoryIcon(u32 category)
+static u8 ShowCategoryIcon(enum DamageCategory category)
 {
     if (sMonSummaryScreen->categoryIconSpriteId == 0xFF)
         sMonSummaryScreen->categoryIconSpriteId = CreateSprite(&gSpriteTemplate_CategoryIcons, 48, 128, 0);
@@ -1173,18 +1209,34 @@ static void DestroyCategoryIcon(void)
     sMonSummaryScreen->categoryIconSpriteId = 0xFF;
 }
 
+u32 GetAdjustedIvData(struct Pokemon *mon, u32 stat)
+{
+    if (P_SUMMARY_SCREEN_IV_HYPERTRAIN && GetMonData(mon, MON_DATA_HYPER_TRAINED_HP + stat))
+        return MAX_PER_STAT_IVS;
+    return GetMonData(mon, MON_DATA_HP_IV + stat);
+}
+
 void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void))
 {
     sMonSummaryScreen = AllocZeroed(sizeof(*sMonSummaryScreen));
     sMonSummaryScreen->mode = mode;
-    sMonSummaryScreen->monList.mons = mons;
-    sMonSummaryScreen->curMonIndex = monIndex;
-    sMonSummaryScreen->maxMonIndex = maxMonIndex;
+    if (monIndex == PC_MON_CHOSEN)
+    {
+        sMonSummaryScreen->monList.boxMons = GetBoxedMonPtr(gSpecialVar_MonBoxId, 0);
+        sMonSummaryScreen->curMonIndex = gSpecialVar_MonBoxPos;
+        sMonSummaryScreen->maxMonIndex = IN_BOX_COUNT - 1;
+    }
+    else
+    {
+        sMonSummaryScreen->monList.mons = mons;
+        sMonSummaryScreen->curMonIndex = monIndex;
+        sMonSummaryScreen->maxMonIndex = maxMonIndex;
+    }
     sMonSummaryScreen->callback = callback;
     if (gInitialSummaryScreenCallback == NULL)
         gInitialSummaryScreenCallback = callback;
 
-    if (mode == SUMMARY_MODE_BOX)
+    if (mode == SUMMARY_MODE_BOX || monIndex == PC_MON_CHOSEN)
         sMonSummaryScreen->isBoxMon = TRUE;
     else
         sMonSummaryScreen->isBoxMon = FALSE;
@@ -1224,19 +1276,16 @@ void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, 
     if (gMonSpritesGfxPtr == NULL)
         CreateMonSpritesGfxManager(MON_SPR_GFX_MANAGER_A, MON_SPR_GFX_MODE_NORMAL);
 
+    if (ShouldShowMoveRelearner())
+        TryUpdateRelearnType(TRY_SET_UPDATE);
+
     SetMainCallback2(CB2_InitSummaryScreen);
 }
 
-void ShowSelectMovePokemonSummaryScreen(struct Pokemon *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void), u16 newMove)
+void ShowSelectMovePokemonSummaryScreen(struct Pokemon *mons, u8 monIndex, void (*callback)(void), u16 newMove)
 {
-    ShowPokemonSummaryScreen(SUMMARY_MODE_SELECT_MOVE, mons, monIndex, maxMonIndex, callback);
+    ShowPokemonSummaryScreen(SUMMARY_MODE_SELECT_MOVE, mons, monIndex, gPlayerPartyCount - 1, callback);
     sMonSummaryScreen->newMove = newMove;
-}
-
-void ShowPokemonSummaryScreenHandleDeoxys(u8 mode, struct BoxPokemon *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void))
-{
-    ShowPokemonSummaryScreen(mode, mons, monIndex, maxMonIndex, callback);
-    sMonSummaryScreen->handleDeoxys = TRUE;
 }
 
 static void MainCB2(void)
@@ -1418,28 +1467,28 @@ static bool8 DecompressGraphics(void)
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != 1)
         {
-            LZDecompressWram(gSummaryPage_Info_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0]);
+            DecompressDataWithHeaderWram(gSummaryPage_Info_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0]);
             sMonSummaryScreen->switchCounter++;
         }
         break;
     case 2:
-        LZDecompressWram(gSummaryPage_InfoEgg_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][1]);
+        DecompressDataWithHeaderWram(gSummaryPage_InfoEgg_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][1]);
         sMonSummaryScreen->switchCounter++;
         break;
     case 3:
-        LZDecompressWram(gSummaryPage_Skills_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_SKILLS][1]);
+        DecompressDataWithHeaderWram(gSummaryPage_Skills_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_SKILLS][1]);
         sMonSummaryScreen->switchCounter++;
         break;
     case 4:
-        LZDecompressWram(gSummaryPage_BattleMoves_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_BATTLE_MOVES][1]);
+        DecompressDataWithHeaderWram(gSummaryPage_BattleMoves_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_BATTLE_MOVES][1]);
         sMonSummaryScreen->switchCounter++;
         break;
     case 5:
-        LZDecompressWram(gSummaryPage_ContestMoves_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][1]);
+        DecompressDataWithHeaderWram(gSummaryPage_ContestMoves_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][1]);
         sMonSummaryScreen->switchCounter++;
         break;
     case 6:
-        LoadCompressedPalette(gSummaryScreen_Pal, BG_PLTT_ID(0), 8 * PLTT_SIZE_4BPP);
+        LoadPalette(gSummaryScreen_Pal, BG_PLTT_ID(0), 8 * PLTT_SIZE_4BPP);
         LoadPalette(&gPPTextPalette, BG_PLTT_ID(8) + 1, PLTT_SIZEOF(16 - 1));
         sMonSummaryScreen->switchCounter++;
         break;
@@ -1456,21 +1505,28 @@ static bool8 DecompressGraphics(void)
         sMonSummaryScreen->switchCounter++;
         break;
     case 10:
-        LoadCompressedSpritePalette(&sStatusIconsSpritePalette);
+        LoadSpritePalette(&sStatusIconsSpritePalette);
         sMonSummaryScreen->switchCounter++;
         break;
     case 11:
-        LoadCompressedSpritePalette(&sMoveSelectorSpritePal);
+        LoadSpritePalette(&sMoveSelectorSpritePal);
         sMonSummaryScreen->switchCounter++;
         break;
     case 12:
-        LoadCompressedPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP);
+        LoadPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP);
         LoadCompressedSpriteSheet(&gSpriteSheet_CategoryIcons);
         LoadSpritePalette(&gSpritePal_CategoryIcons);
         sMonSummaryScreen->switchCounter = 0;
         return TRUE;
     }
     return FALSE;
+}
+
+static struct BoxPokemon *GetCurrentBoxmon(void)
+{
+    if (sMonSummaryScreen->isBoxMon)
+        return &sMonSummaryScreen->monList.boxMons[sMonSummaryScreen->curMonIndex];
+    return &sMonSummaryScreen->monList.mons[sMonSummaryScreen->curMonIndex].box;
 }
 
 static void CopyMonToSummaryStruct(struct Pokemon *mon)
@@ -1536,7 +1592,7 @@ static bool8 ExtractMonDataToSummaryStruct(struct Pokemon *mon)
         sum->ribbonCount = GetMonData(mon, MON_DATA_RIBBON_COUNT);
         sum->teraType = GetMonData(mon, MON_DATA_TERA_TYPE);
         sum->isShiny = GetMonData(mon, MON_DATA_IS_SHINY);
-        sMonSummaryScreen->relearnableMovesNum = P_SUMMARY_SCREEN_MOVE_RELEARNER ? GetNumberOfRelearnableMoves(mon) : 0;
+        sum->isShadow = GetMonData(mon, MON_DATA_IS_SHADOW);
         return TRUE;
     }
     sMonSummaryScreen->switchCounter++;
@@ -1549,8 +1605,8 @@ static void SetDefaultTilemaps(void)
         || sMonSummaryScreen->mode == SUMMARY_MODE_RELEARNER_BATTLE
         || sMonSummaryScreen->mode == SUMMARY_MODE_RELEARNER_CONTEST)
     {
-        HandlePowerAccTilemap(0, 0xFF);
-        HandleAppealJamTilemap(0, 0xFF, 0);
+        PositionPowerAccSlidingWindow(0, 0xFF);
+        PositionAppealJamSlidingWindow(0, 0xFF, 0);
     }
     else
     {
@@ -1590,7 +1646,7 @@ static void SetDefaultTilemaps(void)
     }
 
     if (sMonSummaryScreen->summary.ailment == AILMENT_NONE)
-        HandleStatusTilemap(0, 0xFF);
+        PositionStatusSlidingWindow(0, 0xFF);
     else if ((sMonSummaryScreen->currPageIndex != PSS_PAGE_BATTLE_MOVES && sMonSummaryScreen->currPageIndex != PSS_PAGE_CONTEST_MOVES)
             || sMonSummaryScreen->mode == SUMMARY_MODE_RELEARNER_BATTLE
             || sMonSummaryScreen->mode == SUMMARY_MODE_RELEARNER_CONTEST)
@@ -1696,11 +1752,11 @@ static void Task_HandleInput(u8 taskId)
         {
             ChangeSummaryPokemon(taskId, 1);
         }
-        else if ((JOY_NEW(DPAD_LEFT)) || GetLRKeysPressed() == MENU_L_PRESSED)
+        else if (JOY_NEW(DPAD_LEFT))
         {
             ChangePage(taskId, -1);
         }
-        else if ((JOY_NEW(DPAD_RIGHT)) || GetLRKeysPressed() == MENU_R_PRESSED)
+        else if (JOY_NEW(DPAD_RIGHT))
         {
             ChangePage(taskId, 1);
         }
@@ -1712,15 +1768,23 @@ static void Task_HandleInput(u8 taskId)
                 {
                     if (ShouldShowRename())
                     {
+                        if (sMonSummaryScreen->isBoxMon)
+                        {
+                            gSpecialVar_0x8004 = PC_MON_CHOSEN;
+                            gSpecialVar_MonBoxPos = sMonSummaryScreen->curMonIndex;
+                        }
+                        else
+                        {
+                            gSpecialVar_0x8004 = sMonSummaryScreen->curMonIndex;
+                        }
                         sMonSummaryScreen->callback = CB2_PssChangePokemonNickname;
-                        gSpecialVar_0x8004 = sMonSummaryScreen->curMonIndex;
                     }
 
                     StopPokemonAnimations();
                     PlaySE(SE_SELECT);
                     BeginCloseSummaryScreen(taskId);
                 }
-                else if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES 
+                else if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES
                          || sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES)
                 {
                     PlaySE(SE_SELECT);
@@ -1747,8 +1811,17 @@ static void Task_HandleInput(u8 taskId)
                 && (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES || sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES))
         {
             sMonSummaryScreen->callback = CB2_InitLearnMove;
-            gSpecialVar_0x8004 = sMonSummaryScreen->curMonIndex;
-            gOriginSummaryScreenPage = sMonSummaryScreen->currPageIndex;
+            gRelearnMode = sMonSummaryScreen->currPageIndex;
+            gSpecialVar_MonBoxPos = sMonSummaryScreen->curMonIndex;
+            if (sMonSummaryScreen->isBoxMon)
+            {
+                gSpecialVar_0x8004 = PC_MON_CHOSEN;
+                gSpecialVar_MonBoxPos = sMonSummaryScreen->curMonIndex;
+            }
+            else
+            {
+                gSpecialVar_0x8004 = sMonSummaryScreen->curMonIndex;
+            }
             StopPokemonAnimations();
             PlaySE(SE_SELECT);
             BeginCloseSummaryScreen(taskId);
@@ -1759,6 +1832,24 @@ static void Task_HandleInput(u8 taskId)
             StopPokemonAnimations();
             PlaySE(SE_SELECT);
             CloseSummaryScreen(taskId);
+        }
+        else if (JOY_NEW(R_BUTTON)) // R means increase. Level -> Egg -> TM -> Tutor
+        {
+            if (P_SUMMARY_SCREEN_MOVE_RELEARNER && (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES || sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES) && !gMain.inBattle)
+            {
+                TryUpdateRelearnType(TRY_INCREMENT);
+                PlaySE(SE_SELECT);
+                ShowRelearnPrompt();
+            }
+        }
+        else if (JOY_NEW(L_BUTTON)) // L means decrease. Level <- Egg <- TM <- Tutor
+        {
+            if (P_SUMMARY_SCREEN_MOVE_RELEARNER && (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES || sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES) && !gMain.inBattle)
+            {
+                TryUpdateRelearnType(TRY_DECREMENT);
+                PlaySE(SE_SELECT);
+                ShowRelearnPrompt();
+            }
         }
     }
 }
@@ -1773,7 +1864,7 @@ static u8 IncrementSkillsStatsMode(u8 mode)
             sMonSummaryScreen->skillsPageMode = SUMMARY_SKILLS_MODE_EVS;
             return SUMMARY_SKILLS_MODE_EVS;
         }
-        else 
+        else
         {
             sMonSummaryScreen->skillsPageMode = SUMMARY_SKILLS_MODE_IVS;
             return SUMMARY_SKILLS_MODE_IVS;
@@ -1836,40 +1927,25 @@ static void ShowMonSkillsInfo(u8 taskId, s16 mode)
 
 void ExtractMonSkillStatsData(struct Pokemon *mon, struct PokeSummary *sum)
 {
-    if (sMonSummaryScreen->monList.mons == gPlayerParty || sMonSummaryScreen->mode == SUMMARY_MODE_BOX || sMonSummaryScreen->handleDeoxys == TRUE)
-    {
-        sum->nature = GetNature(mon);
-        sum->mintNature = GetMonData(mon, MON_DATA_HIDDEN_NATURE);
-        sum->currentHP = GetMonData(mon, MON_DATA_HP);
-        sum->maxHP = GetMonData(mon, MON_DATA_MAX_HP);
-        sum->atk = GetMonData(mon, MON_DATA_ATK);
-        sum->def = GetMonData(mon, MON_DATA_DEF);
-        sum->spatk = GetMonData(mon, MON_DATA_SPATK);
-        sum->spdef = GetMonData(mon, MON_DATA_SPDEF);
-        sum->speed = GetMonData(mon, MON_DATA_SPEED);
-    }
-    else
-    {
-        sum->nature = GetNature(mon);
-        sum->mintNature = GetMonData(mon, MON_DATA_HIDDEN_NATURE);
-        sum->currentHP = GetMonData(mon, MON_DATA_HP);
-        sum->maxHP = GetMonData(mon, MON_DATA_MAX_HP);
-        sum->atk = GetMonData(mon, MON_DATA_ATK2);
-        sum->def = GetMonData(mon, MON_DATA_DEF2);
-        sum->spatk = GetMonData(mon, MON_DATA_SPATK2);
-        sum->spdef = GetMonData(mon, MON_DATA_SPDEF2);
-        sum->speed = GetMonData(mon, MON_DATA_SPEED2);
-    }
+    sum->nature = GetNature(mon);
+    sum->mintNature = GetMonData(mon, MON_DATA_HIDDEN_NATURE);
+    sum->currentHP = GetMonData(mon, MON_DATA_HP);
+    sum->maxHP = GetMonData(mon, MON_DATA_MAX_HP);
+    sum->atk = GetMonData(mon, MON_DATA_ATK);
+    sum->def = GetMonData(mon, MON_DATA_DEF);
+    sum->spatk = GetMonData(mon, MON_DATA_SPATK);
+    sum->spdef = GetMonData(mon, MON_DATA_SPDEF);
+    sum->speed = GetMonData(mon, MON_DATA_SPEED);
 }
 
 void ExtractMonSkillIvData(struct Pokemon *mon, struct PokeSummary *sum)
 {
-    sum->currentHP = GetMonData(mon, MON_DATA_HP_IV);
-    sum->atk = GetMonData(mon, MON_DATA_ATK_IV);
-    sum->def = GetMonData(mon, MON_DATA_DEF_IV);
-    sum->spatk = GetMonData(mon, MON_DATA_SPATK_IV);
-    sum->spdef = GetMonData(mon, MON_DATA_SPDEF_IV);
-    sum->speed = GetMonData(mon, MON_DATA_SPEED_IV);
+    sum->currentHP = GetAdjustedIvData(mon, STAT_HP);
+    sum->atk = GetAdjustedIvData(mon, STAT_ATK);
+    sum->def =  GetAdjustedIvData(mon, STAT_DEF);
+    sum->spatk = GetAdjustedIvData(mon, STAT_SPATK);
+    sum->spdef = GetAdjustedIvData(mon, STAT_SPDEF);
+    sum->speed = GetAdjustedIvData(mon, STAT_SPEED);
 }
 
 void ExtractMonSkillEvData(struct Pokemon *mon, struct PokeSummary *sum)
@@ -1880,6 +1956,101 @@ void ExtractMonSkillEvData(struct Pokemon *mon, struct PokeSummary *sum)
     sum->spatk = GetMonData(mon, MON_DATA_SPATK_EV);
     sum->spdef = GetMonData(mon, MON_DATA_SPDEF_EV);
     sum->speed = GetMonData(mon, MON_DATA_SPEED_EV);
+}
+
+bool32 HasAnyRelearnableMoves(enum MoveRelearnerStates state)
+{
+    return CanBoxMonRelearnMoves(GetCurrentBoxmon(), state);
+}
+
+bool32 NoMovesAvailableToRelearn(void)
+{
+    u32 zeroCounter = 0;
+    for (enum MoveRelearnerStates state = MOVE_RELEARNER_LEVEL_UP_MOVES; state < MOVE_RELEARNER_COUNT; state++)
+    {
+        if (!HasAnyRelearnableMoves(state))
+            zeroCounter++;
+    }
+
+    return zeroCounter == MOVE_RELEARNER_COUNT;
+}
+
+bool32 CheckRelearnerStateFlag(enum MoveRelearnerStates state)
+{
+    if (P_ENABLE_MOVE_RELEARNERS)
+        return TRUE;
+
+    switch (state)
+    {
+    case MOVE_RELEARNER_LEVEL_UP_MOVES:
+        return TRUE;
+    case MOVE_RELEARNER_EGG_MOVES:
+        return FlagGet(P_FLAG_EGG_MOVES);
+    case MOVE_RELEARNER_TM_MOVES:
+        return P_TM_MOVES_RELEARNER;
+    case MOVE_RELEARNER_TUTOR_MOVES:
+        return FlagGet(P_FLAG_TUTOR_MOVES);
+    default:
+        return FALSE;
+    }
+}
+
+static void TryUpdateRelearnType(enum IncrDecrUpdateValues delta)
+{
+    bool32 hasRelearnableMoves = FALSE;
+    u32 zeroCounter = 0;
+    enum MoveRelearnerStates state = gMoveRelearnerState;
+
+    // just in case everything is off, default to level up moves
+    if ((!P_ENABLE_MOVE_RELEARNERS
+        && !P_TM_MOVES_RELEARNER
+        && !FlagGet(P_FLAG_EGG_MOVES)
+        && !FlagGet(P_FLAG_TUTOR_MOVES)))
+    {
+        sMonSummaryScreen->hasRelearnableMoves = HasAnyRelearnableMoves(MOVE_RELEARNER_LEVEL_UP_MOVES);
+        return;
+    }
+
+    do
+    {
+        switch (delta)
+        {
+        default:
+        case TRY_SET_UPDATE:
+            hasRelearnableMoves = HasAnyRelearnableMoves(gMoveRelearnerState);
+            if (!hasRelearnableMoves)
+            {
+                delta = TRY_INCREMENT;
+                continue;
+            }
+            else
+            {
+                sMonSummaryScreen->hasRelearnableMoves = hasRelearnableMoves;
+                return;
+            }
+            // should never reach this, but just in case
+            break;
+        case TRY_INCREMENT:
+            state = state >= MOVE_RELEARNER_TUTOR_MOVES ? MOVE_RELEARNER_LEVEL_UP_MOVES : state + 1;
+            break;
+        case TRY_DECREMENT:
+            state = state == MOVE_RELEARNER_LEVEL_UP_MOVES ? MOVE_RELEARNER_TUTOR_MOVES : state - 1;
+            break;
+        }
+
+        if (!CheckRelearnerStateFlag(state))
+            continue;
+
+        hasRelearnableMoves = HasAnyRelearnableMoves(state);
+        if (hasRelearnableMoves)
+        {
+            gMoveRelearnerState = state;
+            sMonSummaryScreen->hasRelearnableMoves = hasRelearnableMoves;
+            return;
+        }
+        zeroCounter++;
+
+    } while (zeroCounter <= MOVE_RELEARNER_COUNT && !hasRelearnableMoves);
 }
 
 static void ChangeSummaryPokemon(u8 taskId, s8 delta)
@@ -1923,7 +2094,7 @@ static void ChangeSummaryPokemon(u8 taskId, s8 delta)
                 SetSpriteInvisibility(SPRITE_ARR_ID_STATUS, TRUE);
                 ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS);
                 ScheduleBgCopyTilemapToVram(0);
-                HandleStatusTilemap(0, 2);
+                PositionStatusSlidingWindow(0, 2);
             }
             sMonSummaryScreen->curMonIndex = monId;
             gTasks[taskId].data[0] = 0;
@@ -1953,27 +2124,32 @@ static void Task_ChangeSummaryMon(u8 taskId)
         sMonSummaryScreen->switchCounter = 0;
         break;
     case 4:
+        if (ExtractMonDataToSummaryStruct(&sMonSummaryScreen->currentMon) == FALSE)
+            return;
+
         if (P_SUMMARY_SCREEN_RENAME && sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
             ShowUtilityPrompt(SUMMARY_MODE_NORMAL);
+
         if (ShouldShowIvEvPrompt() && sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
-        {   
+        {
             sMonSummaryScreen->skillsPageMode = SUMMARY_SKILLS_MODE_STATS;
             ChangeStatLabel(SUMMARY_SKILLS_MODE_STATS);
         }
-        if (ExtractMonDataToSummaryStruct(&sMonSummaryScreen->currentMon) == FALSE)
+
+        if (P_SUMMARY_SCREEN_MOVE_RELEARNER
+             && (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES
+             || sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES))
         {
-            return;
+            gMoveRelearnerState = MOVE_RELEARNER_LEVEL_UP_MOVES;
+            TryUpdateRelearnType(TRY_SET_UPDATE);
+            if (ShouldShowMoveRelearner())
+                ShowRelearnPrompt();
+            else
+                ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
         }
         else
         {
-            if (P_SUMMARY_SCREEN_MOVE_RELEARNER
-                && (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES || sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES))
-            {
-                if (ShouldShowMoveRelearner())
-                    PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
-                else
-                    ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
-            }
+            ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
         }
         break;
     case 5:
@@ -1984,7 +2160,7 @@ static void Task_ChangeSummaryMon(u8 taskId)
         break;
     case 7:
         if (sMonSummaryScreen->summary.ailment != AILMENT_NONE)
-            HandleStatusTilemap(10, -2);
+            PositionStatusSlidingWindow(10, -2);
         DrawPokerusCuredSymbol(&sMonSummaryScreen->currentMon);
         data[1] = 0;
         break;
@@ -2010,7 +2186,7 @@ static void Task_ChangeSummaryMon(u8 taskId)
         gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_MON]].data[2] = 0;
         break;
     default:
-        if (!MenuHelpers_ShouldWaitForLinkRecv() && !FuncIsActiveTask(Task_ShowStatusWindow))
+        if (!MenuHelpers_ShouldWaitForLinkRecv() && !FuncIsActiveTask(Task_SlideStatusWindow))
         {
             data[0] = 0;
             gTasks[taskId].func = Task_HandleInput;
@@ -2089,6 +2265,7 @@ static void ChangePage(u8 taskId, s8 delta)
 {
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
     s16 *data = gTasks[taskId].data;
+    u32 currPageIndex;
 
     if (summary->isEgg)
         return;
@@ -2099,17 +2276,17 @@ static void ChangePage(u8 taskId, s8 delta)
 
     PlaySE(SE_SELECT);
     ClearPageWindowTilemaps(sMonSummaryScreen->currPageIndex);
-    sMonSummaryScreen->currPageIndex += delta;
+    currPageIndex = sMonSummaryScreen->currPageIndex += delta;
     data[0] = 0;
     if (delta == 1)
         SetTaskFuncWithFollowupFunc(taskId, PssScrollRight, gTasks[taskId].func);
     else
         SetTaskFuncWithFollowupFunc(taskId, PssScrollLeft, gTasks[taskId].func);
-    CreateTextPrinterTask(sMonSummaryScreen->currPageIndex);
+    CreateTextPrinterTask(currPageIndex);
     HidePageSpecificSprites();
 
-    if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS 
-        || (sMonSummaryScreen->currPageIndex + delta) == PSS_PAGE_SKILLS)
+    if (currPageIndex == PSS_PAGE_SKILLS
+        || (currPageIndex + delta) == PSS_PAGE_SKILLS)
     {
         struct Pokemon *mon = &sMonSummaryScreen->currentMon;
 
@@ -2125,6 +2302,19 @@ static void ChangePage(u8 taskId, s8 delta)
     {
         ShowUtilityPrompt(SUMMARY_MODE_NORMAL);
     }
+
+    // acts like a quick reset
+    if (currPageIndex == PSS_PAGE_SKILLS)
+    {
+        gMoveRelearnerState = MOVE_RELEARNER_LEVEL_UP_MOVES;
+        TryUpdateRelearnType(TRY_SET_UPDATE);
+    }
+
+    // to prevent nothing showing
+    if (currPageIndex >= PSS_PAGE_BATTLE_MOVES && !sMonSummaryScreen->hasRelearnableMoves)
+        TryUpdateRelearnType(TRY_SET_UPDATE);
+    else
+        ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
 }
 
 static void PssScrollRight(u8 taskId) // Scroll right
@@ -2168,6 +2358,7 @@ static void PssScrollRightEnd(u8 taskId) // display right
     SetTypeIcons();
     TryDrawExperienceProgressBar();
     SwitchTaskToFollowupFunc(taskId);
+    ShowRelearnPrompt();
 }
 
 static void PssScrollLeft(u8 taskId) // Scroll left
@@ -2220,6 +2411,7 @@ static void PssScrollLeftEnd(u8 taskId) // display left
     SetTypeIcons();
     TryDrawExperienceProgressBar();
     SwitchTaskToFollowupFunc(taskId);
+    ShowRelearnPrompt();
 }
 
 static void TryDrawExperienceProgressBar(void)
@@ -2230,21 +2422,20 @@ static void TryDrawExperienceProgressBar(void)
 
 static void SwitchToMoveSelection(u8 taskId)
 {
-    u16 move;
+    enum Move move;
 
     sMonSummaryScreen->firstMoveIndex = 0;
     move = sMonSummaryScreen->summary.moves[sMonSummaryScreen->firstMoveIndex];
     ClearWindowTilemap(PSS_LABEL_WINDOW_PORTRAIT_SPECIES);
     if (!gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_STATUS]].invisible)
         ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS);
-    HandlePowerAccTilemap(9, -3);
-    HandleAppealJamTilemap(9, -3, move);
-
+    PositionPowerAccSlidingWindow(9, -3);
+    PositionAppealJamSlidingWindow(9, -3, move);
     if (!sMonSummaryScreen->lockMovesFlag)
     {
         if (ShouldShowMoveRelearner())
             ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
-        
+
         ShowUtilityPrompt(SUMMARY_MODE_SELECT_MOVE);
     }
     else
@@ -2322,7 +2513,7 @@ static bool8 HasMoreThanOneMove(void)
 static void ChangeSelectedMove(s16 *taskData, s8 direction, u8 *moveIndexPtr)
 {
     s8 i, newMoveIndex;
-    u16 move;
+    enum Move move;
 
     PlaySE(SE_SELECT);
     newMoveIndex = *moveIndexPtr;
@@ -2354,8 +2545,8 @@ static void ChangeSelectedMove(s16 *taskData, s8 direction, u8 *moveIndexPtr)
         if (!gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_STATUS]].invisible)
             ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS);
         ScheduleBgCopyTilemapToVram(0);
-        HandlePowerAccTilemap(9, -3);
-        HandleAppealJamTilemap(9, -3, move);
+        PositionPowerAccSlidingWindow(9, -3);
+        PositionAppealJamSlidingWindow(9, -3, move);
     }
     if (*moveIndexPtr != MAX_MON_MOVES
         && newMoveIndex == MAX_MON_MOVES
@@ -2365,8 +2556,8 @@ static void ChangeSelectedMove(s16 *taskData, s8 direction, u8 *moveIndexPtr)
         ClearWindowTilemap(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM);
         DestroyCategoryIcon();
         ScheduleBgCopyTilemapToVram(0);
-        HandlePowerAccTilemap(0, 3);
-        HandleAppealJamTilemap(0, 3, 0);
+        PositionPowerAccSlidingWindow(0, 3);
+        PositionAppealJamSlidingWindow(0, 3, 0);
     }
 
     *moveIndexPtr = newMoveIndex;
@@ -2393,8 +2584,8 @@ static void CloseMoveSelectMode(u8 taskId)
         ClearWindowTilemap(PSS_LABEL_WINDOW_MOVES_POWER_ACC);
         ClearWindowTilemap(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM);
         DestroyCategoryIcon();
-        HandlePowerAccTilemap(0, 3);
-        HandleAppealJamTilemap(0, 3, 0);
+        PositionPowerAccSlidingWindow(0, 3);
+        PositionAppealJamSlidingWindow(0, 3, 0);
     }
     ScheduleBgCopyTilemapToVram(0);
     ScheduleBgCopyTilemapToVram(1);
@@ -2442,7 +2633,7 @@ static void Task_HandleInput_MovePositionSwitch(u8 taskId)
 
 static void ExitMovePositionSwitchMode(u8 taskId, bool8 swapMoves)
 {
-    u16 move;
+    enum Move move;
 
     PlaySE(SE_SELECT);
     SetMainMoveSelectorColor(0);
@@ -2476,10 +2667,10 @@ static void ExitMovePositionSwitchMode(u8 taskId, bool8 swapMoves)
 
 static void SwapMonMoves(struct Pokemon *mon, u8 moveIndex1, u8 moveIndex2)
 {
-    struct PokeSummary* summary = &sMonSummaryScreen->summary;
+    struct PokeSummary *summary = &sMonSummaryScreen->summary;
 
-    u16 move1 = summary->moves[moveIndex1];
-    u16 move2 = summary->moves[moveIndex2];
+    enum Move move1 = summary->moves[moveIndex1];
+    enum Move move2 = summary->moves[moveIndex2];
     u8 move1pp = summary->pp[moveIndex1];
     u8 move2pp = summary->pp[moveIndex2];
     u8 ppBonuses = summary->ppBonuses;
@@ -2511,10 +2702,10 @@ static void SwapMonMoves(struct Pokemon *mon, u8 moveIndex1, u8 moveIndex2)
 
 static void SwapBoxMonMoves(struct BoxPokemon *mon, u8 moveIndex1, u8 moveIndex2)
 {
-    struct PokeSummary* summary = &sMonSummaryScreen->summary;
+    struct PokeSummary *summary = &sMonSummaryScreen->summary;
 
-    u16 move1 = summary->moves[moveIndex1];
-    u16 move2 = summary->moves[moveIndex2];
+    enum Move move1 = summary->moves[moveIndex1];
+    enum Move move2 = summary->moves[moveIndex2];
     u8 move1pp = summary->pp[moveIndex1];
     u8 move2pp = summary->pp[moveIndex2];
     u8 ppBonuses = summary->ppBonuses;
@@ -2585,6 +2776,7 @@ static void Task_HandleReplaceMoveInput(u8 taskId)
                     PlaySE(SE_SELECT);
                     sMoveSlotToReplace = sMonSummaryScreen->firstMoveIndex;
                     gSpecialVar_0x8005 = sMoveSlotToReplace;
+                    gSpecialVar_Result = TRUE;
                     BeginCloseSummaryScreen(taskId);
                 }
                 else
@@ -2599,6 +2791,7 @@ static void Task_HandleReplaceMoveInput(u8 taskId)
                 PlaySE(SE_SELECT);
                 sMoveSlotToReplace = MAX_MON_MOVES;
                 gSpecialVar_0x8005 = MAX_MON_MOVES;
+                gSpecialVar_Result = FALSE;
                 BeginCloseSummaryScreen(taskId);
             }
         }
@@ -2609,7 +2802,7 @@ static bool8 CanReplaceMove(void)
 {
     if (sMonSummaryScreen->firstMoveIndex == MAX_MON_MOVES
         || sMonSummaryScreen->newMove == MOVE_NONE
-        || IsMoveHM(sMonSummaryScreen->summary.moves[sMonSummaryScreen->firstMoveIndex]) != TRUE)
+        || !CannotForgetMove(sMonSummaryScreen->summary.moves[sMonSummaryScreen->firstMoveIndex]))
         return TRUE;
     else
         return FALSE;
@@ -2621,8 +2814,8 @@ static void ShowCantForgetHMsWindow(u8 taskId)
     ClearWindowTilemap(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM);
     gSprites[sMonSummaryScreen->categoryIconSpriteId].invisible = TRUE;
     ScheduleBgCopyTilemapToVram(0);
-    HandlePowerAccTilemap(0, 3);
-    HandleAppealJamTilemap(0, 3, 0);
+    PositionPowerAccSlidingWindow(0, 3);
+    PositionAppealJamSlidingWindow(0, 3, 0);
     PrintHMMovesCantBeForgotten();
     gTasks[taskId].func = Task_HandleInputCantForgetHMsMoves;
 }
@@ -2631,8 +2824,8 @@ static void ShowCantForgetHMsWindow(u8 taskId)
 static void Task_HandleInputCantForgetHMsMoves(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    u16 move;
-    if (FuncIsActiveTask(Task_ShowPowerAccWindow) != 1)
+    enum Move move;
+    if (FuncIsActiveTask(Task_SlidePowerAccWindow) != 1)
     {
         if (JOY_NEW(DPAD_UP))
         {
@@ -2660,8 +2853,8 @@ static void Task_HandleInputCantForgetHMsMoves(u8 taskId)
                 move = sMonSummaryScreen->summary.moves[sMonSummaryScreen->firstMoveIndex];
                 gTasks[taskId].func = Task_HandleReplaceMoveInput;
                 ChangePage(taskId, -1);
-                HandlePowerAccTilemap(9, -2);
-                HandleAppealJamTilemap(9, -2, move);
+                PositionPowerAccSlidingWindow(9, -2);
+                PositionAppealJamSlidingWindow(9, -2, move);
             }
         }
         else if (JOY_NEW(DPAD_RIGHT) || GetLRKeysPressed() == MENU_R_PRESSED)
@@ -2674,8 +2867,8 @@ static void Task_HandleInputCantForgetHMsMoves(u8 taskId)
                 move = sMonSummaryScreen->summary.moves[sMonSummaryScreen->firstMoveIndex];
                 gTasks[taskId].func = Task_HandleReplaceMoveInput;
                 ChangePage(taskId, 1);
-                HandlePowerAccTilemap(9, -2);
-                HandleAppealJamTilemap(9, -2, move);
+                PositionPowerAccSlidingWindow(9, -2);
+                PositionAppealJamSlidingWindow(9, -2, move);
             }
         }
         else if (JOY_NEW(A_BUTTON | B_BUTTON))
@@ -2686,8 +2879,8 @@ static void Task_HandleInputCantForgetHMsMoves(u8 taskId)
             move = sMonSummaryScreen->summary.moves[sMonSummaryScreen->firstMoveIndex];
             PrintMoveDetails(move);
             ScheduleBgCopyTilemapToVram(0);
-            HandlePowerAccTilemap(9, -3);
-            HandleAppealJamTilemap(9, -3, move);
+            PositionPowerAccSlidingWindow(9, -3);
+            PositionAppealJamSlidingWindow(9, -3, move);
             gTasks[taskId].func = Task_HandleReplaceMoveInput;
         }
     }
@@ -2765,65 +2958,69 @@ static void DrawPagination(void) // Updates the pagination dots at the top of th
     Free(tilemap);
 }
 
-static void ChangeTilemap(const struct TilemapCtrl *unkStruct, u16 *dest, u8 c, bool8 d)
+static void CopyNColumnsToTilemap(const struct SlidingWindow *slidingWindow, u16 *tilemapDest, u8 visibleColumns, bool8 isOpeningToTheLeft)
 {
     u16 i;
-    u16 *alloced = Alloc(unkStruct->field_6 * 2 * unkStruct->field_7);
-    CpuFill16(unkStruct->field_4, alloced, unkStruct->field_6 * 2 * unkStruct->field_7);
-    if (unkStruct->field_6 != c)
+    u16 *alloced = Alloc(slidingWindow->width * 2 * slidingWindow->height);
+    CpuFill16(slidingWindow->defaultTile, alloced, slidingWindow->width * 2 * slidingWindow->height);
+    if (slidingWindow->width != visibleColumns)
     {
-        if (!d)
+        if (!isOpeningToTheLeft)
         {
-            for (i = 0; i < unkStruct->field_7; i++)
-                CpuCopy16(&unkStruct->gfx[c + unkStruct->field_6 * i], &alloced[unkStruct->field_6 * i], (unkStruct->field_6 - c) * 2);
+            for (i = 0; i < slidingWindow->height; i++)
+                CpuCopy16(&slidingWindow->gfx[visibleColumns + slidingWindow->width * i], &alloced[slidingWindow->width * i], (slidingWindow->width - visibleColumns) * 2);
         }
         else
         {
-            for (i = 0; i < unkStruct->field_7; i++)
-                CpuCopy16(&unkStruct->gfx[unkStruct->field_6 * i], &alloced[c + unkStruct->field_6 * i], (unkStruct->field_6 - c) * 2);
+            for (i = 0; i < slidingWindow->height; i++)
+                CpuCopy16(&slidingWindow->gfx[slidingWindow->width * i], &alloced[visibleColumns + slidingWindow->width * i], (slidingWindow->width - visibleColumns) * 2);
         }
     }
 
-    for (i = 0; i < unkStruct->field_7; i++)
-        CpuCopy16(&alloced[unkStruct->field_6 * i], &dest[(unkStruct->field_9 + i) * 32 + unkStruct->field_8], unkStruct->field_6 * 2);
+    for (i = 0; i < slidingWindow->height; i++)
+        CpuCopy16(&alloced[slidingWindow->width * i], &tilemapDest[(slidingWindow->top + i) * 32 + slidingWindow->left], slidingWindow->width * 2);
 
     Free(alloced);
 }
 
-static void HandlePowerAccTilemap(u16 a, s16 b)
+#define tScrollingSpeed data[0]
+#define tVisibleColumns data[1]
+#define tMove           data[2]
+
+static void PositionPowerAccSlidingWindow(u16 visibleColumns, s16 speed)
 {
-    if (b > sBattleMoveTilemapCtrl.field_6)
-        b = sBattleMoveTilemapCtrl.field_6;
-    if (b == 0 || b == sBattleMoveTilemapCtrl.field_6)
+    if (speed > sPowerAccSlidingWindow.width)
+        speed = sPowerAccSlidingWindow.width;
+    if (speed == 0 || speed == sPowerAccSlidingWindow.width)
     {
-        ChangeTilemap(&sBattleMoveTilemapCtrl, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_BATTLE_MOVES][0], b, TRUE);
+        CopyNColumnsToTilemap(&sPowerAccSlidingWindow, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_BATTLE_MOVES][0], speed, TRUE);
     }
     else
     {
-        u8 taskId = FindTaskIdByFunc(Task_ShowPowerAccWindow);
+        u8 taskId = FindTaskIdByFunc(Task_SlidePowerAccWindow);
         if (taskId == TASK_NONE)
-            taskId = CreateTask(Task_ShowPowerAccWindow, 8);
-        gTasks[taskId].data[0] = b;
-        gTasks[taskId].data[1] = a;
+            taskId = CreateTask(Task_SlidePowerAccWindow, 8);
+        gTasks[taskId].tScrollingSpeed = speed;
+        gTasks[taskId].tVisibleColumns = visibleColumns;
     }
 }
 
-static void Task_ShowPowerAccWindow(u8 taskId)
+static void Task_SlidePowerAccWindow(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    data[1] += data[0];
-    if (data[1] < 0)
+    tVisibleColumns += tScrollingSpeed;
+    if (tVisibleColumns < 0)
     {
-        data[1] = 0;
+        tVisibleColumns = 0;
     }
-    else if (data[1] > sBattleMoveTilemapCtrl.field_6)
+    else if (tVisibleColumns > sPowerAccSlidingWindow.width)
     {
-        data[1] = sBattleMoveTilemapCtrl.field_6;
+        tVisibleColumns = sPowerAccSlidingWindow.width;
     }
-    ChangeTilemap(&sBattleMoveTilemapCtrl, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_BATTLE_MOVES][0], data[1], TRUE);
-    if (data[1] <= 0 || data[1] >= sBattleMoveTilemapCtrl.field_6)
+    CopyNColumnsToTilemap(&sPowerAccSlidingWindow, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_BATTLE_MOVES][0], tVisibleColumns, TRUE);
+    if (tVisibleColumns <= 0 || tVisibleColumns >= sPowerAccSlidingWindow.width)
     {
-        if (data[0] < 0)
+        if (tScrollingSpeed < 0)
         {
             if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES)
                 PutWindowTilemap(PSS_LABEL_WINDOW_MOVES_POWER_ACC);
@@ -2841,46 +3038,46 @@ static void Task_ShowPowerAccWindow(u8 taskId)
     ScheduleBgCopyTilemapToVram(2);
 }
 
-static void HandleAppealJamTilemap(u16 a, s16 b, u16 move)
+static void PositionAppealJamSlidingWindow(u16 visibleColumns, s16 speed, enum Move move)
 {
-    if (b > sContestMoveTilemapCtrl.field_6)
-        b = sContestMoveTilemapCtrl.field_6;
+    if (speed > sAppealJamSlidingWindow.width)
+        speed = sAppealJamSlidingWindow.width;
 
-    if (b == 0 || b == sContestMoveTilemapCtrl.field_6)
+    if (speed == 0 || speed == sAppealJamSlidingWindow.width)
     {
-        ChangeTilemap(&sContestMoveTilemapCtrl, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][0], b, TRUE);
+        CopyNColumnsToTilemap(&sAppealJamSlidingWindow, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][0], speed, TRUE);
     }
     else
     {
-        u8 taskId = FindTaskIdByFunc(Task_ShowAppealJamWindow);
+        u8 taskId = FindTaskIdByFunc(Task_SlideAppealJamWindow);
         if (taskId == TASK_NONE)
-            taskId = CreateTask(Task_ShowAppealJamWindow, 8);
-        gTasks[taskId].data[0] = b;
-        gTasks[taskId].data[1] = a;
-        gTasks[taskId].data[2] = move;
+            taskId = CreateTask(Task_SlideAppealJamWindow, 8);
+        gTasks[taskId].tScrollingSpeed = speed;
+        gTasks[taskId].tVisibleColumns = visibleColumns;
+        gTasks[taskId].tMove = move;
     }
 }
 
-static void Task_ShowAppealJamWindow(u8 taskId)
+static void Task_SlideAppealJamWindow(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    data[1] += data[0];
-    if (data[1] < 0)
+    tVisibleColumns += tScrollingSpeed;
+    if (tVisibleColumns < 0)
     {
-        data[1] = 0;
+        tVisibleColumns = 0;
     }
-    else if (data[1] > sContestMoveTilemapCtrl.field_6)
+    else if (tVisibleColumns > sAppealJamSlidingWindow.width)
     {
-        data[1] = sContestMoveTilemapCtrl.field_6;
+        tVisibleColumns = sAppealJamSlidingWindow.width;
     }
-    ChangeTilemap(&sContestMoveTilemapCtrl, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][0], data[1], TRUE);
-    if (data[1] <= 0 || data[1] >= sContestMoveTilemapCtrl.field_6)
+    CopyNColumnsToTilemap(&sAppealJamSlidingWindow, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][0], tVisibleColumns, TRUE);
+    if (tVisibleColumns <= 0 || tVisibleColumns >= sAppealJamSlidingWindow.width)
     {
-        if (data[0] < 0)
+        if (tScrollingSpeed < 0)
         {
             if (sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES && FuncIsActiveTask(PssScrollRight) == 0)
                 PutWindowTilemap(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM);
-            DrawContestMoveHearts(data[2]);
+            DrawContestMoveHearts(tMove);
         }
         else
         {
@@ -2897,37 +3094,37 @@ static void Task_ShowAppealJamWindow(u8 taskId)
     ScheduleBgCopyTilemapToVram(2);
 }
 
-static void HandleStatusTilemap(u16 a, s16 b)
+static void PositionStatusSlidingWindow(u16 visibleColumns, s16 speed)
 {
-    if (b > sStatusTilemapCtrl1.field_6)
-        b = sStatusTilemapCtrl1.field_6;
-    if (b == 0 || b == sStatusTilemapCtrl1.field_6)
+    if (speed > sStatusSlidingWindow1.width)
+        speed = sStatusSlidingWindow1.width;
+    if (speed == 0 || speed == sStatusSlidingWindow1.width)
     {
-        ChangeTilemap(&sStatusTilemapCtrl1, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], b, FALSE);
-        ChangeTilemap(&sStatusTilemapCtrl2, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], b, FALSE);
+        CopyNColumnsToTilemap(&sStatusSlidingWindow1, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], speed, FALSE);
+        CopyNColumnsToTilemap(&sStatusSlidingWindow2, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], speed, FALSE);
     }
     else
     {
-        u8 taskId = CreateTask(Task_ShowStatusWindow, 8);
-        gTasks[taskId].data[0] = b;
-        gTasks[taskId].data[1] = a;
+        u8 taskId = CreateTask(Task_SlideStatusWindow, 8);
+        gTasks[taskId].tScrollingSpeed = speed;
+        gTasks[taskId].tVisibleColumns = visibleColumns;
     }
 }
 
-static void Task_ShowStatusWindow(u8 taskId)
+static void Task_SlideStatusWindow(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    data[1] += data[0];
-    if (data[1] < 0)
-        data[1] = 0;
-    else if (data[1] > sStatusTilemapCtrl1.field_6)
-        data[1] = sStatusTilemapCtrl1.field_6;
-    ChangeTilemap(&sStatusTilemapCtrl1, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], data[1], FALSE);
-    ChangeTilemap(&sStatusTilemapCtrl2, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], data[1], FALSE);
+    tVisibleColumns += tScrollingSpeed;
+    if (tVisibleColumns < 0)
+        tVisibleColumns = 0;
+    else if (tVisibleColumns > sStatusSlidingWindow1.width)
+        tVisibleColumns = sStatusSlidingWindow1.width;
+    CopyNColumnsToTilemap(&sStatusSlidingWindow1, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], tVisibleColumns, FALSE);
+    CopyNColumnsToTilemap(&sStatusSlidingWindow2, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], tVisibleColumns, FALSE);
     ScheduleBgCopyTilemapToVram(3);
-    if (data[1] <= 0 || data[1] >= sStatusTilemapCtrl1.field_6)
+    if (tVisibleColumns <= 0 || tVisibleColumns >= sStatusSlidingWindow1.width)
     {
-        if (data[0] < 0)
+        if (tScrollingSpeed < 0)
         {
             CreateSetStatusSprite();
             PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS);
@@ -2936,6 +3133,10 @@ static void Task_ShowStatusWindow(u8 taskId)
         DestroyTask(taskId);
     }
 }
+
+#undef tScrollingSpeed
+#undef tVisibleColumns
+#undef tMove
 
 // Toggles the "Cancel" window that appears when selecting a move
 static void TilemapFiveMovesDisplay(u16 *dst, u16 palette, bool8 remove)
@@ -2966,7 +3167,7 @@ static void TilemapFiveMovesDisplay(u16 *dst, u16 palette, bool8 remove)
 
 static void DrawPokerusCuredSymbol(struct Pokemon *mon) // This checks if the mon has been cured of pokerus
 {
-    if (!CheckPartyPokerus(mon, 0) && CheckPartyHasHadPokerus(mon, 0)) // If yes it draws the cured symbol
+    if (ShouldPokemonShowCuredPokerus(mon))
     {
         sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0][0x223] = 0x2C;
         sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][1][0x223] = 0x2C;
@@ -3030,7 +3231,7 @@ static void DrawExperienceProgressBar(struct Pokemon *unused)
         ScheduleBgCopyTilemapToVram(2);
 }
 
-static void DrawContestMoveHearts(u16 move)
+static void DrawContestMoveHearts(enum Move move)
 {
     u16 *tilemap = sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][1];
     u8 i;
@@ -3231,7 +3432,13 @@ static void PrintPageNamesAndStats(void)
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_POWER_ACC, gText_Accuracy2, 0, 17, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM, gText_Appeal, 0, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM, gText_Jam, 0, 17, 0, 1);
-    PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_PROMPT_RELEARN, gText_Relearn, 0, 4, 0, 0, FONT_SMALL);
+
+    if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES
+        || sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES)
+    {
+        TryUpdateRelearnType(TRY_SET_UPDATE);
+        ShowRelearnPrompt();
+    }
 }
 
 static void PutPageWindowTilemaps(u8 page)
@@ -3307,6 +3514,7 @@ static void ClearPageWindowTilemaps(u8 page)
         if (InBattleFactory() == TRUE || InSlateportBattleTent() == TRUE)
             ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_INFO_RENTAL);
         ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_INFO_TYPE);
+        ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
         break;
     case PSS_PAGE_SKILLS:
         ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT);
@@ -3314,6 +3522,7 @@ static void ClearPageWindowTilemaps(u8 page)
         ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP);
         if (ShouldShowIvEvPrompt())
             ClearPageWindowTilemaps(PSS_LABEL_WINDOW_PROMPT_UTILITY);
+        ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
         break;
     case PSS_PAGE_BATTLE_MOVES:
         if (sMonSummaryScreen->mode == SUMMARY_MODE_SELECT_MOVE)
@@ -3324,11 +3533,8 @@ static void ClearPageWindowTilemaps(u8 page)
                 gSprites[sMonSummaryScreen->categoryIconSpriteId].invisible = TRUE;
             }
         }
-        else
-        {
-            if (ShouldShowMoveRelearner())
-                ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
-        }
+
+        ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
         break;
     case PSS_PAGE_CONTEST_MOVES:
         if (sMonSummaryScreen->mode == SUMMARY_MODE_SELECT_MOVE)
@@ -3336,11 +3542,8 @@ static void ClearPageWindowTilemaps(u8 page)
             if (sMonSummaryScreen->newMove != MOVE_NONE || sMonSummaryScreen->firstMoveIndex != MAX_MON_MOVES)
                 ClearWindowTilemap(PSS_LABEL_WINDOW_MOVES_APPEAL_JAM);
         }
-        else
-        {
-            if (ShouldShowMoveRelearner())
-                ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
-        }
+
+        ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
         break;
     }
 
@@ -3405,6 +3608,8 @@ static void PrintInfoPageText(void)
         PrintMonAbilityDescription();
         BufferMonTrainerMemo();
         PrintMonTrainerMemo();
+        PrintMonSpecialGiftMark();
+        PrintMonAntiWorldOrShadowMark();
     }
 }
 
@@ -3432,6 +3637,12 @@ static void Task_PrintInfoPage(u8 taskId)
         PrintMonTrainerMemo();
         break;
     case 7:
+        PrintMonSpecialGiftMark();
+        break;
+    case 8:
+        PrintMonAntiWorldOrShadowMark();
+        break;
+    case 9:
         DestroyTask(taskId);
         return;
     }
@@ -3466,13 +3677,13 @@ static void PrintMonOTID(void)
 
 static void PrintMonAbilityName(void)
 {
-    u16 ability = GetAbilityBySpecies(sMonSummaryScreen->summary.species, sMonSummaryScreen->summary.abilityNum);
+    enum Ability ability = GetAbilityBySpecies(sMonSummaryScreen->summary.species, sMonSummaryScreen->summary.abilityNum);
     PrintTextOnWindow(AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_ABILITY), gAbilitiesInfo[ability].name, 0, 1, 0, 1);
 }
 
 static void PrintMonAbilityDescription(void)
 {
-    u16 ability = GetAbilityBySpecies(sMonSummaryScreen->summary.species, sMonSummaryScreen->summary.abilityNum);
+    enum Ability ability = GetAbilityBySpecies(sMonSummaryScreen->summary.species, sMonSummaryScreen->summary.abilityNum);
     PrintTextOnWindow(AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_ABILITY), gAbilitiesInfo[ability].description, 0, 17, 0, 0);
 }
 
@@ -3504,14 +3715,4498 @@ static void BufferMonTrainerMemo(void)
 
         if (DoesMonOTMatchOwner() == TRUE)
         {
-            if (sum->metLevel == 0)
+            if (sum->metGame == 0)
+            {
+                if (sum->metLocation == MAPSEC_ETC_TRIMMED_GENSOKYO)
+                {
+                    text = gText_DebugLocationTrimmedGensokyo;
+                }
+                else
+                {
+                    text = gText_MetLocationPlacholder;
+                }
+            }
+            else if (sum->metGame == VERSION_RUBY
+                || sum->metGame == VERSION_SAPPHIRE
+                || sum->metGame == VERSION_FIRE_RED
+                || sum->metGame == VERSION_LEAF_GREEN)
+            {
+                if (sum->metLocation == 0)
+                {
+                    text = gText_Gen3MetLoc000;
+                }
+                else if (sum->metLocation == 1)
+                {
+                    text = gText_Gen3MetLoc001;
+                }
+                else if (sum->metLocation == 2)
+                {
+                    text = gText_Gen3MetLoc002;
+                }
+                else if (sum->metLocation == 3)
+                {
+                    text = gText_Gen3MetLoc003;
+                }
+                else if (sum->metLocation == 4)
+                {
+                    text = gText_Gen3MetLoc004;
+                }
+                else if (sum->metLocation == 5)
+                {
+                    text = gText_Gen3MetLoc005;
+                }
+                else if (sum->metLocation == 6)
+                {
+                    text = gText_Gen3MetLoc006;
+                }
+                else if (sum->metLocation == 7)
+                {
+                    text = gText_Gen3MetLoc007;
+                }
+                else if (sum->metLocation == 8)
+                {
+                    text = gText_Gen3MetLoc008;
+                }
+                else if (sum->metLocation == 9)
+                {
+                    text = gText_Gen3MetLoc009;
+                }
+                else if (sum->metLocation == 10)
+                {
+                    text = gText_Gen3MetLoc010;
+                }
+                else if (sum->metLocation == 11)
+                {
+                    text = gText_Gen3MetLoc011;
+                }
+                else if (sum->metLocation == 12)
+                {
+                    text = gText_Gen3MetLoc012;
+                }
+                else if (sum->metLocation == 13)
+                {
+                    text = gText_Gen3MetLoc013;
+                }
+                else if (sum->metLocation == 14)
+                {
+                    text = gText_Gen3MetLoc014;
+                }
+                else if (sum->metLocation == 15)
+                {
+                    text = gText_Gen3MetLoc015;
+                }
+                else if (sum->metLocation == 16)
+                {
+                    text = gText_Gen3MetLoc016;
+                }
+                else if (sum->metLocation == 17)
+                {
+                    text = gText_Gen3MetLoc017;
+                }
+                else if (sum->metLocation == 18)
+                {
+                    text = gText_Gen3MetLoc018;
+                }
+                else if (sum->metLocation == 19)
+                {
+                    text = gText_Gen3MetLoc019;
+                }
+                else if (sum->metLocation == 20)
+                {
+                    text = gText_Gen3MetLoc020;
+                }
+                else if (sum->metLocation == 21)
+                {
+                    text = gText_Gen3MetLoc021;
+                }
+                else if (sum->metLocation == 22)
+                {
+                    text = gText_Gen3MetLoc022;
+                }
+                else if (sum->metLocation == 23)
+                {
+                    text = gText_Gen3MetLoc023;
+                }
+                else if (sum->metLocation == 24)
+                {
+                    text = gText_Gen3MetLoc024;
+                }
+                else if (sum->metLocation == 25)
+                {
+                    text = gText_Gen3MetLoc025;
+                }
+                else if (sum->metLocation == 26)
+                {
+                    text = gText_Gen3MetLoc026;
+                }
+                else if (sum->metLocation == 27)
+                {
+                    text = gText_Gen3MetLoc027;
+                }
+                else if (sum->metLocation == 28)
+                {
+                    text = gText_Gen3MetLoc028;
+                }
+                else if (sum->metLocation == 29)
+                {
+                    text = gText_Gen3MetLoc029;
+                }
+                else if (sum->metLocation == 30)
+                {
+                    text = gText_Gen3MetLoc030;
+                }
+                else if (sum->metLocation == 31)
+                {
+                    text = gText_Gen3MetLoc031;
+                }
+                else if (sum->metLocation == 32)
+                {
+                    text = gText_Gen3MetLoc032;
+                }
+                else if (sum->metLocation == 33)
+                {
+                    text = gText_Gen3MetLoc033;
+                }
+                else if (sum->metLocation == 34)
+                {
+                    text = gText_Gen3MetLoc034;
+                }
+                else if (sum->metLocation == 35)
+                {
+                    text = gText_Gen3MetLoc035;
+                }
+                else if (sum->metLocation == 36)
+                {
+                    text = gText_Gen3MetLoc036;
+                }
+                else if (sum->metLocation == 37)
+                {
+                    text = gText_Gen3MetLoc037;
+                }
+                else if (sum->metLocation == 38)
+                {
+                    text = gText_Gen3MetLoc038;
+                }
+                else if (sum->metLocation == 39)
+                {
+                    text = gText_Gen3MetLoc039;
+                }
+                else if (sum->metLocation == 40)
+                {
+                    text = gText_Gen3MetLoc040;
+                }
+                else if (sum->metLocation == 41)
+                {
+                    text = gText_Gen3MetLoc041;
+                }
+                else if (sum->metLocation == 42)
+                {
+                    text = gText_Gen3MetLoc042;
+                }
+                else if (sum->metLocation == 43)
+                {
+                    text = gText_Gen3MetLoc043;
+                }
+                else if (sum->metLocation == 44)
+                {
+                    text = gText_Gen3MetLoc044;
+                }
+                else if (sum->metLocation == 45)
+                {
+                    text = gText_Gen3MetLoc045;
+                }
+                else if (sum->metLocation == 46)
+                {
+                    text = gText_Gen3MetLoc046;
+                }
+                else if (sum->metLocation == 47)
+                {
+                    text = gText_Gen3MetLoc047;
+                }
+                else if (sum->metLocation == 48)
+                {
+                    text = gText_Gen3MetLoc048;
+                }
+                else if (sum->metLocation == 49)
+                {
+                    text = gText_Gen3MetLoc049;
+                }
+                else if (sum->metLocation == 50)
+                {
+                    text = gText_Gen3MetLoc050;
+                }
+                else if (sum->metLocation == 51)
+                {
+                    text = gText_Gen3MetLoc051;
+                }
+                else if (sum->metLocation == 52)
+                {
+                    text = gText_Gen3MetLoc052;
+                }
+                else if (sum->metLocation == 53)
+                {
+                    text = gText_Gen3MetLoc053;
+                }
+                else if (sum->metLocation == 54)
+                {
+                    text = gText_Gen3MetLoc054;
+                }
+                else if (sum->metLocation == 55)
+                {
+                    text = gText_Gen3MetLoc055;
+                }
+                else if (sum->metLocation == 56)
+                {
+                    text = gText_Gen3MetLoc056;
+                }
+                else if (sum->metLocation == 57)
+                {
+                    text = gText_Gen3MetLoc057;
+                }
+                else if (sum->metLocation == 58)
+                {
+                    text = gText_Gen3MetLoc058;
+                }
+                else if (sum->metLocation == 59)
+                {
+                    text = gText_Gen3MetLoc059;
+                }
+                else if (sum->metLocation == 60)
+                {
+                    text = gText_Gen3MetLoc060;
+                }
+                else if (sum->metLocation == 61)
+                {
+                    text = gText_Gen3MetLoc061;
+                }
+                else if (sum->metLocation == 62)
+                {
+                    text = gText_Gen3MetLoc062;
+                }
+                else if (sum->metLocation == 63)
+                {
+                    text = gText_Gen3MetLoc063;
+                }
+                else if (sum->metLocation == 64)
+                {
+                    text = gText_Gen3MetLoc064;
+                }
+                else if (sum->metLocation == 65)
+                {
+                    text = gText_Gen3MetLoc065;
+                }
+                else if (sum->metLocation == 66)
+                {
+                    text = gText_Gen3MetLoc066;
+                }
+                else if (sum->metLocation == 67)
+                {
+                    text = gText_Gen3MetLoc067;
+                }
+                else if (sum->metLocation == 68)
+                {
+                    text = gText_Gen3MetLoc068;
+                }
+                else if (sum->metLocation == 69)
+                {
+                    text = gText_Gen3MetLoc069;
+                }
+                else if (sum->metLocation == 70)
+                {
+                    text = gText_Gen3MetLoc070;
+                }
+                else if (sum->metLocation == 71)
+                {
+                    text = gText_Gen3MetLoc071;
+                }
+                else if (sum->metLocation == 72)
+                {
+                    text = gText_Gen3MetLoc072;
+                }
+                else if (sum->metLocation == 73)
+                {
+                    text = gText_Gen3MetLoc073;
+                }
+                else if (sum->metLocation == 74)
+                {
+                    text = gText_Gen3MetLoc074;
+                }
+                else if (sum->metLocation == 75)
+                {
+                    text = gText_Gen3MetLoc075;
+                }
+                else if (sum->metLocation == 76)
+                {
+                    text = gText_Gen3MetLoc076;
+                }
+                else if (sum->metLocation == 77)
+                {
+                    text = gText_Gen3MetLoc077;
+                }
+                else if (sum->metLocation == 78)
+                {
+                    text = gText_Gen3MetLoc078;
+                }
+                else if (sum->metLocation == 79)
+                {
+                    text = gText_Gen3MetLoc079;
+                }
+                else if (sum->metLocation == 80)
+                {
+                    text = gText_Gen3MetLoc080;
+                }
+                else if (sum->metLocation == 81)
+                {
+                    text = gText_Gen3MetLoc081;
+                }
+                else if (sum->metLocation == 82)
+                {
+                    text = gText_Gen3MetLoc082;
+                }
+                else if (sum->metLocation == 83)
+                {
+                    text = gText_Gen3MetLoc083;
+                }
+                else if (sum->metLocation == 84)
+                {
+                    text = gText_Gen3MetLoc084;
+                }
+                else if (sum->metLocation == 85)
+                {
+                    text = gText_Gen3MetLoc085;
+                }
+                else if (sum->metLocation == 86)
+                {
+                    text = gText_Gen3MetLoc086;
+                }
+                else if (sum->metLocation == 87)
+                {
+                    text = gText_Gen3MetLoc087;
+                }
+                else if (sum->metLocation == 88)
+                {
+                    text = gText_Gen3MetLoc088;
+                }
+                else if (sum->metLocation == 89)
+                {
+                    text = gText_Gen3MetLoc089;
+                }
+                else if (sum->metLocation == 90)
+                {
+                    text = gText_Gen3MetLoc090;
+                }
+                else if (sum->metLocation == 91)
+                {
+                    text = gText_Gen3MetLoc091;
+                }
+                else if (sum->metLocation == 92)
+                {
+                    text = gText_Gen3MetLoc092;
+                }
+                else if (sum->metLocation == 93)
+                {
+                    text = gText_Gen3MetLoc093;
+                }
+                else if (sum->metLocation == 94)
+                {
+                    text = gText_Gen3MetLoc094;
+                }
+                else if (sum->metLocation == 95)
+                {
+                    text = gText_Gen3MetLoc095;
+                }
+                else if (sum->metLocation == 96)
+                {
+                    text = gText_Gen3MetLoc096;
+                }
+                else if (sum->metLocation == 97)
+                {
+                    text = gText_Gen3MetLoc097;
+                }
+                else if (sum->metLocation == 98)
+                {
+                    text = gText_Gen3MetLoc098;
+                }
+                else if (sum->metLocation == 99)
+                {
+                    text = gText_Gen3MetLoc099;
+                }
+                else if (sum->metLocation == 100)
+                {
+                    text = gText_Gen3MetLoc100;
+                }
+                else if (sum->metLocation == 101)
+                {
+                    text = gText_Gen3MetLoc101;
+                }
+                else if (sum->metLocation == 102)
+                {
+                    text = gText_Gen3MetLoc102;
+                }
+                else if (sum->metLocation == 103)
+                {
+                    text = gText_Gen3MetLoc103;
+                }
+                else if (sum->metLocation == 104)
+                {
+                    text = gText_Gen3MetLoc104;
+                }
+                else if (sum->metLocation == 105)
+                {
+                    text = gText_Gen3MetLoc105;
+                }
+                else if (sum->metLocation == 106)
+                {
+                    text = gText_Gen3MetLoc106;
+                }
+                else if (sum->metLocation == 107)
+                {
+                    text = gText_Gen3MetLoc107;
+                }
+                else if (sum->metLocation == 108)
+                {
+                    text = gText_Gen3MetLoc108;
+                }
+                else if (sum->metLocation == 109)
+                {
+                    text = gText_Gen3MetLoc109;
+                }
+                else if (sum->metLocation == 110)
+                {
+                    text = gText_Gen3MetLoc110;
+                }
+                else if (sum->metLocation == 111)
+                {
+                    text = gText_Gen3MetLoc111;
+                }
+                else if (sum->metLocation == 112)
+                {
+                    text = gText_Gen3MetLoc112;
+                }
+                else if (sum->metLocation == 113)
+                {
+                    text = gText_Gen3MetLoc113;
+                }
+                else if (sum->metLocation == 114)
+                {
+                    text = gText_Gen3MetLoc114;
+                }
+                else if (sum->metLocation == 115)
+                {
+                    text = gText_Gen3MetLoc115;
+                }
+                else if (sum->metLocation == 116)
+                {
+                    text = gText_Gen3MetLoc116;
+                }
+                else if (sum->metLocation == 117)
+                {
+                    text = gText_Gen3MetLoc117;
+                }
+                else if (sum->metLocation == 118)
+                {
+                    text = gText_Gen3MetLoc118;
+                }
+                else if (sum->metLocation == 119)
+                {
+                    text = gText_Gen3MetLoc119;
+                }
+                else if (sum->metLocation == 120)
+                {
+                    text = gText_Gen3MetLoc120;
+                }
+                else if (sum->metLocation == 121)
+                {
+                    text = gText_Gen3MetLoc121;
+                }
+                else if (sum->metLocation == 122)
+                {
+                    text = gText_Gen3MetLoc122;
+                }
+                else if (sum->metLocation == 123)
+                {
+                    text = gText_Gen3MetLoc123;
+                }
+                else if (sum->metLocation == 124)
+                {
+                    text = gText_Gen3MetLoc124;
+                }
+                else if (sum->metLocation == 125)
+                {
+                    text = gText_Gen3MetLoc125;
+                }
+                else if (sum->metLocation == 126)
+                {
+                    text = gText_Gen3MetLoc126;
+                }
+                else if (sum->metLocation == 127)
+                {
+                    text = gText_Gen3MetLoc127;
+                }
+                else if (sum->metLocation == 128)
+                {
+                    text = gText_Gen3MetLoc128;
+                }
+                else if (sum->metLocation == 129)
+                {
+                    text = gText_Gen3MetLoc129;
+                }
+                else if (sum->metLocation == 130)
+                {
+                    text = gText_Gen3MetLoc130;
+                }
+                else if (sum->metLocation == 131)
+                {
+                    text = gText_Gen3MetLoc131;
+                }
+                else if (sum->metLocation == 132)
+                {
+                    text = gText_Gen3MetLoc132;
+                }
+                else if (sum->metLocation == 133)
+                {
+                    text = gText_Gen3MetLoc133;
+                }
+                else if (sum->metLocation == 134)
+                {
+                    text = gText_Gen3MetLoc134;
+                }
+                else if (sum->metLocation == 135)
+                {
+                    text = gText_Gen3MetLoc135;
+                }
+                else if (sum->metLocation == 136)
+                {
+                    text = gText_Gen3MetLoc136;
+                }
+                else if (sum->metLocation == 137)
+                {
+                    text = gText_Gen3MetLoc137;
+                }
+                else if (sum->metLocation == 138)
+                {
+                    text = gText_Gen3MetLoc138;
+                }
+                else if (sum->metLocation == 139)
+                {
+                    text = gText_Gen3MetLoc139;
+                }
+                else if (sum->metLocation == 140)
+                {
+                    text = gText_Gen3MetLoc140;
+                }
+                else if (sum->metLocation == 141)
+                {
+                    text = gText_Gen3MetLoc141;
+                }
+                else if (sum->metLocation == 142)
+                {
+                    text = gText_Gen3MetLoc142;
+                }
+                else if (sum->metLocation == 143)
+                {
+                    text = gText_Gen3MetLoc143;
+                }
+                else if (sum->metLocation == 144)
+                {
+                    text = gText_Gen3MetLoc144;
+                }
+                else if (sum->metLocation == 145)
+                {
+                    text = gText_Gen3MetLoc145;
+                }
+                else if (sum->metLocation == 146)
+                {
+                    text = gText_Gen3MetLoc146;
+                }
+                else if (sum->metLocation == 147)
+                {
+                    text = gText_Gen3MetLoc147;
+                }
+                else if (sum->metLocation == 148)
+                {
+                    text = gText_Gen3MetLoc148;
+                }
+                else if (sum->metLocation == 149)
+                {
+                    text = gText_Gen3MetLoc149;
+                }
+                else if (sum->metLocation == 150)
+                {
+                    text = gText_Gen3MetLoc150;
+                }
+                else if (sum->metLocation == 151)
+                {
+                    text = gText_Gen3MetLoc151;
+                }
+                else if (sum->metLocation == 152)
+                {
+                    text = gText_Gen3MetLoc152;
+                }
+                else if (sum->metLocation == 153)
+                {
+                    text = gText_Gen3MetLoc153;
+                }
+                else if (sum->metLocation == 154)
+                {
+                    text = gText_Gen3MetLoc154;
+                }
+                else if (sum->metLocation == 155)
+                {
+                    text = gText_Gen3MetLoc155;
+                }
+                else if (sum->metLocation == 156)
+                {
+                    text = gText_Gen3MetLoc156;
+                }
+                else if (sum->metLocation == 157)
+                {
+                    text = gText_Gen3MetLoc157;
+                }
+                else if (sum->metLocation == 158)
+                {
+                    text = gText_Gen3MetLoc158;
+                }
+                else if (sum->metLocation == 159)
+                {
+                    text = gText_Gen3MetLoc159;
+                }
+                else if (sum->metLocation == 160)
+                {
+                    text = gText_Gen3MetLoc160;
+                }
+                else if (sum->metLocation == 161)
+                {
+                    text = gText_Gen3MetLoc161;
+                }
+                else if (sum->metLocation == 162)
+                {
+                    text = gText_Gen3MetLoc162;
+                }
+                else if (sum->metLocation == 163)
+                {
+                    text = gText_Gen3MetLoc163;
+                }
+                else if (sum->metLocation == 164)
+                {
+                    text = gText_Gen3MetLoc164;
+                }
+                else if (sum->metLocation == 165)
+                {
+                    text = gText_Gen3MetLoc165;
+                }
+                else if (sum->metLocation == 166)
+                {
+                    text = gText_Gen3MetLoc166;
+                }
+                else if (sum->metLocation == 167)
+                {
+                    text = gText_Gen3MetLoc167;
+                }
+                else if (sum->metLocation == 168)
+                {
+                    text = gText_Gen3MetLoc168;
+                }
+                else if (sum->metLocation == 169)
+                {
+                    text = gText_Gen3MetLoc169;
+                }
+                else if (sum->metLocation == 170)
+                {
+                    text = gText_Gen3MetLoc170;
+                }
+                else if (sum->metLocation == 171)
+                {
+                    text = gText_Gen3MetLoc171;
+                }
+                else if (sum->metLocation == 172)
+                {
+                    text = gText_Gen3MetLoc172;
+                }
+                else if (sum->metLocation == 173)
+                {
+                    text = gText_Gen3MetLoc173;
+                }
+                else if (sum->metLocation == 174)
+                {
+                    text = gText_Gen3MetLoc174;
+                }
+                else if (sum->metLocation == 175)
+                {
+                    text = gText_Gen3MetLoc175;
+                }
+                else if (sum->metLocation == 176)
+                {
+                    text = gText_Gen3MetLoc176;
+                }
+                else if (sum->metLocation == 177)
+                {
+                    text = gText_Gen3MetLoc177;
+                }
+                else if (sum->metLocation == 178)
+                {
+                    text = gText_Gen3MetLoc178;
+                }
+                else if (sum->metLocation == 179)
+                {
+                    text = gText_Gen3MetLoc179;
+                }
+                else if (sum->metLocation == 180)
+                {
+                    text = gText_Gen3MetLoc180;
+                }
+                else if (sum->metLocation == 181)
+                {
+                    text = gText_Gen3MetLoc181;
+                }
+                else if (sum->metLocation == 182)
+                {
+                    text = gText_Gen3MetLoc182;
+                }
+                else if (sum->metLocation == 183)
+                {
+                    text = gText_Gen3MetLoc183;
+                }
+                else if (sum->metLocation == 184)
+                {
+                    text = gText_Gen3MetLoc184;
+                }
+                else if (sum->metLocation == 185)
+                {
+                    text = gText_Gen3MetLoc185;
+                }
+                else if (sum->metLocation == 186)
+                {
+                    text = gText_Gen3MetLoc186;
+                }
+                else if (sum->metLocation == 187)
+                {
+                    text = gText_Gen3MetLoc187;
+                }
+                else if (sum->metLocation == 188)
+                {
+                    text = gText_Gen3MetLoc188;
+                }
+                else if (sum->metLocation == 189)
+                {
+                    text = gText_Gen3MetLoc189;
+                }
+                else if (sum->metLocation == 190)
+                {
+                    text = gText_Gen3MetLoc190;
+                }
+                else if (sum->metLocation == 191)
+                {
+                    text = gText_Gen3MetLoc191;
+                }
+                else if (sum->metLocation == 192)
+                {
+                    text = gText_Gen3MetLoc192;
+                }
+                else if (sum->metLocation == 193)
+                {
+                    text = gText_Gen3MetLoc193;
+                }
+                else if (sum->metLocation == 194)
+                {
+                    text = gText_Gen3MetLoc194;
+                }
+                else if (sum->metLocation == 195)
+                {
+                    text = gText_Gen3MetLoc195;
+                }
+                else if (sum->metLocation == 196)
+                {
+                    text = gText_Gen3MetLoc196;
+                }
+                else if (sum->metLocation == 197)
+                {
+                    text = gText_Gen3MetLoc197;
+                }
+                else if (sum->metLocation == 198)
+                {
+                    text = gText_Gen3MetLoc198;
+                }
+                else if (sum->metLocation == 199)
+                {
+                    text = gText_Gen3MetLoc199;
+                }
+                else if (sum->metLocation == 200)
+                {
+                    text = gText_Gen3MetLoc200;
+                }
+                else if (sum->metLocation == 201)
+                {
+                    text = gText_Gen3MetLoc201;
+                }
+                else if (sum->metLocation == 202)
+                {
+                    text = gText_Gen3MetLoc202;
+                }
+                else if (sum->metLocation == 203)
+                {
+                    text = gText_Gen3MetLoc203;
+                }
+                else if (sum->metLocation == 204)
+                {
+                    text = gText_Gen3MetLoc204;
+                }
+                else if (sum->metLocation == 205)
+                {
+                    text = gText_Gen3MetLoc205;
+                }
+                else if (sum->metLocation == 206)
+                {
+                    text = gText_Gen3MetLoc206;
+                }
+                else if (sum->metLocation == 207)
+                {
+                    text = gText_Gen3MetLoc207;
+                }
+                else if (sum->metLocation == 208)
+                {
+                    text = gText_Gen3MetLoc208;
+                }
+                else if (sum->metLocation == 209)
+                {
+                    text = gText_Gen3MetLoc209;
+                }
+                else if (sum->metLocation == 210)
+                {
+                    text = gText_Gen3MetLoc210;
+                }
+                else if (sum->metLocation == 211)
+                {
+                    text = gText_Gen3MetLoc211;
+                }
+                else if (sum->metLocation == 212)
+                {
+                    text = gText_Gen3MetLoc212;
+                }
+                else if (sum->metLocation == 213)
+                {
+                    text = gText_Gen3MetLoc213;
+                }
+                else if (sum->metLocation == 214)
+                {
+                    text = gText_Gen3MetLoc214;
+                }
+                else if (sum->metLocation == 215)
+                {
+                    text = gText_Gen3MetLoc215;
+                }
+                else if (sum->metLocation == 216)
+                {
+                    text = gText_Gen3MetLoc216;
+                }
+                else if (sum->metLocation == 217)
+                {
+                    text = gText_Gen3MetLoc217;
+                }
+                else if (sum->metLocation == 218)
+                {
+                    text = gText_Gen3MetLoc218;
+                }
+                else if (sum->metLocation == 219)
+                {
+                    text = gText_Gen3MetLoc219;
+                }
+                else if (sum->metLocation == 220)
+                {
+                    text = gText_Gen3MetLoc220;
+                }
+                else if (sum->metLocation == 221)
+                {
+                    text = gText_Gen3MetLoc221;
+                }
+                else if (sum->metLocation == 222)
+                {
+                    text = gText_Gen3MetLoc222;
+                }
+                else if (sum->metLocation == 223)
+                {
+                    text = gText_Gen3MetLoc223;
+                }
+                else if (sum->metLocation == 224)
+                {
+                    text = gText_Gen3MetLoc224;
+                }
+                else if (sum->metLocation == 225)
+                {
+                    text = gText_Gen3MetLoc225;
+                }
+                else if (sum->metLocation == 226)
+                {
+                    text = gText_Gen3MetLoc226;
+                }
+                else if (sum->metLocation == 227)
+                {
+                    text = gText_Gen3MetLoc227;
+                }
+                else if (sum->metLocation == 228)
+                {
+                    text = gText_Gen3MetLoc228;
+                }
+                else if (sum->metLocation == 229)
+                {
+                    text = gText_Gen3MetLoc229;
+                }
+                else if (sum->metLocation == 230)
+                {
+                    text = gText_Gen3MetLoc230;
+                }
+                else if (sum->metLocation == 231)
+                {
+                    text = gText_Gen3MetLoc231;
+                }
+                else if (sum->metLocation == 232)
+                {
+                    text = gText_Gen3MetLoc232;
+                }
+                else if (sum->metLocation == 233)
+                {
+                    text = gText_Gen3MetLoc233;
+                }
+                else if (sum->metLocation == 234)
+                {
+                    text = gText_Gen3MetLoc234;
+                }
+                else if (sum->metLocation == 235)
+                {
+                    text = gText_Gen3MetLoc235;
+                }
+                else if (sum->metLocation == 236)
+                {
+                    text = gText_Gen3MetLoc236;
+                }
+                else if (sum->metLocation == 237)
+                {
+                    text = gText_Gen3MetLoc237;
+                }
+                else if (sum->metLocation == 238)
+                {
+                    text = gText_Gen3MetLoc238;
+                }
+                else if (sum->metLocation == 239)
+                {
+                    text = gText_Gen3MetLoc239;
+                }
+                else if (sum->metLocation == 240)
+                {
+                    text = gText_Gen3MetLoc240;
+                }
+                else if (sum->metLocation == 241)
+                {
+                    text = gText_Gen3MetLoc241;
+                }
+                else if (sum->metLocation == 242)
+                {
+                    text = gText_Gen3MetLoc242;
+                }
+                else if (sum->metLocation == 243)
+                {
+                    text = gText_Gen3MetLoc243;
+                }
+                else if (sum->metLocation == 244)
+                {
+                    text = gText_Gen3MetLoc244;
+                }
+                else if (sum->metLocation == 245)
+                {
+                    text = gText_Gen3MetLoc245;
+                }
+                else if (sum->metLocation == 246)
+                {
+                    text = gText_Gen3MetLoc246;
+                }
+                else if (sum->metLocation == 247)
+                {
+                    text = gText_Gen3MetLoc247;
+                }
+                else if (sum->metLocation == 248)
+                {
+                    text = gText_Gen3MetLoc248;
+                }
+                else if (sum->metLocation == 249)
+                {
+                    text = gText_Gen3MetLoc249;
+                }
+                else if (sum->metLocation == 250)
+                {
+                    text = gText_Gen3MetLoc250;
+                }
+                else if (sum->metLocation == 251)
+                {
+                    text = gText_Gen3MetLoc251;
+                }
+                else if (sum->metLocation == 252)
+                {
+                    text = gText_Gen3MetLoc252;
+                }
+                else if (sum->metLocation == 253)
+                {
+                    text = gText_Gen3MetLoc253;
+                }
+                else if (sum->metLocation == 254)
+                {
+                    text = gText_Gen3MetLoc254;
+                }
+                else if (sum->metLocation == 255)
+                {
+                    text = gText_Gen3MetLoc255;
+                }   
+            }
+            else if (sum->metGame == VERSION_DIAMOND
+                || sum->metGame == VERSION_PEARL
+                || sum->metGame == VERSION_PLATINUM
+                || sum->metGame == VERSION_HEART_GOLD
+				|| sum->metGame == VERSION_SOUL_SILVER)
+            {
+                if (sum->metLocation == 0)
+                {
+                    text = gText_Gen4MetLoc000;
+                }
+                else if (sum->metLocation == 1)
+                {
+                    text = gText_Gen4MetLoc001;
+                }
+                else if (sum->metLocation == 2)
+                {
+                    text = gText_Gen4MetLoc002;
+                }
+                else if (sum->metLocation == 3)
+                {
+                    text = gText_Gen4MetLoc003;
+                }
+                else if (sum->metLocation == 4)
+                {
+                    text = gText_Gen4MetLoc004;
+                }
+                else if (sum->metLocation == 5)
+                {
+                    text = gText_Gen4MetLoc005;
+                }
+                else if (sum->metLocation == 6)
+                {
+                    text = gText_Gen4MetLoc006;
+                }
+                else if (sum->metLocation == 7)
+                {
+                    text = gText_Gen4MetLoc007;
+                }
+                else if (sum->metLocation == 8)
+                {
+                    text = gText_Gen4MetLoc008;
+                }
+                else if (sum->metLocation == 9)
+                {
+                    text = gText_Gen4MetLoc009;
+                }
+                else if (sum->metLocation == 10)
+                {
+                    text = gText_Gen4MetLoc010;
+                }
+                else if (sum->metLocation == 11)
+                {
+                    text = gText_Gen4MetLoc011;
+                }
+                else if (sum->metLocation == 12)
+                {
+                    text = gText_Gen4MetLoc012;
+                }
+                else if (sum->metLocation == 13)
+                {
+                    text = gText_Gen4MetLoc013;
+                }
+                else if (sum->metLocation == 14)
+                {
+                    text = gText_Gen4MetLoc014;
+                }
+                else if (sum->metLocation == 15)
+                {
+                    text = gText_Gen4MetLoc015;
+                }
+                else if (sum->metLocation == 16)
+                {
+                    text = gText_Gen4MetLoc016;
+                }
+                else if (sum->metLocation == 17)
+                {
+                    text = gText_Gen4MetLoc017;
+                }
+                else if (sum->metLocation == 18)
+                {
+                    text = gText_Gen4MetLoc018;
+                }
+                else if (sum->metLocation == 19)
+                {
+                    text = gText_Gen4MetLoc019;
+                }
+                else if (sum->metLocation == 20)
+                {
+                    text = gText_Gen4MetLoc020;
+                }
+                else if (sum->metLocation == 21)
+                {
+                    text = gText_Gen4MetLoc021;
+                }
+                else if (sum->metLocation == 22)
+                {
+                    text = gText_Gen4MetLoc022;
+                }
+                else if (sum->metLocation == 23)
+                {
+                    text = gText_Gen4MetLoc023;
+                }
+                else if (sum->metLocation == 24)
+                {
+                    text = gText_Gen4MetLoc024;
+                }
+                else if (sum->metLocation == 25)
+                {
+                    text = gText_Gen4MetLoc025;
+                }
+                else if (sum->metLocation == 26)
+                {
+                    text = gText_Gen4MetLoc026;
+                }
+                else if (sum->metLocation == 27)
+                {
+                    text = gText_Gen4MetLoc027;
+                }
+                else if (sum->metLocation == 28)
+                {
+                    text = gText_Gen4MetLoc028;
+                }
+                else if (sum->metLocation == 29)
+                {
+                    text = gText_Gen4MetLoc029;
+                }
+                else if (sum->metLocation == 30)
+                {
+                    text = gText_Gen4MetLoc030;
+                }
+                else if (sum->metLocation == 31)
+                {
+                    text = gText_Gen4MetLoc031;
+                }
+                else if (sum->metLocation == 32)
+                {
+                    text = gText_Gen4MetLoc032;
+                }
+                else if (sum->metLocation == 33)
+                {
+                    text = gText_Gen4MetLoc033;
+                }
+                else if (sum->metLocation == 34)
+                {
+                    text = gText_Gen4MetLoc034;
+                }
+                else if (sum->metLocation == 35)
+                {
+                    text = gText_Gen4MetLoc035;
+                }
+                else if (sum->metLocation == 36)
+                {
+                    text = gText_Gen4MetLoc036;
+                }
+                else if (sum->metLocation == 37)
+                {
+                    text = gText_Gen4MetLoc037;
+                }
+                else if (sum->metLocation == 38)
+                {
+                    text = gText_Gen4MetLoc038;
+                }
+                else if (sum->metLocation == 39)
+                {
+                    text = gText_Gen4MetLoc039;
+                }
+                else if (sum->metLocation == 40)
+                {
+                    text = gText_Gen4MetLoc040;
+                }
+                else if (sum->metLocation == 41)
+                {
+                    text = gText_Gen4MetLoc041;
+                }
+                else if (sum->metLocation == 42)
+                {
+                    text = gText_Gen4MetLoc042;
+                }
+                else if (sum->metLocation == 43)
+                {
+                    text = gText_Gen4MetLoc043;
+                }
+                else if (sum->metLocation == 44)
+                {
+                    text = gText_Gen4MetLoc044;
+                }
+                else if (sum->metLocation == 45)
+                {
+                    text = gText_Gen4MetLoc045;
+                }
+                else if (sum->metLocation == 46)
+                {
+                    text = gText_Gen4MetLoc046;
+                }
+                else if (sum->metLocation == 47)
+                {
+                    text = gText_Gen4MetLoc047;
+                }
+                else if (sum->metLocation == 48)
+                {
+                    text = gText_Gen4MetLoc048;
+                }
+                else if (sum->metLocation == 49)
+                {
+                    text = gText_Gen4MetLoc049;
+                }
+                else if (sum->metLocation == 50)
+                {
+                    text = gText_Gen4MetLoc050;
+                }
+                else if (sum->metLocation == 51)
+                {
+                    text = gText_Gen4MetLoc051;
+                }
+                else if (sum->metLocation == 52)
+                {
+                    text = gText_Gen4MetLoc052;
+                }
+                else if (sum->metLocation == 53)
+                {
+                    text = gText_Gen4MetLoc053;
+                }
+                else if (sum->metLocation == 54)
+                {
+                    text = gText_Gen4MetLoc054;
+                }
+                else if (sum->metLocation == 55)
+                {
+                    text = gText_Gen4MetLoc055;
+                }
+                else if (sum->metLocation == 56)
+                {
+                    text = gText_Gen4MetLoc056;
+                }
+                else if (sum->metLocation == 57)
+                {
+                    text = gText_Gen4MetLoc057;
+                }
+                else if (sum->metLocation == 58)
+                {
+                    text = gText_Gen4MetLoc058;
+                }
+                else if (sum->metLocation == 59)
+                {
+                    text = gText_Gen4MetLoc059;
+                }
+                else if (sum->metLocation == 60)
+                {
+                    text = gText_Gen4MetLoc060;
+                }
+                else if (sum->metLocation == 61)
+                {
+                    text = gText_Gen4MetLoc061;
+                }
+                else if (sum->metLocation == 62)
+                {
+                    text = gText_Gen4MetLoc062;
+                }
+                else if (sum->metLocation == 63)
+                {
+                    text = gText_Gen4MetLoc063;
+                }
+                else if (sum->metLocation == 64)
+                {
+                    text = gText_Gen4MetLoc064;
+                }
+                else if (sum->metLocation == 65)
+                {
+                    text = gText_Gen4MetLoc065;
+                }
+                else if (sum->metLocation == 66)
+                {
+                    text = gText_Gen4MetLoc066;
+                }
+                else if (sum->metLocation == 67)
+                {
+                    text = gText_Gen4MetLoc067;
+                }
+                else if (sum->metLocation == 68)
+                {
+                    text = gText_Gen4MetLoc068;
+                }
+                else if (sum->metLocation == 69)
+                {
+                    text = gText_Gen4MetLoc069;
+                }
+                else if (sum->metLocation == 70)
+                {
+                    text = gText_Gen4MetLoc070;
+                }
+                else if (sum->metLocation == 71)
+                {
+                    text = gText_Gen4MetLoc071;
+                }
+                else if (sum->metLocation == 72)
+                {
+                    text = gText_Gen4MetLoc072;
+                }
+                else if (sum->metLocation == 73)
+                {
+                    text = gText_Gen4MetLoc073;
+                }
+                else if (sum->metLocation == 74)
+                {
+                    text = gText_Gen4MetLoc074;
+                }
+                else if (sum->metLocation == 75)
+                {
+                    text = gText_Gen4MetLoc075;
+                }
+                else if (sum->metLocation == 76)
+                {
+                    text = gText_Gen4MetLoc076;
+                }
+                else if (sum->metLocation == 77)
+                {
+                    text = gText_Gen4MetLoc077;
+                }
+                else if (sum->metLocation == 78)
+                {
+                    text = gText_Gen4MetLoc078;
+                }
+                else if (sum->metLocation == 79)
+                {
+                    text = gText_Gen4MetLoc079;
+                }
+                else if (sum->metLocation == 80)
+                {
+                    text = gText_Gen4MetLoc080;
+                }
+                else if (sum->metLocation == 81)
+                {
+                    text = gText_Gen4MetLoc081;
+                }
+                else if (sum->metLocation == 82)
+                {
+                    text = gText_Gen4MetLoc082;
+                }
+                else if (sum->metLocation == 83)
+                {
+                    text = gText_Gen4MetLoc083;
+                }
+                else if (sum->metLocation == 84)
+                {
+                    text = gText_Gen4MetLoc084;
+                }
+                else if (sum->metLocation == 85)
+                {
+                    text = gText_Gen4MetLoc085;
+                }
+                else if (sum->metLocation == 86)
+                {
+                    text = gText_Gen4MetLoc086;
+                }
+                else if (sum->metLocation == 87)
+                {
+                    text = gText_Gen4MetLoc087;
+                }
+                else if (sum->metLocation == 88)
+                {
+                    text = gText_Gen4MetLoc088;
+                }
+                else if (sum->metLocation == 89)
+                {
+                    text = gText_Gen4MetLoc089;
+                }
+                else if (sum->metLocation == 90)
+                {
+                    text = gText_Gen4MetLoc090;
+                }
+                else if (sum->metLocation == 91)
+                {
+                    text = gText_Gen4MetLoc091;
+                }
+                else if (sum->metLocation == 92)
+                {
+                    text = gText_Gen4MetLoc092;
+                }
+                else if (sum->metLocation == 93)
+                {
+                    text = gText_Gen4MetLoc093;
+                }
+                else if (sum->metLocation == 94)
+                {
+                    text = gText_Gen4MetLoc094;
+                }
+                else if (sum->metLocation == 95)
+                {
+                    text = gText_Gen4MetLoc095;
+                }
+                else if (sum->metLocation == 96)
+                {
+                    text = gText_Gen4MetLoc096;
+                }
+                else if (sum->metLocation == 97)
+                {
+                    text = gText_Gen4MetLoc097;
+                }
+                else if (sum->metLocation == 98)
+                {
+                    text = gText_Gen4MetLoc098;
+                }
+                else if (sum->metLocation == 99)
+                {
+                    text = gText_Gen4MetLoc099;
+                }
+                else if (sum->metLocation == 100)
+                {
+                    text = gText_Gen4MetLoc100;
+                }
+                else if (sum->metLocation == 101)
+                {
+                    text = gText_Gen4MetLoc101;
+                }
+                else if (sum->metLocation == 102)
+                {
+                    text = gText_Gen4MetLoc102;
+                }
+                else if (sum->metLocation == 103)
+                {
+                    text = gText_Gen4MetLoc103;
+                }
+                else if (sum->metLocation == 104)
+                {
+                    text = gText_Gen4MetLoc104;
+                }
+                else if (sum->metLocation == 105)
+                {
+                    text = gText_Gen4MetLoc105;
+                }
+                else if (sum->metLocation == 106)
+                {
+                    text = gText_Gen4MetLoc106;
+                }
+                else if (sum->metLocation == 107)
+                {
+                    text = gText_Gen4MetLoc107;
+                }
+                else if (sum->metLocation == 108)
+                {
+                    text = gText_Gen4MetLoc108;
+                }
+                else if (sum->metLocation == 109)
+                {
+                    text = gText_Gen4MetLoc109;
+                }
+                else if (sum->metLocation == 110)
+                {
+                    text = gText_Gen4MetLoc110;
+                }
+                else if (sum->metLocation == 111)
+                {
+                    text = gText_Gen4MetLoc111;
+                }
+                else if (sum->metLocation == 112)
+                {
+                    text = gText_Gen4MetLoc112;
+                }
+                else if (sum->metLocation == 113)
+                {
+                    text = gText_Gen4MetLoc113;
+                }
+                else if (sum->metLocation == 114)
+                {
+                    text = gText_Gen4MetLoc114;
+                }
+                else if (sum->metLocation == 115)
+                {
+                    text = gText_Gen4MetLoc115;
+                }
+                else if (sum->metLocation == 116)
+                {
+                    text = gText_Gen4MetLoc116;
+                }
+                else if (sum->metLocation == 117)
+                {
+                    text = gText_Gen4MetLoc117;
+                }
+                else if (sum->metLocation == 118)
+                {
+                    text = gText_Gen4MetLoc118;
+                }
+                else if (sum->metLocation == 119)
+                {
+                    text = gText_Gen4MetLoc119;
+                }
+                else if (sum->metLocation == 120)
+                {
+                    text = gText_Gen4MetLoc120;
+                }
+                else if (sum->metLocation == 121)
+                {
+                    text = gText_Gen4MetLoc121;
+                }
+                else if (sum->metLocation == 122)
+                {
+                    text = gText_Gen4MetLoc122;
+                }
+                else if (sum->metLocation == 123)
+                {
+                    text = gText_Gen4MetLoc123;
+                }
+                else if (sum->metLocation == 124)
+                {
+                    text = gText_Gen4MetLoc124;
+                }
+                else if (sum->metLocation == 125)
+                {
+                    text = gText_Gen4MetLoc125;
+                }
+                else if (sum->metLocation == 126)
+                {
+                    text = gText_Gen4MetLoc126;
+                }
+                else if (sum->metLocation == 127)
+                {
+                    text = gText_Gen4MetLoc127;
+                }
+                else if (sum->metLocation == 128)
+                {
+                    text = gText_Gen4MetLoc128;
+                }
+                else if (sum->metLocation == 129)
+                {
+                    text = gText_Gen4MetLoc129;
+                }
+                else if (sum->metLocation == 130)
+                {
+                    text = gText_Gen4MetLoc130;
+                }
+                else if (sum->metLocation == 131)
+                {
+                    text = gText_Gen4MetLoc131;
+                }
+                else if (sum->metLocation == 132)
+                {
+                    text = gText_Gen4MetLoc132;
+                }
+                else if (sum->metLocation == 133)
+                {
+                    text = gText_Gen4MetLoc133;
+                }
+                else if (sum->metLocation == 134)
+                {
+                    text = gText_Gen4MetLoc134;
+                }
+                else if (sum->metLocation == 135)
+                {
+                    text = gText_Gen4MetLoc135;
+                }
+                else if (sum->metLocation == 136)
+                {
+                    text = gText_Gen4MetLoc136;
+                }
+                else if (sum->metLocation == 137)
+                {
+                    text = gText_Gen4MetLoc137;
+                }
+                else if (sum->metLocation == 138)
+                {
+                    text = gText_Gen4MetLoc138;
+                }
+                else if (sum->metLocation == 139)
+                {
+                    text = gText_Gen4MetLoc139;
+                }
+                else if (sum->metLocation == 140)
+                {
+                    text = gText_Gen4MetLoc140;
+                }
+                else if (sum->metLocation == 141)
+                {
+                    text = gText_Gen4MetLoc141;
+                }
+                else if (sum->metLocation == 142)
+                {
+                    text = gText_Gen4MetLoc142;
+                }
+                else if (sum->metLocation == 143)
+                {
+                    text = gText_Gen4MetLoc143;
+                }
+                else if (sum->metLocation == 144)
+                {
+                    text = gText_Gen4MetLoc144;
+                }
+                else if (sum->metLocation == 145)
+                {
+                    text = gText_Gen4MetLoc145;
+                }
+                else if (sum->metLocation == 146)
+                {
+                    text = gText_Gen4MetLoc146;
+                }
+                else if (sum->metLocation == 147)
+                {
+                    text = gText_Gen4MetLoc147;
+                }
+                else if (sum->metLocation == 148)
+                {
+                    text = gText_Gen4MetLoc148;
+                }
+                else if (sum->metLocation == 149)
+                {
+                    text = gText_Gen4MetLoc149;
+                }
+                else if (sum->metLocation == 150)
+                {
+                    text = gText_Gen4MetLoc150;
+                }
+                else if (sum->metLocation == 151)
+                {
+                    text = gText_Gen4MetLoc151;
+                }
+                else if (sum->metLocation == 152)
+                {
+                    text = gText_Gen4MetLoc152;
+                }
+                else if (sum->metLocation == 153)
+                {
+                    text = gText_Gen4MetLoc153;
+                }
+                else if (sum->metLocation == 154)
+                {
+                    text = gText_Gen4MetLoc154;
+                }
+                else if (sum->metLocation == 155)
+                {
+                    text = gText_Gen4MetLoc155;
+                }
+                else if (sum->metLocation == 156)
+                {
+                    text = gText_Gen4MetLoc156;
+                }
+                else if (sum->metLocation == 157)
+                {
+                    text = gText_Gen4MetLoc157;
+                }
+                else if (sum->metLocation == 158)
+                {
+                    text = gText_Gen4MetLoc158;
+                }
+                else if (sum->metLocation == 159)
+                {
+                    text = gText_Gen4MetLoc159;
+                }
+                else if (sum->metLocation == 160)
+                {
+                    text = gText_Gen4MetLoc160;
+                }
+                else if (sum->metLocation == 161)
+                {
+                    text = gText_Gen4MetLoc161;
+                }
+                else if (sum->metLocation == 162)
+                {
+                    text = gText_Gen4MetLoc162;
+                }
+                else if (sum->metLocation == 163)
+                {
+                    text = gText_Gen4MetLoc163;
+                }
+                else if (sum->metLocation == 164)
+                {
+                    text = gText_Gen4MetLoc164;
+                }
+                else if (sum->metLocation == 165)
+                {
+                    text = gText_Gen4MetLoc165;
+                }
+                else if (sum->metLocation == 166)
+                {
+                    text = gText_Gen4MetLoc166;
+                }
+                else if (sum->metLocation == 167)
+                {
+                    text = gText_Gen4MetLoc167;
+                }
+                else if (sum->metLocation == 168)
+                {
+                    text = gText_Gen4MetLoc168;
+                }
+                else if (sum->metLocation == 169)
+                {
+                    text = gText_Gen4MetLoc169;
+                }
+                else if (sum->metLocation == 170)
+                {
+                    text = gText_Gen4MetLoc170;
+                }
+                else if (sum->metLocation == 171)
+                {
+                    text = gText_Gen4MetLoc171;
+                }
+                else if (sum->metLocation == 172)
+                {
+                    text = gText_Gen4MetLoc172;
+                }
+                else if (sum->metLocation == 173)
+                {
+                    text = gText_Gen4MetLoc173;
+                }
+                else if (sum->metLocation == 174)
+                {
+                    text = gText_Gen4MetLoc174;
+                }
+                else if (sum->metLocation == 175)
+                {
+                    text = gText_Gen4MetLoc175;
+                }
+                else if (sum->metLocation == 176)
+                {
+                    text = gText_Gen4MetLoc176;
+                }
+                else if (sum->metLocation == 177)
+                {
+                    text = gText_Gen4MetLoc177;
+                }
+                else if (sum->metLocation == 178)
+                {
+                    text = gText_Gen4MetLoc178;
+                }
+                else if (sum->metLocation == 179)
+                {
+                    text = gText_Gen4MetLoc179;
+                }
+                else if (sum->metLocation == 180)
+                {
+                    text = gText_Gen4MetLoc180;
+                }
+                else if (sum->metLocation == 181)
+                {
+                    text = gText_Gen4MetLoc181;
+                }
+                else if (sum->metLocation == 182)
+                {
+                    text = gText_Gen4MetLoc182;
+                }
+                else if (sum->metLocation == 183)
+                {
+                    text = gText_Gen4MetLoc183;
+                }
+                else if (sum->metLocation == 184)
+                {
+                    text = gText_Gen4MetLoc184;
+                }
+                else if (sum->metLocation == 185)
+                {
+                    text = gText_Gen4MetLoc185;
+                }
+                else if (sum->metLocation == 186)
+                {
+                    text = gText_Gen4MetLoc186;
+                }
+                else if (sum->metLocation == 187)
+                {
+                    text = gText_Gen4MetLoc187;
+                }
+                else if (sum->metLocation == 188)
+                {
+                    text = gText_Gen4MetLoc188;
+                }
+                else if (sum->metLocation == 189)
+                {
+                    text = gText_Gen4MetLoc189;
+                }
+                else if (sum->metLocation == 190)
+                {
+                    text = gText_Gen4MetLoc190;
+                }
+                else if (sum->metLocation == 191)
+                {
+                    text = gText_Gen4MetLoc191;
+                }
+                else if (sum->metLocation == 192)
+                {
+                    text = gText_Gen4MetLoc192;
+                }
+                else if (sum->metLocation == 193)
+                {
+                    text = gText_Gen4MetLoc193;
+                }
+                else if (sum->metLocation == 194)
+                {
+                    text = gText_Gen4MetLoc194;
+                }
+                else if (sum->metLocation == 195)
+                {
+                    text = gText_Gen4MetLoc195;
+                }
+                else if (sum->metLocation == 196)
+                {
+                    text = gText_Gen4MetLoc196;
+                }
+                else if (sum->metLocation == 197)
+                {
+                    text = gText_Gen4MetLoc197;
+                }
+                else if (sum->metLocation == 198)
+                {
+                    text = gText_Gen4MetLoc198;
+                }
+                else if (sum->metLocation == 199)
+                {
+                    text = gText_Gen4MetLoc199;
+                }
+                else if (sum->metLocation == 200)
+                {
+                    text = gText_Gen4MetLoc200;
+                }
+                else if (sum->metLocation == 201)
+                {
+                    text = gText_Gen4MetLoc201;
+                }
+                else if (sum->metLocation == 202)
+                {
+                    text = gText_Gen4MetLoc202;
+                }
+                else if (sum->metLocation == 203)
+                {
+                    text = gText_Gen4MetLoc203;
+                }
+                else if (sum->metLocation == 204)
+                {
+                    text = gText_Gen4MetLoc204;
+                }
+                else if (sum->metLocation == 205)
+                {
+                    text = gText_Gen4MetLoc205;
+                }
+                else if (sum->metLocation == 206)
+                {
+                    text = gText_Gen4MetLoc206;
+                }
+                else if (sum->metLocation == 207)
+                {
+                    text = gText_Gen4MetLoc207;
+                }
+                else if (sum->metLocation == 208)
+                {
+                    text = gText_Gen4MetLoc208;
+                }
+                else if (sum->metLocation == 209)
+                {
+                    text = gText_Gen4MetLoc209;
+                }
+                else if (sum->metLocation == 210)
+                {
+                    text = gText_Gen4MetLoc210;
+                }
+                else if (sum->metLocation == 211)
+                {
+                    text = gText_Gen4MetLoc211;
+                }
+                else if (sum->metLocation == 212)
+                {
+                    text = gText_Gen4MetLoc212;
+                }
+                else if (sum->metLocation == 213)
+                {
+                    text = gText_Gen4MetLoc213;
+                }
+                else if (sum->metLocation == 214)
+                {
+                    text = gText_Gen4MetLoc214;
+                }
+                else if (sum->metLocation == 215)
+                {
+                    text = gText_Gen4MetLoc215;
+                }
+                else if (sum->metLocation == 216)
+                {
+                    text = gText_Gen4MetLoc216;
+                }
+                else if (sum->metLocation == 217)
+                {
+                    text = gText_Gen4MetLoc217;
+                }
+                else if (sum->metLocation == 218)
+                {
+                    text = gText_Gen4MetLoc218;
+                }
+                else if (sum->metLocation == 219)
+                {
+                    text = gText_Gen4MetLoc219;
+                }
+                else if (sum->metLocation == 220)
+                {
+                    text = gText_Gen4MetLoc220;
+                }
+                else if (sum->metLocation == 221)
+                {
+                    text = gText_Gen4MetLoc221;
+                }
+                else if (sum->metLocation == 222)
+                {
+                    text = gText_Gen4MetLoc222;
+                }
+                else if (sum->metLocation == 223)
+                {
+                    text = gText_Gen4MetLoc223;
+                }
+                else if (sum->metLocation == 224)
+                {
+                    text = gText_Gen4MetLoc224;
+                }
+                else if (sum->metLocation == 225)
+                {
+                    text = gText_Gen4MetLoc225;
+                }
+                else if (sum->metLocation == 226)
+                {
+                    text = gText_Gen4MetLoc226;
+                }
+                else if (sum->metLocation == 227)
+                {
+                    text = gText_Gen4MetLoc227;
+                }
+                else if (sum->metLocation == 228)
+                {
+                    text = gText_Gen4MetLoc228;
+                }
+                else if (sum->metLocation == 229)
+                {
+                    text = gText_Gen4MetLoc229;
+                }
+                else if (sum->metLocation == 230)
+                {
+                    text = gText_Gen4MetLoc230;
+                }
+                else if (sum->metLocation == 231)
+                {
+                    text = gText_Gen4MetLoc231;
+                }
+                else if (sum->metLocation == 232)
+                {
+                    text = gText_Gen4MetLoc232;
+                }
+                else if (sum->metLocation == 233)
+                {
+                    text = gText_Gen4MetLoc233;
+                }
+                else if (sum->metLocation == 234)
+                {
+                    text = gText_Gen4MetLoc234;
+                }
+                else if (sum->metLocation == 235)
+                {
+                    text = gText_Gen4MetLoc235;
+                }
+                else if (sum->metLocation == 236)
+                {
+                    text = gText_Gen4MetLoc236;
+                }
+                else if (sum->metLocation == 237)
+                {
+                    text = gText_Gen4MetLoc237;
+                }
+                else if (sum->metLocation == 238)
+                {
+                    text = gText_Gen4MetLoc238;
+                }
+                else if (sum->metLocation == 239)
+                {
+                    text = gText_Gen4MetLoc239;
+                }
+                else if (sum->metLocation == 240)
+                {
+                    text = gText_Gen4MetLoc240;
+                }
+                else if (sum->metLocation == 241)
+                {
+                    text = gText_Gen4MetLoc241;
+                }
+                else if (sum->metLocation == 242)
+                {
+                    text = gText_Gen4MetLoc242;
+                }
+                else if (sum->metLocation == 243)
+                {
+                    text = gText_Gen4MetLoc243;
+                }
+                else if (sum->metLocation == 244)
+                {
+                    text = gText_Gen4MetLoc244;
+                }
+                else if (sum->metLocation == 245)
+                {
+                    text = gText_Gen4MetLoc245;
+                }
+                else if (sum->metLocation == 246)
+                {
+                    text = gText_Gen4MetLoc246;
+                }
+                else if (sum->metLocation == 247)
+                {
+                    text = gText_Gen4MetLoc247;
+                }
+                else if (sum->metLocation == 248)
+                {
+                    text = gText_Gen4MetLoc248;
+                }
+                else if (sum->metLocation == 249)
+                {
+                    text = gText_Gen4MetLoc249;
+                }
+                else if (sum->metLocation == 250)
+                {
+                    text = gText_Gen4MetLoc250;
+                }
+                else if (sum->metLocation == 251)
+                {
+                    text = gText_Gen4MetLoc251;
+                }
+                else if (sum->metLocation == 252)
+                {
+                    text = gText_Gen4MetLoc252;
+                }
+                else if (sum->metLocation == 253)
+                {
+                    text = gText_Gen4MetLoc253;
+                }
+                else if (sum->metLocation == 254)
+                {
+                    text = gText_Gen4MetLoc254;
+                }
+                else if (sum->metLocation == 255)
+                {
+                    text = gText_Gen4MetLoc255;
+                }   
+            }
+            else if (sum->metGame == VERSION_IDENTIFIER_NEGA)
+            {
+                if (sum->metLevel == 0)
+                   text = (sum->metLocation >= MAPSEC_NONE) ? gText_XNatureHatchedSomewhereAt : gText_XNatureHatchedAtYZNega;
+                else
+                   text = (sum->metLocation >= MAPSEC_NONE) ? gText_XNatureMetSomewhereAt : gText_XNatureMetAtYZNega;
+            }
+            else if (sum->metGame == VERSION_IDENTIFIER_GACHA)
+            {
+                if (sum->metLevel == 0 && sum->metLocation == METLOC_FATEFUL_ENCOUNTER)
+                {
+                    text = gText_FromMiracleGacha;
+                }
+                else if (sum->metLevel == 0)
+                {
+                    text = gText_FromGacha;
+                }
+                else
+                {
+                    text = gText_IsItHacked;
+                }
+            }
+            else if (sum->metGame == VERSION_IDENTIFIER_SPECIAL_GIFT)
+            {
+                if (sum->metLocation == METLOC_FATEFUL_ENCOUNTER)
+                {
+                   text = gText_XNatureAnotherReality;
+                }
+                else if (sum->metLocation == 222)
+                {
+                    if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 1)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 2)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 3)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 4)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 5)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 6)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 7)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 8)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 9)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 10)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 11)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 12)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 13)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 14)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 15)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 16)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 17)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 18)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 19)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else if (VarGet(VAR_GIFTMON3_IDENTIFIER) <= 20)
+                    {
+                        text = gText_XNatureCensored;
+                    }
+                    else
+                    {
+                        text = gText_XNatureAnotherReality;
+                    }
+                }
+                else
+                   text = gText_IsItHacked;
+            }
+            else if (sum->metGame == VERSION_IDENTIFIER_DEBUG)
+            {
+                text = gText_DebugPurpose;
+            }
+            else if (sum->metGame == VERSION_GAMECUBE)
+            {
+                text = gText_XNatureOrre;
+            }
+            else if (sum->metLevel == 0)
                 text = (sum->metLocation >= MAPSEC_NONE) ? gText_XNatureHatchedSomewhereAt : gText_XNatureHatchedAtYZ;
             else
                 text = (sum->metLocation >= MAPSEC_NONE) ? gText_XNatureMetSomewhereAt : gText_XNatureMetAtYZ;
         }
+        else if (sum->metGame == 0)
+        {
+            if (sum->metLocation == MAPSEC_ETC_TRIMMED_GENSOKYO)
+            {
+                text = gText_ApparentlyTrimmedGensokyoGeneric;
+            }
+            else
+            {
+                text = gText_MetLocationPlacholder;
+            }
+        }
+        else if (sum->metGame == VERSION_RUBY
+            || sum->metGame == VERSION_SAPPHIRE
+            || sum->metGame == VERSION_FIRE_RED
+            || sum->metGame == VERSION_LEAF_GREEN)
+        {
+            if (sum->metLocation == 0)
+            {
+                text = gText_Gen3MetLocProbably000;
+            }
+            else if (sum->metLocation == 1)
+            {
+                text = gText_Gen3MetLocProbably001;
+            }
+            else if (sum->metLocation == 2)
+            {
+                text = gText_Gen3MetLocProbably002;
+            }
+            else if (sum->metLocation == 3)
+            {
+                text = gText_Gen3MetLocProbably003;
+            }
+            else if (sum->metLocation == 4)
+            {
+                text = gText_Gen3MetLocProbably004;
+            }
+            else if (sum->metLocation == 5)
+            {
+                text = gText_Gen3MetLocProbably005;
+            }
+            else if (sum->metLocation == 6)
+            {
+                text = gText_Gen3MetLocProbably006;
+            }
+            else if (sum->metLocation == 7)
+            {
+                text = gText_Gen3MetLocProbably007;
+            }
+            else if (sum->metLocation == 8)
+            {
+                text = gText_Gen3MetLocProbably008;
+            }
+            else if (sum->metLocation == 9)
+            {
+                text = gText_Gen3MetLocProbably009;
+            }
+            else if (sum->metLocation == 10)
+            {
+                text = gText_Gen3MetLocProbably010;
+            }
+            else if (sum->metLocation == 11)
+            {
+                text = gText_Gen3MetLocProbably011;
+            }
+            else if (sum->metLocation == 12)
+            {
+                text = gText_Gen3MetLocProbably012;
+            }
+            else if (sum->metLocation == 13)
+            {
+                text = gText_Gen3MetLocProbably013;
+            }
+            else if (sum->metLocation == 14)
+            {
+                text = gText_Gen3MetLocProbably014;
+            }
+            else if (sum->metLocation == 15)
+            {
+                text = gText_Gen3MetLocProbably015;
+            }
+            else if (sum->metLocation == 16)
+            {
+                text = gText_Gen3MetLocProbably016;
+            }
+            else if (sum->metLocation == 17)
+            {
+                text = gText_Gen3MetLocProbably017;
+            }
+            else if (sum->metLocation == 18)
+            {
+                text = gText_Gen3MetLocProbably018;
+            }
+            else if (sum->metLocation == 19)
+            {
+                text = gText_Gen3MetLocProbably019;
+            }
+            else if (sum->metLocation == 20)
+            {
+                text = gText_Gen3MetLocProbably020;
+            }
+            else if (sum->metLocation == 21)
+            {
+                text = gText_Gen3MetLocProbably021;
+            }
+            else if (sum->metLocation == 22)
+            {
+                text = gText_Gen3MetLocProbably022;
+            }
+            else if (sum->metLocation == 23)
+            {
+                text = gText_Gen3MetLocProbably023;
+            }
+            else if (sum->metLocation == 24)
+            {
+                text = gText_Gen3MetLocProbably024;
+            }
+            else if (sum->metLocation == 25)
+            {
+                text = gText_Gen3MetLocProbably025;
+            }
+            else if (sum->metLocation == 26)
+            {
+                text = gText_Gen3MetLocProbably026;
+            }
+            else if (sum->metLocation == 27)
+            {
+                text = gText_Gen3MetLocProbably027;
+            }
+            else if (sum->metLocation == 28)
+            {
+                text = gText_Gen3MetLocProbably028;
+            }
+            else if (sum->metLocation == 29)
+            {
+                text = gText_Gen3MetLocProbably029;
+            }
+            else if (sum->metLocation == 30)
+            {
+                text = gText_Gen3MetLocProbably030;
+            }
+            else if (sum->metLocation == 31)
+            {
+                text = gText_Gen3MetLocProbably031;
+            }
+            else if (sum->metLocation == 32)
+            {
+                text = gText_Gen3MetLocProbably032;
+            }
+            else if (sum->metLocation == 33)
+            {
+                text = gText_Gen3MetLocProbably033;
+            }
+            else if (sum->metLocation == 34)
+            {
+                text = gText_Gen3MetLocProbably034;
+            }
+            else if (sum->metLocation == 35)
+            {
+                text = gText_Gen3MetLocProbably035;
+            }
+            else if (sum->metLocation == 36)
+            {
+                text = gText_Gen3MetLocProbably036;
+            }
+            else if (sum->metLocation == 37)
+            {
+                text = gText_Gen3MetLocProbably037;
+            }
+            else if (sum->metLocation == 38)
+            {
+                text = gText_Gen3MetLocProbably038;
+            }
+            else if (sum->metLocation == 39)
+            {
+                text = gText_Gen3MetLocProbably039;
+            }
+            else if (sum->metLocation == 40)
+            {
+                text = gText_Gen3MetLocProbably040;
+            }
+            else if (sum->metLocation == 41)
+            {
+                text = gText_Gen3MetLocProbably041;
+            }
+            else if (sum->metLocation == 42)
+            {
+                text = gText_Gen3MetLocProbably042;
+            }
+            else if (sum->metLocation == 43)
+            {
+                text = gText_Gen3MetLocProbably043;
+            }
+            else if (sum->metLocation == 44)
+            {
+                text = gText_Gen3MetLocProbably044;
+            }
+            else if (sum->metLocation == 45)
+            {
+                text = gText_Gen3MetLocProbably045;
+            }
+            else if (sum->metLocation == 46)
+            {
+                text = gText_Gen3MetLocProbably046;
+            }
+            else if (sum->metLocation == 47)
+            {
+                text = gText_Gen3MetLocProbably047;
+            }
+            else if (sum->metLocation == 48)
+            {
+                text = gText_Gen3MetLocProbably048;
+            }
+            else if (sum->metLocation == 49)
+            {
+                text = gText_Gen3MetLocProbably049;
+            }
+            else if (sum->metLocation == 50)
+            {
+                text = gText_Gen3MetLocProbably050;
+            }
+            else if (sum->metLocation == 51)
+            {
+                text = gText_Gen3MetLocProbably051;
+            }
+            else if (sum->metLocation == 52)
+            {
+                text = gText_Gen3MetLocProbably052;
+            }
+            else if (sum->metLocation == 53)
+            {
+                text = gText_Gen3MetLocProbably053;
+            }
+            else if (sum->metLocation == 54)
+            {
+                text = gText_Gen3MetLocProbably054;
+            }
+            else if (sum->metLocation == 55)
+            {
+                text = gText_Gen3MetLocProbably055;
+            }
+            else if (sum->metLocation == 56)
+            {
+                text = gText_Gen3MetLocProbably056;
+            }
+            else if (sum->metLocation == 57)
+            {
+                text = gText_Gen3MetLocProbably057;
+            }
+            else if (sum->metLocation == 58)
+            {
+                text = gText_Gen3MetLocProbably058;
+            }
+            else if (sum->metLocation == 59)
+            {
+                text = gText_Gen3MetLocProbably059;
+            }
+            else if (sum->metLocation == 60)
+            {
+                text = gText_Gen3MetLocProbably060;
+            }
+            else if (sum->metLocation == 61)
+            {
+                text = gText_Gen3MetLocProbably061;
+            }
+            else if (sum->metLocation == 62)
+            {
+                text = gText_Gen3MetLocProbably062;
+            }
+            else if (sum->metLocation == 63)
+            {
+                text = gText_Gen3MetLocProbably063;
+            }
+            else if (sum->metLocation == 64)
+            {
+                text = gText_Gen3MetLocProbably064;
+            }
+            else if (sum->metLocation == 65)
+            {
+                text = gText_Gen3MetLocProbably065;
+            }
+            else if (sum->metLocation == 66)
+            {
+                text = gText_Gen3MetLocProbably066;
+            }
+            else if (sum->metLocation == 67)
+            {
+                text = gText_Gen3MetLocProbably067;
+            }
+            else if (sum->metLocation == 68)
+            {
+                text = gText_Gen3MetLocProbably068;
+            }
+            else if (sum->metLocation == 69)
+            {
+                text = gText_Gen3MetLocProbably069;
+            }
+            else if (sum->metLocation == 70)
+            {
+                text = gText_Gen3MetLocProbably070;
+            }
+            else if (sum->metLocation == 71)
+            {
+                text = gText_Gen3MetLocProbably071;
+            }
+            else if (sum->metLocation == 72)
+            {
+                text = gText_Gen3MetLocProbably072;
+            }
+            else if (sum->metLocation == 73)
+            {
+                text = gText_Gen3MetLocProbably073;
+            }
+            else if (sum->metLocation == 74)
+            {
+                text = gText_Gen3MetLocProbably074;
+            }
+            else if (sum->metLocation == 75)
+            {
+                text = gText_Gen3MetLocProbably075;
+            }
+            else if (sum->metLocation == 76)
+            {
+                text = gText_Gen3MetLocProbably076;
+            }
+            else if (sum->metLocation == 77)
+            {
+                text = gText_Gen3MetLocProbably077;
+            }
+            else if (sum->metLocation == 78)
+            {
+                text = gText_Gen3MetLocProbably078;
+            }
+            else if (sum->metLocation == 79)
+            {
+                text = gText_Gen3MetLocProbably079;
+            }
+            else if (sum->metLocation == 80)
+            {
+                text = gText_Gen3MetLocProbably080;
+            }
+            else if (sum->metLocation == 81)
+            {
+                text = gText_Gen3MetLocProbably081;
+            }
+            else if (sum->metLocation == 82)
+            {
+                text = gText_Gen3MetLocProbably082;
+            }
+            else if (sum->metLocation == 83)
+            {
+                text = gText_Gen3MetLocProbably083;
+            }
+            else if (sum->metLocation == 84)
+            {
+                text = gText_Gen3MetLocProbably084;
+            }
+            else if (sum->metLocation == 85)
+            {
+                text = gText_Gen3MetLocProbably085;
+            }
+            else if (sum->metLocation == 86)
+            {
+                text = gText_Gen3MetLocProbably086;
+            }
+            else if (sum->metLocation == 87)
+            {
+                text = gText_Gen3MetLocProbably087;
+            }
+            else if (sum->metLocation == 88)
+            {
+                text = gText_Gen3MetLocProbably088;
+            }
+            else if (sum->metLocation == 89)
+            {
+                text = gText_Gen3MetLocProbably089;
+            }
+            else if (sum->metLocation == 90)
+            {
+                text = gText_Gen3MetLocProbably090;
+            }
+            else if (sum->metLocation == 91)
+            {
+                text = gText_Gen3MetLocProbably091;
+            }
+            else if (sum->metLocation == 92)
+            {
+                text = gText_Gen3MetLocProbably092;
+            }
+            else if (sum->metLocation == 93)
+            {
+                text = gText_Gen3MetLocProbably093;
+            }
+            else if (sum->metLocation == 94)
+            {
+                text = gText_Gen3MetLocProbably094;
+            }
+            else if (sum->metLocation == 95)
+            {
+                text = gText_Gen3MetLocProbably095;
+            }
+            else if (sum->metLocation == 96)
+            {
+                text = gText_Gen3MetLocProbably096;
+            }
+            else if (sum->metLocation == 97)
+            {
+                text = gText_Gen3MetLocProbably097;
+            }
+            else if (sum->metLocation == 98)
+            {
+                text = gText_Gen3MetLocProbably098;
+            }
+            else if (sum->metLocation == 99)
+            {
+                text = gText_Gen3MetLocProbably099;
+            }
+            else if (sum->metLocation == 100)
+            {
+                text = gText_Gen3MetLocProbably100;
+            }
+            else if (sum->metLocation == 101)
+            {
+                text = gText_Gen3MetLocProbably101;
+            }
+            else if (sum->metLocation == 102)
+            {
+                text = gText_Gen3MetLocProbably102;
+            }
+            else if (sum->metLocation == 103)
+            {
+                text = gText_Gen3MetLocProbably103;
+            }
+            else if (sum->metLocation == 104)
+            {
+                text = gText_Gen3MetLocProbably104;
+            }
+            else if (sum->metLocation == 105)
+            {
+                text = gText_Gen3MetLocProbably105;
+            }
+            else if (sum->metLocation == 106)
+            {
+                text = gText_Gen3MetLocProbably106;
+            }
+            else if (sum->metLocation == 107)
+            {
+                text = gText_Gen3MetLocProbably107;
+            }
+            else if (sum->metLocation == 108)
+            {
+                text = gText_Gen3MetLocProbably108;
+            }
+            else if (sum->metLocation == 109)
+            {
+                text = gText_Gen3MetLocProbably109;
+            }
+            else if (sum->metLocation == 110)
+            {
+                text = gText_Gen3MetLocProbably110;
+            }
+            else if (sum->metLocation == 111)
+            {
+                text = gText_Gen3MetLocProbably111;
+            }
+            else if (sum->metLocation == 112)
+            {
+                text = gText_Gen3MetLocProbably112;
+            }
+            else if (sum->metLocation == 113)
+            {
+                text = gText_Gen3MetLocProbably113;
+            }
+            else if (sum->metLocation == 114)
+            {
+                text = gText_Gen3MetLocProbably114;
+            }
+            else if (sum->metLocation == 115)
+            {
+                text = gText_Gen3MetLocProbably115;
+            }
+            else if (sum->metLocation == 116)
+            {
+                text = gText_Gen3MetLocProbably116;
+            }
+            else if (sum->metLocation == 117)
+            {
+                text = gText_Gen3MetLocProbably117;
+            }
+            else if (sum->metLocation == 118)
+            {
+                text = gText_Gen3MetLocProbably118;
+            }
+            else if (sum->metLocation == 119)
+            {
+                text = gText_Gen3MetLocProbably119;
+            }
+            else if (sum->metLocation == 120)
+            {
+                text = gText_Gen3MetLocProbably120;
+            }
+            else if (sum->metLocation == 121)
+            {
+                text = gText_Gen3MetLocProbably121;
+            }
+            else if (sum->metLocation == 122)
+            {
+                text = gText_Gen3MetLocProbably122;
+            }
+            else if (sum->metLocation == 123)
+            {
+                text = gText_Gen3MetLocProbably123;
+            }
+            else if (sum->metLocation == 124)
+            {
+                text = gText_Gen3MetLocProbably124;
+            }
+            else if (sum->metLocation == 125)
+            {
+                text = gText_Gen3MetLocProbably125;
+            }
+            else if (sum->metLocation == 126)
+            {
+                text = gText_Gen3MetLocProbably126;
+            }
+            else if (sum->metLocation == 127)
+            {
+                text = gText_Gen3MetLocProbably127;
+            }
+            else if (sum->metLocation == 128)
+            {
+                text = gText_Gen3MetLocProbably128;
+            }
+            else if (sum->metLocation == 129)
+            {
+                text = gText_Gen3MetLocProbably129;
+            }
+            else if (sum->metLocation == 130)
+            {
+                text = gText_Gen3MetLocProbably130;
+            }
+            else if (sum->metLocation == 131)
+            {
+                text = gText_Gen3MetLocProbably131;
+            }
+            else if (sum->metLocation == 132)
+            {
+                text = gText_Gen3MetLocProbably132;
+            }
+            else if (sum->metLocation == 133)
+            {
+                text = gText_Gen3MetLocProbably133;
+            }
+            else if (sum->metLocation == 134)
+            {
+                text = gText_Gen3MetLocProbably134;
+            }
+            else if (sum->metLocation == 135)
+            {
+                text = gText_Gen3MetLocProbably135;
+            }
+            else if (sum->metLocation == 136)
+            {
+                text = gText_Gen3MetLocProbably136;
+            }
+            else if (sum->metLocation == 137)
+            {
+                text = gText_Gen3MetLocProbably137;
+            }
+            else if (sum->metLocation == 138)
+            {
+                text = gText_Gen3MetLocProbably138;
+            }
+            else if (sum->metLocation == 139)
+            {
+                text = gText_Gen3MetLocProbably139;
+            }
+            else if (sum->metLocation == 140)
+            {
+                text = gText_Gen3MetLocProbably140;
+            }
+            else if (sum->metLocation == 141)
+            {
+                text = gText_Gen3MetLocProbably141;
+            }
+            else if (sum->metLocation == 142)
+            {
+                text = gText_Gen3MetLocProbably142;
+            }
+            else if (sum->metLocation == 143)
+            {
+                text = gText_Gen3MetLocProbably143;
+            }
+            else if (sum->metLocation == 144)
+            {
+                text = gText_Gen3MetLocProbably144;
+            }
+            else if (sum->metLocation == 145)
+            {
+                text = gText_Gen3MetLocProbably145;
+            }
+            else if (sum->metLocation == 146)
+            {
+                text = gText_Gen3MetLocProbably146;
+            }
+            else if (sum->metLocation == 147)
+            {
+                text = gText_Gen3MetLocProbably147;
+            }
+            else if (sum->metLocation == 148)
+            {
+                text = gText_Gen3MetLocProbably148;
+            }
+            else if (sum->metLocation == 149)
+            {
+                text = gText_Gen3MetLocProbably149;
+            }
+            else if (sum->metLocation == 150)
+            {
+                text = gText_Gen3MetLocProbably150;
+            }
+            else if (sum->metLocation == 151)
+            {
+                text = gText_Gen3MetLocProbably151;
+            }
+            else if (sum->metLocation == 152)
+            {
+                text = gText_Gen3MetLocProbably152;
+            }
+            else if (sum->metLocation == 153)
+            {
+                text = gText_Gen3MetLocProbably153;
+            }
+            else if (sum->metLocation == 154)
+            {
+                text = gText_Gen3MetLocProbably154;
+            }
+            else if (sum->metLocation == 155)
+            {
+                text = gText_Gen3MetLocProbably155;
+            }
+            else if (sum->metLocation == 156)
+            {
+                text = gText_Gen3MetLocProbably156;
+            }
+            else if (sum->metLocation == 157)
+            {
+                text = gText_Gen3MetLocProbably157;
+            }
+            else if (sum->metLocation == 158)
+            {
+                text = gText_Gen3MetLocProbably158;
+            }
+            else if (sum->metLocation == 159)
+            {
+                text = gText_Gen3MetLocProbably159;
+            }
+            else if (sum->metLocation == 160)
+            {
+                text = gText_Gen3MetLocProbably160;
+            }
+            else if (sum->metLocation == 161)
+            {
+                text = gText_Gen3MetLocProbably161;
+            }
+            else if (sum->metLocation == 162)
+            {
+                text = gText_Gen3MetLocProbably162;
+            }
+            else if (sum->metLocation == 163)
+            {
+                text = gText_Gen3MetLocProbably163;
+            }
+            else if (sum->metLocation == 164)
+            {
+                text = gText_Gen3MetLocProbably164;
+            }
+            else if (sum->metLocation == 165)
+            {
+                text = gText_Gen3MetLocProbably165;
+            }
+            else if (sum->metLocation == 166)
+            {
+                text = gText_Gen3MetLocProbably166;
+            }
+            else if (sum->metLocation == 167)
+            {
+                text = gText_Gen3MetLocProbably167;
+            }
+            else if (sum->metLocation == 168)
+            {
+                text = gText_Gen3MetLocProbably168;
+            }
+            else if (sum->metLocation == 169)
+            {
+                text = gText_Gen3MetLocProbably169;
+            }
+            else if (sum->metLocation == 170)
+            {
+                text = gText_Gen3MetLocProbably170;
+            }
+            else if (sum->metLocation == 171)
+            {
+                text = gText_Gen3MetLocProbably171;
+            }
+            else if (sum->metLocation == 172)
+            {
+                text = gText_Gen3MetLocProbably172;
+            }
+            else if (sum->metLocation == 173)
+            {
+                text = gText_Gen3MetLocProbably173;
+            }
+            else if (sum->metLocation == 174)
+            {
+                text = gText_Gen3MetLocProbably174;
+            }
+            else if (sum->metLocation == 175)
+            {
+                text = gText_Gen3MetLocProbably175;
+            }
+            else if (sum->metLocation == 176)
+            {
+                text = gText_Gen3MetLocProbably176;
+            }
+            else if (sum->metLocation == 177)
+            {
+                text = gText_Gen3MetLocProbably177;
+            }
+            else if (sum->metLocation == 178)
+            {
+                text = gText_Gen3MetLocProbably178;
+            }
+            else if (sum->metLocation == 179)
+            {
+                text = gText_Gen3MetLocProbably179;
+            }
+            else if (sum->metLocation == 180)
+            {
+                text = gText_Gen3MetLocProbably180;
+            }
+            else if (sum->metLocation == 181)
+            {
+                text = gText_Gen3MetLocProbably181;
+            }
+            else if (sum->metLocation == 182)
+            {
+                text = gText_Gen3MetLocProbably182;
+            }
+            else if (sum->metLocation == 183)
+            {
+                text = gText_Gen3MetLocProbably183;
+            }
+            else if (sum->metLocation == 184)
+            {
+                text = gText_Gen3MetLocProbably184;
+            }
+            else if (sum->metLocation == 185)
+            {
+                text = gText_Gen3MetLocProbably185;
+            }
+            else if (sum->metLocation == 186)
+            {
+                text = gText_Gen3MetLocProbably186;
+            }
+            else if (sum->metLocation == 187)
+            {
+                text = gText_Gen3MetLocProbably187;
+            }
+            else if (sum->metLocation == 188)
+            {
+                text = gText_Gen3MetLocProbably188;
+            }
+            else if (sum->metLocation == 189)
+            {
+                text = gText_Gen3MetLocProbably189;
+            }
+            else if (sum->metLocation == 190)
+            {
+                text = gText_Gen3MetLocProbably190;
+            }
+            else if (sum->metLocation == 191)
+            {
+                text = gText_Gen3MetLocProbably191;
+            }
+            else if (sum->metLocation == 192)
+            {
+                text = gText_Gen3MetLocProbably192;
+            }
+            else if (sum->metLocation == 193)
+            {
+                text = gText_Gen3MetLocProbably193;
+            }
+            else if (sum->metLocation == 194)
+            {
+                text = gText_Gen3MetLocProbably194;
+            }
+            else if (sum->metLocation == 195)
+            {
+                text = gText_Gen3MetLocProbably195;
+            }
+            else if (sum->metLocation == 196)
+            {
+                text = gText_Gen3MetLocProbably196;
+            }
+            else if (sum->metLocation == 197)
+            {
+                text = gText_Gen3MetLocProbably197;
+            }
+            else if (sum->metLocation == 198)
+            {
+                text = gText_Gen3MetLocProbably198;
+            }
+            else if (sum->metLocation == 199)
+            {
+                text = gText_Gen3MetLocProbably199;
+            }
+            else if (sum->metLocation == 200)
+            {
+                text = gText_Gen3MetLocProbably200;
+            }
+            else if (sum->metLocation == 201)
+            {
+                text = gText_Gen3MetLocProbably201;
+            }
+            else if (sum->metLocation == 202)
+            {
+                text = gText_Gen3MetLocProbably202;
+            }
+            else if (sum->metLocation == 203)
+            {
+                text = gText_Gen3MetLocProbably203;
+            }
+            else if (sum->metLocation == 204)
+            {
+                text = gText_Gen3MetLocProbably204;
+            }
+            else if (sum->metLocation == 205)
+            {
+                text = gText_Gen3MetLocProbably205;
+            }
+            else if (sum->metLocation == 206)
+            {
+                text = gText_Gen3MetLocProbably206;
+            }
+            else if (sum->metLocation == 207)
+            {
+                text = gText_Gen3MetLocProbably207;
+            }
+            else if (sum->metLocation == 208)
+            {
+                text = gText_Gen3MetLocProbably208;
+            }
+            else if (sum->metLocation == 209)
+            {
+                text = gText_Gen3MetLocProbably209;
+            }
+            else if (sum->metLocation == 210)
+            {
+                text = gText_Gen3MetLocProbably210;
+            }
+            else if (sum->metLocation == 211)
+            {
+                text = gText_Gen3MetLocProbably211;
+            }
+            else if (sum->metLocation == 212)
+            {
+                text = gText_Gen3MetLocProbably212;
+            }
+            else if (sum->metLocation == 213)
+            {
+                text = gText_Gen3MetLocProbably213;
+            }
+            else if (sum->metLocation == 214)
+            {
+                text = gText_Gen3MetLocProbably214;
+            }
+            else if (sum->metLocation == 215)
+            {
+                text = gText_Gen3MetLocProbably215;
+            }
+            else if (sum->metLocation == 216)
+            {
+                text = gText_Gen3MetLocProbably216;
+            }
+            else if (sum->metLocation == 217)
+            {
+                text = gText_Gen3MetLocProbably217;
+            }
+            else if (sum->metLocation == 218)
+            {
+                text = gText_Gen3MetLocProbably218;
+            }
+            else if (sum->metLocation == 219)
+            {
+                text = gText_Gen3MetLocProbably219;
+            }
+            else if (sum->metLocation == 220)
+            {
+                text = gText_Gen3MetLocProbably220;
+            }
+            else if (sum->metLocation == 221)
+            {
+                text = gText_Gen3MetLocProbably221;
+            }
+            else if (sum->metLocation == 222)
+            {
+                text = gText_Gen3MetLocProbably222;
+            }
+            else if (sum->metLocation == 223)
+            {
+                text = gText_Gen3MetLocProbably223;
+            }
+            else if (sum->metLocation == 224)
+            {
+                text = gText_Gen3MetLocProbably224;
+            }
+            else if (sum->metLocation == 225)
+            {
+                text = gText_Gen3MetLocProbably225;
+            }
+            else if (sum->metLocation == 226)
+            {
+                text = gText_Gen3MetLocProbably226;
+            }
+            else if (sum->metLocation == 227)
+            {
+                text = gText_Gen3MetLocProbably227;
+            }
+            else if (sum->metLocation == 228)
+            {
+                text = gText_Gen3MetLocProbably228;
+            }
+            else if (sum->metLocation == 229)
+            {
+                text = gText_Gen3MetLocProbably229;
+            }
+            else if (sum->metLocation == 230)
+            {
+                text = gText_Gen3MetLocProbably230;
+            }
+            else if (sum->metLocation == 231)
+            {
+                text = gText_Gen3MetLocProbably231;
+            }
+            else if (sum->metLocation == 232)
+            {
+                text = gText_Gen3MetLocProbably232;
+            }
+            else if (sum->metLocation == 233)
+            {
+                text = gText_Gen3MetLocProbably233;
+            }
+            else if (sum->metLocation == 234)
+            {
+                text = gText_Gen3MetLocProbably234;
+            }
+            else if (sum->metLocation == 235)
+            {
+                text = gText_Gen3MetLocProbably235;
+            }
+            else if (sum->metLocation == 236)
+            {
+                text = gText_Gen3MetLocProbably236;
+            }
+            else if (sum->metLocation == 237)
+            {
+                text = gText_Gen3MetLocProbably237;
+            }
+            else if (sum->metLocation == 238)
+            {
+                text = gText_Gen3MetLocProbably238;
+            }
+            else if (sum->metLocation == 239)
+            {
+                text = gText_Gen3MetLocProbably239;
+            }
+            else if (sum->metLocation == 240)
+            {
+                text = gText_Gen3MetLocProbably240;
+            }
+            else if (sum->metLocation == 241)
+            {
+                text = gText_Gen3MetLocProbably241;
+            }
+            else if (sum->metLocation == 242)
+            {
+                text = gText_Gen3MetLocProbably242;
+            }
+            else if (sum->metLocation == 243)
+            {
+                text = gText_Gen3MetLocProbably243;
+            }
+            else if (sum->metLocation == 244)
+            {
+                text = gText_Gen3MetLocProbably244;
+            }
+            else if (sum->metLocation == 245)
+            {
+                text = gText_Gen3MetLocProbably245;
+            }
+            else if (sum->metLocation == 246)
+            {
+                text = gText_Gen3MetLocProbably246;
+            }
+            else if (sum->metLocation == 247)
+            {
+                text = gText_Gen3MetLocProbably247;
+            }
+            else if (sum->metLocation == 248)
+            {
+                text = gText_Gen3MetLocProbably248;
+            }
+            else if (sum->metLocation == 249)
+            {
+                text = gText_Gen3MetLocProbably249;
+            }
+            else if (sum->metLocation == 250)
+            {
+                text = gText_Gen3MetLocProbably250;
+            }
+            else if (sum->metLocation == 251)
+            {
+                text = gText_Gen3MetLocProbably251;
+            }
+            else if (sum->metLocation == 252)
+            {
+                text = gText_Gen3MetLocProbably252;
+            }
+            else if (sum->metLocation == 253)
+            {
+                text = gText_Gen3MetLocProbably253;
+            }
+            else if (sum->metLocation == 254)
+            {
+                text = gText_Gen3MetLocProbably254;
+            }
+            else if (sum->metLocation == 255)
+            {
+                text = gText_Gen3MetLocProbably255;
+            }   
+        }
+        else if (sum->metGame == VERSION_DIAMOND
+            || sum->metGame == VERSION_PEARL
+            || sum->metGame == VERSION_PLATINUM
+            || sum->metGame == VERSION_HEART_GOLD
+            || sum->metGame == VERSION_SOUL_SILVER)
+        {
+            if (sum->metLocation == 0)
+            {
+                text = gText_Gen4MetLocProbably000;
+            }
+            else if (sum->metLocation == 1)
+            {
+                text = gText_Gen4MetLocProbably001;
+            }
+            else if (sum->metLocation == 2)
+            {
+                text = gText_Gen4MetLocProbably002;
+            }
+            else if (sum->metLocation == 3)
+            {
+                text = gText_Gen4MetLocProbably003;
+            }
+            else if (sum->metLocation == 4)
+            {
+                text = gText_Gen4MetLocProbably004;
+            }
+            else if (sum->metLocation == 5)
+            {
+                text = gText_Gen4MetLocProbably005;
+            }
+            else if (sum->metLocation == 6)
+            {
+                text = gText_Gen4MetLocProbably006;
+            }
+            else if (sum->metLocation == 7)
+            {
+                text = gText_Gen4MetLocProbably007;
+            }
+            else if (sum->metLocation == 8)
+            {
+                text = gText_Gen4MetLocProbably008;
+            }
+            else if (sum->metLocation == 9)
+            {
+                text = gText_Gen4MetLocProbably009;
+            }
+            else if (sum->metLocation == 10)
+            {
+                text = gText_Gen4MetLocProbably010;
+            }
+            else if (sum->metLocation == 11)
+            {
+                text = gText_Gen4MetLocProbably011;
+            }
+            else if (sum->metLocation == 12)
+            {
+                text = gText_Gen4MetLocProbably012;
+            }
+            else if (sum->metLocation == 13)
+            {
+                text = gText_Gen4MetLocProbably013;
+            }
+            else if (sum->metLocation == 14)
+            {
+                text = gText_Gen4MetLocProbably014;
+            }
+            else if (sum->metLocation == 15)
+            {
+                text = gText_Gen4MetLocProbably015;
+            }
+            else if (sum->metLocation == 16)
+            {
+                text = gText_Gen4MetLocProbably016;
+            }
+            else if (sum->metLocation == 17)
+            {
+                text = gText_Gen4MetLocProbably017;
+            }
+            else if (sum->metLocation == 18)
+            {
+                text = gText_Gen4MetLocProbably018;
+            }
+            else if (sum->metLocation == 19)
+            {
+                text = gText_Gen4MetLocProbably019;
+            }
+            else if (sum->metLocation == 20)
+            {
+                text = gText_Gen4MetLocProbably020;
+            }
+            else if (sum->metLocation == 21)
+            {
+                text = gText_Gen4MetLocProbably021;
+            }
+            else if (sum->metLocation == 22)
+            {
+                text = gText_Gen4MetLocProbably022;
+            }
+            else if (sum->metLocation == 23)
+            {
+                text = gText_Gen4MetLocProbably023;
+            }
+            else if (sum->metLocation == 24)
+            {
+                text = gText_Gen4MetLocProbably024;
+            }
+            else if (sum->metLocation == 25)
+            {
+                text = gText_Gen4MetLocProbably025;
+            }
+            else if (sum->metLocation == 26)
+            {
+                text = gText_Gen4MetLocProbably026;
+            }
+            else if (sum->metLocation == 27)
+            {
+                text = gText_Gen4MetLocProbably027;
+            }
+            else if (sum->metLocation == 28)
+            {
+                text = gText_Gen4MetLocProbably028;
+            }
+            else if (sum->metLocation == 29)
+            {
+                text = gText_Gen4MetLocProbably029;
+            }
+            else if (sum->metLocation == 30)
+            {
+                text = gText_Gen4MetLocProbably030;
+            }
+            else if (sum->metLocation == 31)
+            {
+                text = gText_Gen4MetLocProbably031;
+            }
+            else if (sum->metLocation == 32)
+            {
+                text = gText_Gen4MetLocProbably032;
+            }
+            else if (sum->metLocation == 33)
+            {
+                text = gText_Gen4MetLocProbably033;
+            }
+            else if (sum->metLocation == 34)
+            {
+                text = gText_Gen4MetLocProbably034;
+            }
+            else if (sum->metLocation == 35)
+            {
+                text = gText_Gen4MetLocProbably035;
+            }
+            else if (sum->metLocation == 36)
+            {
+                text = gText_Gen4MetLocProbably036;
+            }
+            else if (sum->metLocation == 37)
+            {
+                text = gText_Gen4MetLocProbably037;
+            }
+            else if (sum->metLocation == 38)
+            {
+                text = gText_Gen4MetLocProbably038;
+            }
+            else if (sum->metLocation == 39)
+            {
+                text = gText_Gen4MetLocProbably039;
+            }
+            else if (sum->metLocation == 40)
+            {
+                text = gText_Gen4MetLocProbably040;
+            }
+            else if (sum->metLocation == 41)
+            {
+                text = gText_Gen4MetLocProbably041;
+            }
+            else if (sum->metLocation == 42)
+            {
+                text = gText_Gen4MetLocProbably042;
+            }
+            else if (sum->metLocation == 43)
+            {
+                text = gText_Gen4MetLocProbably043;
+            }
+            else if (sum->metLocation == 44)
+            {
+                text = gText_Gen4MetLocProbably044;
+            }
+            else if (sum->metLocation == 45)
+            {
+                text = gText_Gen4MetLocProbably045;
+            }
+            else if (sum->metLocation == 46)
+            {
+                text = gText_Gen4MetLocProbably046;
+            }
+            else if (sum->metLocation == 47)
+            {
+                text = gText_Gen4MetLocProbably047;
+            }
+            else if (sum->metLocation == 48)
+            {
+                text = gText_Gen4MetLocProbably048;
+            }
+            else if (sum->metLocation == 49)
+            {
+                text = gText_Gen4MetLocProbably049;
+            }
+            else if (sum->metLocation == 50)
+            {
+                text = gText_Gen4MetLocProbably050;
+            }
+            else if (sum->metLocation == 51)
+            {
+                text = gText_Gen4MetLocProbably051;
+            }
+            else if (sum->metLocation == 52)
+            {
+                text = gText_Gen4MetLocProbably052;
+            }
+            else if (sum->metLocation == 53)
+            {
+                text = gText_Gen4MetLocProbably053;
+            }
+            else if (sum->metLocation == 54)
+            {
+                text = gText_Gen4MetLocProbably054;
+            }
+            else if (sum->metLocation == 55)
+            {
+                text = gText_Gen4MetLocProbably055;
+            }
+            else if (sum->metLocation == 56)
+            {
+                text = gText_Gen4MetLocProbably056;
+            }
+            else if (sum->metLocation == 57)
+            {
+                text = gText_Gen4MetLocProbably057;
+            }
+            else if (sum->metLocation == 58)
+            {
+                text = gText_Gen4MetLocProbably058;
+            }
+            else if (sum->metLocation == 59)
+            {
+                text = gText_Gen4MetLocProbably059;
+            }
+            else if (sum->metLocation == 60)
+            {
+                text = gText_Gen4MetLocProbably060;
+            }
+            else if (sum->metLocation == 61)
+            {
+                text = gText_Gen4MetLocProbably061;
+            }
+            else if (sum->metLocation == 62)
+            {
+                text = gText_Gen4MetLocProbably062;
+            }
+            else if (sum->metLocation == 63)
+            {
+                text = gText_Gen4MetLocProbably063;
+            }
+            else if (sum->metLocation == 64)
+            {
+                text = gText_Gen4MetLocProbably064;
+            }
+            else if (sum->metLocation == 65)
+            {
+                text = gText_Gen4MetLocProbably065;
+            }
+            else if (sum->metLocation == 66)
+            {
+                text = gText_Gen4MetLocProbably066;
+            }
+            else if (sum->metLocation == 67)
+            {
+                text = gText_Gen4MetLocProbably067;
+            }
+            else if (sum->metLocation == 68)
+            {
+                text = gText_Gen4MetLocProbably068;
+            }
+            else if (sum->metLocation == 69)
+            {
+                text = gText_Gen4MetLocProbably069;
+            }
+            else if (sum->metLocation == 70)
+            {
+                text = gText_Gen4MetLocProbably070;
+            }
+            else if (sum->metLocation == 71)
+            {
+                text = gText_Gen4MetLocProbably071;
+            }
+            else if (sum->metLocation == 72)
+            {
+                text = gText_Gen4MetLocProbably072;
+            }
+            else if (sum->metLocation == 73)
+            {
+                text = gText_Gen4MetLocProbably073;
+            }
+            else if (sum->metLocation == 74)
+            {
+                text = gText_Gen4MetLocProbably074;
+            }
+            else if (sum->metLocation == 75)
+            {
+                text = gText_Gen4MetLocProbably075;
+            }
+            else if (sum->metLocation == 76)
+            {
+                text = gText_Gen4MetLocProbably076;
+            }
+            else if (sum->metLocation == 77)
+            {
+                text = gText_Gen4MetLocProbably077;
+            }
+            else if (sum->metLocation == 78)
+            {
+                text = gText_Gen4MetLocProbably078;
+            }
+            else if (sum->metLocation == 79)
+            {
+                text = gText_Gen4MetLocProbably079;
+            }
+            else if (sum->metLocation == 80)
+            {
+                text = gText_Gen4MetLocProbably080;
+            }
+            else if (sum->metLocation == 81)
+            {
+                text = gText_Gen4MetLocProbably081;
+            }
+            else if (sum->metLocation == 82)
+            {
+                text = gText_Gen4MetLocProbably082;
+            }
+            else if (sum->metLocation == 83)
+            {
+                text = gText_Gen4MetLocProbably083;
+            }
+            else if (sum->metLocation == 84)
+            {
+                text = gText_Gen4MetLocProbably084;
+            }
+            else if (sum->metLocation == 85)
+            {
+                text = gText_Gen4MetLocProbably085;
+            }
+            else if (sum->metLocation == 86)
+            {
+                text = gText_Gen4MetLocProbably086;
+            }
+            else if (sum->metLocation == 87)
+            {
+                text = gText_Gen4MetLocProbably087;
+            }
+            else if (sum->metLocation == 88)
+            {
+                text = gText_Gen4MetLocProbably088;
+            }
+            else if (sum->metLocation == 89)
+            {
+                text = gText_Gen4MetLocProbably089;
+            }
+            else if (sum->metLocation == 90)
+            {
+                text = gText_Gen4MetLocProbably090;
+            }
+            else if (sum->metLocation == 91)
+            {
+                text = gText_Gen4MetLocProbably091;
+            }
+            else if (sum->metLocation == 92)
+            {
+                text = gText_Gen4MetLocProbably092;
+            }
+            else if (sum->metLocation == 93)
+            {
+                text = gText_Gen4MetLocProbably093;
+            }
+            else if (sum->metLocation == 94)
+            {
+                text = gText_Gen4MetLocProbably094;
+            }
+            else if (sum->metLocation == 95)
+            {
+                text = gText_Gen4MetLocProbably095;
+            }
+            else if (sum->metLocation == 96)
+            {
+                text = gText_Gen4MetLocProbably096;
+            }
+            else if (sum->metLocation == 97)
+            {
+                text = gText_Gen4MetLocProbably097;
+            }
+            else if (sum->metLocation == 98)
+            {
+                text = gText_Gen4MetLocProbably098;
+            }
+            else if (sum->metLocation == 99)
+            {
+                text = gText_Gen4MetLocProbably099;
+            }
+            else if (sum->metLocation == 100)
+            {
+                text = gText_Gen4MetLocProbably100;
+            }
+            else if (sum->metLocation == 101)
+            {
+                text = gText_Gen4MetLocProbably101;
+            }
+            else if (sum->metLocation == 102)
+            {
+                text = gText_Gen4MetLocProbably102;
+            }
+            else if (sum->metLocation == 103)
+            {
+                text = gText_Gen4MetLocProbably103;
+            }
+            else if (sum->metLocation == 104)
+            {
+                text = gText_Gen4MetLocProbably104;
+            }
+            else if (sum->metLocation == 105)
+            {
+                text = gText_Gen4MetLocProbably105;
+            }
+            else if (sum->metLocation == 106)
+            {
+                text = gText_Gen4MetLocProbably106;
+            }
+            else if (sum->metLocation == 107)
+            {
+                text = gText_Gen4MetLocProbably107;
+            }
+            else if (sum->metLocation == 108)
+            {
+                text = gText_Gen4MetLocProbably108;
+            }
+            else if (sum->metLocation == 109)
+            {
+                text = gText_Gen4MetLocProbably109;
+            }
+            else if (sum->metLocation == 110)
+            {
+                text = gText_Gen4MetLocProbably110;
+            }
+            else if (sum->metLocation == 111)
+            {
+                text = gText_Gen4MetLocProbably111;
+            }
+            else if (sum->metLocation == 112)
+            {
+                text = gText_Gen4MetLocProbably112;
+            }
+            else if (sum->metLocation == 113)
+            {
+                text = gText_Gen4MetLocProbably113;
+            }
+            else if (sum->metLocation == 114)
+            {
+                text = gText_Gen4MetLocProbably114;
+            }
+            else if (sum->metLocation == 115)
+            {
+                text = gText_Gen4MetLocProbably115;
+            }
+            else if (sum->metLocation == 116)
+            {
+                text = gText_Gen4MetLocProbably116;
+            }
+            else if (sum->metLocation == 117)
+            {
+                text = gText_Gen4MetLocProbably117;
+            }
+            else if (sum->metLocation == 118)
+            {
+                text = gText_Gen4MetLocProbably118;
+            }
+            else if (sum->metLocation == 119)
+            {
+                text = gText_Gen4MetLocProbably119;
+            }
+            else if (sum->metLocation == 120)
+            {
+                text = gText_Gen4MetLocProbably120;
+            }
+            else if (sum->metLocation == 121)
+            {
+                text = gText_Gen4MetLocProbably121;
+            }
+            else if (sum->metLocation == 122)
+            {
+                text = gText_Gen4MetLocProbably122;
+            }
+            else if (sum->metLocation == 123)
+            {
+                text = gText_Gen4MetLocProbably123;
+            }
+            else if (sum->metLocation == 124)
+            {
+                text = gText_Gen4MetLocProbably124;
+            }
+            else if (sum->metLocation == 125)
+            {
+                text = gText_Gen4MetLocProbably125;
+            }
+            else if (sum->metLocation == 126)
+            {
+                text = gText_Gen4MetLocProbably126;
+            }
+            else if (sum->metLocation == 127)
+            {
+                text = gText_Gen4MetLocProbably127;
+            }
+            else if (sum->metLocation == 128)
+            {
+                text = gText_Gen4MetLocProbably128;
+            }
+            else if (sum->metLocation == 129)
+            {
+                text = gText_Gen4MetLocProbably129;
+            }
+            else if (sum->metLocation == 130)
+            {
+                text = gText_Gen4MetLocProbably130;
+            }
+            else if (sum->metLocation == 131)
+            {
+                text = gText_Gen4MetLocProbably131;
+            }
+            else if (sum->metLocation == 132)
+            {
+                text = gText_Gen4MetLocProbably132;
+            }
+            else if (sum->metLocation == 133)
+            {
+                text = gText_Gen4MetLocProbably133;
+            }
+            else if (sum->metLocation == 134)
+            {
+                text = gText_Gen4MetLocProbably134;
+            }
+            else if (sum->metLocation == 135)
+            {
+                text = gText_Gen4MetLocProbably135;
+            }
+            else if (sum->metLocation == 136)
+            {
+                text = gText_Gen4MetLocProbably136;
+            }
+            else if (sum->metLocation == 137)
+            {
+                text = gText_Gen4MetLocProbably137;
+            }
+            else if (sum->metLocation == 138)
+            {
+                text = gText_Gen4MetLocProbably138;
+            }
+            else if (sum->metLocation == 139)
+            {
+                text = gText_Gen4MetLocProbably139;
+            }
+            else if (sum->metLocation == 140)
+            {
+                text = gText_Gen4MetLocProbably140;
+            }
+            else if (sum->metLocation == 141)
+            {
+                text = gText_Gen4MetLocProbably141;
+            }
+            else if (sum->metLocation == 142)
+            {
+                text = gText_Gen4MetLocProbably142;
+            }
+            else if (sum->metLocation == 143)
+            {
+                text = gText_Gen4MetLocProbably143;
+            }
+            else if (sum->metLocation == 144)
+            {
+                text = gText_Gen4MetLocProbably144;
+            }
+            else if (sum->metLocation == 145)
+            {
+                text = gText_Gen4MetLocProbably145;
+            }
+            else if (sum->metLocation == 146)
+            {
+                text = gText_Gen4MetLocProbably146;
+            }
+            else if (sum->metLocation == 147)
+            {
+                text = gText_Gen4MetLocProbably147;
+            }
+            else if (sum->metLocation == 148)
+            {
+                text = gText_Gen4MetLocProbably148;
+            }
+            else if (sum->metLocation == 149)
+            {
+                text = gText_Gen4MetLocProbably149;
+            }
+            else if (sum->metLocation == 150)
+            {
+                text = gText_Gen4MetLocProbably150;
+            }
+            else if (sum->metLocation == 151)
+            {
+                text = gText_Gen4MetLocProbably151;
+            }
+            else if (sum->metLocation == 152)
+            {
+                text = gText_Gen4MetLocProbably152;
+            }
+            else if (sum->metLocation == 153)
+            {
+                text = gText_Gen4MetLocProbably153;
+            }
+            else if (sum->metLocation == 154)
+            {
+                text = gText_Gen4MetLocProbably154;
+            }
+            else if (sum->metLocation == 155)
+            {
+                text = gText_Gen4MetLocProbably155;
+            }
+            else if (sum->metLocation == 156)
+            {
+                text = gText_Gen4MetLocProbably156;
+            }
+            else if (sum->metLocation == 157)
+            {
+                text = gText_Gen4MetLocProbably157;
+            }
+            else if (sum->metLocation == 158)
+            {
+                text = gText_Gen4MetLocProbably158;
+            }
+            else if (sum->metLocation == 159)
+            {
+                text = gText_Gen4MetLocProbably159;
+            }
+            else if (sum->metLocation == 160)
+            {
+                text = gText_Gen4MetLocProbably160;
+            }
+            else if (sum->metLocation == 161)
+            {
+                text = gText_Gen4MetLocProbably161;
+            }
+            else if (sum->metLocation == 162)
+            {
+                text = gText_Gen4MetLocProbably162;
+            }
+            else if (sum->metLocation == 163)
+            {
+                text = gText_Gen4MetLocProbably163;
+            }
+            else if (sum->metLocation == 164)
+            {
+                text = gText_Gen4MetLocProbably164;
+            }
+            else if (sum->metLocation == 165)
+            {
+                text = gText_Gen4MetLocProbably165;
+            }
+            else if (sum->metLocation == 166)
+            {
+                text = gText_Gen4MetLocProbably166;
+            }
+            else if (sum->metLocation == 167)
+            {
+                text = gText_Gen4MetLocProbably167;
+            }
+            else if (sum->metLocation == 168)
+            {
+                text = gText_Gen4MetLocProbably168;
+            }
+            else if (sum->metLocation == 169)
+            {
+                text = gText_Gen4MetLocProbably169;
+            }
+            else if (sum->metLocation == 170)
+            {
+                text = gText_Gen4MetLocProbably170;
+            }
+            else if (sum->metLocation == 171)
+            {
+                text = gText_Gen4MetLocProbably171;
+            }
+            else if (sum->metLocation == 172)
+            {
+                text = gText_Gen4MetLocProbably172;
+            }
+            else if (sum->metLocation == 173)
+            {
+                text = gText_Gen4MetLocProbably173;
+            }
+            else if (sum->metLocation == 174)
+            {
+                text = gText_Gen4MetLocProbably174;
+            }
+            else if (sum->metLocation == 175)
+            {
+                text = gText_Gen4MetLocProbably175;
+            }
+            else if (sum->metLocation == 176)
+            {
+                text = gText_Gen4MetLocProbably176;
+            }
+            else if (sum->metLocation == 177)
+            {
+                text = gText_Gen4MetLocProbably177;
+            }
+            else if (sum->metLocation == 178)
+            {
+                text = gText_Gen4MetLocProbably178;
+            }
+            else if (sum->metLocation == 179)
+            {
+                text = gText_Gen4MetLocProbably179;
+            }
+            else if (sum->metLocation == 180)
+            {
+                text = gText_Gen4MetLocProbably180;
+            }
+            else if (sum->metLocation == 181)
+            {
+                text = gText_Gen4MetLocProbably181;
+            }
+            else if (sum->metLocation == 182)
+            {
+                text = gText_Gen4MetLocProbably182;
+            }
+            else if (sum->metLocation == 183)
+            {
+                text = gText_Gen4MetLocProbably183;
+            }
+            else if (sum->metLocation == 184)
+            {
+                text = gText_Gen4MetLocProbably184;
+            }
+            else if (sum->metLocation == 185)
+            {
+                text = gText_Gen4MetLocProbably185;
+            }
+            else if (sum->metLocation == 186)
+            {
+                text = gText_Gen4MetLocProbably186;
+            }
+            else if (sum->metLocation == 187)
+            {
+                text = gText_Gen4MetLocProbably187;
+            }
+            else if (sum->metLocation == 188)
+            {
+                text = gText_Gen4MetLocProbably188;
+            }
+            else if (sum->metLocation == 189)
+            {
+                text = gText_Gen4MetLocProbably189;
+            }
+            else if (sum->metLocation == 190)
+            {
+                text = gText_Gen4MetLocProbably190;
+            }
+            else if (sum->metLocation == 191)
+            {
+                text = gText_Gen4MetLocProbably191;
+            }
+            else if (sum->metLocation == 192)
+            {
+                text = gText_Gen4MetLocProbably192;
+            }
+            else if (sum->metLocation == 193)
+            {
+                text = gText_Gen4MetLocProbably193;
+            }
+            else if (sum->metLocation == 194)
+            {
+                text = gText_Gen4MetLocProbably194;
+            }
+            else if (sum->metLocation == 195)
+            {
+                text = gText_Gen4MetLocProbably195;
+            }
+            else if (sum->metLocation == 196)
+            {
+                text = gText_Gen4MetLocProbably196;
+            }
+            else if (sum->metLocation == 197)
+            {
+                text = gText_Gen4MetLocProbably197;
+            }
+            else if (sum->metLocation == 198)
+            {
+                text = gText_Gen4MetLocProbably198;
+            }
+            else if (sum->metLocation == 199)
+            {
+                text = gText_Gen4MetLocProbably199;
+            }
+            else if (sum->metLocation == 200)
+            {
+                text = gText_Gen4MetLocProbably200;
+            }
+            else if (sum->metLocation == 201)
+            {
+                text = gText_Gen4MetLocProbably201;
+            }
+            else if (sum->metLocation == 202)
+            {
+                text = gText_Gen4MetLocProbably202;
+            }
+            else if (sum->metLocation == 203)
+            {
+                text = gText_Gen4MetLocProbably203;
+            }
+            else if (sum->metLocation == 204)
+            {
+                text = gText_Gen4MetLocProbably204;
+            }
+            else if (sum->metLocation == 205)
+            {
+                text = gText_Gen4MetLocProbably205;
+            }
+            else if (sum->metLocation == 206)
+            {
+                text = gText_Gen4MetLocProbably206;
+            }
+            else if (sum->metLocation == 207)
+            {
+                text = gText_Gen4MetLocProbably207;
+            }
+            else if (sum->metLocation == 208)
+            {
+                text = gText_Gen4MetLocProbably208;
+            }
+            else if (sum->metLocation == 209)
+            {
+                text = gText_Gen4MetLocProbably209;
+            }
+            else if (sum->metLocation == 210)
+            {
+                text = gText_Gen4MetLocProbably210;
+            }
+            else if (sum->metLocation == 211)
+            {
+                text = gText_Gen4MetLocProbably211;
+            }
+            else if (sum->metLocation == 212)
+            {
+                text = gText_Gen4MetLocProbably212;
+            }
+            else if (sum->metLocation == 213)
+            {
+                text = gText_Gen4MetLocProbably213;
+            }
+            else if (sum->metLocation == 214)
+            {
+                text = gText_Gen4MetLocProbably214;
+            }
+            else if (sum->metLocation == 215)
+            {
+                text = gText_Gen4MetLocProbably215;
+            }
+            else if (sum->metLocation == 216)
+            {
+                text = gText_Gen4MetLocProbably216;
+            }
+            else if (sum->metLocation == 217)
+            {
+                text = gText_Gen4MetLocProbably217;
+            }
+            else if (sum->metLocation == 218)
+            {
+                text = gText_Gen4MetLocProbably218;
+            }
+            else if (sum->metLocation == 219)
+            {
+                text = gText_Gen4MetLocProbably219;
+            }
+            else if (sum->metLocation == 220)
+            {
+                text = gText_Gen4MetLocProbably220;
+            }
+            else if (sum->metLocation == 221)
+            {
+                text = gText_Gen4MetLocProbably221;
+            }
+            else if (sum->metLocation == 222)
+            {
+                text = gText_Gen4MetLocProbably222;
+            }
+            else if (sum->metLocation == 223)
+            {
+                text = gText_Gen4MetLocProbably223;
+            }
+            else if (sum->metLocation == 224)
+            {
+                text = gText_Gen4MetLocProbably224;
+            }
+            else if (sum->metLocation == 225)
+            {
+                text = gText_Gen4MetLocProbably225;
+            }
+            else if (sum->metLocation == 226)
+            {
+                text = gText_Gen4MetLocProbably226;
+            }
+            else if (sum->metLocation == 227)
+            {
+                text = gText_Gen4MetLocProbably227;
+            }
+            else if (sum->metLocation == 228)
+            {
+                text = gText_Gen4MetLocProbably228;
+            }
+            else if (sum->metLocation == 229)
+            {
+                text = gText_Gen4MetLocProbably229;
+            }
+            else if (sum->metLocation == 230)
+            {
+                text = gText_Gen4MetLocProbably230;
+            }
+            else if (sum->metLocation == 231)
+            {
+                text = gText_Gen4MetLocProbably231;
+            }
+            else if (sum->metLocation == 232)
+            {
+                text = gText_Gen4MetLocProbably232;
+            }
+            else if (sum->metLocation == 233)
+            {
+                text = gText_Gen4MetLocProbably233;
+            }
+            else if (sum->metLocation == 234)
+            {
+                text = gText_Gen4MetLocProbably234;
+            }
+            else if (sum->metLocation == 235)
+            {
+                text = gText_Gen4MetLocProbably235;
+            }
+            else if (sum->metLocation == 236)
+            {
+                text = gText_Gen4MetLocProbably236;
+            }
+            else if (sum->metLocation == 237)
+            {
+                text = gText_Gen4MetLocProbably237;
+            }
+            else if (sum->metLocation == 238)
+            {
+                text = gText_Gen4MetLocProbably238;
+            }
+            else if (sum->metLocation == 239)
+            {
+                text = gText_Gen4MetLocProbably239;
+            }
+            else if (sum->metLocation == 240)
+            {
+                text = gText_Gen4MetLocProbably240;
+            }
+            else if (sum->metLocation == 241)
+            {
+                text = gText_Gen4MetLocProbably241;
+            }
+            else if (sum->metLocation == 242)
+            {
+                text = gText_Gen4MetLocProbably242;
+            }
+            else if (sum->metLocation == 243)
+            {
+                text = gText_Gen4MetLocProbably243;
+            }
+            else if (sum->metLocation == 244)
+            {
+                text = gText_Gen4MetLocProbably244;
+            }
+            else if (sum->metLocation == 245)
+            {
+                text = gText_Gen4MetLocProbably245;
+            }
+            else if (sum->metLocation == 246)
+            {
+                text = gText_Gen4MetLocProbably246;
+            }
+            else if (sum->metLocation == 247)
+            {
+                text = gText_Gen4MetLocProbably247;
+            }
+            else if (sum->metLocation == 248)
+            {
+                text = gText_Gen4MetLocProbably248;
+            }
+            else if (sum->metLocation == 249)
+            {
+                text = gText_Gen4MetLocProbably249;
+            }
+            else if (sum->metLocation == 250)
+            {
+                text = gText_Gen4MetLocProbably250;
+            }
+            else if (sum->metLocation == 251)
+            {
+                text = gText_Gen4MetLocProbably251;
+            }
+            else if (sum->metLocation == 252)
+            {
+                text = gText_Gen4MetLocProbably252;
+            }
+            else if (sum->metLocation == 253)
+            {
+                text = gText_Gen4MetLocProbably253;
+            }
+            else if (sum->metLocation == 254)
+            {
+                text = gText_Gen4MetLocProbably254;
+            }
+            else if (sum->metLocation == 255)
+            {
+                text = gText_Gen4MetLocProbably255;
+            }
+        }
+        else if (sum->metGame == VERSION_IDENTIFIER_GACHA)
+        {
+            if (sum->metLevel == 0 && sum->metLocation == METLOC_FATEFUL_ENCOUNTER)
+            {
+                text = gText_FromMiracleGacha;
+            }
+            else if (sum->metLevel == 0)
+            {
+                text = gText_FromGachaProbably;
+            }
+            else
+            {
+                text = gText_IsItHacked;
+            }
+        }
+        else if (sum->metGame == VERSION_IDENTIFIER_SPECIAL_GIFT)
+        {
+            if (sum->metLocation == 255)
+            {
+                text = gText_FromAnotherPlayer;
+            }
+            else if(sum->metLocation == 254
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gText_Aichiya
+                 && sum->OTID == 92538244)
+            {
+                text = gText_FromDev;
+            }
+            else if (sum->metLocation == 253
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gText_Ame
+                 && sum->OTID == 87622969)
+            {
+                text = gText_FromTimeTraveller;
+            }
+            else if (sum->metLocation == 252
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gText_BlueShell
+                 && sum->OTID == 1577803275)
+            {
+                text = gText_FromGardener;
+            }
+            else if (sum->metLocation == 251
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gText_Machomuu
+                 && sum->OTID == 2713756096)
+            {
+                text = gText_FromGirlTrapped;
+            }
+            else if (sum->metLocation == 250
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gJPText_Elgrete
+                 && sum->OTID == 456727353)
+            {
+                text = gText_FromZokuGensokyoDev;
+            }
+            else if (sum->metLocation == 249
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gJPText_RF
+                 && sum->OTID == 1298287970)
+            {
+                text = gText_FromRFDev;
+            }
+            else if (sum->metLocation == 248
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gJPText_Hemoguro
+                 && sum->OTID == 169609756)
+            {
+                text = gText_FromTPDPDev;
+            }
+            else if (sum->metLocation == 247
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gText_DSlayer
+                 && sum->OTID == 27197855)
+            {
+                text = gText_FromReduxDev;
+            }
+            else if (sum->metLocation == 246
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gText_Tye
+                 && sum->OTID == 262148)
+            {
+                text = gText_FromThmonHGDev;
+            }
+            else if (sum->metLocation == 245
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gText_Gemini
+                 && sum->OTID == 1317424774)
+            {
+                text = gText_FromThmonOrdinaryDev;
+            }
+            else if (sum->metLocation == 244
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gJPText_eggf
+                 && sum->OTID == 11796660)
+            {
+                text = gText_FromLeafKeyDev;
+            }
+            else if (sum->metLocation == 243
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gText_ZetaSukuna
+                 && sum->OTID == 1703962000)
+            {
+                text = gText_FromRetold;
+            }
+            else if (sum->metLocation == 242
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gText_Agastya
+                 && sum->OTID == 1000000)
+            {
+                text = gText_FromPurple;
+            }
+            else if (sum->metLocation == 241
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gJPText_ZUN
+                 && sum->OTID == 0)
+            {
+                text = gText_ShanghaiAlice;
+            }
+            else if (sum->metLocation == 240
+                 && VarGet(VAR_GIFTMON1_IDENTIFIER) == 254
+                // && sum->OTName == gText_Nemoma
+                 && sum->OTID == 328)
+            {
+                text = gText_SaniwaShrine;
+            }
+            else if (sum->metLocation == 1
+                 && VarGet(VAR_GIFTMON2_IDENTIFIER) == 10
+                // && sum->OTName == gText_OTNameGold
+                 && sum->OTID == 1444697628)
+            {
+                text = gText_FromChampion;
+            }
+            else if (sum->metLocation == 2
+                 && VarGet(VAR_GIFTMON2_IDENTIFIER) == 10
+                // && sum->OTName == gText_OTNameSilver
+                 && sum->OTID == 2885069814)
+            {
+                text = gText_FromRival;
+            }
+            else if (sum->metLocation == 3
+                 && VarGet(VAR_GIFTMON2_IDENTIFIER) == 10
+                // && sum->OTName == gText_OTNameWakaba
+                 && sum->OTID == 4063294000)
+            {
+                text = gText_FromFirstHero;
+            }
+            else if (sum->metLocation == 4
+                 && VarGet(VAR_GIFTMON2_IDENTIFIER) == 10
+                // && sum->OTName == gText_OTNameIllusionaryGirl
+                 && sum->OTID == 131467222)
+            {
+                text = gText_FromDeusEx;
+            }
+            else if (sum->metLocation == 5
+                 && VarGet(VAR_GIFTMON2_IDENTIFIER) == 10
+                // && sum->OTName == gText_OTNameMiki
+                 && sum->OTID == 134023165)
+            {
+                text = gText_FromBattleGirl;
+            }
+            else if (sum->metLocation == 6
+                 && VarGet(VAR_GIFTMON2_IDENTIFIER) == 10
+                // && sum->OTName == gText_OTNameReimu
+                 && sum->OTID == 2006)
+            {
+                text = gText_FromMiko;
+            }
+            else if (sum->metLocation == 7
+                 && VarGet(VAR_GIFTMON2_IDENTIFIER) == 10
+                // && sum->OTName == gText_OTNameVIVIT
+                 && sum->OTID == 130942926)
+            {
+                text = gText_FromRobotMaid;
+            }
+            else if (sum->metLocation == 10
+                 && VarGet(VAR_GIFTMON2_IDENTIFIER) == 10
+                // && sum->OTName == gText_Tsukasa
+                 && sum->OTID == 683813058)
+            {
+                text = gText_FromDimensionalRift;
+            }
+            else if (sum->metLocation == 11)
+            {
+                text = gText_XNatureObtainedInTrade;
+            }
+            else if (sum->metLocation == 12)
+            {
+                text = gText_XNatureProbablyYogyakarta;
+            }
+            else if (sum->metLocation >= 240)
+            {
+                text = gText_XNatureEvent;
+            }
+            else if (sum->metLocation <= 10)
+            {
+                text = gText_XNatureObtainedInTrade;
+            }
+            else
+            {
+                text = gText_FromAnotherPlayer;
+            }
+        }
+        else if (sum->metGame == VERSION_IDENTIFIER_NEGA)
+        {
+            if (sum->metLevel == 0)
+                text = (sum->metLocation >= MAPSEC_NONE) ? gText_XNatureHatchedSomewhereAt : gText_XNatureHatchedAtYZNega;
+            else
+                text = (sum->metLocation >= MAPSEC_NONE) ? gText_XNatureMetSomewhereAt : gText_XNatureProbablyMetAtNega;
+        }
         else if (sum->metLocation == METLOC_FATEFUL_ENCOUNTER)
         {
             text = gText_XNatureFatefulEncounter;
+        }
+        else if (sum->metGame == VERSION_GAMECUBE)
+        {
+            text = gText_XNatureProbablyOrre;
         }
         else if (sum->metLocation != METLOC_IN_GAME_TRADE && DidMonComeFromGBAGames())
         {
@@ -3531,6 +8226,26 @@ static void BufferMonTrainerMemo(void)
 static void PrintMonTrainerMemo(void)
 {
     PrintTextOnWindow(AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_MEMO), gStringVar4, 0, 1, 0, 0);
+}
+
+static void PrintMonSpecialGiftMark(void)
+{
+    const u8 *mark;
+    mark = gText_SpecialGiftMarkEmoji;
+    struct PokeSummary *sum = &sMonSummaryScreen->summary;
+    if (sum->metGame == VERSION_IDENTIFIER_SPECIAL_GIFT
+     || sum->metLocation == METLOC_FATEFUL_ENCOUNTER)
+        PrintTextOnWindow(AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_SPECIAL_GIFT_MARK), mark, 0, 0, 0, 0);
+}
+
+static void PrintMonAntiWorldOrShadowMark(void)
+{
+    const u8 *mark;
+    mark = gText_AntiWorldMarkEmoji;
+    struct PokeSummary *sum = &sMonSummaryScreen->summary;
+    if (sum->metGame == VERSION_IDENTIFIER_NEGA
+     || sum->isShadow == TRUE)
+        PrintTextOnWindow(AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_ANTI_WORLD_OR_SHADOW_MARK), mark, 0, 0, 0, 0);
 }
 
 static void BufferNatureString(void)
@@ -3644,7 +8359,9 @@ static void PrintEggMemo(void)
 
     if (sMonSummaryScreen->summary.sanity != 1)
     {
-        if (sum->metLocation == METLOC_FATEFUL_ENCOUNTER)
+        if (sum->metGame == VERSION_IDENTIFIER_SPECIAL_GIFT || sum->metGame == VERSION_IDENTIFIER_GACHA)
+            text = gText_EggFromMiracle;
+        else if (sum->metLocation == METLOC_FATEFUL_ENCOUNTER)
             text = gText_PeculiarEggNicePlace;
         else if (DidMonComeFromGBAGames() == FALSE || DoesMonOTMatchOwner() == FALSE)
             text = gText_PeculiarEggTrade;
@@ -3665,7 +8382,7 @@ static void PrintSkillsPageText(void)
 {
     PrintHeldItemName();
     PrintRibbonCount();
-    if(ShouldShowIvEvPrompt())
+    if (ShouldShowIvEvPrompt())
         ShowUtilityPrompt(SUMMARY_SKILLS_MODE_STATS);
     BufferLeftColumnStats();
     PrintLeftColumnStats();
@@ -3721,7 +8438,7 @@ static void PrintHeldItemName(void)
         && IsMultiBattle() == TRUE
         && (sMonSummaryScreen->curMonIndex == 1 || sMonSummaryScreen->curMonIndex == 4 || sMonSummaryScreen->curMonIndex == 5))
     {
-        text = ItemId_GetName(ITEM_ENIGMA_BERRY_E_READER);
+        text = GetItemName(ITEM_ENIGMA_BERRY_E_READER);
     }
     else if (sMonSummaryScreen->summary.item == ITEM_NONE)
     {
@@ -3758,14 +8475,14 @@ static void PrintRibbonCount(void)
     PrintTextOnWindow(AddWindowFromTemplateList(sPageSkillsTemplate, PSS_DATA_WINDOW_SKILLS_RIBBON_COUNT), text, x, 1, 0, 0);
 }
 
-static void BufferStat(u8 *dst, u8 statIndex, u32 stat, u32 strId, u32 n)
+static void BufferStat(u8 *dst, enum Stat statIndex, u32 stat, u32 strId, u32 n)
 {
     static const u8 sTextNatureDown[] = _("{COLOR}{08}");
     static const u8 sTextNatureUp[] = _("{COLOR}{05}");
     static const u8 sTextNatureNeutral[] = _("{COLOR}{01}");
     u8 *txtPtr;
 
-    if (statIndex == 0 || !SUMMARY_SCREEN_NATURE_COLORS || gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
+    if (statIndex == 0 || !P_SUMMARY_SCREEN_NATURE_COLORS || gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
         txtPtr = StringCopy(dst, sTextNatureNeutral);
     else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp)
         txtPtr = StringCopy(dst, sTextNatureUp);
@@ -3774,10 +8491,10 @@ static void BufferStat(u8 *dst, u8 statIndex, u32 stat, u32 strId, u32 n)
     else
         txtPtr = StringCopy(dst, sTextNatureNeutral);
 
-    if (!P_SUMMARY_SCREEN_IV_EV_VALUES 
+    if (!P_SUMMARY_SCREEN_IV_EV_VALUES
         && sMonSummaryScreen->skillsPageMode == SUMMARY_SKILLS_MODE_IVS)
         StringAppend(dst, GetLetterGrade(stat));
-    else 
+    else
         ConvertIntToDecimalStringN(txtPtr, stat, STR_CONV_MODE_RIGHT_ALIGN, n);
 
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(strId, dst);
@@ -3791,19 +8508,19 @@ static const u8 *GetLetterGrade(u32 stat)
     static const u8 gText_GradeB[] = _("B");
     static const u8 gText_GradeA[] = _("A");
     static const u8 gText_GradeS[] = _("S");
-    
-    if (stat > 0 && stat <= 15)
-        return gText_GradeD;
-    else if (stat > 15 && stat <= 25)
-        return gText_GradeC;
-    else if (stat > 26 && stat <= 29)
-        return gText_GradeB;
-    else if (stat == 30)
-        return gText_GradeA;
-    else if (stat == 31)
-        return gText_GradeS;
-    else
+
+    if (stat <= 0)
         return gText_GradeF;
+    else if (stat <= 15)
+        return gText_GradeD;
+    else if (stat <= 25)
+        return gText_GradeC;
+    else if (stat <= 29)
+        return gText_GradeB;
+    else if (stat <= 30)
+        return gText_GradeA;
+    else
+        return gText_GradeS;
 }
 
 static void BufferLeftColumnStats(void)
@@ -3833,7 +8550,7 @@ static void BufferLeftColumnIvEvStats(void)
     u8 *hpIvEvString = Alloc(20);
     u8 *attackIvEvString = Alloc(20);
     u8 *defenseIvEvString = Alloc(20);
-    
+
     DynamicPlaceholderTextUtil_Reset();
 
     BufferStat(hpIvEvString, STAT_HP, sMonSummaryScreen->summary.currentHP, 0, 7);
@@ -3850,7 +8567,7 @@ static void BufferLeftColumnIvEvStats(void)
 static void PrintLeftColumnStats(void)
 {
     int x;
-    
+
     if (sMonSummaryScreen->skillsPageMode == SUMMARY_SKILLS_MODE_IVS && !P_SUMMARY_SCREEN_IV_EV_VALUES)
         x = GetStringRightAlignXOffset(FONT_NORMAL, gStringVar4, 46);
     else
@@ -3873,7 +8590,7 @@ static void BufferRightColumnStats(void)
 static void PrintRightColumnStats(void)
 {
     int x;
-    
+
     if (sMonSummaryScreen->skillsPageMode == SUMMARY_SKILLS_MODE_IVS && !P_SUMMARY_SCREEN_IV_EV_VALUES)
         x = GetStringRightAlignXOffset(FONT_NORMAL, gStringVar4, 20);
     else
@@ -3977,7 +8694,7 @@ static void PrintMoveNameAndPP(u8 moveIndex)
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
     u8 moveNameWindowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_NAMES);
     u8 ppValueWindowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_PP);
-    u16 move = summary->moves[moveIndex];
+    enum Move move = summary->moves[moveIndex];
 
     if (move != 0)
     {
@@ -4004,7 +8721,7 @@ static void PrintMoveNameAndPP(u8 moveIndex)
     PrintTextOnWindow(ppValueWindowId, text, x, moveIndex * 16 + 1, 0, ppState);
 }
 
-static void PrintMovePowerAndAccuracy(u16 moveIndex)
+static void PrintMovePowerAndAccuracy(enum Move moveIndex)
 {
     const u8 *text;
     if (moveIndex != MOVE_NONE)
@@ -4091,7 +8808,7 @@ static void Task_PrintContestMoves(u8 taskId)
 
 static void PrintContestMoveDescription(u8 moveSlot)
 {
-    u16 move;
+    enum Move move;
 
     if (moveSlot == MAX_MON_MOVES)
         move = sMonSummaryScreen->newMove;
@@ -4101,11 +8818,11 @@ static void PrintContestMoveDescription(u8 moveSlot)
     if (move != MOVE_NONE)
     {
         u8 windowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_DESCRIPTION);
-        PrintTextOnWindow(windowId, gContestEffectDescriptionPointers[GetMoveContestEffect(move)], 6, 1, 0, 0);
+        PrintTextOnWindow(windowId, gContestEffects[GetMoveContestEffect(move)].description, 6, 1, 0, 0);
     }
 }
 
-static void PrintMoveDetails(u16 move)
+static void PrintMoveDetails(enum Move move)
 {
     u8 windowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_DESCRIPTION);
     FillWindowPixelBuffer(windowId, PIXEL_FILL(0));
@@ -4120,7 +8837,7 @@ static void PrintMoveDetails(u16 move)
         }
         else
         {
-            PrintTextOnWindow(windowId, gContestEffectDescriptionPointers[GetMoveContestEffect(move)], 6, 1, 0, 0);
+            PrintTextOnWindow(windowId, gContestEffects[GetMoveContestEffect(move)].description, 6, 1, 0, 0);
         }
         PutWindowTilemap(windowId);
     }
@@ -4143,7 +8860,7 @@ static void PrintNewMoveDetailsOrCancelText(void)
     }
     else
     {
-        u16 move = sMonSummaryScreen->newMove;
+        enum Move move = sMonSummaryScreen->newMove;
 
         if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES)
             PrintTextOnWindowToFit(windowId1, GetMoveName(move), 0, 65, 0, 6);
@@ -4253,14 +8970,14 @@ static void CreateMoveTypeIcons(void)
     }
 }
 
-void SetTypeSpritePosAndPal(u8 typeId, u8 x, u8 y, u8 spriteArrayId)
+void SetTypeSpritePosAndPal(enum Type typeId, u8 x, u8 y, u8 spriteArrayId)
 {
     struct Sprite *sprite = &gSprites[sMonSummaryScreen->spriteIds[spriteArrayId]];
     StartSpriteAnim(sprite, typeId);
     if (typeId < NUMBER_OF_MON_TYPES)
         sprite->oam.paletteNum = gTypesInfo[typeId].palette;
     else
-        sprite->oam.paletteNum = sContestCategoryToOamPaletteNum[typeId - NUMBER_OF_MON_TYPES];
+        sprite->oam.paletteNum = gContestCategoryInfo[typeId - NUMBER_OF_MON_TYPES].palette;
     sprite->x = x + 16;
     sprite->y = y + 8;
     SetSpriteInvisibility(spriteArrayId, FALSE);
@@ -4276,10 +8993,10 @@ static void SetMonTypeIcons(void)
     }
     else
     {
-        SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[0], 120, 48, SPRITE_ARR_ID_TYPE);
-        if (gSpeciesInfo[summary->species].types[0] != gSpeciesInfo[summary->species].types[1])
+        SetTypeSpritePosAndPal(GetSpeciesType(summary->species, 0), 120, 48, SPRITE_ARR_ID_TYPE);
+        if (GetSpeciesType(summary->species, 0) != GetSpeciesType(summary->species, 1))
         {
-            SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[1], 160, 48, SPRITE_ARR_ID_TYPE + 1);
+            SetTypeSpritePosAndPal(GetSpeciesType(summary->species, 1), 160, 48, SPRITE_ARR_ID_TYPE + 1);
             SetSpriteInvisibility(SPRITE_ARR_ID_TYPE + 1, FALSE);
         }
         else
@@ -4298,7 +9015,7 @@ static void SetMoveTypeIcons(void)
     u32 i;
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
     struct Pokemon *mon = &sMonSummaryScreen->currentMon;
-    u32 type;
+    enum Type type;
 
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
@@ -4306,7 +9023,11 @@ static void SetMoveTypeIcons(void)
         {
             type = GetMoveType(summary->moves[i]);
             if (P_SHOW_DYNAMIC_TYPES)
-                type = CheckDynamicMoveType(mon, summary->moves[i], 0);
+            {
+                enum MonState state = gMain.inBattle ? MON_IN_BATTLE : MON_OUTSIDE_BATTLE;
+                type = CheckDynamicMoveType(mon, summary->moves[i], 0, state); // Bug: in battle, this only shows the dynamic type of battler in position 0
+            }
+
             SetTypeSpritePosAndPal(type, 85, 32 + (i * 16), i + SPRITE_ARR_ID_TYPE);
         }
         else
@@ -4331,11 +9052,14 @@ static void SetContestMoveTypeIcons(void)
 
 static void SetNewMoveTypeIcon(void)
 {
-    u32 type = GetMoveType(sMonSummaryScreen->newMove);
+    enum Type type = GetMoveType(sMonSummaryScreen->newMove);
     struct Pokemon *mon = &sMonSummaryScreen->currentMon;
 
     if (P_SHOW_DYNAMIC_TYPES)
-        type = CheckDynamicMoveType(mon, sMonSummaryScreen->newMove, 0);
+    {
+        enum MonState state = gMain.inBattle ? MON_IN_BATTLE : MON_OUTSIDE_BATTLE;
+        type = CheckDynamicMoveType(mon, sMonSummaryScreen->newMove, 0, state);  // Bug: in battle, this only shows the dynamic type of battler in position 0
+    }
 
     if (sMonSummaryScreen->newMove == MOVE_NONE)
     {
@@ -4384,32 +9108,35 @@ static u8 LoadMonGfxAndSprite(struct Pokemon *mon, s16 *state)
     case 0:
         if (gMain.inBattle)
         {
-            HandleLoadSpecialPokePic(TRUE,
+            HandleLoadSpecialPokePicIsEgg(TRUE,
                                      gMonSpritesGfxPtr->spritesGfx[B_POSITION_OPPONENT_LEFT],
-                                     summary->species2,
-                                     summary->pid);
+                                     summary->species,
+                                     summary->pid,
+                                     summary->isEgg);
         }
         else
         {
             if (gMonSpritesGfxPtr != NULL)
             {
-                HandleLoadSpecialPokePic(TRUE,
+                HandleLoadSpecialPokePicIsEgg(TRUE,
                                          gMonSpritesGfxPtr->spritesGfx[B_POSITION_OPPONENT_LEFT],
-                                         summary->species2,
-                                         summary->pid);
+                                         summary->species,
+                                         summary->pid,
+                                         summary->isEgg);
             }
             else
             {
-                HandleLoadSpecialPokePic(TRUE,
+                HandleLoadSpecialPokePicIsEgg(TRUE,
                                          MonSpritesGfxManager_GetSpritePtr(MON_SPR_GFX_MANAGER_A, B_POSITION_OPPONENT_LEFT),
-                                         summary->species2,
-                                         summary->pid);
+                                         summary->species,
+                                         summary->pid,
+                                         summary->isEgg);
             }
         }
         (*state)++;
         return 0xFF;
     case 1:
-        LoadCompressedSpritePaletteWithTag(GetMonSpritePalFromSpeciesAndPersonality(summary->species2, summary->isShiny, summary->pid), summary->species2);
+        LoadSpritePaletteWithTag(GetMonSpritePalFromSpeciesAndPersonalityIsEgg(summary->species, summary->isShiny, summary->pid, summary->isEgg), summary->species2);
         SetMultiuseSpriteTemplateToPokemon(summary->species2, B_POSITION_OPPONENT_LEFT);
         (*state)++;
         return 0xFF;
@@ -4527,7 +9254,7 @@ static void CreateCaughtBallSprite(struct Pokemon *mon)
     enum PokeBall ball = GetMonData(mon, MON_DATA_POKEBALL);
 
     LoadBallGfx(ball);
-    sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL] = CreateSprite(&gBallSpriteTemplates[ball], 16, 136, 0);
+    sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL] = CreateSprite(&gPokeBalls[ball].spriteTemplate, 16, 136, 0);
     gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]].callback = SpriteCallbackDummy;
     gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]].oam.priority = 3;
 }
@@ -4642,12 +9369,31 @@ static inline bool32 ShouldShowMoveRelearner(void)
 {
     return (P_SUMMARY_SCREEN_MOVE_RELEARNER
          && !sMonSummaryScreen->lockMovesFlag
-         && !sMonSummaryScreen->isBoxMon
-         && sMonSummaryScreen->mode != SUMMARY_MODE_BOX
          && sMonSummaryScreen->mode != SUMMARY_MODE_BOX_CURSOR
-         && sMonSummaryScreen->relearnableMovesNum > 0
+         && sMonSummaryScreen->hasRelearnableMoves
          && !InBattleFactory()
-         && !InSlateportBattleTent());
+         && !InSlateportBattleTent()
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_DEWFORD_TOWN_GYM) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_DEWFORD_TOWN_GYM))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_LAVARIDGE_TOWN_GYM_1F) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVARIDGE_TOWN_GYM_1F))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_LAVARIDGE_TOWN_GYM_B1F) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LAVARIDGE_TOWN_GYM_B1F))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_PETALBURG_CITY_GYM) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_PETALBURG_CITY_GYM))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MAUVILLE_CITY_GYM) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MAUVILLE_CITY_GYM))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_RUSTBORO_CITY_GYM) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_RUSTBORO_CITY_GYM))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_FORTREE_CITY_GYM) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_FORTREE_CITY_GYM))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MOSSDEEP_CITY_GYM) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MOSSDEEP_CITY_GYM))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SOOTOPOLIS_CITY_GYM_1F) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SOOTOPOLIS_CITY_GYM_1F))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SOOTOPOLIS_CITY_GYM_B1F) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SOOTOPOLIS_CITY_GYM_B1F))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_PHOEBES_ROOM) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_EVER_GRANDE_CITY_PHOEBES_ROOM))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_GLACIAS_ROOM) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_EVER_GRANDE_CITY_GLACIAS_ROOM))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_DRAKES_ROOM) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_EVER_GRANDE_CITY_DRAKES_ROOM))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_CHAMPIONS_ROOM) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_EVER_GRANDE_CITY_CHAMPIONS_ROOM))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_HALL1) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_EVER_GRANDE_CITY_HALL1))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_HALL2) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_EVER_GRANDE_CITY_HALL2))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_HALL3) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_EVER_GRANDE_CITY_HALL3))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_HALL4) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_EVER_GRANDE_CITY_HALL4))
+         && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_EVER_GRANDE_CITY_HALL5) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_EVER_GRANDE_CITY_HALL5))
+         && !NoMovesAvailableToRelearn());
 }
 
 static inline bool32 ShouldShowRename(void)
@@ -4655,8 +9401,6 @@ static inline bool32 ShouldShowRename(void)
     return (P_SUMMARY_SCREEN_RENAME
          && !sMonSummaryScreen->lockMovesFlag
          && !sMonSummaryScreen->summary.isEgg
-         && !sMonSummaryScreen->isBoxMon
-         && sMonSummaryScreen->mode != SUMMARY_MODE_BOX
          && sMonSummaryScreen->mode != SUMMARY_MODE_BOX_CURSOR
          && !InBattleFactory()
          && !InSlateportBattleTent()
@@ -4668,7 +9412,7 @@ static inline bool32 ShouldShowIvEvPrompt(void)
     if (P_SUMMARY_SCREEN_IV_EV_BOX_ONLY)
     {
         return (P_SUMMARY_SCREEN_IV_EV_INFO || FlagGet(P_FLAG_SUMMARY_SCREEN_IV_EV_INFO))
-            && (sMonSummaryScreen->mode == SUMMARY_MODE_BOX|| sMonSummaryScreen->mode == SUMMARY_MODE_BOX_CURSOR);
+            && (sMonSummaryScreen->mode == SUMMARY_MODE_BOX || sMonSummaryScreen->mode == SUMMARY_MODE_BOX_CURSOR);
     }
     else if (!P_SUMMARY_SCREEN_IV_EV_BOX_ONLY)
     {
@@ -4683,6 +9427,7 @@ static inline void ShowUtilityPrompt(s16 mode)
     const u8* gText_SkillPageIvs = COMPOUND_STRING("IVs");
     const u8* gText_SkillPageEvs = COMPOUND_STRING("EVs");
     const u8* gText_SkillPageStats = COMPOUND_STRING("STATS");
+    const u8* gText_Rename = COMPOUND_STRING("RENAME");
 
     if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
     {
@@ -4743,17 +9488,63 @@ static inline void ShowUtilityPrompt(s16 mode)
     PrintTextOnWindow(PSS_LABEL_WINDOW_PROMPT_UTILITY, promptText, stringXPos, 1, 0, 0);
 }
 
+static void ShowRelearnPrompt(void)
+{
+    u32 currPage = sMonSummaryScreen->currPageIndex;
+
+    if (!ShouldShowMoveRelearner() || !(currPage >= PSS_PAGE_BATTLE_MOVES))
+    {
+        ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
+        return;
+    }
+
+    if (!HasAnyRelearnableMoves(gMoveRelearnerState))
+        return;
+
+    const u8 *relearnText;
+    int relearnTextXPos;
+
+    if ((!P_ENABLE_MOVE_RELEARNERS
+    && !P_TM_MOVES_RELEARNER
+    && !FlagGet(P_FLAG_EGG_MOVES)
+    && !FlagGet(P_FLAG_TUTOR_MOVES)))
+    {
+        relearnText = sText_Relearn;
+        relearnTextXPos = 0;
+    }
+    else
+    {
+        switch (gMoveRelearnerState)
+        {
+        case MOVE_RELEARNER_EGG_MOVES:
+            relearnText = sText_Relearn_Egg;
+            break;
+        case MOVE_RELEARNER_TM_MOVES:
+            relearnText = sText_Relearn_TM;
+            break;
+        case MOVE_RELEARNER_TUTOR_MOVES:
+            relearnText = sText_Relearn_Tutor;
+            break;
+        default:
+        case MOVE_RELEARNER_LEVEL_UP_MOVES:
+            relearnText = sText_Relearn_LevelUp;
+            break;
+        }
+        relearnTextXPos = GetStringRightAlignXOffset(FONT_NORMAL, relearnText, 0);
+    }
+
+    FillWindowPixelBuffer(PSS_LABEL_WINDOW_PROMPT_RELEARN, PIXEL_FILL(0));
+    PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
+    PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_PROMPT_RELEARN, relearnText, relearnTextXPos, 4, 0, 0, FONT_SMALL);
+}
+
 static void CB2_ReturnToSummaryScreenFromNamingScreen(void)
 {
-    SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_NICKNAME, gStringVar2);
+    SetBoxMonData(GetSelectedBoxMonFromPcOrParty(), MON_DATA_NICKNAME, gStringVar2);
     ShowPokemonSummaryScreen(SUMMARY_MODE_NORMAL, gPlayerParty, gSpecialVar_0x8004, gPlayerPartyCount - 1, gInitialSummaryScreenCallback);
 }
 
 static void CB2_PssChangePokemonNickname(void)
 {
-    GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_NICKNAME, gStringVar3);
-    GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_NICKNAME, gStringVar2);
-    DoNamingScreen(NAMING_SCREEN_NICKNAME, gStringVar2, GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_SPECIES, NULL),
-                   GetMonGender(&gPlayerParty[gSpecialVar_0x8004]), GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_PERSONALITY, NULL),
-                   CB2_ReturnToSummaryScreenFromNamingScreen);
+    ChangePokemonNicknameWithCallback(CB2_ReturnToSummaryScreenFromNamingScreen);
 }

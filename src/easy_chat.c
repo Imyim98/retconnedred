@@ -704,6 +704,30 @@ static const u16 sBerryMasterWifePhrases[][2] = {
     [PHRASE_OVERWHELMING_LATIAS - 1] = {EC_WORD_OVERWHELMING, EC_POKEMON(LATIAS)},
     [PHRASE_COOL_LATIOS - 1]         = {EC_WORD_COOL, EC_POKEMON(LATIOS)},
     [PHRASE_SUPER_HUSTLE - 1]        = {EC_WORD_SUPER, EC_WORD_HUSTLE},
+    [PHRASE_NICE_6 - 1]              = {EC_WORD_ANOTHER, EC_WORD_WORLD},
+    [PHRASE_NICE_7 - 1]              = {EC_WORD_FRIDAY, EC_WORD_REFRESHING},
+    [PHRASE_NICE_8 - 1]              = {EC_WORD_UNAVOIDABLE, EC_WORD_END},
+    [PHRASE_NICE_9 - 1]              = {EC_WORD_LIVING, EC_WORD_HEROINE},
+    [PHRASE_NICE_10 - 1]             = {EC_WORD_SERIOUSLY, EC_WORD_JOKING},
+    [PHRASE_NICE_11 - 1]             = {EC_WORD_INCREDIBLE, EC_WORD_UNCLE},
+    [PHRASE_NICE_12 - 1]             = {EC_WORD_SILVER, EC_WORD_LEAF},
+    [PHRASE_NICE_13 - 1]             = {EC_WORD_GOLD, EC_WORD_DRINK},
+    [PHRASE_NICE_14 - 1]             = {EC_WORD_OH_DEAR, EC_WORD_TEACHER},
+    [PHRASE_NICE_15 - 1]             = {EC_WORD_MYSTERY, EC_WORD_FRIEND},
+    [PHRASE_NICE_16 - 1]             = {EC_WORD_MEET, EC_WORD_MYSELF},
+    [PHRASE_NICE_17 - 1]             = {EC_WORD_UNBELIEVABLE, EC_WORD_DANGER},
+    [PHRASE_NICE_18 - 1]             = {EC_WORD_FABULOUS, EC_WORD_FESTIVAL},
+    [PHRASE_NICE_19 - 1]             = {EC_WORD_APPROVED, EC_WORD_SOFTWARE},
+    [PHRASE_NICE_20 - 1]             = {EC_WORD_INFORMATION, EC_WORD_READY},
+    [PHRASE_NICE_21 - 1]             = {EC_WORD_BAD, EC_WORD_MOOD},
+    [PHRASE_NICE_22 - 1]             = {EC_WORD_IDOL, EC_WORD_ANIME},
+    [PHRASE_NICE_23 - 1]             = {EC_WORD_FOREVER, EC_WORD_INCREASING},
+    [PHRASE_NICE_24 - 1]             = {EC_WORD_GENIUS, EC_WORD_SKILL},
+    [PHRASE_NICE_25 - 1]             = {EC_WORD_A_TINY_BIT, EC_WORD_HAPPINESS},
+    [PHRASE_NICE_26 - 1]             = {EC_WORD_SOMEHOW, EC_WORD_EXISTS},
+    [PHRASE_NICE_27 - 1]             = {EC_WORD_WANDERING, EC_WORD_MASTER},
+    [PHRASE_NICE_28 - 1]             = {EC_WORD_I_AM, EC_WORD_INVINCIBLE},
+    [PHRASE_NICE_29 - 1]             = {EC_WORD_UPSIDE_DOWN, EC_WORD_SYSTEM},
 };
 
 static const u16 sTriangleCursor_Pal[] = INCBIN_U16("graphics/easy_chat/triangle_cursor.gbapal");
@@ -714,10 +738,10 @@ static const u32 sStartSelectButtons_Gfx[] = INCBIN_U32("graphics/easy_chat/star
 // on screen the interview_frame gfx was shown behind them.
 // In Emerald all Easy Chat screens have a filled background, so these gfx go unused
 static const u16 sRSInterviewFrame_Pal[] = INCBIN_U16("graphics/easy_chat/interview_frame.gbapal");
-static const u32 sRSInterviewFrame_Gfx[] = INCBIN_U32("graphics/easy_chat/interview_frame.4bpp.lz");
+static const u32 sRSInterviewFrame_Gfx[] = INCBIN_U32("graphics/easy_chat/interview_frame.4bpp.smol");
 static const u16 sTextInputFrameOrange_Pal[] = INCBIN_U16("graphics/easy_chat/text_input_frame_orange.gbapal");
 static const u16 sTextInputFrameGreen_Pal[] = INCBIN_U16("graphics/easy_chat/text_input_frame_green.gbapal");
-static const u32 sTextInputFrame_Gfx[] = INCBIN_U32("graphics/easy_chat/text_input_frame.4bpp.lz");
+static const u32 sTextInputFrame_Gfx[] = INCBIN_U32("graphics/easy_chat/text_input_frame.4bpp.smol");
 static const u16 sTitleText_Pal[] = INCBIN_U16("graphics/easy_chat/title_text.gbapal");
 static const u16 sText_Pal[] = INCBIN_U16("graphics/easy_chat/text.gbapal");
 
@@ -962,9 +986,6 @@ static const struct SpriteTemplate sSpriteTemplate_TriangleCursor =
     .tileTag = PALTAG_TRIANGLE_CURSOR,
     .paletteTag = GFXTAG_TRIANGLE_CURSOR,
     .oam = &sOamData_TriangleCursor,
-    .anims = gDummySpriteAnimTable,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_Cursor,
 };
 
@@ -1025,8 +1046,6 @@ static const struct SpriteTemplate sSpriteTemplate_RectangleCursor =
     .paletteTag = PALTAG_RECTANGLE_CURSOR,
     .oam = &sOamData_RectangleCursor,
     .anims = sAnims_RectangleCursor,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_Cursor,
 };
 
@@ -1096,9 +1115,6 @@ static const struct SpriteTemplate sSpriteTemplate_ModeWindow =
     .paletteTag = PALTAG_MISC_UI,
     .oam = &sOamData_ModeWindow,
     .anims = sAnims_ModeWindow,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
 };
 
 static const struct OamData sOamData_ButtonWindow = {
@@ -1122,10 +1138,6 @@ static const struct SpriteTemplate sSpriteTemplate_ButtonWindow =
     .tileTag = GFXTAG_BUTTON_WINDOW,
     .paletteTag = PALTAG_MISC_UI,
     .oam = &sOamData_ButtonWindow,
-    .anims = gDummySpriteAnimTable,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
 };
 
 static const struct OamData sOamData_StartSelectButton = {
@@ -1182,9 +1194,6 @@ static const struct SpriteTemplate sSpriteTemplate_StartSelectButton =
     .paletteTag = PALTAG_MISC_UI,
     .oam = &sOamData_StartSelectButton,
     .anims = sAnims_TwoFrame,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ScrollIndicator =
@@ -1193,9 +1202,6 @@ static const struct SpriteTemplate sSpriteTemplate_ScrollIndicator =
     .paletteTag = PALTAG_MISC_UI,
     .oam = &sOamData_ScrollIndicator,
     .anims = sAnims_TwoFrame,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
 };
 
 static const u8 sFooterOptionXOffsets[NUM_FOOTER_TYPES][4] = {
@@ -1212,31 +1218,6 @@ static const u8 *const sFooterTextOptions[NUM_FOOTER_TYPES][4] = {
 
 #include "data/easy_chat/easy_chat_groups.h"
 #include "data/easy_chat/easy_chat_words_by_letter.h"
-
-static const u8 *const sEasyChatGroupNamePointers[EC_NUM_GROUPS] = {
-    [EC_GROUP_POKEMON]          = gEasyChatGroupName_Pokemon,
-    [EC_GROUP_TRAINER]          = gEasyChatGroupName_Trainer,
-    [EC_GROUP_STATUS]           = gEasyChatGroupName_Status,
-    [EC_GROUP_BATTLE]           = gEasyChatGroupName_Battle,
-    [EC_GROUP_GREETINGS]        = gEasyChatGroupName_Greetings,
-    [EC_GROUP_PEOPLE]           = gEasyChatGroupName_People,
-    [EC_GROUP_VOICES]           = gEasyChatGroupName_Voices,
-    [EC_GROUP_SPEECH]           = gEasyChatGroupName_Speech,
-    [EC_GROUP_ENDINGS]          = gEasyChatGroupName_Endings,
-    [EC_GROUP_FEELINGS]         = gEasyChatGroupName_Feelings,
-    [EC_GROUP_CONDITIONS]       = gEasyChatGroupName_Conditions,
-    [EC_GROUP_ACTIONS]          = gEasyChatGroupName_Actions,
-    [EC_GROUP_LIFESTYLE]        = gEasyChatGroupName_Lifestyle,
-    [EC_GROUP_HOBBIES]          = gEasyChatGroupName_Hobbies,
-    [EC_GROUP_TIME]             = gEasyChatGroupName_Time,
-    [EC_GROUP_MISC]             = gEasyChatGroupName_Misc,
-    [EC_GROUP_ADJECTIVES]       = gEasyChatGroupName_Adjectives,
-    [EC_GROUP_EVENTS]           = gEasyChatGroupName_Events,
-    [EC_GROUP_MOVE_1]           = gEasyChatGroupName_Move1,
-    [EC_GROUP_MOVE_2]           = gEasyChatGroupName_Move2,
-    [EC_GROUP_TRENDY_SAYING]    = gEasyChatGroupName_TrendySaying,
-    [EC_GROUP_POKEMON_NATIONAL] = gEasyChatGroupName_Pokemon2,
-};
 
 static const u16 sDefaultProfileWords[EASY_CHAT_BATTLE_WORDS_COUNT - 2] = {
     EC_WORD_I_AM,
@@ -5545,7 +5526,7 @@ static u16 GetRandomUnlockedEasyChatPokemon(void)
     numWords = gEasyChatGroups[EC_GROUP_POKEMON].numWords;
     for (i = 0; i < numWords; i++)
     {
-        u16 dexNum = SpeciesToNationalPokedexNum(*species);
+        enum NationalDexOrder dexNum = SpeciesToNationalPokedexNum(*species);
         if (GetSetPokedexFlag(dexNum, FLAG_GET_SEEN))
         {
             if (index)
@@ -5653,7 +5634,7 @@ static u8 GetUnlockedEasyChatGroupId(u8 index)
 static u8 UNUSED *BufferEasyChatWordGroupName(u8 *dest, u8 groupId, u16 totalChars)
 {
     u16 i;
-    u8 *str = StringCopy(dest, sEasyChatGroupNamePointers[groupId]);
+    u8 *str = StringCopy(dest, gEasyChatGroups[groupId].name);
     for (i = str - dest; i < totalChars; i++)
     {
         *str = CHAR_SPACE;
@@ -5666,7 +5647,7 @@ static u8 UNUSED *BufferEasyChatWordGroupName(u8 *dest, u8 groupId, u16 totalCha
 
 static const u8 *GetEasyChatWordGroupName(u8 groupId)
 {
-    return sEasyChatGroupNamePointers[groupId];
+    return gEasyChatGroups[groupId].name;
 }
 
 static u8 *CopyEasyChatWordPadded(u8 *dest, u16 easyChatWord, u16 totalChars)
@@ -5851,16 +5832,23 @@ static u8 IsEasyChatWordUnlocked(u16 easyChatWord)
 void InitializeEasyChatWordArray(u16 *words, u16 length)
 {
     u16 i;
-    for (i = length - 1; i != EC_EMPTY_WORD; i--)
-        *(words++) = EC_EMPTY_WORD;
+    if (words != NULL)
+    {
+        for (i = length - 1; i != EC_EMPTY_WORD; i--)
+            *(words++) = EC_EMPTY_WORD;
+    }
 }
 
 void InitQuestionnaireWords(void)
 {
     int i;
     u16 *words = GetQuestionnaireWordsPtr();
-    for (i = 0; i < NUM_QUESTIONNAIRE_WORDS; i++)
-        words[i] = EC_EMPTY_WORD;
+
+    if (words != NULL)
+    {
+        for (i = 0; i < NUM_QUESTIONNAIRE_WORDS; i++)
+            words[i] = EC_EMPTY_WORD;
+    }
 }
 
 bool32 IsEasyChatAnswerUnlocked(int easyChatWord)

@@ -1,16 +1,14 @@
-.set LOCALID_NURSE, 1
-
 SootopolisCity_PokemonCenter_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, SootopolisCity_PokemonCenter_1F_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
 SootopolisCity_PokemonCenter_1F_OnTransition:
-	setrespawn HEAL_LOCATION_SOOTOPOLIS_CITY
+	setrespawn HEAL_LOCATION_JOHTO_MORIYA_SHRINE
 	end
 
 SootopolisCity_PokemonCenter_1F_EventScript_Nurse::
-	setvar VAR_0x800B, LOCALID_NURSE
+	setvar VAR_0x800B, LOCALID_SOOTOPOLIS_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress

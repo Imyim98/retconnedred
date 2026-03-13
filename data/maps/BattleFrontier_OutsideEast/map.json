@@ -5,7 +5,7 @@
   "music": "MUS_B_FRONTIER",
   "region_map_section": "MAPSEC_BATTLE_FRONTIER",
   "requires_flash": false,
-  "weather": "WEATHER_NONE",
+  "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_ROUTE",
   "allow_cycling": true,
   "allow_escaping": false,
@@ -14,9 +14,9 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_BATTLE_FRONTIER_OUTSIDE_WEST",
-      "offset": 0,
-      "direction": "left"
+      "map": "MAP_ROUTE115",
+      "offset": -38,
+      "direction": "down"
     }
   ],
   "object_events": [
@@ -100,8 +100,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
-      "x": 8,
-      "y": 46,
+      "x": 5,
+      "y": 45,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -152,8 +152,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_TWIN",
-      "x": 18,
-      "y": 40,
+      "x": 28,
+      "y": 41,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -165,8 +165,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_1",
-      "x": 17,
-      "y": 40,
+      "x": 26,
+      "y": 44,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 1,
@@ -190,9 +190,10 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_FRONTIER_SUDOWOODO",
       "graphics_id": "OBJ_EVENT_GFX_SUDOWOODO",
-      "x": 54,
-      "y": 62,
+      "x": 61,
+      "y": 56,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 1,
@@ -243,8 +244,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_3",
-      "x": 11,
-      "y": 21,
+      "x": 1,
+      "y": 13,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -256,8 +257,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
-      "x": 10,
-      "y": 21,
+      "x": 0,
+      "y": 9,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 1,
@@ -269,8 +270,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
-      "x": 16,
-      "y": 30,
+      "x": 30,
+      "y": 45,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 3,
@@ -322,7 +323,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN",
       "x": 58,
-      "y": 55,
+      "y": 47,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN_AND_LEFT",
       "movement_range_x": 1,
@@ -347,8 +348,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_CAMPER",
-      "x": 29,
-      "y": 14,
+      "x": 35,
+      "y": 8,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 1,
@@ -361,32 +362,32 @@
   ],
   "warp_events": [
     {
-      "x": 16,
-      "y": 14,
+      "x": 18,
+      "y": 5,
       "elevation": 0,
       "dest_map": "MAP_BATTLE_FRONTIER_BATTLE_TOWER_LOBBY",
       "dest_warp_id": "0"
     },
     {
-      "x": 39,
-      "y": 29,
+      "x": 17,
+      "y": 38,
       "elevation": 0,
-      "dest_map": "MAP_BATTLE_FRONTIER_BATTLE_ARENA_LOBBY",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_ROUTE115",
+      "dest_warp_id": "7"
     },
     {
-      "x": 45,
-      "y": 56,
+      "x": 18,
+      "y": 38,
       "elevation": 0,
-      "dest_map": "MAP_BATTLE_FRONTIER_BATTLE_PALACE_LOBBY",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_ROUTE115",
+      "dest_warp_id": "7"
     },
     {
-      "x": 58,
-      "y": 14,
+      "x": 19,
+      "y": 38,
       "elevation": 0,
-      "dest_map": "MAP_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_ROUTE115",
+      "dest_warp_id": "8"
     },
     {
       "x": 35,

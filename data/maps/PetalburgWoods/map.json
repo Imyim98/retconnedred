@@ -3,7 +3,7 @@
   "name": "PetalburgWoods",
   "layout": "LAYOUT_PETALBURG_WOODS",
   "music": "MUS_PETALBURG_WOODS",
-  "region_map_section": "MAPSEC_PETALBURG_WOODS",
+  "region_map_section": "MAPSEC_JOHTO_ROUTE_33",
   "requires_flash": false,
   "weather": "WEATHER_SHADE",
   "map_type": "MAP_TYPE_ROUTE",
@@ -41,6 +41,7 @@
       "flag": "FLAG_TEMP_12"
     },
     {
+      "local_id": "LOCALID_PETALBURG_WOODS_GRUNT",
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
       "x": 26,
       "y": 17,
@@ -54,6 +55,7 @@
       "flag": "FLAG_HIDE_PETALBURG_WOODS_AQUA_GRUNT"
     },
     {
+      "local_id": "LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE",
       "graphics_id": "OBJ_EVENT_GFX_MAN_2",
       "x": 26,
       "y": 20,

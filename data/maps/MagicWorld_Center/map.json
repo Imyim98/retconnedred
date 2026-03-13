@@ -1,0 +1,53 @@
+{
+  "id": "MAP_MAGIC_WORLD_CENTER",
+  "name": "MagicWorld_Center",
+  "layout": "LAYOUT_MAGIC_WORLD_CENTER",
+  "music": "MUS_TH_KIMI_NO_YUME",
+  "region_map_section": "MAPSEC_MAGIC_WORLD",
+  "requires_flash": false,
+  "weather": "WEATHER_SUNNY",
+  "map_type": "MAP_TYPE_INDOOR",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_MAGIC_WORLD_NORTH1",
+      "offset": 0,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_MAGIC_WORLD_SOUTH",
+      "offset": 0,
+      "direction": "down"
+    }
+  ],
+  "object_events": [],
+  "warp_events": [
+    {
+      "x": 19,
+      "y": 17,
+      "elevation": 0,
+      "dest_map": "MAP_MAGIC_WORLD_CENTER",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 8,
+      "y": 15,
+      "elevation": 0,
+      "dest_map": "MAP_MAGIC_WORLD_CENTER",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 20,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_MAGIC_WORLD_CENTER",
+      "dest_warp_id": "0"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": []
+}

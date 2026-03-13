@@ -3,7 +3,7 @@
   "name": "Route111_WinstrateFamilysHouse",
   "layout": "LAYOUT_HOUSE2",
   "music": "MUS_RUSTBORO",
-  "region_map_section": "MAPSEC_ROUTE_111",
+  "region_map_section": "MAPSEC_GENSOKYO_GARDEN_OF_THE_SUN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
@@ -15,6 +15,7 @@
   "connections": null,
   "object_events": [
     {
+      "local_id": "LOCALID_WINSTRATE_HOUSE_VIVI",
       "graphics_id": "OBJ_EVENT_GFX_LASS",
       "x": 7,
       "y": 5,
@@ -28,6 +29,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_WINSTRATE_HOUSE_VICTOR",
       "graphics_id": "OBJ_EVENT_GFX_MAN_1",
       "x": 4,
       "y": 5,
@@ -41,6 +43,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_WINSTRATE_HOUSE_VICTORIA",
       "graphics_id": "OBJ_EVENT_GFX_POKEFAN_F",
       "x": 7,
       "y": 4,
@@ -54,6 +57,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_WINSTRATE_HOUSE_VICKY",
       "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
       "x": 4,
       "y": 4,

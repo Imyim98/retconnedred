@@ -3,7 +3,7 @@
   "name": "SafariZone_Northeast",
   "layout": "LAYOUT_SAFARI_ZONE_NORTHEAST",
   "music": "MUS_SAFARI_ZONE",
-  "region_map_section": "MAPSEC_SAFARI_ZONE",
+  "region_map_section": "MAPSEC_JOHTO_MT_SILVER_CAVE",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_ROUTE",
@@ -13,11 +13,6 @@
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
-    {
-      "map": "MAP_SAFARI_ZONE_NORTH",
-      "offset": 0,
-      "direction": "left"
-    },
     {
       "map": "MAP_SAFARI_ZONE_SOUTHEAST",
       "offset": 0,
@@ -143,8 +138,12 @@
       "flag": "FLAG_ITEM_SAFARI_ZONE_NORTH_EAST_NUGGET"
     }
   ],
-  "warp_events": [],
-  "coord_events": [],
+  "warp_events": [
+
+  ],
+  "coord_events": [
+
+  ],
   "bg_events": [
     {
       "type": "hidden_item",

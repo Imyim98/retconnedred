@@ -5,15 +5,15 @@
 
 struct BattlePyramidRequirement {
     const u16 *moves; /* use moves instead of effects so we don't need to find moves with said effect in our loop */
-    u16 abilities[10];
+    enum Ability abilities[10];
     u8 nAbilities;
-    u8 type;
+    enum Type type;
     u8 nMoves;
     const u16 *evoItems;
     u8 nEvoItems;
 };
 
-// EFFECT_PARALYZE, MOVE_EFFECT_PARALYZE (30% or more)
+// MOVE_EFFECT_PARALYZE (30% or more)
 static const u16 sParalyzingMoves[] = {
     //MOVE_THUNDER_PUNCH,
     MOVE_BODY_SLAM,
@@ -35,7 +35,7 @@ static const u16 sParalyzingMoves[] = {
     MOVE_COMBAT_TORQUE,
 };
 
-// MOVE_EFFECT_POISON (30% or more), EFFECT_POISON, MOVE_EFFECT_TOXIC, EFFECT_TOXIC, EFFECT_TOXIC_THREAD
+// MOVE_EFFECT_POISON (30% or more), MOVE_EFFECT_TOXIC, EFFECT_TOXIC_THREAD
 static const u16 sPoisoningMoves[] = {
     MOVE_POISON_STING,
     //MOVE_TWINEEDLE,
@@ -57,7 +57,7 @@ static const u16 sPoisoningMoves[] = {
     MOVE_TOXIC_THREAD,
 };
 
-// MOVE_EFFECT_BURN, EFFECT_WILL_O_WISP
+// MOVE_EFFECT_BURN
 static const u16 sBurningMoves[] = {
     MOVE_WILL_O_WISP,
     //MOVE_EMBER,
@@ -108,6 +108,7 @@ static const u16 sWeatherChangingMoves[] = {
     MOVE_SANDSTORM,
     MOVE_HAIL,
     MOVE_SUNNY_DAY,
+    MOVE_SHADOW_SKY,
 };
 
 // MOVE_EFFECT_RECHARGE, recoil
@@ -167,7 +168,7 @@ static const struct BattlePyramidRequirement sBattlePyramidRequirementsByRound[]
     },
     [6] = /* ice types */
     {
-        .type = TYPE_ICE,
+        .type = TYPE_NEW_ICE,
     },
 
     [7] = /* pokemon with explosion effects */
@@ -178,15 +179,15 @@ static const struct BattlePyramidRequirement sBattlePyramidRequirementsByRound[]
     },
     [8] = /* psychic types */
     {
-        .type = TYPE_PSYCHIC,
+        .type = TYPE_NEW_REASON,
     },
     [9] = /* rock types */
     {
-        .type = TYPE_ROCK,
+        .type = TYPE_NEW_EARTH,
     },
     [10] = /* fighting types */
     {
-        .type = TYPE_FIGHTING,
+        .type = TYPE_NEW_DREAM,
     },
     [11] = /* pokemon with weather-altering effects */
     {
@@ -198,27 +199,27 @@ static const struct BattlePyramidRequirement sBattlePyramidRequirementsByRound[]
     },
     [12] = /* bug types */
     {
-        .type = TYPE_BUG,
+        .type = TYPE_NEW_BEAST,
     },
     [13] = /* dark types */
     {
-        .type = TYPE_DARK,
+        .type = TYPE_NEW_DARK,
     },
     [14] = /* water types */
     {
-        .type = TYPE_WATER,
+        .type = TYPE_NEW_WATER,
     },
     [15] = /* ghost types */
     {
-        .type = TYPE_GHOST,
+        .type = TYPE_NEW_NETHER,
     },
     [16] = /* steel types */
     {
-        .type = TYPE_STEEL,
+        .type = TYPE_NEW_METAL,
     },
     [17] = /* flying/dragon types */
     {
-        .type = TYPE_DRAGON,
+        .type = TYPE_NEW_DIVINE,
     },
     [18] = /* evolve via water/thunder/fire stone */
     {
@@ -228,7 +229,7 @@ static const struct BattlePyramidRequirement sBattlePyramidRequirementsByRound[]
     },
     [19] = /* normal with powerful moves */
     {
-        .type = TYPE_NORMAL,
+        .type = TYPE_NEW_ILLUSION,
         .moves = sPowerfulNormalMoves,
         .nMoves = NELEMS(sPowerfulNormalMoves),
     },

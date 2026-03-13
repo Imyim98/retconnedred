@@ -2,8 +2,8 @@
   "id": "MAP_DEWFORD_TOWN",
   "name": "DewfordTown",
   "layout": "LAYOUT_DEWFORD_TOWN",
-  "music": "MUS_DEWFORD",
-  "region_map_section": "MAPSEC_DEWFORD_TOWN",
+  "music": "MUS_HG_CHERRYGROVE",
+  "region_map_section": "MAPSEC_JOHTO_CHERRYGROVE_CITY",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_TOWN",
@@ -14,13 +14,13 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_ROUTE106",
-      "offset": -60,
+      "map": "MAP_JOHTO_ROUTE30",
+      "offset": 12,
       "direction": "up"
     },
     {
-      "map": "MAP_ROUTE107",
-      "offset": 0,
+      "map": "MAP_JOHTO_ROUTE29",
+      "offset": -4,
       "direction": "right"
     }
   ],
@@ -39,6 +39,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_DEWFORD_BRINEY",
       "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
       "x": 12,
       "y": 9,
@@ -65,6 +66,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_DEWFORD_BOAT",
       "graphics_id": "OBJ_EVENT_GFX_MR_BRINEYS_BOAT",
       "x": 12,
       "y": 8,
@@ -100,8 +102,8 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 2,
-      "y": 10,
+      "x": 37,
+      "y": 3,
       "elevation": 0,
       "dest_map": "MAP_DEWFORD_TOWN_POKEMON_CENTER_1F",
       "dest_warp_id": "0"
@@ -148,16 +150,16 @@
     },
     {
       "type": "sign",
-      "x": 4,
-      "y": 10,
+      "x": 39,
+      "y": 3,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Common_EventScript_ShowPokemonCenterSign"
     },
     {
       "type": "sign",
-      "x": 3,
-      "y": 10,
+      "x": 38,
+      "y": 3,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Common_EventScript_ShowPokemonCenterSign"

@@ -276,7 +276,13 @@
 #define SE_PIKE_CURTAIN_CLOSE       267 // SE_CURTAIN
 #define SE_PIKE_CURTAIN_OPEN        268 // SE_CURTAIN1
 #define SE_SUDOWOODO_SHAKE          269 // SE_USSOKI
-#define END_SE                      SE_SUDOWOODO_SHAKE
+// New SFX
+#define SE_TH_PICHUUN               270
+#define SE_TH_SPELL                 271
+#define SE_YYYI_JUKAI_WARNING       272
+#define SE_ETC_ZERONOS              273
+#define SE_M_CLASSIC_HYPER_BEAM     274
+#define END_SE                      SE_M_CLASSIC_HYPER_BEAM
 
 // Music
 #define START_MUS                   350
@@ -545,7 +551,6 @@
 #define PH_NURSE_HELD               608
 #define PH_NURSE_SOLO               609
 
-// Start HGSS Songs
 #define MUS_HG_INTRO                      610 // Opening Movie
 #define MUS_HG_TITLE                      611 // Title Screen
 #define MUS_HG_NEW_GAME                   612 // An Adventure Begins!

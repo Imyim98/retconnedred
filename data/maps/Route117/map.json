@@ -3,7 +3,7 @@
   "name": "Route117",
   "layout": "LAYOUT_ROUTE117",
   "music": "MUS_ROUTE110",
-  "region_map_section": "MAPSEC_ROUTE_117",
+  "region_map_section": "MAPSEC_GENSOKYO_DREAM_WORLD",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_ROUTE",
@@ -12,18 +12,7 @@
   "allow_running": true,
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": [
-    {
-      "map": "MAP_VERDANTURF_TOWN",
-      "offset": 0,
-      "direction": "left"
-    },
-    {
-      "map": "MAP_MAUVILLE_CITY",
-      "offset": 0,
-      "direction": "right"
-    }
-  ],
+  "connections": null,
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_1",
@@ -52,6 +41,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_DAYCARE_MAN",
       "graphics_id": "OBJ_EVENT_GFX_OLD_MAN",
       "x": 47,
       "y": 4,

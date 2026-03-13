@@ -39,13 +39,14 @@
 #include "constants/event_objects.h"
 #include "constants/field_specials.h"
 #include "constants/items.h"
-#include "constants/map_types.h"
 #include "constants/metatile_behaviors.h"
 #include "constants/metatile_labels.h"
 #include "constants/moves.h"
 #include "constants/secret_bases.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
+#include "constants/moves.h"
+#include "constants/species.h"
 
 #define TAG_SCROLL_ARROW 5112
 
@@ -110,30 +111,30 @@ static const struct SecretBaseEntranceMetatiles sSecretBaseEntranceMetatiles[] =
 // x, y positions are for when the player warps in for the first time (in front of the computer)
 static const u8 sSecretBaseEntrancePositions[NUM_SECRET_BASE_GROUPS * 4] =
 {
-    [SECRET_BASE_RED_CAVE1]    = MAP_NUM(SECRET_BASE_RED_CAVE1),    0,  1,  3,
-    [SECRET_BASE_RED_CAVE2]    = MAP_NUM(SECRET_BASE_RED_CAVE2),    0,  5,  9,
-    [SECRET_BASE_RED_CAVE3]    = MAP_NUM(SECRET_BASE_RED_CAVE3),    0,  1,  3,
-    [SECRET_BASE_RED_CAVE4]    = MAP_NUM(SECRET_BASE_RED_CAVE4),    0,  7, 13,
-    [SECRET_BASE_BROWN_CAVE1]  = MAP_NUM(SECRET_BASE_BROWN_CAVE1),  0,  2,  3,
-    [SECRET_BASE_BROWN_CAVE2]  = MAP_NUM(SECRET_BASE_BROWN_CAVE2),  0,  9,  2,
-    [SECRET_BASE_BROWN_CAVE3]  = MAP_NUM(SECRET_BASE_BROWN_CAVE3),  0, 13,  4,
-    [SECRET_BASE_BROWN_CAVE4]  = MAP_NUM(SECRET_BASE_BROWN_CAVE4),  0,  1,  2,
-    [SECRET_BASE_BLUE_CAVE1]   = MAP_NUM(SECRET_BASE_BLUE_CAVE1),   0,  1,  3,
-    [SECRET_BASE_BLUE_CAVE2]   = MAP_NUM(SECRET_BASE_BLUE_CAVE2),   0,  1,  2,
-    [SECRET_BASE_BLUE_CAVE3]   = MAP_NUM(SECRET_BASE_BLUE_CAVE3),   0,  3, 15,
-    [SECRET_BASE_BLUE_CAVE4]   = MAP_NUM(SECRET_BASE_BLUE_CAVE4),   0,  3, 14,
-    [SECRET_BASE_YELLOW_CAVE1] = MAP_NUM(SECRET_BASE_YELLOW_CAVE1), 0,  9,  3,
-    [SECRET_BASE_YELLOW_CAVE2] = MAP_NUM(SECRET_BASE_YELLOW_CAVE2), 0,  8,  7,
-    [SECRET_BASE_YELLOW_CAVE3] = MAP_NUM(SECRET_BASE_YELLOW_CAVE3), 0,  3,  6,
-    [SECRET_BASE_YELLOW_CAVE4] = MAP_NUM(SECRET_BASE_YELLOW_CAVE4), 0,  5,  9,
-    [SECRET_BASE_TREE1]        = MAP_NUM(SECRET_BASE_TREE1),        0,  2,  3,
-    [SECRET_BASE_TREE2]        = MAP_NUM(SECRET_BASE_TREE2),        0,  5,  6,
-    [SECRET_BASE_TREE3]        = MAP_NUM(SECRET_BASE_TREE3),        0, 15,  3,
-    [SECRET_BASE_TREE4]        = MAP_NUM(SECRET_BASE_TREE4),        0,  4, 10,
-    [SECRET_BASE_SHRUB1]       = MAP_NUM(SECRET_BASE_SHRUB1),       0,  3,  3,
-    [SECRET_BASE_SHRUB2]       = MAP_NUM(SECRET_BASE_SHRUB2),       0,  1,  2,
-    [SECRET_BASE_SHRUB3]       = MAP_NUM(SECRET_BASE_SHRUB3),       0,  7,  8,
-    [SECRET_BASE_SHRUB4]       = MAP_NUM(SECRET_BASE_SHRUB4),       0,  9,  6,
+    [SECRET_BASE_RED_CAVE1]    = MAP_NUM(MAP_SECRET_BASE_RED_CAVE1),    0,  1,  3,
+    [SECRET_BASE_RED_CAVE2]    = MAP_NUM(MAP_SECRET_BASE_RED_CAVE2),    0,  5,  9,
+    [SECRET_BASE_RED_CAVE3]    = MAP_NUM(MAP_SECRET_BASE_RED_CAVE3),    0,  1,  3,
+    [SECRET_BASE_RED_CAVE4]    = MAP_NUM(MAP_SECRET_BASE_RED_CAVE4),    0,  7, 13,
+    [SECRET_BASE_BROWN_CAVE1]  = MAP_NUM(MAP_SECRET_BASE_BROWN_CAVE1),  0,  2,  3,
+    [SECRET_BASE_BROWN_CAVE2]  = MAP_NUM(MAP_SECRET_BASE_BROWN_CAVE2),  0,  9,  2,
+    [SECRET_BASE_BROWN_CAVE3]  = MAP_NUM(MAP_SECRET_BASE_BROWN_CAVE3),  0, 13,  4,
+    [SECRET_BASE_BROWN_CAVE4]  = MAP_NUM(MAP_SECRET_BASE_BROWN_CAVE4),  0,  1,  2,
+    [SECRET_BASE_BLUE_CAVE1]   = MAP_NUM(MAP_SECRET_BASE_BLUE_CAVE1),   0,  1,  3,
+    [SECRET_BASE_BLUE_CAVE2]   = MAP_NUM(MAP_SECRET_BASE_BLUE_CAVE2),   0,  1,  2,
+    [SECRET_BASE_BLUE_CAVE3]   = MAP_NUM(MAP_SECRET_BASE_BLUE_CAVE3),   0,  3, 15,
+    [SECRET_BASE_BLUE_CAVE4]   = MAP_NUM(MAP_SECRET_BASE_BLUE_CAVE4),   0,  3, 14,
+    [SECRET_BASE_YELLOW_CAVE1] = MAP_NUM(MAP_SECRET_BASE_YELLOW_CAVE1), 0,  9,  3,
+    [SECRET_BASE_YELLOW_CAVE2] = MAP_NUM(MAP_SECRET_BASE_YELLOW_CAVE2), 0,  8,  7,
+    [SECRET_BASE_YELLOW_CAVE3] = MAP_NUM(MAP_SECRET_BASE_YELLOW_CAVE3), 0,  3,  6,
+    [SECRET_BASE_YELLOW_CAVE4] = MAP_NUM(MAP_SECRET_BASE_YELLOW_CAVE4), 0,  5,  9,
+    [SECRET_BASE_TREE1]        = MAP_NUM(MAP_SECRET_BASE_TREE1),        0,  2,  3,
+    [SECRET_BASE_TREE2]        = MAP_NUM(MAP_SECRET_BASE_TREE2),        0,  5,  6,
+    [SECRET_BASE_TREE3]        = MAP_NUM(MAP_SECRET_BASE_TREE3),        0, 15,  3,
+    [SECRET_BASE_TREE4]        = MAP_NUM(MAP_SECRET_BASE_TREE4),        0,  4, 10,
+    [SECRET_BASE_SHRUB1]       = MAP_NUM(MAP_SECRET_BASE_SHRUB1),       0,  3,  3,
+    [SECRET_BASE_SHRUB2]       = MAP_NUM(MAP_SECRET_BASE_SHRUB2),       0,  1,  2,
+    [SECRET_BASE_SHRUB3]       = MAP_NUM(MAP_SECRET_BASE_SHRUB3),       0,  7,  8,
+    [SECRET_BASE_SHRUB4]       = MAP_NUM(MAP_SECRET_BASE_SHRUB4),       0,  9,  6,
 };
 
 #define GET_BASE_MAP_NUM(group)    (sSecretBaseEntrancePositions[(group) + 0])
@@ -159,20 +160,60 @@ static const struct YesNoFuncTable sDeleteRegistryYesNoFuncs =
     .noFunc = DeleteRegistry_No,
 };
 
-static const u16 sSecretBaseOwnerGfxIds[10] =
+static const u16 sSecretBaseOwnerGfxIds[50] =
 {
     // Male
-    OBJ_EVENT_GFX_YOUNGSTER,
-    OBJ_EVENT_GFX_BUG_CATCHER,
-    OBJ_EVENT_GFX_RICH_BOY,
-    OBJ_EVENT_GFX_CAMPER,
-    OBJ_EVENT_GFX_MAN_3,
+    OBJ_EVENT_GFX_YOUNGSTER, // 1
+    OBJ_EVENT_GFX_SCHOOL_KID_M, // 2
+    OBJ_EVENT_GFX_RICH_BOY, // 3
+    OBJ_EVENT_GFX_CAMPER, // 4
+    OBJ_EVENT_GFX_MAN_3, // 5
+    OBJ_EVENT_GFX_RED, // 6
+    OBJ_EVENT_GFX_LINK_RS_BRENDAN, // 7
+    OBJ_EVENT_GFX_BRENDAN_NORMAL, // 8
+    OBJ_EVENT_GFX_POKEFAN_M, // 9
+    OBJ_EVENT_GFX_MAN_3, // 10
+    OBJ_EVENT_GFX_AQUA_MEMBER_M, // 11
+    OBJ_EVENT_GFX_MAGMA_MEMBER_M, // 12
+    OBJ_EVENT_GFX_PSYCHIC_M, // 13
+    OBJ_EVENT_GFX_EXPERT_M, // 14
+    OBJ_EVENT_GFX_BLACK_BELT, // 15
+    OBJ_EVENT_GFX_MAN_5, // 16
+    OBJ_EVENT_GFX_GENTLEMAN, // 17
+    OBJ_EVENT_GFX_MANIAC, // 18
+    OBJ_EVENT_GFX_HIKER, // 19
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_M, // 20
+    OBJ_EVENT_GFX_CYCLING_TRIATHLETE_M, // 21
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_M, // 22
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_M, // 23
+    OBJ_EVENT_GFX_MAN_4, // 24
+    OBJ_EVENT_GFX_TUBER_M, // 25
     // Female
-    OBJ_EVENT_GFX_LASS,
-    OBJ_EVENT_GFX_GIRL_3,
-    OBJ_EVENT_GFX_WOMAN_2,
-    OBJ_EVENT_GFX_PICNICKER,
-    OBJ_EVENT_GFX_WOMAN_5,
+    OBJ_EVENT_GFX_LASS, // 1
+    OBJ_EVENT_GFX_GIRL_3, // 2
+    OBJ_EVENT_GFX_WOMAN_2, // 3
+    OBJ_EVENT_GFX_PICNICKER, // 4
+    OBJ_EVENT_GFX_WOMAN_5, // 5
+    OBJ_EVENT_GFX_LEAF, // 6
+    OBJ_EVENT_GFX_LINK_RS_MAY, // 7
+    OBJ_EVENT_GFX_MAY_NORMAL, // 8
+    OBJ_EVENT_GFX_POKEFAN_M, // 9
+    OBJ_EVENT_GFX_WOMAN_5, // 10
+    OBJ_EVENT_GFX_AQUA_MEMBER_F, // 11
+    OBJ_EVENT_GFX_MAGMA_MEMBER_F, // 12
+    OBJ_EVENT_GFX_HEX_MANIAC, // 13
+    OBJ_EVENT_GFX_EXPERT_F, // 14
+    OBJ_EVENT_GFX_GIRL_3, // 15
+    OBJ_EVENT_GFX_PICNICKER, // 16
+    OBJ_EVENT_GFX_GIRL_2, // 17
+    OBJ_EVENT_GFX_BEAUTY, // 18
+    OBJ_EVENT_GFX_HEX_MANIAC, // 19
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_F, // 20
+    OBJ_EVENT_GFX_CYCLING_TRIATHLETE_F, // 21
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_F, // 22
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_F, // 23
+    OBJ_EVENT_GFX_WOMAN_2, // 24
+    OBJ_EVENT_GFX_TUBER_F, // 25
 };
 
 static const struct WindowTemplate sRegistryWindowTemplates[] =
@@ -332,7 +373,7 @@ void ToggleSecretBaseEntranceMetatile(void)
     {
         if (sSecretBaseEntranceMetatiles[i].closedMetatileId == metatileId)
         {
-            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].openMetatileId | MAPGRID_COLLISION_MASK);
+            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].openMetatileId | MAPGRID_IMPASSABLE);
             CurrentMapDrawMetatileAt(x, y);
             return;
         }
@@ -343,7 +384,7 @@ void ToggleSecretBaseEntranceMetatile(void)
     {
         if (sSecretBaseEntranceMetatiles[i].openMetatileId == metatileId)
         {
-            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].closedMetatileId | MAPGRID_COLLISION_MASK);
+            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].closedMetatileId | MAPGRID_IMPASSABLE);
             CurrentMapDrawMetatileAt(x, y);
             return;
         }
@@ -398,7 +439,7 @@ void SetOccupiedSecretBaseEntranceMetatiles(struct MapEvents const *events)
                     {
                         if (sSecretBaseEntranceMetatiles[i].closedMetatileId == tile_id)
                         {
-                            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].openMetatileId | MAPGRID_COLLISION_MASK);
+                            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].openMetatileId | MAPGRID_IMPASSABLE);
                             break;
                         }
                     }
@@ -412,7 +453,7 @@ void SetOccupiedSecretBaseEntranceMetatiles(struct MapEvents const *events)
 static void SetSecretBaseWarpDestination(void)
 {
     s8 secretBaseGroup = SECRET_BASE_ID_TO_GROUP(sCurSecretBaseId);
-    SetWarpDestinationToMapWarp(MAP_GROUP(SECRET_BASE_RED_CAVE1), GET_BASE_MAP_NUM(secretBaseGroup), GET_BASE_WARP_ID(secretBaseGroup));
+    SetWarpDestinationToMapWarp(MAP_GROUP(MAP_SECRET_BASE_RED_CAVE1), GET_BASE_MAP_NUM(secretBaseGroup), GET_BASE_WARP_ID(secretBaseGroup));
 }
 
 #define tState data[0]
@@ -477,7 +518,7 @@ static void EnterNewlyCreatedSecretBase_StartFadeIn(void)
     FindMetatileIdMapCoords(&x, &y, METATILE_SecretBase_PC);
     x += MAP_OFFSET;
     y += MAP_OFFSET;
-    MapGridSetMetatileIdAt(x, y, METATILE_SecretBase_PC | MAPGRID_COLLISION_MASK);
+    MapGridSetMetatileIdAt(x, y, METATILE_SecretBase_PC | MAPGRID_IMPASSABLE);
     CurrentMapDrawMetatileAt(x, y);
     FadeInFromBlack();
     CreateTask(EnterNewlyCreatedSecretBase_WaitFadeIn, 0);
@@ -509,8 +550,8 @@ void EnterNewlyCreatedSecretBase(void)
 
 bool8 CurMapIsSecretBase(void)
 {
-    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(SECRET_BASE_RED_CAVE1)
-     && (u8)gSaveBlock1Ptr->location.mapNum <= MAP_NUM(SECRET_BASE_SHRUB4))
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SECRET_BASE_RED_CAVE1)
+     && (u8)gSaveBlock1Ptr->location.mapNum <= MAP_NUM(MAP_SECRET_BASE_SHRUB4))
         return TRUE;
     else
         return FALSE;
@@ -538,13 +579,13 @@ void InitSecretBaseAppearance(bool8 hidePC)
         {
             // Another player's secret base. Change PC type to the "Register" PC.
             FindMetatileIdMapCoords(&x, &y, METATILE_SecretBase_PC);
-            MapGridSetMetatileIdAt(x + MAP_OFFSET, y + MAP_OFFSET, METATILE_SecretBase_RegisterPC | MAPGRID_COLLISION_MASK);
+            MapGridSetMetatileIdAt(x + MAP_OFFSET, y + MAP_OFFSET, METATILE_SecretBase_RegisterPC | MAPGRID_IMPASSABLE);
         }
         else if (hidePC == TRUE && VarGet(VAR_SECRET_BASE_INITIALIZED) == 1)
         {
             // Change PC to regular ground tile.
             FindMetatileIdMapCoords(&x, &y, METATILE_SecretBase_PC);
-            MapGridSetMetatileIdAt(x + MAP_OFFSET, y + MAP_OFFSET, METATILE_SecretBase_Ground | MAPGRID_COLLISION_MASK);
+            MapGridSetMetatileIdAt(x + MAP_OFFSET, y + MAP_OFFSET, METATILE_SecretBase_Ground | MAPGRID_IMPASSABLE);
         }
     }
 }
@@ -771,7 +812,7 @@ static u8 GetAverageEVs(struct Pokemon *pokemon)
 void SetPlayerSecretBaseParty(void)
 {
     u16 i;
-    u16 moveIdx;
+    u16 moveIndex;
     u16 partyId;
     struct SecretBaseParty *party;
 
@@ -781,8 +822,8 @@ void SetPlayerSecretBaseParty(void)
     {
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            for (moveIdx = 0; moveIdx < MAX_MON_MOVES; moveIdx++)
-                party->moves[i * MAX_MON_MOVES + moveIdx] = MOVE_NONE;
+            for (moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
+                party->moves[i * MAX_MON_MOVES + moveIndex] = MOVE_NONE;
 
             party->species[i] = SPECIES_NONE;
             party->heldItems[i] = ITEM_NONE;
@@ -793,8 +834,8 @@ void SetPlayerSecretBaseParty(void)
             if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE
             && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
             {
-                for (moveIdx = 0; moveIdx < MAX_MON_MOVES; moveIdx++)
-                    party->moves[partyId * MAX_MON_MOVES + moveIdx] = GetMonData(&gPlayerParty[i], MON_DATA_MOVE1 + moveIdx);
+                for (moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
+                    party->moves[partyId * MAX_MON_MOVES + moveIndex] = GetMonData(&gPlayerParty[i], MON_DATA_MOVE1 + moveIndex);
 
                 party->species[partyId] = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES);
                 party->heldItems[partyId] = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
@@ -840,7 +881,7 @@ static void ClosePlayerSecretBaseEntrance(void)
                 {
                     MapGridSetMetatileIdAt(events->bgEvents[i].x + MAP_OFFSET,
                                            events->bgEvents[i].y + MAP_OFFSET,
-                                           sSecretBaseEntranceMetatiles[j].closedMetatileId | MAPGRID_COLLISION_MASK);
+                                           sSecretBaseEntranceMetatiles[j].closedMetatileId | MAPGRID_IMPASSABLE);
                     break;
                 }
             }
@@ -1164,7 +1205,10 @@ void PrepSecretBaseBattleFlags(void)
 {
     TryGainNewFanFromCounter(FANCOUNTER_BATTLED_AT_BASE);
     TRAINER_BATTLE_PARAM.opponentA = TRAINER_SECRET_BASE;
-    gBattleTypeFlags = BATTLE_TYPE_TRAINER | BATTLE_TYPE_SECRET_BASE;
+    if (gSaveBlock1Ptr->secretBases[0].battleType == 1)
+        gBattleTypeFlags = BATTLE_TYPE_TRAINER | BATTLE_TYPE_SECRET_BASE | BATTLE_TYPE_DOUBLE;
+    else
+        gBattleTypeFlags = BATTLE_TYPE_TRAINER | BATTLE_TYPE_SECRET_BASE;
 }
 
 void SetBattledOwnerFromResult(void)
@@ -1333,7 +1377,7 @@ void SecretBasePerStepCallback(u8 taskId)
 #undef tPlayerY
 #undef tFldEff
 
-static void SaveSecretBase(u8 secretBaseIdx, struct SecretBase *secretBase, u32 version, u32 language)
+static void SaveSecretBase(u8 secretBaseIdx, struct SecretBase *secretBase, enum GameVersion version, enum Language language)
 {
     int stringLength;
     u8 *name;
@@ -1892,24 +1936,24 @@ void CheckInteractedWithFriendsPosterDecor(void)
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
     switch (MapGridGetMetatileIdAt(x, y))
     {
-        case METATILE_SecretBase_PikaPoster_Left:
-        case METATILE_SecretBase_PikaPoster_Right:
-        case METATILE_SecretBase_LongPoster_Left:
-        case METATILE_SecretBase_LongPoster_Right:
-        case METATILE_SecretBase_SeaPoster_Left:
-        case METATILE_SecretBase_SeaPoster_Right:
-        case METATILE_SecretBase_SkyPoster_Left:
-        case METATILE_SecretBase_SkyPoster_Right:
-        case METATILE_SecretBase_KissPoster_Left:
-        case METATILE_SecretBase_KissPoster_Right:
-        case METATILE_SecretBase_BallPoster:
-        case METATILE_SecretBase_GreenPoster:
-        case METATILE_SecretBase_RedPoster:
-        case METATILE_SecretBase_BluePoster:
-        case METATILE_SecretBase_CutePoster:
-            if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
-                VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | SECRET_BASE_USED_POSTER);
-            break;
+    case METATILE_SecretBase_PikaPoster_Left:
+    case METATILE_SecretBase_PikaPoster_Right:
+    case METATILE_SecretBase_LongPoster_Left:
+    case METATILE_SecretBase_LongPoster_Right:
+    case METATILE_SecretBase_SeaPoster_Left:
+    case METATILE_SecretBase_SeaPoster_Right:
+    case METATILE_SecretBase_SkyPoster_Left:
+    case METATILE_SecretBase_SkyPoster_Right:
+    case METATILE_SecretBase_KissPoster_Left:
+    case METATILE_SecretBase_KissPoster_Right:
+    case METATILE_SecretBase_BallPoster:
+    case METATILE_SecretBase_GreenPoster:
+    case METATILE_SecretBase_RedPoster:
+    case METATILE_SecretBase_BluePoster:
+    case METATILE_SecretBase_CutePoster:
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+            VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | SECRET_BASE_USED_POSTER);
+        break;
     }
 }
 
@@ -1920,71 +1964,71 @@ void CheckInteractedWithFriendsFurnitureBottom(void)
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
     switch (MapGridGetMetatileIdAt(x, y))
     {
-        case METATILE_SecretBase_GlassOrnament_Base1:
-        case METATILE_SecretBase_GlassOrnament_Base2:
-            if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
-                VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | SECRET_BASE_USED_GLASS_ORNAMENT);
-            break;
-        case METATILE_SecretBase_RedPlant_Base1:
-        case METATILE_SecretBase_RedPlant_Base2:
-        case METATILE_SecretBase_TropicalPlant_Base1:
-        case METATILE_SecretBase_TropicalPlant_Base2:
-        case METATILE_SecretBase_PrettyFlowers_Base1:
-        case METATILE_SecretBase_PrettyFlowers_Base2:
-        case METATILE_SecretBase_ColorfulPlant_BaseLeft1:
-        case METATILE_SecretBase_ColorfulPlant_BaseRight1:
-        case METATILE_SecretBase_ColorfulPlant_BaseLeft2:
-        case METATILE_SecretBase_ColorfulPlant_BaseRight2:
-        case METATILE_SecretBase_BigPlant_BaseLeft1:
-        case METATILE_SecretBase_BigPlant_BaseRight1:
-        case METATILE_SecretBase_BigPlant_BaseLeft2:
-        case METATILE_SecretBase_BigPlant_BaseRight2:
-        case METATILE_SecretBase_GorgeousPlant_BaseLeft1:
-        case METATILE_SecretBase_GorgeousPlant_BaseRight1:
-        case METATILE_SecretBase_GorgeousPlant_BaseLeft2:
-        case METATILE_SecretBase_GorgeousPlant_BaseRight2:
-            if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
-                VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | SECRET_BASE_USED_PLANT);
-            break;
-        case METATILE_SecretBase_Fence_Horizontal:
-        case METATILE_SecretBase_Fence_Vertical:
-            if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
-                VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_FENCE);
-            break;
-        case METATILE_SecretBase_Tire_BottomLeft:
-        case METATILE_SecretBase_Tire_BottomRight:
-            if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
-                VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_TIRE);
-            break;
-        case METATILE_SecretBase_RedBrick_Bottom:
-        case METATILE_SecretBase_YellowBrick_Bottom:
-        case METATILE_SecretBase_BlueBrick_Bottom:
-            if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
-                VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_BRICK);
-            break;
-        case METATILE_SecretBase_SmallDesk:
-        case METATILE_SecretBase_PokemonDesk:
-        case METATILE_SecretBase_HeavyDesk_BottomLeft:
-        case METATILE_SecretBase_HeavyDesk_BottomMid:
-        case METATILE_SecretBase_HeavyDesk_BottomRight:
-        case METATILE_SecretBase_RaggedDesk_BottomLeft:
-        case METATILE_SecretBase_RaggedDesk_BottomMid:
-        case METATILE_SecretBase_RaggedDesk_BottomRight:
-        case METATILE_SecretBase_ComfortDesk_BottomLeft:
-        case METATILE_SecretBase_ComfortDesk_BottomMid:
-        case METATILE_SecretBase_ComfortDesk_BottomRight:
-        case METATILE_SecretBase_BrickDesk_BottomLeft:
-        case METATILE_SecretBase_BrickDesk_BottomMid:
-        case METATILE_SecretBase_BrickDesk_BottomRight:
-        case METATILE_SecretBase_CampDesk_BottomLeft:
-        case METATILE_SecretBase_CampDesk_BottomMid:
-        case METATILE_SecretBase_CampDesk_BottomRight:
-        case METATILE_SecretBase_HardDesk_BottomLeft:
-        case METATILE_SecretBase_HardDesk_BottomMid:
-        case METATILE_SecretBase_HardDesk_BottomRight:
-        case METATILE_SecretBase_PrettyDesk_BottomLeft:
-        case METATILE_SecretBase_PrettyDesk_BottomMid:
-        case METATILE_SecretBase_PrettyDesk_BottomRight:
+    case METATILE_SecretBase_GlassOrnament_Base1:
+    case METATILE_SecretBase_GlassOrnament_Base2:
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+            VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | SECRET_BASE_USED_GLASS_ORNAMENT);
+        break;
+    case METATILE_SecretBase_RedPlant_Base1:
+    case METATILE_SecretBase_RedPlant_Base2:
+    case METATILE_SecretBase_TropicalPlant_Base1:
+    case METATILE_SecretBase_TropicalPlant_Base2:
+    case METATILE_SecretBase_PrettyFlowers_Base1:
+    case METATILE_SecretBase_PrettyFlowers_Base2:
+    case METATILE_SecretBase_ColorfulPlant_BaseLeft1:
+    case METATILE_SecretBase_ColorfulPlant_BaseRight1:
+    case METATILE_SecretBase_ColorfulPlant_BaseLeft2:
+    case METATILE_SecretBase_ColorfulPlant_BaseRight2:
+    case METATILE_SecretBase_BigPlant_BaseLeft1:
+    case METATILE_SecretBase_BigPlant_BaseRight1:
+    case METATILE_SecretBase_BigPlant_BaseLeft2:
+    case METATILE_SecretBase_BigPlant_BaseRight2:
+    case METATILE_SecretBase_GorgeousPlant_BaseLeft1:
+    case METATILE_SecretBase_GorgeousPlant_BaseRight1:
+    case METATILE_SecretBase_GorgeousPlant_BaseLeft2:
+    case METATILE_SecretBase_GorgeousPlant_BaseRight2:
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+            VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | SECRET_BASE_USED_PLANT);
+        break;
+    case METATILE_SecretBase_Fence_Horizontal:
+    case METATILE_SecretBase_Fence_Vertical:
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+            VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_FENCE);
+        break;
+    case METATILE_SecretBase_Tire_BottomLeft:
+    case METATILE_SecretBase_Tire_BottomRight:
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+            VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_TIRE);
+        break;
+    case METATILE_SecretBase_RedBrick_Bottom:
+    case METATILE_SecretBase_YellowBrick_Bottom:
+    case METATILE_SecretBase_BlueBrick_Bottom:
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+            VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_BRICK);
+        break;
+    case METATILE_SecretBase_SmallDesk:
+    case METATILE_SecretBase_PokemonDesk:
+    case METATILE_SecretBase_HeavyDesk_BottomLeft:
+    case METATILE_SecretBase_HeavyDesk_BottomMid:
+    case METATILE_SecretBase_HeavyDesk_BottomRight:
+    case METATILE_SecretBase_RaggedDesk_BottomLeft:
+    case METATILE_SecretBase_RaggedDesk_BottomMid:
+    case METATILE_SecretBase_RaggedDesk_BottomRight:
+    case METATILE_SecretBase_ComfortDesk_BottomLeft:
+    case METATILE_SecretBase_ComfortDesk_BottomMid:
+    case METATILE_SecretBase_ComfortDesk_BottomRight:
+    case METATILE_SecretBase_BrickDesk_BottomLeft:
+    case METATILE_SecretBase_BrickDesk_BottomMid:
+    case METATILE_SecretBase_BrickDesk_BottomRight:
+    case METATILE_SecretBase_CampDesk_BottomLeft:
+    case METATILE_SecretBase_CampDesk_BottomMid:
+    case METATILE_SecretBase_CampDesk_BottomRight:
+    case METATILE_SecretBase_HardDesk_BottomLeft:
+    case METATILE_SecretBase_HardDesk_BottomMid:
+    case METATILE_SecretBase_HardDesk_BottomRight:
+    case METATILE_SecretBase_PrettyDesk_BottomLeft:
+    case METATILE_SecretBase_PrettyDesk_BottomMid:
+    case METATILE_SecretBase_PrettyDesk_BottomRight:
             if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
                 VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_DESK);
             break;
@@ -1998,17 +2042,17 @@ void CheckInteractedWithFriendsFurnitureMiddle(void)
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
     switch (MapGridGetMetatileIdAt(x, y))
     {
-        case METATILE_SecretBase_HeavyDesk_TopMid:
-        case METATILE_SecretBase_RaggedDesk_TopMid:
-        case METATILE_SecretBase_ComfortDesk_TopMid:
-        case METATILE_SecretBase_BrickDesk_TopMid:
-        case METATILE_SecretBase_BrickDesk_Center:
-        case METATILE_SecretBase_CampDesk_TopMid:
-        case METATILE_SecretBase_CampDesk_Center:
-        case METATILE_SecretBase_HardDesk_TopMid:
-        case METATILE_SecretBase_HardDesk_Center:
-        case METATILE_SecretBase_PrettyDesk_TopMid:
-        case METATILE_SecretBase_PrettyDesk_Center:
+    case METATILE_SecretBase_HeavyDesk_TopMid:
+    case METATILE_SecretBase_RaggedDesk_TopMid:
+    case METATILE_SecretBase_ComfortDesk_TopMid:
+    case METATILE_SecretBase_BrickDesk_TopMid:
+    case METATILE_SecretBase_BrickDesk_Center:
+    case METATILE_SecretBase_CampDesk_TopMid:
+    case METATILE_SecretBase_CampDesk_Center:
+    case METATILE_SecretBase_HardDesk_TopMid:
+    case METATILE_SecretBase_HardDesk_Center:
+    case METATILE_SecretBase_PrettyDesk_TopMid:
+    case METATILE_SecretBase_PrettyDesk_Center:
             if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
                 VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_DESK);
             break;
@@ -2022,39 +2066,39 @@ void CheckInteractedWithFriendsFurnitureTop(void)
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
     switch (MapGridGetMetatileIdAt(x, y))
     {
-        case METATILE_SecretBase_HeavyDesk_TopLeft:
-        case METATILE_SecretBase_HeavyDesk_TopRight:
-        case METATILE_SecretBase_RaggedDesk_TopLeft:
-        case METATILE_SecretBase_RaggedDesk_TopRight:
-        case METATILE_SecretBase_ComfortDesk_TopLeft:
-        case METATILE_SecretBase_ComfortDesk_TopRight:
-        case METATILE_SecretBase_BrickDesk_TopLeft:
-        case METATILE_SecretBase_BrickDesk_TopRight:
-        case METATILE_SecretBase_BrickDesk_MidLeft:
-        case METATILE_SecretBase_BrickDesk_MidRight:
-        case METATILE_SecretBase_CampDesk_TopLeft:
-        case METATILE_SecretBase_CampDesk_TopRight:
-        case METATILE_SecretBase_CampDesk_MidLeft:
-        case METATILE_SecretBase_CampDesk_MidRight:
-        case METATILE_SecretBase_HardDesk_TopLeft:
-        case METATILE_SecretBase_HardDesk_TopRight:
-        case METATILE_SecretBase_HardDesk_MidLeft:
-        case METATILE_SecretBase_HardDesk_MidRight:
-        case METATILE_SecretBase_PrettyDesk_TopLeft:
-        case METATILE_SecretBase_PrettyDesk_TopRight:
-        case METATILE_SecretBase_PrettyDesk_MidLeft:
-        case METATILE_SecretBase_PrettyDesk_MidRight:
-            if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
-                VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_DESK);
-            break;
-        case METATILE_SecretBase_Tire_TopLeft:
-        case METATILE_SecretBase_Tire_TopRight:
-            if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
-                VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_TIRE);
-            break;
-        case METATILE_SecretBase_RedBrick_Top:
-        case METATILE_SecretBase_YellowBrick_Top:
-        case METATILE_SecretBase_BlueBrick_Top:
+    case METATILE_SecretBase_HeavyDesk_TopLeft:
+    case METATILE_SecretBase_HeavyDesk_TopRight:
+    case METATILE_SecretBase_RaggedDesk_TopLeft:
+    case METATILE_SecretBase_RaggedDesk_TopRight:
+    case METATILE_SecretBase_ComfortDesk_TopLeft:
+    case METATILE_SecretBase_ComfortDesk_TopRight:
+    case METATILE_SecretBase_BrickDesk_TopLeft:
+    case METATILE_SecretBase_BrickDesk_TopRight:
+    case METATILE_SecretBase_BrickDesk_MidLeft:
+    case METATILE_SecretBase_BrickDesk_MidRight:
+    case METATILE_SecretBase_CampDesk_TopLeft:
+    case METATILE_SecretBase_CampDesk_TopRight:
+    case METATILE_SecretBase_CampDesk_MidLeft:
+    case METATILE_SecretBase_CampDesk_MidRight:
+    case METATILE_SecretBase_HardDesk_TopLeft:
+    case METATILE_SecretBase_HardDesk_TopRight:
+    case METATILE_SecretBase_HardDesk_MidLeft:
+    case METATILE_SecretBase_HardDesk_MidRight:
+    case METATILE_SecretBase_PrettyDesk_TopLeft:
+    case METATILE_SecretBase_PrettyDesk_TopRight:
+    case METATILE_SecretBase_PrettyDesk_MidLeft:
+    case METATILE_SecretBase_PrettyDesk_MidRight:
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+            VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_DESK);
+        break;
+    case METATILE_SecretBase_Tire_TopLeft:
+    case METATILE_SecretBase_Tire_TopRight:
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+            VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_TIRE);
+        break;
+    case METATILE_SecretBase_RedBrick_Top:
+    case METATILE_SecretBase_YellowBrick_Top:
+    case METATILE_SecretBase_BlueBrick_Top:
             if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
                 VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_BRICK);
             break;
@@ -2068,10 +2112,613 @@ void CheckInteractedWithFriendsSandOrnament(void)
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
     switch ((int)MapGridGetMetatileIdAt(x, y))
     {
-        case METATILE_SecretBase_SandOrnament_Base1:
-        case METATILE_SecretBase_SandOrnament_Base2:
+    case METATILE_SecretBase_SandOrnament_Base1:
+    case METATILE_SecretBase_SandOrnament_Base2:
             if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
                 VarSet(VAR_SECRET_BASE_HIGH_TV_FLAGS, VarGet(VAR_SECRET_BASE_HIGH_TV_FLAGS) | SECRET_BASE_USED_SAND_ORNAMENT);
             break;
     }
+}
+
+const u8 gText_PseudoTrainerNameDefault[] = _("Aichiya");
+const u8 gText_PseudoTrainerName001[] = _("Alfa");
+const u8 gText_PseudoTrainerName002[] = _("BB");
+
+void PrepareSecretBasePseudoTrainerBattleByVar(void)
+{
+    struct SecretBaseParty *party;
+    u16 trainerNum;
+    
+    trainerNum = VarGet(VAR_SECRET_BASE_PSEUDO_TRAINER_NUM);
+
+    FlagClear(FLAG_DAILY_SECRET_BASE);
+
+    switch(trainerNum)
+    {
+        case PSEUDO_TRAINER_ALFA:
+            party = &gSaveBlock1Ptr->secretBases[0].party;
+
+            gSaveBlock1Ptr->secretBases[0].secretBaseId = 1;
+            gSaveBlock1Ptr->secretBases[0].trainerId[0] = NATURE_MODEST;
+            gSaveBlock1Ptr->secretBases[0].trainerId[1] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[2] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[3] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerName[0] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[1] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[2] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[3] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[4] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[5] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[6] = 0xFF;
+            StringCopyN(gSaveBlock1Ptr->secretBases[0].trainerName, gText_PseudoTrainerName001, GetNameLength(gText_PseudoTrainerName001));
+            gSaveBlock1Ptr->secretBases[0].gender = 0;
+            gSaveBlock1Ptr->secretBases[0].battleType = 1;
+            gSaveBlock1Ptr->secretBases[0].language = GAME_LANGUAGE;
+
+            party->moves[0*MAX_MON_MOVES + 0] = MOVE_DEFECTIVE_MIRACLE;
+            party->moves[0*MAX_MON_MOVES + 1] = MOVE_DIMENSION_SLASH;
+            party->moves[0*MAX_MON_MOVES + 2] = MOVE_FLUFFICATION;
+            party->moves[0*MAX_MON_MOVES + 3] = MOVE_CALM_MIND;
+            party->species[0] = SPECIES_NECROZMA_ULTRA;
+            party->heldItems[0] = ITEM_LEFTOVERS;
+            party->levels[0] = 50;
+            party->personality[0] = NATURE_MODEST;
+            party->EVs[0] = 510 / 6;
+
+            party->moves[1*MAX_MON_MOVES + 0] = MOVE_DIMENSION_SHOT;
+            party->moves[1*MAX_MON_MOVES + 1] = MOVE_ICE_BLADE;
+            party->moves[1*MAX_MON_MOVES + 2] = MOVE_TWIN_SPARK;
+            party->moves[1*MAX_MON_MOVES + 3] = MOVE_NEPTUNE_BREAK;
+            party->species[1] = SPECIES_MEW;
+            party->heldItems[1] = ITEM_LIFE_ORB;
+            party->levels[1] = 100;
+            party->personality[1] = NATURE_MODEST + 0x80000000;
+            party->EVs[1] = 510 / 6;
+
+            party->moves[2*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[2] = SPECIES_NONE;
+            party->heldItems[2] = ITEM_NONE;
+            party->levels[2] = 100;
+            party->personality[2] = 3;
+            party->EVs[2] = 510 / 6;
+
+            party->moves[3*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[3] = SPECIES_NONE;
+            party->heldItems[3] = ITEM_NONE;
+            party->levels[3] = 0;
+            party->personality[3] = 0;
+            party->EVs[3] = 0;
+
+            party->moves[4*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[4] = SPECIES_NONE;
+            party->heldItems[4] = ITEM_NONE;
+            party->levels[4] = 0;
+            party->personality[4] = 0;
+            party->EVs[4] = 0;
+
+            party->moves[5*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[5] = SPECIES_NONE;
+            party->heldItems[5] = ITEM_NONE;
+            party->levels[5] = 0;
+            party->personality[5] = 0;
+            party->EVs[5] = 0;
+
+            break;
+        case PSEUDO_TRAINER_BB:
+            party = &gSaveBlock1Ptr->secretBases[0].party;
+
+            gSaveBlock1Ptr->secretBases[0].secretBaseId = 1;
+            gSaveBlock1Ptr->secretBases[0].trainerId[0] = 2;
+            gSaveBlock1Ptr->secretBases[0].trainerId[1] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[2] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[3] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerName[0] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[1] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[2] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[3] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[4] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[5] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[6] = 0xFF;
+            StringCopyN(gSaveBlock1Ptr->secretBases[0].trainerName, gText_PseudoTrainerName002, GetNameLength(gText_PseudoTrainerName002));
+            gSaveBlock1Ptr->secretBases[0].gender = 0;
+            gSaveBlock1Ptr->secretBases[0].battleType = 0;
+            gSaveBlock1Ptr->secretBases[0].language = GAME_LANGUAGE;
+
+            party->moves[0*MAX_MON_MOVES + 0] = MOVE_SLASH;
+            party->moves[0*MAX_MON_MOVES + 1] = MOVE_FLAMETHROWER;
+            party->moves[0*MAX_MON_MOVES + 2] = MOVE_DRAGON_RAGE;
+            party->moves[0*MAX_MON_MOVES + 3] = MOVE_AIR_SLASH;
+            party->species[0] = SPECIES_CHARIZARD;
+            party->heldItems[0] = ITEM_NONE;
+            party->levels[0] = 40;
+            party->personality[0] = 0;
+            party->EVs[0] = 85;
+
+            party->moves[1*MAX_MON_MOVES + 0] = MOVE_VOLT_TACKLE;
+            party->moves[1*MAX_MON_MOVES + 1] = MOVE_THUNDER_WAVE;
+            party->moves[1*MAX_MON_MOVES + 2] = MOVE_IRON_TAIL;
+            party->moves[1*MAX_MON_MOVES + 3] = MOVE_ENERGY_BALL;
+            party->species[1] = SPECIES_PIKACHU;
+            party->heldItems[1] = ITEM_NONE;
+            party->levels[1] = 80;
+            party->personality[1] = 19;
+            party->EVs[1] = 85;
+
+            party->moves[2*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[2] = SPECIES_NONE;
+            party->heldItems[2] = ITEM_NONE;
+            party->levels[2] = 0;
+            party->personality[2] = 0;
+            party->EVs[2] = 0;
+
+            party->moves[3*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[3] = SPECIES_NONE;
+            party->heldItems[3] = ITEM_NONE;
+            party->levels[3] = 0;
+            party->personality[3] = 0;
+            party->EVs[3] = 0;
+
+            party->moves[4*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[4] = SPECIES_NONE;
+            party->heldItems[4] = ITEM_NONE;
+            party->levels[4] = 0;
+            party->personality[4] = 0;
+            party->EVs[4] = 0;
+
+            party->moves[5*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[5] = SPECIES_NONE;
+            party->heldItems[5] = ITEM_NONE;
+            party->levels[5] = 0;
+            party->personality[5] = 0;
+            party->EVs[5] = 0;
+
+            break;
+        case PSEUDO_TRAINER_MIRROR_OPPOSITE_GENDER:
+            party = &gSaveBlock1Ptr->secretBases[0].party;
+
+            gSaveBlock1Ptr->secretBases[0].secretBaseId = 1;
+            gSaveBlock1Ptr->secretBases[0].trainerId[0] = 7;
+            gSaveBlock1Ptr->secretBases[0].trainerId[1] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[2] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[3] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerName[0] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[1] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[2] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[3] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[4] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[5] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[6] = 0xFF;
+            StringCopyN(gSaveBlock1Ptr->secretBases[0].trainerName, gSaveBlock2Ptr->playerName, GetNameLength(gSaveBlock2Ptr->playerName));
+            if (gSaveBlock2Ptr->playerGender == 0)
+                gSaveBlock1Ptr->secretBases[0].gender = 1;
+            else
+                gSaveBlock1Ptr->secretBases[0].gender = 0;
+            gSaveBlock1Ptr->secretBases[0].battleType = 1;
+            gSaveBlock1Ptr->secretBases[0].language = GAME_LANGUAGE;
+
+            party->moves[0*MAX_MON_MOVES + 0] = MOVE_TRANSFORM;
+            party->moves[0*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[0*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[0*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[0] = SPECIES_MEW;
+            party->heldItems[0] = ITEM_NONE;
+            party->levels[0] = 5;
+            party->personality[0] = 7;
+            party->EVs[0] = 85;
+
+            party->moves[1*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[1] = SPECIES_NONE;
+            party->heldItems[1] = ITEM_NONE;
+            party->levels[1] = 0;
+            party->personality[1] = 0;
+            party->EVs[1] = 0;
+
+            party->moves[2*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[2] = SPECIES_NONE;
+            party->heldItems[2] = ITEM_NONE;
+            party->levels[2] = 0;
+            party->personality[2] = 0;
+            party->EVs[2] = 0;
+
+            party->moves[3*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[3] = SPECIES_NONE;
+            party->heldItems[3] = ITEM_NONE;
+            party->levels[3] = 0;
+            party->personality[3] = 0;
+            party->EVs[3] = 0;
+
+            party->moves[4*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[4] = SPECIES_NONE;
+            party->heldItems[4] = ITEM_NONE;
+            party->levels[4] = 0;
+            party->personality[4] = 0;
+            party->EVs[4] = 0;
+
+            party->moves[5*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[5] = SPECIES_NONE;
+            party->heldItems[5] = ITEM_NONE;
+            party->levels[5] = 0;
+            party->personality[5] = 0;
+            party->EVs[5] = 0;
+
+            break;
+        case PSEUDO_TRAINER_MIRROR_SAME_GENDER: // vs. same gender mirror battle
+            party = &gSaveBlock1Ptr->secretBases[0].party;
+
+            gSaveBlock1Ptr->secretBases[0].secretBaseId = 1;
+            gSaveBlock1Ptr->secretBases[0].trainerId[0] = 7;
+            gSaveBlock1Ptr->secretBases[0].trainerId[1] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[2] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[3] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerName[0] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[1] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[2] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[3] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[4] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[5] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[6] = 0xFF;
+            StringCopyN(gSaveBlock1Ptr->secretBases[0].trainerName, gSaveBlock2Ptr->playerName, GetNameLength(gSaveBlock2Ptr->playerName));
+            if (gSaveBlock2Ptr->playerGender == 1)
+                gSaveBlock1Ptr->secretBases[0].gender = 1;
+            else
+                gSaveBlock1Ptr->secretBases[0].gender = 0;
+            gSaveBlock1Ptr->secretBases[0].battleType = 0;
+            gSaveBlock1Ptr->secretBases[0].language = GAME_LANGUAGE;
+
+            party->moves[0*MAX_MON_MOVES + 0] = MOVE_TRANSFORM;
+            party->moves[0*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[0*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[0*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[0] = SPECIES_MEW;
+            party->heldItems[0] = ITEM_NONE;
+            party->levels[0] = 5;
+            party->personality[0] = 7;
+            party->EVs[0] = 85;
+
+            party->moves[1*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[1] = SPECIES_NONE;
+            party->heldItems[1] = ITEM_NONE;
+            party->levels[1] = 0;
+            party->personality[1] = 0;
+            party->EVs[1] = 0;
+
+            party->moves[2*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[2] = SPECIES_NONE;
+            party->heldItems[2] = ITEM_NONE;
+            party->levels[2] = 0;
+            party->personality[2] = 0;
+            party->EVs[2] = 0;
+
+            party->moves[3*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[3] = SPECIES_NONE;
+            party->heldItems[3] = ITEM_NONE;
+            party->levels[3] = 0;
+            party->personality[3] = 0;
+            party->EVs[3] = 0;
+
+            party->moves[4*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[4] = SPECIES_NONE;
+            party->heldItems[4] = ITEM_NONE;
+            party->levels[4] = 0;
+            party->personality[4] = 0;
+            party->EVs[4] = 0;
+
+            party->moves[5*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[5] = SPECIES_NONE;
+            party->heldItems[5] = ITEM_NONE;
+            party->levels[5] = 0;
+            party->personality[5] = 0;
+            party->EVs[5] = 0;
+
+            break;
+        case PSEUDO_TRAINER_MIRROR_OPPOSITE_GENDER_CHECK_PARTY_LEVEL:
+            party = &gSaveBlock1Ptr->secretBases[0].party;
+
+            gSaveBlock1Ptr->secretBases[0].secretBaseId = 1;
+            gSaveBlock1Ptr->secretBases[0].trainerId[0] = 7;
+            gSaveBlock1Ptr->secretBases[0].trainerId[1] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[2] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[3] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerName[0] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[1] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[2] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[3] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[4] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[5] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[6] = 0xFF;
+            StringCopyN(gSaveBlock1Ptr->secretBases[0].trainerName, gSaveBlock2Ptr->playerName, GetNameLength(gSaveBlock2Ptr->playerName));
+            if (gSaveBlock2Ptr->playerGender == 0)
+                gSaveBlock1Ptr->secretBases[0].gender = 1;
+            else
+                gSaveBlock1Ptr->secretBases[0].gender = 0;
+            gSaveBlock1Ptr->secretBases[0].battleType = 1;
+            gSaveBlock1Ptr->secretBases[0].language = GAME_LANGUAGE;
+
+            party->moves[0*MAX_MON_MOVES + 0] = MOVE_TRANSFORM;
+            party->moves[0*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[0*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[0*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[0] = SPECIES_MEW;
+            party->heldItems[0] = ITEM_NONE;
+            party->levels[0] = 5;
+            party->personality[0] = 7;
+            party->EVs[0] = 85;
+
+            party->moves[1*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[1] = SPECIES_NONE;
+            party->heldItems[1] = ITEM_NONE;
+            party->levels[1] = 0;
+            party->personality[1] = 0;
+            party->EVs[1] = 0;
+
+            party->moves[2*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[2] = SPECIES_NONE;
+            party->heldItems[2] = ITEM_NONE;
+            party->levels[2] = 0;
+            party->personality[2] = 0;
+            party->EVs[2] = 0;
+
+            party->moves[3*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[3] = SPECIES_NONE;
+            party->heldItems[3] = ITEM_NONE;
+            party->levels[3] = 0;
+            party->personality[3] = 0;
+            party->EVs[3] = 0;
+
+            party->moves[4*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[4] = SPECIES_NONE;
+            party->heldItems[4] = ITEM_NONE;
+            party->levels[4] = 0;
+            party->personality[4] = 0;
+            party->EVs[4] = 0;
+
+            party->moves[5*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[5] = SPECIES_NONE;
+            party->heldItems[5] = ITEM_NONE;
+            party->levels[5] = 0;
+            party->personality[5] = 0;
+            party->EVs[5] = 0;
+
+            break;
+        case PSEUDO_TRAINER_MIRROR_SAME_GENDER_CHECK_PARTY_LEVEL:
+            party = &gSaveBlock1Ptr->secretBases[0].party;
+
+            gSaveBlock1Ptr->secretBases[0].secretBaseId = 1;
+            gSaveBlock1Ptr->secretBases[0].trainerId[0] = 7;
+            gSaveBlock1Ptr->secretBases[0].trainerId[1] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[2] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[3] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerName[0] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[1] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[2] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[3] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[4] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[5] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[6] = 0xFF;
+            StringCopyN(gSaveBlock1Ptr->secretBases[0].trainerName, gSaveBlock2Ptr->playerName, GetNameLength(gSaveBlock2Ptr->playerName));
+            if (gSaveBlock2Ptr->playerGender == 1)
+                gSaveBlock1Ptr->secretBases[0].gender = 1;
+            else
+                gSaveBlock1Ptr->secretBases[0].gender = 0;
+            gSaveBlock1Ptr->secretBases[0].battleType = 0;
+            gSaveBlock1Ptr->secretBases[0].language = GAME_LANGUAGE;
+
+            party->moves[0*MAX_MON_MOVES + 0] = MOVE_TRANSFORM;
+            party->moves[0*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[0*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[0*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[0] = SPECIES_MEW;
+            party->heldItems[0] = ITEM_NONE;
+            party->levels[0] = 5;
+            party->personality[0] = 7;
+            party->EVs[0] = 85;
+
+            party->moves[1*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[1] = SPECIES_NONE;
+            party->heldItems[1] = ITEM_NONE;
+            party->levels[1] = 0;
+            party->personality[1] = 0;
+            party->EVs[1] = 0;
+
+            party->moves[2*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[2] = SPECIES_NONE;
+            party->heldItems[2] = ITEM_NONE;
+            party->levels[2] = 0;
+            party->personality[2] = 0;
+            party->EVs[2] = 0;
+
+            party->moves[3*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[3] = SPECIES_NONE;
+            party->heldItems[3] = ITEM_NONE;
+            party->levels[3] = 0;
+            party->personality[3] = 0;
+            party->EVs[3] = 0;
+
+            party->moves[4*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[4] = SPECIES_NONE;
+            party->heldItems[4] = ITEM_NONE;
+            party->levels[4] = 0;
+            party->personality[4] = 0;
+            party->EVs[4] = 0;
+
+            party->moves[5*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[5] = SPECIES_NONE;
+            party->heldItems[5] = ITEM_NONE;
+            party->levels[5] = 0;
+            party->personality[5] = 0;
+            party->EVs[5] = 0;
+
+            break;
+        default:
+            party = &gSaveBlock1Ptr->secretBases[0].party;
+
+            gSaveBlock1Ptr->secretBases[0].secretBaseId = 1;
+            gSaveBlock1Ptr->secretBases[0].trainerId[0] = 7;
+            gSaveBlock1Ptr->secretBases[0].trainerId[1] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[2] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerId[3] = 0;
+            gSaveBlock1Ptr->secretBases[0].trainerName[0] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[1] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[2] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[3] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[4] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[5] = 0xFF;
+            gSaveBlock1Ptr->secretBases[0].trainerName[6] = 0xFF;
+            StringCopyN(gSaveBlock1Ptr->secretBases[0].trainerName, gText_PseudoTrainerNameDefault, GetNameLength(gText_PseudoTrainerNameDefault));
+            gSaveBlock1Ptr->secretBases[0].gender = 1;
+            gSaveBlock1Ptr->secretBases[0].battleType = 0;
+            gSaveBlock1Ptr->secretBases[0].language = GAME_LANGUAGE;
+
+            party->moves[0*MAX_MON_MOVES + 0] = MOVE_ADVENT_LYCORIS;
+            party->moves[0*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[0*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[0*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[0] = SPECIES_KECLEON;
+            party->heldItems[0] = ITEM_MEWNIUM_Z;
+            party->levels[0] = 50;
+            party->personality[0] = 7;
+            party->EVs[0] = 85;
+
+            party->moves[1*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[1*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[1] = SPECIES_NONE;
+            party->heldItems[1] = ITEM_NONE;
+            party->levels[1] = 0;
+            party->personality[1] = 0;
+            party->EVs[1] = 0;
+
+            party->moves[2*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[2*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[2] = SPECIES_NONE;
+            party->heldItems[2] = ITEM_NONE;
+            party->levels[2] = 0;
+            party->personality[2] = 0;
+            party->EVs[2] = 0;
+
+            party->moves[3*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[3*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[3] = SPECIES_NONE;
+            party->heldItems[3] = ITEM_NONE;
+            party->levels[3] = 0;
+            party->personality[3] = 0;
+            party->EVs[3] = 0;
+
+            party->moves[4*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[4*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[4] = SPECIES_NONE;
+            party->heldItems[4] = ITEM_NONE;
+            party->levels[4] = 0;
+            party->personality[4] = 0;
+            party->EVs[4] = 0;
+
+            party->moves[5*MAX_MON_MOVES + 0] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 1] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 2] = MOVE_NONE;
+            party->moves[5*MAX_MON_MOVES + 3] = MOVE_NONE;
+            party->species[5] = SPECIES_NONE;
+            party->heldItems[5] = ITEM_NONE;
+            party->levels[5] = 0;
+            party->personality[5] = 0;
+            party->EVs[5] = 0;
+
+            break;
+
+    }
+    
+    gSpecialVar_0x8004 = GetSecretBaseOwnerType(0);
+    gSaveBlock1Ptr->secretBases[0].battledOwnerToday = 0;
+    gSpecialVar_Result = gSaveBlock1Ptr->secretBases[0].battledOwnerToday;
+    FlagClear(FLAG_DAILY_SECRET_BASE);
 }

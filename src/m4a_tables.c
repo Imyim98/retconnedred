@@ -3,7 +3,7 @@
 // Some of these functions have different signatures, so we need to make this
 // an array of void pointers or a struct. It's simpler to just make it an array
 // for now.
-void * const gMPlayJumpTableTemplate[] =
+void *const gMPlayJumpTableTemplate[] =
 {
     ply_fine,
     ply_goto,
@@ -251,6 +251,7 @@ const u8 gClockTable[] =
 #define xRELE  0x07
 #define xIECV  0x08
 #define xIECL  0x09
+#define xWAIT  0x0c
 
 #define EOT    0xce
 #define TIE    0xcf

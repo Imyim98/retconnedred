@@ -2,8 +2,8 @@
   "id": "MAP_ROUTE134",
   "name": "Route134",
   "layout": "LAYOUT_ROUTE134",
-  "music": "MUS_ROUTE119",
-  "region_map_section": "MAPSEC_ROUTE_134",
+  "music": "MUS_DGMN_STORY2_DARKMOON_CITY",
+  "region_map_section": "MAPSEC_JAVA_CILA_PRISON_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_OCEAN_ROUTE",
@@ -14,21 +14,21 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_SLATEPORT_CITY",
-      "offset": 0,
-      "direction": "left"
+      "map": "MAP_JAVA_WESTERN_PASS",
+      "offset": 26,
+      "direction": "up"
     },
     {
-      "map": "MAP_ROUTE133",
-      "offset": 0,
+      "map": "MAP_JAVA_SOUTH_LINE_ROUTE",
+      "offset": 10,
       "direction": "right"
     }
   ],
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
-      "x": 49,
-      "y": 9,
+      "x": 71,
+      "y": 5,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_WALK_SEQUENCE_UP_RIGHT_DOWN_LEFT",
       "movement_range_x": 3,
@@ -40,8 +40,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F",
-      "x": 58,
-      "y": 7,
+      "x": 66,
+      "y": 2,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -53,8 +53,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_3",
-      "x": 41,
-      "y": 23,
+      "x": 31,
+      "y": 18,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
@@ -66,8 +66,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_5",
-      "x": 24,
-      "y": 23,
+      "x": 34,
+      "y": 28,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WALK_DOWN_AND_UP",
       "movement_range_x": 0,
@@ -79,8 +79,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
-      "x": 49,
-      "y": 16,
+      "x": 41,
+      "y": 17,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
       "movement_range_x": 6,
@@ -92,8 +92,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
-      "x": 43,
-      "y": 23,
+      "x": 34,
+      "y": 18,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 1,
@@ -118,8 +118,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_GIRL_3",
-      "x": 50,
-      "y": 16,
+      "x": 42,
+      "y": 17,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WALK_RIGHT_AND_LEFT",
       "movement_range_x": 6,
@@ -144,8 +144,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 50,
-      "y": 17,
+      "x": 47,
+      "y": 18,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,
@@ -157,8 +157,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 22,
-      "y": 27,
+      "x": 18,
+      "y": 29,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 1,

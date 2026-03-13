@@ -2,8 +2,8 @@
   "id": "MAP_LAVARIDGE_TOWN",
   "name": "LavaridgeTown",
   "layout": "LAYOUT_LAVARIDGE_TOWN",
-  "music": "MUS_OLDALE",
-  "region_map_section": "MAPSEC_LAVARIDGE_TOWN",
+  "music": "MUS_HG_VIOLET",
+  "region_map_section": "MAPSEC_JOHTO_VIOLET_CITY",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_TOWN",
@@ -14,8 +14,18 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_ROUTE112",
-      "offset": -40,
+      "map": "MAP_JOHTO_ROUTE36",
+      "offset": 6,
+      "direction": "left"
+    },
+    {
+      "map": "MAP_JOHTO_ROUTE32",
+      "offset": 0,
+      "direction": "down"
+    },
+    {
+      "map": "MAP_JOHTO_ROUTE31",
+      "offset": 22,
       "direction": "right"
     }
   ],
@@ -99,6 +109,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_LAVARIDGE_RIVAL_ON_BIKE",
       "graphics_id": "OBJ_EVENT_GFX_VAR_3",
       "x": 6,
       "y": 16,
@@ -112,6 +123,7 @@
       "flag": "FLAG_HIDE_LAVARIDGE_TOWN_RIVAL_ON_BIKE"
     },
     {
+      "local_id": "LOCALID_LAVARIDGE_RIVAL",
       "graphics_id": "OBJ_EVENT_GFX_VAR_0",
       "x": 12,
       "y": 15,
@@ -154,15 +166,15 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 15,
-      "y": 5,
+      "x": 10,
+      "y": 27,
       "elevation": 0,
       "dest_map": "MAP_LAVARIDGE_TOWN_MART",
       "dest_warp_id": "0"
     },
     {
-      "x": 9,
-      "y": 6,
+      "x": 33,
+      "y": 34,
       "elevation": 0,
       "dest_map": "MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F",
       "dest_warp_id": "0"
@@ -212,8 +224,8 @@
     },
     {
       "type": "sign",
-      "x": 17,
-      "y": 5,
+      "x": 12,
+      "y": 27,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Common_EventScript_ShowPokemartSign"
@@ -228,24 +240,24 @@
     },
     {
       "type": "sign",
-      "x": 10,
-      "y": 6,
+      "x": 34,
+      "y": 34,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Common_EventScript_ShowPokemonCenterSign"
     },
     {
       "type": "sign",
-      "x": 16,
-      "y": 5,
+      "x": 11,
+      "y": 27,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Common_EventScript_ShowPokemartSign"
     },
     {
       "type": "sign",
-      "x": 11,
-      "y": 6,
+      "x": 35,
+      "y": 34,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Common_EventScript_ShowPokemonCenterSign"
