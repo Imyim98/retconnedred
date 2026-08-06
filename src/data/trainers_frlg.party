@@ -7046,7 +7046,7 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Geodude
 Level: 12
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Rock Tomb
+- Rollout
 - Bulldoze
 - Defense Curl
 - Rock Polish
@@ -7055,8 +7055,8 @@ Onix @ Oran Berry
 Level: 14
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Rock Tomb
-- Smack Down
 - Dragon Breath
+- Bind
 - Rock Polish
 
 === TRAINER_LEADER_MISTY ===
