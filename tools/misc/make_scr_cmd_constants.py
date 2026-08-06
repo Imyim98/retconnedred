@@ -16,7 +16,8 @@ def main():
     with open("data/script_cmd_table.inc", "r") as f:
         ctr = 0
         for line in f.readlines():
-            if match := re.search(SCR_CMD_PAT, line):
+            match = re.search(SCR_CMD_PAT, line)
+            if match:
                 new_line = "    " + match.group(1) + f" = 0x{ctr:X},"
                 output.append(new_line)
                 ctr += 1
