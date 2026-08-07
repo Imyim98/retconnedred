@@ -32333,27 +32333,27 @@
               {
                 "min_level": 2,
                 "max_level": 5,
-                "species": "SPECIES_RATTATA"
-              },
-              {
-                "min_level": 2,
-                "max_level": 5,
-                "species": "SPECIES_RATTATA"
-              },
-              {
-                "min_level": 2,
-                "max_level": 5,
                 "species": "SPECIES_MANKEY"
               },
               {
                 "min_level": 2,
                 "max_level": 5,
                 "species": "SPECIES_MANKEY"
+              },
+              {
+                "min_level": 2,
+                "max_level": 5,
+                "species": "SPECIES_SPEAROW"
+              },
+              {
+                "min_level": 2,
+                "max_level": 5,
+                "species": "SPECIES_SPEAROW"
               },
               {
                 "min_level": 2,
                 "max_level": 2,
-                "species": "SPECIES_MANKEY"
+                "species": "SPECIES_SPEAROW"
               },
               {
                 "min_level": 3,
@@ -32363,12 +32363,12 @@
               {
                 "min_level": 3,
                 "max_level": 5,
-                "species": "SPECIES_SPEAROW"
+                "species": "SPECIES_PONYTA"
               },
               {
                 "min_level": 3,
                 "max_level": 5,
-                "species": "SPECIES_SPEAROW"
+                "species": "SPECIES_PONYTA"
               },
               {
                 "min_level": 2,
@@ -36582,7 +36582,7 @@
           "map": "MAP_PEWTER_CITY",
           "base_label": "gPewterCity_Frlg",
           "land_mons": {
-            "encounter_rate": 7,
+            "encounter_rate": 21,
             "mons": [
               {
                 "min_level": 5,

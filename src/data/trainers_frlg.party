@@ -4440,8 +4440,6 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Squirtle
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
-- Tail Whip
 
 === TRAINER_RIVAL_OAKS_LAB_BULBASAUR ===
 Name: TERRY
@@ -4455,8 +4453,6 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Bulbasaur
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
-- Growl
 
 === TRAINER_RIVAL_OAKS_LAB_CHARMANDER ===
 Name: TERRY
@@ -4470,8 +4466,6 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Charmander
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Scratch
-- Growl
 
 === TRAINER_RIVAL_ROUTE22_EARLY_SQUIRTLE ===
 Name: TERRY
@@ -4485,14 +4479,10 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Pidgey
 Level: 9
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Tackle
-- Sand Attack
 
 Squirtle
 Level: 9
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Tackle
-- Tail Whip
 
 === TRAINER_RIVAL_ROUTE22_EARLY_BULBASAUR ===
 Name: TERRY
@@ -4506,14 +4496,10 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Pidgey
 Level: 9
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Tackle
-- Sand Attack
 
 Bulbasaur
 Level: 9
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Tackle
-- Growl
 
 === TRAINER_RIVAL_ROUTE22_EARLY_CHARMANDER ===
 Name: TERRY
@@ -4527,14 +4513,10 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Pidgey
 Level: 9
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Tackle
-- Sand Attack
 
 Charmander
 Level: 9
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Scratch
-- Growl
 
 === TRAINER_RIVAL_CERULEAN_SQUIRTLE ===
 Name: TERRY
@@ -4548,30 +4530,14 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Pidgeotto
 Level: 17
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Tackle
-- Sand Attack
-- Gust
-- Quick Attack
-
-Abra
-Level: 16
-IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Teleport
 
 Rattata
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Tackle
-- Tail Whip
-- Quick Attack
 
-Squirtle
+Wartortle
 Level: 18
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Tackle
-- Tail Whip
-- Withdraw
-- Water Gun
 
 === TRAINER_RIVAL_CERULEAN_BULBASAUR ===
 Name: TERRY
@@ -4585,30 +4551,14 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Pidgeotto
 Level: 17
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Tackle
-- Sand Attack
-- Gust
-- Quick Attack
-
-Abra
-Level: 16
-IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Teleport
 
 Rattata
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Tackle
-- Tail Whip
-- Quick Attack
 
-Bulbasaur
+Ivysaur
 Level: 18
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Sleep Powder
-- Poison Powder
-- Vine Whip
-- Leech Seed
 
 === TRAINER_RIVAL_CERULEAN_CHARMANDER ===
 Name: TERRY
@@ -4622,30 +4572,14 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Pidgeotto
 Level: 17
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Tackle
-- Sand Attack
-- Gust
-- Quick Attack
-
-Abra
-Level: 16
-IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Teleport
 
 Rattata
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Tackle
-- Tail Whip
-- Quick Attack
 
-Charmander
+Charmeleon
 Level: 18
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Metal Claw
-- Ember
-- Growl
-- Scratch
 
 === TRAINER_SCIENTIST_TED ===
 Name: TED
@@ -7066,24 +7000,32 @@ Pic: Leader Misty Frlg
 Gender: Male
 Music: Female
 Items: Super Potion
-Double Battle: No
+Double Battle: Yes
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Staryu
+Psyduck
 Level: 18
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
-- Harden
-- Recover
 - Water Pulse
+- Zen Headbutt
+- Fury Swipes
+- Disable
 
-Starmie
+Wingull
+Level: 19
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Wing Attack
+- Water Gun
+- Quick Attack
+- Supersonic
+
+Starmie @ Oran Berry
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Swift
-- Recover
-- Rapid Spin
 - Water Pulse
+- Psybeam
+- Swift
+- Rapid Spin
 
 === TRAINER_LEADER_LT_SURGE ===
 Name: LT. SURGE
@@ -7092,7 +7034,7 @@ Pic: Leader Lt Surge Frlg
 Gender: Male
 Music: Male
 Items: Super Potion / Full Heal
-Double Battle: No
+Double Battle: Yes
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Voltorb
@@ -7126,7 +7068,7 @@ Pic: Leader Erika Frlg
 Gender: Male
 Music: Female
 Items: Hyper Potion / Full Heal
-Double Battle: No
+Double Battle: Yes
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Victreebel
@@ -7160,7 +7102,7 @@ Pic: Leader Koga Frlg
 Gender: Male
 Music: Male
 Items: Hyper Potion / Hyper Potion / Full Heal
-Double Battle: No
+Double Battle: Yes
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Koffing
@@ -7202,7 +7144,7 @@ Pic: Leader Blaine Frlg
 Gender: Male
 Music: Male
 Items: Hyper Potion / Hyper Potion / Full Heal
-Double Battle: No
+Double Battle: Yes
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Growlithe
@@ -7244,7 +7186,7 @@ Pic: Leader Sabrina Frlg
 Gender: Male
 Music: Female
 Items: Hyper Potion / Hyper Potion / Full Heal
-Double Battle: No
+Double Battle: Yes
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Kadabra
