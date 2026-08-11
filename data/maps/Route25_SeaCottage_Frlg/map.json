@@ -3,7 +3,6 @@
   "name": "Route25_SeaCottage_Frlg",
   "layout": "LAYOUT_ROUTE25_SEA_COTTAGE",
   "music": "MUS_RG_FUCHSIA",
-  "region": "REGION_KANTO",
   "region_map_section": "MAPSEC_ROUTE_25",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -52,21 +51,21 @@
       "x": 6,
       "y": 9,
       "elevation": 3,
-      "dest_map": "MAP_ROUTE25",
+      "dest_map": "MAP_ROUTE25_CAPE_FRLG",
       "dest_warp_id": "0"
     },
     {
       "x": 7,
       "y": 9,
       "elevation": 3,
-      "dest_map": "MAP_ROUTE25",
+      "dest_map": "MAP_ROUTE25_CAPE_FRLG",
       "dest_warp_id": "0"
     },
     {
       "x": 8,
       "y": 9,
       "elevation": 3,
-      "dest_map": "MAP_ROUTE25",
+      "dest_map": "MAP_ROUTE25_CAPE_FRLG",
       "dest_warp_id": "0"
     }
   ],
@@ -80,5 +79,6 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Route25_SeaCottage_EventScript_Computer"
     }
-  ]
+  ],
+  "region": "REGION_KANTO"
 }
