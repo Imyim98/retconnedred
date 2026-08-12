@@ -38,6 +38,11 @@ ViridianForest_EventScript_ExitSign::
 	msgbox ViridianForest_Text_LeavingViridianForest, MSGBOX_SIGN
 	end
 
+ViridianForest_EventScript_Brittany::
+	trainerbattle_single TRAINER_LASS_BRITTANY, ViridianForest_Text_BrittanyIntro, ViridianForest_Text_BrittanyDefeat
+	msgbox ViridianForest_Text_BrittanyPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 ViridianForest_EventScript_Rick::
 	trainerbattle_single TRAINER_BUG_CATCHER_RICK, ViridianForest_Text_RickIntro, ViridianForest_Text_RickDefeat
 	msgbox ViridianForest_Text_RickPostBattle, MSGBOX_AUTOCLOSE
@@ -68,6 +73,16 @@ ViridianForest_Text_FriendsItchingToBattle::
 	.string "catch us some BUG POKéMON!\p"
 	.string "They're all itching to get into\n"
 	.string "some POKéMON battles!$"
+
+ViridianForest_Text_BrittanyIntro::
+	.string "Hi, do you have a Pikachu?$"
+
+ViridianForest_Text_BrittanyDefeat::
+	.string "Oh no, really?$"
+
+ViridianForest_Text_BrittanyPostBattle::
+	.string "I looked forever but I never\n"
+	.string "found a Pikachu here!$"
 
 ViridianForest_Text_RickIntro::
 	.string "Hey! You have POKéMON!\n"

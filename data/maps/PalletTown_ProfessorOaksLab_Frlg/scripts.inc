@@ -339,6 +339,7 @@ PalletTown_ProfessorOaksLab_Movement_RivalApproachForBattleSquirtleLeft::
 	walk_left
 	walk_left
 	walk_left
+	walk_left
 	walk_down
 	walk_down
 	step_end
@@ -347,11 +348,13 @@ PalletTown_ProfessorOaksLab_Movement_RivalApproachForBattleSquirtleMid::
 	walk_left
 	walk_left
 	walk_left
+	walk_left
 	walk_down
 	walk_down
 	step_end
 
 PalletTown_ProfessorOaksLab_Movement_RivalApproachForBattleSquirtleRight::
+	walk_left
 	walk_left
 	walk_left
 	walk_down
@@ -392,8 +395,7 @@ PalletTown_ProfessorOaksLab_Movement_ApproachForBattleCharmanderLeft::
 	walk_left
 	walk_left
 	walk_left
-	walk_left
-	walk_down
+		walk_down
 	walk_down
 	step_end
 
@@ -401,16 +403,14 @@ PalletTown_ProfessorOaksLab_Movement_ApproachForBattleCharmanderMid::
 	walk_left
 	walk_left
 	walk_left
-	walk_left
-	walk_down
+		walk_down
 	walk_down
 	step_end
 
 PalletTown_ProfessorOaksLab_Movement_ApproachForBattleCharmanderRight::
 	walk_left
 	walk_left
-	walk_left
-	walk_down
+		walk_down
 	walk_down
 	step_end
 
@@ -1182,8 +1182,7 @@ PalletTown_ProfessorOaksLab_EventScript_ReadyEndSignLadyScene::
 PalletTown_ProfessorOaksLab_Movement_RivalWalksToCharmander::
 	walk_down
 	walk_down
-	walk_right
-	walk_right
+		walk_right
 	walk_right
 	walk_right
 	walk_right
@@ -1192,6 +1191,7 @@ PalletTown_ProfessorOaksLab_Movement_RivalWalksToCharmander::
 
 PalletTown_ProfessorOaksLab_Movement_RivalWalksToSquirtle::
 	walk_down
+	walk_right
 	walk_right
 	walk_right
 	walk_right

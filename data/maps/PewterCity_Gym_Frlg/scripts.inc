@@ -40,6 +40,11 @@ PewterCity_Gym_EventScript_Liam::
 	msgbox PewterCity_Gym_Text_LiamPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+PewterCity_Gym_EventScript_Jerry::
+	trainerbattle_single TRAINER_CAMPER_JERRY, PewterCity_Gym_Text_JerryIntro, PewterCity_Gym_Text_JerryDefeat
+	msgbox PewterCity_Gym_Text_JerryPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 PewterCity_Gym_EventScript_GymGuy::
 	lock
 	faceplayer
@@ -158,6 +163,19 @@ PewterCity_Gym_Text_LiamDefeat::
 PewterCity_Gym_Text_LiamPostBattle::
 	.string "You're pretty hot.\n"
 	.string "…But not as hot as BROCK!$"
+
+PewterCity_Gym_Text_JerryIntro::
+	.string "The trainers of this GYM use rock-type Pokemon.\p"
+	.string "The rock-type has high DEFENSE.\p"
+	.string "Battles could end up going a long time. Are you ready for this?$"
+
+PewterCity_Gym_Text_JerryDefeat::
+	.string "I have to win these battles…$"
+
+PewterCity_Gym_Text_JerryPostBattle::
+	.string "Hey you!\p"
+	.string "BROCK is tough. He'll punish you\n"
+	.string "if you don't take him seriously.$"
 
 PewterCity_Gym_Text_LetMeTakeYouToTheTop::
 	.string "Hiya!\n"
