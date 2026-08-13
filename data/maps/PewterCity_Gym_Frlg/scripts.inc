@@ -3,7 +3,7 @@ PewterCity_Gym_Frlg_MapScripts::
 
 PewterCity_Gym_EventScript_Brock::
 	famechecker FAMECHECKER_BROCK, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
-	trainerbattle_single TRAINER_LEADER_BROCK, PewterCity_Gym_Text_BrockIntro, PewterCity_Gym_Text_BrockDefeat, PewterCity_Gym_EventScript_DefeatedBrock, NO_MUSIC
+	trainerbattle_double TRAINER_LEADER_BROCK, PewterCity_Gym_Text_BrockIntro, PewterCity_Gym_Text_BrockDefeat, PewterCity_Gym_Text_BrockNeedTwoMons, PewterCity_Gym_EventScript_DefeatedBrock, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM39_FROM_BROCK, PewterCity_Gym_EventScript_GiveTM39
 	msgbox PewterCity_Gym_Text_BrockPostBattle
 	release
@@ -86,6 +86,14 @@ PewterCity_Gym_EventScript_GymStatuePostVictory::
 	releaseall
 	end
 
+PewterCity_Gym_Text_BrockNeedTwoMons:
+	.string "I'm sorry. According to the official\n"
+	.string "Indigo League rules, any sanctioned\p"
+	.string "gym challenges are required to be a\n"
+	.string "DOUBLE BATTLE.\p"
+	.string "If you wish to challenge me,\n"
+	.string "bring some more POKéMON.$"
+
 PewterCity_Gym_Text_BrockIntro::
 	.string "So, you're here. I'm BROCK.\n"
 	.string "I'm PEWTER's GYM LEADER.\p"
@@ -165,9 +173,12 @@ PewterCity_Gym_Text_LiamPostBattle::
 	.string "…But not as hot as BROCK!$"
 
 PewterCity_Gym_Text_JerryIntro::
-	.string "The trainers of this GYM use rock-type Pokemon.\p"
+	.string "The trainers of this GYM use\n"
+	.string "rock-type Pokemon.\p"
 	.string "The rock-type has high DEFENSE.\p"
-	.string "Battles could end up going a long time. Are you ready for this?$"
+	.string "Battles could end up going a \n"
+	.string "long time.\p"
+	.string "Are you ready for this?$"
 
 PewterCity_Gym_Text_JerryDefeat::
 	.string "I have to win these battles…$"
