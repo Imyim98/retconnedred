@@ -13,5 +13,5 @@ MtMoon_B1F_Text_AlexandriaDefeat::
 	.string "That strength is the real deal!$"
 
 MtMoon_B1F_Text_AlexandriaPostBattle::
-	.string "I don't think I deserve to be called a\n$"
+	.string "I don't think I deserve to be called a\n"
 	.string "Clefable master yet!$"
