@@ -632,13 +632,14 @@
 #define TRAINER_HIKER_BRUCE                        626
 #define TRAINER_HIKER_DWIGHT                       627
 #define TRAINER_COOL_COUPLE_ZAC_JEN                628
+#define TRAINER_COOLTRAINER_ALEXANDRIA             629
 
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is
-//       only space for 20 additional trainers before trainer flag space overflows.
+//       only space for 19 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT_FRLG can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_FRLG                      629
+#define TRAINERS_COUNT_FRLG                      630
 #define MAX_TRAINERS_COUNT_FRLG                  768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_FRLG_H
