@@ -87,16 +87,15 @@ Route3_Text_CalvinPostBattle::
 	.string "I always wear shorts, even in\n"
 	.string "winter. That's my policy.$"
 
-Route3_Text_JamesIntro::
-	.string "I'll battle you with the POKéMON\n"
-	.string "I just caught.$"
+Route3_Text_JimmyIntro::
+	.string "I can run like the wind!$"
+	
+Route3_Text_JimmyDefeat::
+	.string "Blown away!$"
 
-Route3_Text_JamesDefeat::
-	.string "Done like dinner!$"
-
-Route3_Text_JamesPostBattle::
-	.string "Trained POKéMON are stronger than\n"
-	.string "the wild ones.$"
+Route3_Text_JimmyPostBattle::
+	.string "I wear shorts the whole year round.\n"
+	.string "That's my fashion policy.$"
 
 Route3_Text_RobinIntro::
 	.string "Eek!\n"
@@ -113,3 +112,63 @@ Route3_Text_RouteSign::
 	.string "ROUTE 3\n"
 	.string "MT. MOON AHEAD$"
 
+Route3_Text_BruceIntro::
+	.string "My bag is digging into my shoulders!\n"
+	.string "When that happens, I like to take a\p"
+	.string "break and have a battle!$"
+
+Route3_Text_BruceDefeat::
+	.string "Feh.$"
+
+Route3_Text_BrucePostBattle::
+	.string "All right, guess I should carry my\n"
+	.string "bag again!$"
+
+Route3_Text_DwightIntro::
+	.string "Peace!\p"
+	.string "...\n"
+	.string "...Huh?\p"
+	.string "When you meet the unknown on a\n"
+	.string "mountain road, all you want is peace,\l"
+	.string "right?$"
+
+Route3_Text_DwightDefeat::
+	.string "Peace--even though I lost!$"
+
+Route3_Text_DwightPostBattle::
+	.string "Exchanging lighthearted greetings with\n"
+	.string "someone you don't know...\p"
+	.string "That's the best thing about mountains!$"
+
+Route3_Text_ZacIntro::
+	.string "ZAC: Really, you want to battle us?\p"
+	.string "You've got a lot of courage for someone\n"
+	.string "so young.$"
+
+Route3_Text_ZacDefeat::
+	.string "ZAC: You weren't bluffing...$"
+
+Route3_Text_ZacPostBattle::
+	.string "ZAC: Your future looks promising.$"
+
+Route3_Text_ZacNotEnoughMons::
+	.string "ZAC: If you want to battle with\n"
+	.string "us, you have to bring at least two\l"
+	.string "POKéMON with you.$"
+
+Route3_Text_JenIntro::
+	.string "JEN: Huh? You'd like to go up against\n"
+	.string "us? Great!$"
+
+Route3_Text_JenDefeat::
+	.string "JEN: You're so much stronger than\n"
+	.string "I thought.$"
+
+Route3_Text_JenPostBattle::
+	.string "JEN: I'm looking forward to seeing what\n"
+	.string "kind of Trainer you'll become.$"
+
+Route3_Text_JenNotEnoughMons::
+	.string "JEN: If you want to battle with\n"
+	.string "us, you have to bring at least two\l"
+	.string "POKéMON with you.$"

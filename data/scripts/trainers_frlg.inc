@@ -46,16 +46,9 @@ Route3_EventScript_GregRematch::
 	msgbox Route3_Text_GregPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route3_EventScript_James::
-	trainerbattle_single TRAINER_BUG_CATCHER_JAMES, Route3_Text_JamesIntro, Route3_Text_JamesDefeat
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route3_EventScript_JamesRematch
-	msgbox Route3_Text_JamesPostBattle, MSGBOX_AUTOCLOSE
-	end
-
-Route3_EventScript_JamesRematch::
-	trainerbattle_rematch TRAINER_BUG_CATCHER_JAMES, Route3_Text_JamesRematchIntro, Route3_Text_JamesDefeat
-	msgbox Route3_Text_JamesPostBattle, MSGBOX_AUTOCLOSE
+Route3_EventScript_Jimmy::
+	trainerbattle_single TRAINER_YOUNGSTER_JIMMY, Route3_Text_JimmyIntro, Route3_Text_JimmyDefeat
+	msgbox Route3_Text_JimmyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route3_EventScript_Janice::
@@ -92,6 +85,26 @@ Route3_EventScript_Robin::
 Route3_EventScript_RobinRematch::
 	trainerbattle_rematch TRAINER_LASS_ROBIN, Route3_Text_RobinRematchIntro, Route3_Text_RobinDefeat
 	msgbox Route3_Text_RobinPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route3_EventScript_Bruce::
+	trainerbattle_single TRAINER_HIKER_BRUCE, Route3_Text_BruceIntro, Route3_Text_BruceDefeat
+	msgbox Route3_Text_BrucePostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route3_EventScript_Dwight::
+	trainerbattle_single TRAINER_HIKER_DWIGHT, Route3_Text_DwightIntro, Route3_Text_DwightDefeat
+	msgbox Route3_Text_DwightPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route3_EventScript_Zac::
+	trainerbattle_double TRAINER_COOL_COUPLE_ZAC_JEN, Route3_Text_ZacIntro, Route3_Text_ZacDefeat, Route3_Text_ZacNotEnoughMons
+	msgbox Route3_Text_ZacPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route3_EventScript_Jen::
+	trainerbattle_double TRAINER_COOL_COUPLE_ZAC_JEN, Route3_Text_JenIntro, Route3_Text_JenDefeat, Route3_Text_JenNotEnoughMons
+	msgbox Route3_Text_JenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route4_EventScript_Crissy::

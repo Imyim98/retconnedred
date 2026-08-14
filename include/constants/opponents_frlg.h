@@ -22,7 +22,7 @@
 #define TRAINER_BUG_CATCHER_SAMMY                  16
 #define TRAINER_BUG_CATCHER_COLTON                 17
 #define TRAINER_BUG_CATCHER_GREG                   18
-#define TRAINER_BUG_CATCHER_JAMES                  19
+#define TRAINER_YOUNGSTER_JIMMY                    19
 #define TRAINER_BUG_CATCHER_KENT                   20
 #define TRAINER_BUG_CATCHER_ROBBY                  21
 #define TRAINER_BUG_CATCHER_CALE                   22
@@ -629,12 +629,16 @@
 #define TRAINER_CUE_BALL_PAXTON                    623
 #define TRAINER_LASS_BRITTANY                      624
 #define TRAINER_CAMPER_JERRY                       625
+#define TRAINER_HIKER_BRUCE                        626
+#define TRAINER_HIKER_DWIGHT                       627
+#define TRAINER_COOL_COUPLE_ZAC_JEN                628
+
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is
-//       only space for 23 additional trainers before trainer flag space overflows.
+//       only space for 20 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT_FRLG can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_FRLG                      626
+#define TRAINERS_COUNT_FRLG                      629
 #define MAX_TRAINERS_COUNT_FRLG                  768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_FRLG_H
