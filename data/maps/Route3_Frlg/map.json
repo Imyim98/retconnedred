@@ -155,7 +155,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_M",
-      "x": 22,
+      "x": 21,
       "y": 14,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
@@ -197,7 +197,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_F",
-      "x": 21,
+      "x": 22,
       "y": 14,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",

@@ -526,11 +526,15 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
+Oddish
+Level: 6
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
 Pidgey
 Level: 9
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Pidgey
+Ponyta
 Level: 9
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -549,6 +553,10 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Nidoran F
 Level: 10
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Bulbasaur
+Level: 11
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_LASS_ROBIN ===
@@ -1962,7 +1970,7 @@ Double Battle: No
 AI: Check Bad Move
 
 Geodude
-Level: 8
+Level: 9
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Machop
@@ -1974,7 +1982,7 @@ Level: 13
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Clefairy
-Level: 15
+Level: 14
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_HIKER_DWIGHT ===
@@ -9919,11 +9927,11 @@ Music: Cool
 Double Battle: Yes
 AI: Check Bad Move
 
-Minun
+Plusle
 Level: 12
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Plusle
+Minun
 Level: 12
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 

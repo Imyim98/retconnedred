@@ -94,8 +94,7 @@ Route3_Text_JimmyDefeat::
 	.string "Blown away!$"
 
 Route3_Text_JimmyPostBattle::
-	.string "I wear shorts the whole year round.\n"
-	.string "That's my fashion policy.$"
+	.string "Time to run home!$"
 
 Route3_Text_RobinIntro::
 	.string "Eek!\n"
