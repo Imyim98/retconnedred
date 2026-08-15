@@ -192,14 +192,7 @@ Route24_EventScript_EthanRematch::
 	end
 
 Route25_EventScript_Joey::
-	trainerbattle_single TRAINER_YOUNGSTER_JOEY, Route25_Text_JoeyIntro, Route25_Text_JoeyDefeat
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route25_EventScript_JoeyRematch
-	msgbox Route25_Text_JoeyPostBattle, MSGBOX_AUTOCLOSE
-	end
-
-Route25_EventScript_JoeyRematch::
-	trainerbattle_rematch TRAINER_YOUNGSTER_JOEY, Route25_Text_JoeyRematchIntro, Route25_Text_JoeyDefeat
+	trainerbattle_single TRAINER_BIRD_KEEPER_JOEY, Route25_Text_JoeyIntro, Route25_Text_JoeyDefeat
 	msgbox Route25_Text_JoeyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -276,14 +269,7 @@ Route25_EventScript_NobRematch::
 	end
 
 Route25_EventScript_Wayne::
-	trainerbattle_single TRAINER_HIKER_WAYNE, Route25_Text_WayneIntro, Route25_Text_WayneDefeat
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route25_EventScript_WayneRematch
-	msgbox Route25_Text_WaynePostBattle, MSGBOX_AUTOCLOSE
-	end
-
-Route25_EventScript_WayneRematch::
-	trainerbattle_rematch TRAINER_HIKER_WAYNE, Route25_Text_WayneRematchIntro, Route25_Text_WayneDefeat
+	trainerbattle_single TRAINER_FISHERMAN_WAYNE, Route25_Text_WayneIntro, Route25_Text_WayneDefeat
 	msgbox Route25_Text_WaynePostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -297,6 +283,11 @@ Route25_EventScript_Flint::
 Route25_EventScript_FlintRematch::
 	trainerbattle_rematch TRAINER_CAMPER_FLINT, Route25_Text_FlintRematchIntro, Route25_Text_FlintDefeat
 	msgbox Route25_Text_FlintPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route25_EventScript_Kevin::
+	trainerbattle_single TRAINER_COOLTRAINER_KEVIN, Route25_Text_KevinIntro, Route25_Text_KevinDefeat
+	msgbox Route25_Text_KevinPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route6_EventScript_Keigo::

@@ -8,7 +8,7 @@
 #define TRAINER_YOUNGSTER_CALVIN                   2
 #define TRAINER_YOUNGSTER_JOSH                     3
 #define TRAINER_YOUNGSTER_TIMMY                    4
-#define TRAINER_YOUNGSTER_JOEY                     5
+#define TRAINER_BIRD_KEEPER_JOEY                   5
 #define TRAINER_YOUNGSTER_DAN                      6
 #define TRAINER_YOUNGSTER_CHAD                     7
 #define TRAINER_YOUNGSTER_TYLER                    8
@@ -93,7 +93,7 @@
 #define TRAINER_HIKER_MARCOS                       87
 #define TRAINER_HIKER_FRANKLIN                     88
 #define TRAINER_HIKER_NOB                          89
-#define TRAINER_HIKER_WAYNE                        90
+#define TRAINER_FISHERMAN_WAYNE                    90
 #define TRAINER_HIKER_ALAN                         91
 #define TRAINER_HIKER_BRICE                        92
 #define TRAINER_HIKER_CLARK                        93
@@ -633,13 +633,15 @@
 #define TRAINER_HIKER_DWIGHT                       627
 #define TRAINER_COOL_COUPLE_ZAC_JEN                628
 #define TRAINER_COOLTRAINER_ALEXANDRIA             629
+#define TRAINER_COOLTRAINER_KEVIN                  630
+#define TRAINER_SAILOR_EDDIE                       631
 
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is
-//       only space for 19 additional trainers before trainer flag space overflows.
+//       only space for 17 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT_FRLG can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_FRLG                      630
+#define TRAINERS_COUNT_FRLG                      632
 #define MAX_TRAINERS_COUNT_FRLG                  768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_FRLG_H

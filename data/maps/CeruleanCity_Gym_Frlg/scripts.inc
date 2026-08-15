@@ -38,6 +38,11 @@ CeruleanCity_Gym_EventScript_Diana::
 	msgbox CeruleanCity_Gym_Text_DianaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+CeruleanCity_Gym_EventScript_Eddie::
+	trainerbattle_single TRAINER_SAILOR_EDDIE, CeruleanCity_Gym_Text_EddieIntro, CeruleanCity_Gym_Text_EddieDefeat
+	msgbox CeruleanCity_Gym_Text_EddiePostBattle, MSGBOX_AUTOCLOSE
+	end
+
 CeruleanCity_Gym_EventScript_Luis::
 	trainerbattle_single TRAINER_SWIMMER_MALE_LUIS, CeruleanCity_Gym_Text_LuisIntro, CeruleanCity_Gym_Text_LuisDefeat
 	famechecker FAMECHECKER_MISTY, 2
@@ -118,6 +123,17 @@ CeruleanCity_Gym_Text_DianaDefeat::
 CeruleanCity_Gym_Text_DianaPostBattle::
 	.string "You have to face other TRAINERS\n"
 	.string "to see how good you really are.$"
+
+CeruleanCity_Gym_Text_EddieIntro::
+	.string "I've been relaxing poolside, so I've got\n"
+	.string "enough strength!$"
+
+CeruleanCity_Gym_Text_EddieDefeat::
+	.string "You can't win with strength alone.$"
+
+CeruleanCity_Gym_Text_EddiePostBattle::
+	.string "Hey, let's go for a swim!\n" 
+	.string "Sailors have to be able to swim!$"
 
 CeruleanCity_Gym_Text_LuisIntro::
 	.string "Splash!\p"
