@@ -14,7 +14,7 @@
 #define TRAINER_YOUNGSTER_TYLER                    8
 #define TRAINER_YOUNGSTER_EDDIE                    9
 #define TRAINER_YOUNGSTER_DILLON                   10
-#define TRAINER_YOUNGSTER_YASU                     11
+#define TRAINER_SAILOR_YASU                        11
 #define TRAINER_YOUNGSTER_DAVE                     12
 #define TRAINER_YOUNGSTER_BEN_2                    13
 #define TRAINER_BUG_CATCHER_RICK                   14
@@ -27,7 +27,7 @@
 #define TRAINER_BUG_CATCHER_ROBBY                  21
 #define TRAINER_BUG_CATCHER_CALE                   22
 #define TRAINER_BUG_CATCHER_KEIGO                  23
-#define TRAINER_BUG_CATCHER_ELIJAH                 24
+#define TRAINER_SAILOR_ELIJAH                      24
 #define TRAINER_BUG_CATCHER_BRENT                  25
 #define TRAINER_BUG_CATCHER_CONNER                 26
 #define TRAINER_LASS_JANICE                        27
@@ -52,7 +52,7 @@
 #define TRAINER_SAILOR_LEONARD                     46
 #define TRAINER_SAILOR_DUNCAN                      47
 #define TRAINER_SAILOR_HUEY                        48
-#define TRAINER_SAILOR_DYLAN                       49
+#define TRAINER_ENGINEER_DYLAN                     49
 #define TRAINER_SAILOR_PHILLIP                     50
 #define TRAINER_SAILOR_DWAYNE                      51
 #define TRAINER_CAMPER_LIAM                        52
@@ -164,7 +164,7 @@
 #define TRAINER_CUE_BALL_CHASE                     158
 #define TRAINER_GAMER_HUGO                         159
 #define TRAINER_GAMER_JASPER                       160
-#define TRAINER_GAMER_DIRK                         161
+#define TRAINER_SAILOR_DIRK                        161
 #define TRAINER_GAMER_DARIAN                       162
 #define TRAINER_GAMER_STAN                         163
 #define TRAINER_GAMER_RICH                         164
@@ -635,13 +635,15 @@
 #define TRAINER_COOLTRAINER_ALEXANDRIA             629
 #define TRAINER_COOLTRAINER_KEVIN                  630
 #define TRAINER_SAILOR_EDDIE                       631
+#define TRAINER_TWINS_DAY_DANI                     632
+#define TRAINER_PSYCHIC_HERMAN                     633
 
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is
-//       only space for 17 additional trainers before trainer flag space overflows.
+//       only space for 15 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT_FRLG can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_FRLG                      632
+#define TRAINERS_COUNT_FRLG                      634
 #define MAX_TRAINERS_COUNT_FRLG                  768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_FRLG_H

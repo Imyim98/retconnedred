@@ -115,6 +115,15 @@ Route11_Text_DavePostBattle::
 	.string "Tch…\n"
 	.string "I better go find stronger ones!$"
 
+Route11_Text_HermanIntro::
+	.string "...$"
+
+Route11_Text_HermanDefeat::
+	.string "...$"
+
+Route11_Text_HermanPostBattle::
+	.string "... I lost while I had my eyes closed...$"
+	
 Route11_Text_DiglettsCave::
 	.string "DIGLETT'S CAVE$"
 

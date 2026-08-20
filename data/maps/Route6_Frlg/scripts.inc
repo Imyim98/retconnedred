@@ -74,7 +74,34 @@ Route6_Text_ElijahPostBattle::
 	.string "Or, am I just bad?\l"
 	.string "Which do you think?$"
 
+Route6_Text_DayIntro::
+	.string "DAY: Are you going to beat us?$" 
+		
+Route6_Text_DayDefeat::
+	.string "DAY: Waah!$"
+
+Route6_Text_DayPostBattle::
+	.string "DAY: Looks like we got bounced.$"
+
+Route6_Text_DayNotEnoughMons::
+	.string "DAY: If you want to battle with\n"
+	.string "us, you have to bring at least two\l"
+	.string "POKéMON with you.$"
+
+Route6_Text_DaniIntro::
+	.string "DANI: We'll knock you flat!$"
+
+Route6_Text_DaniDefeat::
+	.string "DANI: Eeeh!$"
+
+Route6_Text_DaniPostBattle::
+	.string "DANI: You beat us...$"
+
+Route6_Text_DaniNotEnoughMons::
+	.string "DANI: If you want to battle with\n"
+	.string "us, you have to bring at least two\l"
+	.string "POKéMON with you.$"
+
 Route6_Text_UndergroundPathSign::
 	.string "UNDERGROUND PATH\n"
 	.string "CERULEAN CITY - VERMILION CITY$"
-

@@ -73,7 +73,7 @@ enum Language
     #define IS_FRLG 1
     #else
     #define GAME_VERSION (VERSION_EMERALD)
-    #define IS_FRLG 0
+    #define IS_FRLG 1
     #endif
 #endif
 #define GAME_LANGUAGE (LANGUAGE_ENGLISH)

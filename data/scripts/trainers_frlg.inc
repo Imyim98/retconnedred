@@ -303,14 +303,7 @@ Route6_EventScript_KeigoRematch::
 	end
 
 Route6_EventScript_Elijah::
-	trainerbattle_single TRAINER_BUG_CATCHER_ELIJAH, Route6_Text_ElijahIntro, Route6_Text_ElijahDefeat
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route6_EventScript_ElijahRematch
-	msgbox Route6_Text_ElijahPostBattle, MSGBOX_AUTOCLOSE
-	end
-
-Route6_EventScript_ElijahRematch::
-	trainerbattle_rematch TRAINER_BUG_CATCHER_ELIJAH, Route6_Text_ElijahRematchIntro, Route6_Text_ElijahDefeat
+	trainerbattle_single TRAINER_SAILOR_ELIJAH, Route6_Text_ElijahIntro, Route6_Text_ElijahDefeat
 	msgbox Route6_Text_ElijahPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -362,6 +355,16 @@ Route6_EventScript_IsabelleRematch::
 	msgbox Route6_Text_IsabellePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route6_EventScript_Day::
+	trainerbattle_double TRAINER_TWINS_DAY_DANI, Route6_Text_DayIntro, Route6_Text_DayDefeat, Route6_Text_DayNotEnoughMons
+	msgbox Route6_Text_DayPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route6_EventScript_Dani::
+	trainerbattle_double TRAINER_TWINS_DAY_DANI, Route6_Text_DaniIntro, Route6_Text_DaniDefeat, Route6_Text_DaniNotEnoughMons
+	msgbox Route6_Text_DaniPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 Route11_EventScript_Eddie::
 	trainerbattle_single TRAINER_YOUNGSTER_EDDIE, Route11_Text_EddieIntro, Route11_Text_EddieDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
@@ -387,14 +390,7 @@ Route11_EventScript_DillonRematch::
 	end
 
 Route11_EventScript_Yasu::
-	trainerbattle_single TRAINER_YOUNGSTER_YASU, Route11_Text_YasuIntro, Route11_Text_YasuDefeat
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route11_EventScript_YasuRematch
-	msgbox Route11_Text_YasuPostBattle, MSGBOX_AUTOCLOSE
-	end
-
-Route11_EventScript_YasuRematch::
-	trainerbattle_rematch TRAINER_YOUNGSTER_YASU, Route11_Text_YasuRematchIntro, Route11_Text_YasuDefeat
+	trainerbattle_single TRAINER_SAILOR_YASU, Route11_Text_YasuIntro, Route11_Text_YasuDefeat
 	msgbox Route11_Text_YasuPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -459,14 +455,7 @@ Route11_EventScript_JasperRematch::
 	end
 
 Route11_EventScript_Dirk::
-	trainerbattle_single TRAINER_GAMER_DIRK, Route11_Text_DirkIntro, Route11_Text_DirkDefeat
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route11_EventScript_DirkRematch
-	msgbox Route11_Text_DirkPostBattle, MSGBOX_AUTOCLOSE
-	end
-
-Route11_EventScript_DirkRematch::
-	trainerbattle_rematch TRAINER_GAMER_DIRK, Route11_Text_DirkRematchIntro, Route11_Text_DirkDefeat
+	trainerbattle_single TRAINER_SAILOR_DIRK, Route11_Text_DirkIntro, Route11_Text_DirkDefeat
 	msgbox Route11_Text_DirkPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -480,6 +469,11 @@ Route11_EventScript_Darian::
 Route11_EventScript_DarianRematch::
 	trainerbattle_rematch TRAINER_GAMER_DARIAN, Route11_Text_DarianRematchIntro, Route11_Text_DarianDefeat
 	msgbox Route11_Text_DarianPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route11_EventScript_Herman::
+	trainerbattle_single TRAINER_PSYCHIC_HERMAN, Route11_Text_HermanIntro, Route11_Text_HermanDefeat
+	msgbox Route11_Text_HermanPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route9_EventScript_Brent::
