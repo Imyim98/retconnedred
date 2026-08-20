@@ -7428,11 +7428,11 @@ Items: Super Potion / Full Heal
 Double Battle: Yes
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Electrode_Hisui
+Voltorb_Hisui
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Chloroblast
 - Electro Ball
+- Bullet Seed
 - Swift
 - Charge
 
@@ -7443,6 +7443,14 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Spark
 - Confuse Ray
 - Stockpile
+
+Raichu_Alola
+Level: 24
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Psychic
+- Shock Wave
+- Thunder Wave
+- Charm
 
 Raichu
 Level: 28
