@@ -516,11 +516,11 @@ Double Battle: No
 AI: Check Bad Move
 
 Beedrill
-Level: 19
+Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Beedrill
-Level: 19
+Heracross
+Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_BUG_CATCHER_CONNER ===
@@ -532,16 +532,20 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Caterpie
-Level: 20
+Butterfree
+Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Weedle
-Level: 20
+Beedrill
+Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Venonat
-Level: 20
+Level: 25
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Parasect
+Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_LASS_BRITTANY ===
@@ -1205,12 +1209,24 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Growlithe
-Level: 21
+Growlithe_Hisui
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Charmander
-Level: 21
+Charmeleon
+Level: 26
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Sandslash
+Level: 29
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Diglett_Alola
+Level: 25
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Fearow
+Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_CAMPER_DREW ===
@@ -1222,20 +1238,20 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Rattata
-Level: 19
+Raticate
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Sandshrew
-Level: 19
+Psyduck
+Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Ekans
-Level: 19
+Arbok
+Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Sandshrew
-Level: 19
+Sandslash
+Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_PICNICKER_DIANA ===
@@ -1339,20 +1355,20 @@ Music: Girl
 Double Battle: No
 AI: Check Bad Move
 
-Oddish
-Level: 18
+Nidorina
+Level: 23
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Bellsprout
-Level: 18
+Raichu
+Level: 23
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Oddish
-Level: 18
+Eevee
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Bellsprout
-Level: 18
+Gloom
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_PICNICKER_CAITLIN ===
@@ -1364,8 +1380,24 @@ Music: Girl
 Double Battle: No
 AI: Check Bad Move
 
-Meowth
-Level: 23
+Persian
+Level: 28
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Goldeen
+Level: 26
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Pidgeotto
+Level: 26
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Jumpluff
+Level: 27
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Vulpix
+Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_PICNICKER_HEIDI ===
@@ -1378,11 +1410,23 @@ Double Battle: No
 AI: Check Bad Move
 
 Pikachu
-Level: 20
+Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Clefairy
-Level: 20
+Level: 25
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Jigglypuff
+Level: 25
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Eevee
+Level: 27
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Psyduck
+Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_PICNICKER_CAROL ===
@@ -1394,12 +1438,16 @@ Music: Girl
 Double Battle: No
 AI: Check Bad Move
 
-Pidgey
-Level: 21
+Noctowl
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Pidgeotto
-Level: 21
+Level: 26
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Pikachu
+Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_PICNICKER_SOFIA ===
@@ -1503,6 +1551,14 @@ Lickitung
 Level: 29
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
 
+Poliwhirl
+Level: 30
+IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+
+Kadabra
+Level: 30
+IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+
 === TRAINER_POKEMANIAC_HERMAN ===
 Name: HERMAN
 Class: Pokemaniac Frlg
@@ -1513,11 +1569,23 @@ Double Battle: No
 AI: Check Bad Move
 
 Cubone
-Level: 20
+Level: 25
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
 
-Slowpoke
-Level: 20
+Slowpoke_Galar
+Level: 25
+IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+
+Charmeleon
+Level: 29
+IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+
+Kingler
+Level: 29
+IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+
+Electabuzz
+Level: 30
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
 
 === TRAINER_POKEMANIAC_COOPER ===
@@ -1929,21 +1997,25 @@ Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Geodude
-Level: 21
+Graveler_Alola
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Magnitude
-- Rock Throw
-- Mud Sport
-- Defense Curl
 
 Onix
-Level: 21
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Harden
-- Rock Throw
-- Bind
-- Screech
+
+Sandshrew_Alola
+Level: 27
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Primeape
+Level: 28
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Poliwhirl
+Level: 30
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_HIKER_BRICE ===
 Name: BRICE
@@ -1954,16 +2026,16 @@ Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Geodude
-Level: 20
+Graveler
+Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Machop
-Level: 20
+Farfetchd_Galar
+Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Geodude
-Level: 20
+Hariyama
+Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_HIKER_CLARK ===
@@ -1975,21 +2047,17 @@ Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Geodude
-Level: 21
+Graveler
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Magnitude
-- Rock Throw
-- Mud Sport
-- Defense Curl
 
 Onix
-Level: 21
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Harden
-- Rock Throw
-- Bind
-- Screech
+
+Machoke
+Level: 30
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_HIKER_TRENT ===
 Name: TRENT
@@ -2001,11 +2069,19 @@ Double Battle: No
 AI: Check Bad Move
 
 Onix
-Level: 19
+Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Graveler
-Level: 19
+Level: 30
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Quagsire
+Level: 28
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Machoke
+Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_HIKER_DUDLEY ===
@@ -8547,12 +8623,16 @@ Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Machop
-Level: 20
+Machoke
+Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Onix
-Level: 20
+Level: 27
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Baltoy
+Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_PICNICKER_ALMA ===
