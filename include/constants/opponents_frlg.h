@@ -70,7 +70,7 @@
 #define TRAINER_PICNICKER_CAITLIN                  64
 #define TRAINER_PICNICKER_HEIDI                    65
 #define TRAINER_PICNICKER_CAROL                    66
-#define TRAINER_PICNICKER_SOFIA                    67
+#define TRAINER_COOLTRAINER_SOFIA                  67
 #define TRAINER_PICNICKER_MARTHA                   68
 #define TRAINER_PICNICKER_TINA                     69
 #define TRAINER_PICNICKER_HANNAH                   70

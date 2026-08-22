@@ -2,7 +2,7 @@ RockTunnel_B1F_Frlg_MapScripts::
 	.byte 0
 
 RockTunnel_B1F_EventScript_Sofia::
-	trainerbattle_single TRAINER_PICNICKER_SOFIA, RockTunnel_B1F_Text_SofiaIntro, RockTunnel_B1F_Text_SofiaDefeat
+	trainerbattle_single TRAINER_COOLTRAINER_SOFIA, RockTunnel_B1F_Text_SofiaIntro, RockTunnel_B1F_Text_SofiaDefeat
 	msgbox RockTunnel_B1F_Text_SofiaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
