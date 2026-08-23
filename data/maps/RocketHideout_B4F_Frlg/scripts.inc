@@ -28,6 +28,7 @@ RocketHideout_B4F_EventScript_Giovanni::
 	fadescreen FADE_TO_BLACK
 	closemessage
 	removeobject LOCALID_HIDEOUT_GIOVANNI
+	removeobject LOCALID_HIDEOUT_ARCHER
 	addobject LOCALID_SILPH_SCOPE
 	clearflag FLAG_HIDE_SILPH_SCOPE
 	setflag FLAG_HIDE_CELADON_ROCKETS
@@ -44,6 +45,12 @@ RocketHideout_B4F_EventScript_SilphScope::
 	goto_if_eq VAR_RESULT, FALSE, EventScript_BagIsFull
 	release
 	end
+
+RocketHideout_B4F_EventScript_Archer::
+	trainerbattle_single TRAINER_ADMIN_ARCHER, RocketHideout_B4F_Text_ArcherIntro, RocketHideout_B4F_Text_ArcherDefeat
+	msgbox RocketHideout_B4F_Text_ArcherPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 
 RocketHideout_B4F_EventScript_Grunt1::
 	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_18, RocketHideout_B4F_Text_Grunt1Intro, RocketHideout_B4F_Text_Grunt1Defeat, RocketHideout_B4F_EventScript_DefeatedGrunt1
@@ -119,6 +126,18 @@ RocketHideout_B4F_EventScript_RemoveBarrier::
 	setmetatile 17, 14, METATILE_SilphCo_HideoutFloor_ShadeFull, 0
 	setmetatile 18, 14, METATILE_SilphCo_HideoutFloor, 0
 	return
+
+RocketHideout_B4F_Text_ArcherIntro::
+	.string "What is a child doing here?\p"
+	.string "I am Archer, an Admin of TEAM ROCKET.\p"
+	.string "And I do not go easy even on children!$"
+
+RocketHideout_B4F_Text_ArcherDefeat::
+	.string "What a blunder!$"
+
+RocketHideout_B4F_Text_ArcherPostBattle::
+	.string "F-forgive me, Giovanni...\n"
+	.string "For me to be defeated by a simple child...$"
 
 RocketHideout_B4F_Text_GiovanniIntro::
 	.string "So! I must say, I am impressed you\n"

@@ -637,13 +637,14 @@
 #define TRAINER_SAILOR_EDDIE                       631
 #define TRAINER_TWINS_DAY_DANI                     632
 #define TRAINER_PSYCHIC_HERMAN                     633
+#define TRAINER_ADMIN_ARCHER                       634
 
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is
-//       only space for 15 additional trainers before trainer flag space overflows.
+//       only space for 14 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT_FRLG can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_FRLG                      634
+#define TRAINERS_COUNT_FRLG                      635
 #define MAX_TRAINERS_COUNT_FRLG                  768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_FRLG_H
