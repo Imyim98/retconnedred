@@ -893,12 +893,16 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Bellsprout
-Level: 23
+Weepinbell
+Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Weepinbell
-Level: 23
+Jumpluff
+Level: 28
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Gloom
+Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_LASS_LISA ===
@@ -910,12 +914,12 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Oddish
-Level: 23
+Sunflora
+Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Gloom
-Level: 23
+Jumpluff
+Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_SAILOR_EDMOND ===
@@ -1506,12 +1510,16 @@ Music: Girl
 Double Battle: No
 AI: Check Bad Move
 
-Bulbasaur
-Level: 24
+Ivysaur
+Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Ivysaur
-Level: 24
+Roselia
+Level: 29
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Exeggutor
+Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_PICNICKER_HANNAH ===
@@ -3676,20 +3684,20 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Oddish
-Level: 21
+Gloom
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Bellsprout
-Level: 21
+Weepinbell
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Oddish
-Level: 21
+Shiftry
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Bellsprout
-Level: 21
+Breloom
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_BEAUTY_TAMIA ===
@@ -3701,12 +3709,16 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Bellsprout
-Level: 24
+Roselia
+Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Bellsprout
-Level: 24
+Carnivine
+Level: 29
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Parasect
+Level: 32
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_BEAUTY_LORI ===
@@ -3718,8 +3730,12 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move
 
-Exeggcute
-Level: 24
+Exeggutor
+Level: 29
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Gloom
+Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_BEAUTY_LOLA ===
@@ -6891,45 +6907,21 @@ Items: Super Potion
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Bellsprout
-Level: 22
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Wrap
-- Stun Spore
-- Poison Powder
-- Growth
-
-Oddish
-Level: 22
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Poison Powder
-- Stun Spore
-- Absorb
-- Sweet Scent
-
 Weepinbell
-Level: 22
+Level: 31
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Vine Whip
-- Stun Spore
-- Poison Powder
-- Growth
 
-Gloom
-Level: 22
+Shiftry
+Level: 27
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Absorb
-- Stun Spore
-- Poison Powder
-- Sweet Scent
 
 Ivysaur
-Level: 22
+Level: 27
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Razor Leaf
-- Sleep Powder
-- Vine Whip
-- Leech Seed
+
+Bellossom
+Level: 32
+IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
 === TRAINER_COOLTRAINER_CAROLINE ===
 Name: CAROLINE
@@ -7597,28 +7589,36 @@ Double Battle: Yes
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Victreebel
-Level: 29
+Level: 34
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Stun Spore
+- Leaf Storm
+- Razor Leaf
 - Acid
 - Poison Powder
-- Giga Drain
 
-Tangela
-Level: 24
+Leafeon
+Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Poison Powder
-- Constrict
-- Ingrain
+- Razor Leaf
+- Bite
+- Baby-Doll Eyes
+- Sunny Day
+
+Tangrowth
+Level: 33
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Giga Drain
+- Ancient Power
+- Knock Off
+- Growth
 
 Vileplume
-Level: 29
+Level: 35
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sleep Powder
-- Acid
-- Stun Spore
+- Petal Blizzard
 - Giga Drain
+- Moonblast
+- Sleep Powder
 
 === TRAINER_LEADER_KOGA ===
 Name: KOGA
