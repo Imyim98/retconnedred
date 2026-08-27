@@ -183,3 +183,9 @@ ViridianForest_Text_LeavingViridianForest::
 	.string "LEAVING VIRIDIAN FOREST\n"
 	.string "PEWTER CITY AHEAD$"
 
+ViridianForest_EventScript_DiglettsCaveSign::
+	msgbox ViridianForest_Text_DiglettsCave, MSGBOX_SIGN
+	end
+
+ViridianForest_Text_DiglettsCave::
+	.string "DIGLETT'S CAVE$"

@@ -2381,6 +2381,9 @@
 #define FLAG_SYS_GOT_BERRY_POUCH                                    0
 #define FLAG_SYS_UNLOCKED_TANOBY_RUINS                              0
 
+// Mega Stones
+#define FLAG_GOT_RAICHUNITEX                                        0
+
 // World Map Flags
 #define FLAG_WORLD_MAP_PALLET_TOWN                                  0
 #define FLAG_WORLD_MAP_VIRIDIAN_CITY                                0

@@ -10018,6 +10018,12 @@ static void Cmd_handleballthrow(void)
         MarkBattlerForControllerExec(gBattlerAttacker);
         gBattlescriptCurrInstr = BattleScript_WallyBallThrow;
     }
+    else if (gBattleTypeFlags & BATTLE_TYPE_MEGAS)
+    {
+        BtlController_EmitBallThrowAnim(gBattlerAttacker, B_COMM_TO_CONTROLLER, BALL_GHOST_DODGE);
+        MarkBattlerForControllerExec(gBattlerAttacker);
+        gBattlescriptCurrInstr = BattleScript_MegaBallDodge;
+    }
     else
     {
         gBallToDisplay = gLastThrownBall = gLastUsedItem;

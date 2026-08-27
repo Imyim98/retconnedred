@@ -21,3 +21,11 @@ EventScript_AwakenSnorlax::
 	waitfanfare
 	msgbox Text_SnorlaxWokeUp
 	return
+
+EventScript_AwakenRaichuX::
+	message Text_PlayedPokeFlute
+	waitmessage
+	playfanfare MUS_RG_POKE_FLUTE
+	waitfanfare
+	msgbox Text_EnterRaichuX
+	return

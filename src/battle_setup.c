@@ -73,6 +73,7 @@ static void DoStandardWildBattle(bool32 isDouble);
 static void CB2_EndWildBattle(void);
 static void CB2_EndScriptedWildBattle(void);
 static void CB2_EndMarowakBattle(void);
+static void CB2_EndRaichuXBattle(void);
 static void TryUpdateGymLeaderRematchFromWild(void);
 static void TryUpdateGymLeaderRematchFromTrainer(void);
 static void CB2_GiveStarter(void);
@@ -526,6 +527,25 @@ void StartMarowakBattle(void)
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
 }
 
+void StartRaichuXBattle(void)
+{
+    LockPlayerFieldControls();
+    gMain.savedCallback = CB2_EndRaichuXBattle;
+    gBattleTypeFlags = BATTLE_TYPE_MEGAS;
+
+if (CheckBagHasItem(ITEM_POKE_FLUTE, 1))
+    {
+        u32 personality = GetMonPersonality(SPECIES_RAICHU_MEGA_X, MON_MALE, NATURE_SERIOUS, RANDOM_UNOWN_LETTER);
+
+        CreateMonWithIVsPersonality(&gParties[B_TRAINER_OPPONENT_A][0], SPECIES_RAICHU_MEGA_X, 50, 31, personality);
+    }
+    
+    CreateBattleStartTask(B_TRANSITION_BLUR, MUS_RG_VS_LEGEND);
+    SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_NICKNAME, gText_Mega);
+    IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
+    IncrementGameStat(GAME_STAT_WILD_BATTLES);
+}
+
 void BattleSetup_StartLatiBattle(void)
 {
     LockPlayerFieldControls();
@@ -700,6 +720,27 @@ static void CB2_EndMarowakBattle(void)
     else
     {
         // If result is TRUE player didnt defeat Marowak, force player back from stairs
+        if (gBattleOutcome == B_OUTCOME_WON)
+            gSpecialVar_Result = FALSE;
+        else
+            gSpecialVar_Result = TRUE;
+        DowngradeBadPoison();
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+    }
+}
+
+static void CB2_EndRaichuXBattle(void)
+{
+    CpuFill16(0, (void *)BG_PLTT, BG_PLTT_SIZE);
+    ResetOamRange(0, 128);
+
+    if (IsPlayerDefeated(gBattleOutcome))
+    {
+        SetMainCallback2(CB2_WhiteOut);
+    }
+    else
+    {
+        // If result is TRUE player didnt defeat Raichu X, force player down from the trees
         if (gBattleOutcome == B_OUTCOME_WON)
             gSpecialVar_Result = FALSE;
         else

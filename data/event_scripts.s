@@ -1741,3 +1741,6 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 	.include "data/maps/Route25_Cape_Frlg/scripts.inc"
 	.include "data/maps/Route25_Cape_Frlg/text.inc"
+
+	.include "data/maps/ViridianDeepForest_Frlg/scripts.inc"
+	.include "data/maps/ViridianDeepForest_Frlg/text.inc"

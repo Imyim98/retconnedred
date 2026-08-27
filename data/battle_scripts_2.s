@@ -330,6 +330,12 @@ BattleScript_GhostBallDodge::
 	waitmessage B_WAIT_TIME_LONG
 	finishaction
 
+BattleScript_MegaBallDodge::
+	waitmessage B_WAIT_TIME_LONG
+	printstring STRINGID_ITDODGEDBALL
+	waitmessage B_WAIT_TIME_LONG
+	finishaction
+
 BattleScript_ActionThrowRock::
 	printstring STRINGID_THREWROCK
 	waitmessage B_WAIT_TIME_LONG
