@@ -536,14 +536,21 @@ void StartRaichuXBattle(void)
 if (CheckBagHasItem(ITEM_POKE_FLUTE, 1))
     {
         u32 personality = GetMonPersonality(SPECIES_RAICHU_MEGA_X, MON_MALE, NATURE_SERIOUS, RANDOM_UNOWN_LETTER);
-
+        u16 monData;
         CreateMonWithIVsPersonality(&gParties[B_TRAINER_OPPONENT_A][0], SPECIES_RAICHU_MEGA_X, 50, 31, personality);
+        monData = TRUE;
+        monData = MOVE_VOLT_TACKLE;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE1, &monData);
+        monData = MOVE_RISING_VOLTAGE;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE2, &monData);
+        monData = MOVE_PLAY_ROUGH;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE3, &monData);
+        monData = MOVE_TRAILBLAZE;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE4, &monData);
     }
     
     CreateBattleStartTask(B_TRANSITION_BLUR, MUS_RG_VS_LEGEND);
-    SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_NICKNAME, gText_Mega);
-    IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
-    IncrementGameStat(GAME_STAT_WILD_BATTLES);
+    SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_NICKNAME, gText_RaichuX);
 }
 
 void BattleSetup_StartLatiBattle(void)

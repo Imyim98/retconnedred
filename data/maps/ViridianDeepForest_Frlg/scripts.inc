@@ -1,8 +1,12 @@
 ViridianDeepForest_Frlg_MapScripts::
+	map_script MAP_SCRIPT_ON_RESUME, ViridianDeepForest_OnResume
 	.byte 0
 
 ViridianDeepForest_Text_RestlessPikachu::
-	.string "This PIKACHU seems restless... like something is nearby.$"
+	.string "This PIKACHU seems restless...\n" 
+	.string "like something dangerous is nearby.\p"
+	.string "Perhaps there's something you\n"
+	.string "can try to calm it with?$"
 
 ViridianDeepForest_OnResume::
 	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, ViridianDeepForest_EventScript_TryRemoveRaichuX
@@ -16,12 +20,15 @@ ViridianDeepForest_EventScript_RaichuX::
 	lock
 	faceplayer
 	goto_if_unset FLAG_GOT_POKE_FLUTE, ViridianDeepForest_EventScript_RaichuXNoPokeFlute
+	msgbox ViridianDeepForest_Text_RestlessPikachu
 	msgbox Text_WantToUsePokeFlute, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, ViridianDeepForest_EventScript_DontUsePokeFlute
-	msgbox Text_EnterRaichuX
+	call EventScript_AwakenRaichuX
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special StartRaichuXBattle
 	waitstate
 	goto_if_eq VAR_RESULT, FALSE, ViridianDeepForest_EventScript_DefeatedRaichuX  @ VAR_RESULT set by CB2_EndRaichuXBattle
+	call ViridianDeepForest_EventScript_FoughtRaichuX
 	applymovement LOCALID_PLAYER, ViridianDeepForest_Movement_ForcePlayerDown
 	waitmovement 0
 	releaseall
@@ -35,12 +42,14 @@ ViridianDeepForest_EventScript_DefeatedRaichuX::
 	waitbuttonpress
 	waitmoncry
 	msgbox ViridianDeepForest_Text_RaichuXWasCalmed
+	waitmessage
 	setvar VAR_MAP_SCENE_DEEPFOREST, 1
 	goto_if_unset FLAG_GOT_RAICHUNITEX, ViridianDeepForest_EventScript_GiveMegaStone
 	end
 
 ViridianDeepForest_EventScript_GiveMegaStone::
 	msgbox ViridianDeepForest_Text_CollectStone
+	waitmessage
 	checkitemspace ITEM_RAICHUNITE_X
 	goto_if_eq VAR_RESULT, FALSE, ViridianDeepForest_EventScript_NoRoomForStone
 	giveitem_msg ViridianDeepForest_Text_ReceivedStone, ITEM_RAICHUNITE_X
@@ -54,10 +63,10 @@ ViridianDeepForest_EventScript_NoRoomForStone::
 	end
 
 ViridianDeepForest_Text_CollectStone::
-	.string "There's something glowing on the ground...$"
+	.string "There's something glowing on the ground.$"
 
 ViridianDeepForest_Text_ReceivedStone::
-	.string "{PLAYER} received the RAICHUNITE X!{PAUSE_MUSIC}{PLAY_BGM}{MUS_OBTAIN_BADGE}{PAUSE 0xFE}{PAUSE 0x56}{RESUME_MUSIC}$"
+	.string "{PLAYER} received the RAICHUNITE X!$"
 
 ViridianDeepForest_Text_DontHaveRoomForThis::
 	.string "You don't have room for this.$"
@@ -84,11 +93,12 @@ Text_EnterRaichuX::
 	.string "Something is emerging from the trees!$"
 
 Text_RaichuXReturnedToForest::
-	.string "The rogue MEGA RAICHU disappeared into the forest...$"
+	.string "The rogue MEGA RAICHU disappeared\n" 
+	.string "into the forest...$"
 
 ViridianDeepForest_Text_RaichuX::
 	.string "It was a rogue MEGA RAICHU!$"
 
 ViridianDeepForest_Text_RaichuXWasCalmed::
 	.string "The rogue RAICHU was calmed.\p"
-	.string "It's spirit is now free once more…$"
+	.string "It's spirit is now free once more...$"
