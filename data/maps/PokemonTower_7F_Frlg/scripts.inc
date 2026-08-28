@@ -280,3 +280,75 @@ PokemonTower_7F_Text_MrFujiThankYouFollowMe::
 	.string "Follow me to my home, POKéMON\n"
 	.string "HOUSE, at the foot of this tower.$"
 
+PokemonTower_7F_EventScript_Chimecho::
+	lock
+	faceplayer
+	msgbox Text_EnterChimecho
+	special StartChimechoBattle
+	waitstate
+	goto_if_eq VAR_RESULT, FALSE, PokemonTower_7F_EventScript_DefeatedChimecho  @ VAR_RESULT set by CB2_EndChimechoBattle
+	call PokemonTower_7F_EventScript_FoughtChimecho
+	applymovement LOCALID_PLAYER, PokemonTower_7F_Movement_ForcePlayerDown
+	waitmovement 0
+	releaseall
+	end
+
+PokemonTower_7F_EventScript_DefeatedChimecho::
+	message Text_Chimecho
+	waitmessage
+	waitse
+	playmoncry SPECIES_CHIMECHO, CRY_MODE_NORMAL
+	waitbuttonpress
+	waitmoncry
+	msgbox Text_ChimechoWasCalmed
+	waitmessage
+	setvar VAR_MAP_SCENE_POKEMON_TOWER_7F, 1
+	goto_if_unset FLAG_GOT_CHIMECHITE, PokemonTower_7F_EventScript_GiveMegaStone
+	end
+
+PokemonTower_7F_EventScript_GiveMegaStone::
+	msgbox PokemonTower_7F_Text_CollectStone
+	waitmessage
+	checkitemspace ITEM_CHIMECHITE
+	goto_if_eq VAR_RESULT, FALSE, PokemonTower_7F_EventScript_NoRoomForStone
+	giveitem_msg PokemonTower_7F_Text_ReceivedStone, ITEM_CHIMECHITE
+	setflag FLAG_GOT_CHIMECHITE
+	release
+	end
+
+PokemonTower_7F_EventScript_NoRoomForStone::
+	msgbox PokemonTower_7F_Text_DontHaveRoomForThis
+	release
+	end
+
+PokemonTower_7F_Text_CollectStone::
+	.string "Something's glowing on the ground:$"
+
+PokemonTower_7F_Text_ReceivedStone::
+	.string "{PLAYER} received the CHIMECHITE!$"
+
+PokemonTower_7F_Text_DontHaveRoomForThis::
+	.string "You don't have room for this.$"
+
+PokemonTower_7F_Movement_ForcePlayerDown::
+	walk_down
+	step_end
+
+PokemonTower_7F_EventScript_FoughtChimecho::
+	msgbox Text_ChimechoDisappeared
+	release
+	end	
+
+Text_EnterChimecho::
+	.string "Something is emerging from the fog!$"
+
+Text_ChimechoDisappeared::
+	.string "The rogue MEGA CHIMECHO hovers\n" 
+	.string "in the fog outside your vision...$"
+
+Text_Chimecho::
+	.string "It was a rogue MEGA CHIMECHO!$"
+
+Text_ChimechoWasCalmed::
+	.string "The rogue CHIMECHO was calmed.\p"
+	.string "It's spirit is now free once more...$"

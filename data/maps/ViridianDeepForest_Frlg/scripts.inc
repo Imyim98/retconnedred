@@ -35,13 +35,13 @@ ViridianDeepForest_EventScript_RaichuX::
 	end
 
 ViridianDeepForest_EventScript_DefeatedRaichuX::
-	message ViridianDeepForest_Text_RaichuX
+	message Text_RaichuX
 	waitmessage
 	waitse
 	playmoncry SPECIES_RAICHU, CRY_MODE_NORMAL
 	waitbuttonpress
 	waitmoncry
-	msgbox ViridianDeepForest_Text_RaichuXWasCalmed
+	msgbox Text_RaichuXWasCalmed
 	waitmessage
 	setvar VAR_MAP_SCENE_DEEPFOREST, 1
 	goto_if_unset FLAG_GOT_RAICHUNITEX, ViridianDeepForest_EventScript_GiveMegaStone
@@ -63,7 +63,7 @@ ViridianDeepForest_EventScript_NoRoomForStone::
 	end
 
 ViridianDeepForest_Text_CollectStone::
-	.string "There's something glowing on the ground.$"
+	.string "Something's glowing on the ground:$"
 
 ViridianDeepForest_Text_ReceivedStone::
 	.string "{PLAYER} received the RAICHUNITE X!$"
@@ -96,9 +96,9 @@ Text_RaichuXReturnedToForest::
 	.string "The rogue MEGA RAICHU disappeared\n" 
 	.string "into the forest...$"
 
-ViridianDeepForest_Text_RaichuX::
+Text_RaichuX::
 	.string "It was a rogue MEGA RAICHU!$"
 
-ViridianDeepForest_Text_RaichuXWasCalmed::
+Text_RaichuXWasCalmed::
 	.string "The rogue RAICHU was calmed.\p"
 	.string "It's spirit is now free once more...$"

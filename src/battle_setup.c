@@ -73,6 +73,7 @@ static void DoStandardWildBattle(bool32 isDouble);
 static void CB2_EndWildBattle(void);
 static void CB2_EndScriptedWildBattle(void);
 static void CB2_EndMarowakBattle(void);
+static void CB2_EndChimechoBattle(void);
 static void CB2_EndRaichuXBattle(void);
 static void TryUpdateGymLeaderRematchFromWild(void);
 static void TryUpdateGymLeaderRematchFromTrainer(void);
@@ -516,15 +517,41 @@ void StartMarowakBattle(void)
 
     if (CheckBagHasItem(ITEM_SILPH_SCOPE, 1))
     {
-        u32 personality = GetMonPersonality(SPECIES_MAROWAK, MON_FEMALE, NATURE_SERIOUS, RANDOM_UNOWN_LETTER);
+        u32 personality = GetMonPersonality(SPECIES_MAROWAK_ALOLA, MON_FEMALE, NATURE_SERIOUS, RANDOM_UNOWN_LETTER);
 
-        CreateMonWithIVsPersonality(&gParties[B_TRAINER_OPPONENT_A][0], SPECIES_MAROWAK, 30, 31, personality);
+        CreateMonWithIVsPersonality(&gParties[B_TRAINER_OPPONENT_A][0], SPECIES_MAROWAK_ALOLA, 40, 31, personality);
     }
 
     CreateBattleStartTask(GetWildBattleTransition(), 0);
     SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_NICKNAME, gText_Ghost);
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
+}
+
+void StartChimechoBattle(void)
+{
+    LockPlayerFieldControls();
+    gMain.savedCallback = CB2_EndChimechoBattle;
+    gBattleTypeFlags = BATTLE_TYPE_MEGAS;
+
+if (CheckBagHasItem(ITEM_SILPH_SCOPE, 1))
+    {
+        u32 personality = GetMonPersonality(SPECIES_CHIMECHO_MEGA, MON_MALE, NATURE_SERIOUS, RANDOM_UNOWN_LETTER);
+        u16 monData;
+        CreateMonWithIVsPersonality(&gParties[B_TRAINER_OPPONENT_A][0], SPECIES_CHIMECHO_MEGA, 40, 31, personality);
+        monData = TRUE;
+        monData = MOVE_STORED_POWER;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE1, &monData);
+        monData = MOVE_FLASH_CANNON;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE2, &monData);
+        monData = MOVE_COSMIC_POWER;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE3, &monData);
+        monData = MOVE_RECOVER;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE4, &monData);
+    }
+    
+    CreateBattleStartTask(B_TRANSITION_BLUR, MUS_RG_VS_LEGEND);
+    SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_NICKNAME, gText_Chimecho);
 }
 
 void StartRaichuXBattle(void)
@@ -748,6 +775,26 @@ static void CB2_EndRaichuXBattle(void)
     else
     {
         // If result is TRUE player didnt defeat Raichu X, force player down from the trees
+        if (gBattleOutcome == B_OUTCOME_WON)
+            gSpecialVar_Result = FALSE;
+        else
+            gSpecialVar_Result = TRUE;
+        DowngradeBadPoison();
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+    }
+}
+static void CB2_EndChimechoBattle(void)
+{
+    CpuFill16(0, (void *)BG_PLTT, BG_PLTT_SIZE);
+    ResetOamRange(0, 128);
+
+    if (IsPlayerDefeated(gBattleOutcome))
+    {
+        SetMainCallback2(CB2_WhiteOut);
+    }
+    else
+    {
+        // If result is TRUE player didnt defeat Chimecho, force player down from the altar
         if (gBattleOutcome == B_OUTCOME_WON)
             gSpecialVar_Result = FALSE;
         else

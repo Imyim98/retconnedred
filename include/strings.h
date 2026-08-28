@@ -2141,6 +2141,7 @@ extern const u8 MoveRelearner_Text_TutorMoveLWR[];
 extern const u8 MoveRelearner_Text_MoveLWR[];
 
 extern const u8 gText_Ghost[];
+extern const u8 gText_Chimecho[];
 extern const u8 gText_RaichuX[];
 extern const u8 gText_Boulderbadge[];
 extern const u8 gText_Cascadebadge[];

@@ -11,7 +11,26 @@ LavenderTown_VolunteerPokemonHouse_EventScript_MrFuji::
 	setflag FLAG_GOT_POKE_FLUTE
 	giveitem_msg LavenderTown_VolunteerPokemonHouse_Text_ReceivedPokeFluteFromMrFuji, ITEM_POKE_FLUTE, 1, MUS_RG_OBTAIN_KEY_ITEM
 	msgbox LavenderTown_VolunteerPokemonHouse_Text_ExplainPokeFlute
+	waitse
+	msgbox LavenderTown_VolunteerPokemonHouse_Text_MegaRing
+	giveitem_msg LavenderTown_VolunteerPokemonHouse_Text_ReceivedMegaRing, ITEM_MEGA_RING, 1, MUS_RG_OBTAIN_KEY_ITEM
+	switch VAR_STARTER_MON
+	case 0, LavenderTown_EventScript_Venusaur
+	case 1, LavenderTown_EventScript_Blastoise
+	case 2, LavenderTown_EventScript_Charizard
 	release
+	end
+
+LavenderTown_EventScript_Venusaur::
+	giveitem_msg Text_ReceivedVenusaurite, ITEM_VENUSAURITE, 1, MUS_RG_OBTAIN_KEY_ITEM
+	end
+
+LavenderTown_EventScript_Charizard::
+	giveitem_msg Text_ReceivedCharizarditeY, ITEM_CHARIZARDITE_Y, 1, MUS_RG_OBTAIN_KEY_ITEM
+	end
+
+LavenderTown_EventScript_Blastoise::
+	giveitem_msg Text_ReceivedBlastoisinite, ITEM_BLASTOISINITE, 1, MUS_RG_OBTAIN_KEY_ITEM
 	end
 
 LavenderTown_VolunteerPokemonHouse_EventScript_AlreadyHavePokeFlute::
@@ -111,12 +130,9 @@ LavenderTown_VolunteerPokemonHouse_Text_Psyduck::
 
 LavenderTown_VolunteerPokemonHouse_Text_IdLikeYouToHaveThis::
 	.string "MR. FUJI: {PLAYER}…\p"
-	.string "Your POKéDEX quest is one that\n"
-	.string "requires strong dedication.\p"
-	.string "Without deep love for POKéMON,\n"
-	.string "your quest may fail.\p"
-	.string "I'm not sure if this will help you,\n"
-	.string "but I'd like you to have it.$"
+	.string "I would like to thank you for\n"
+	.string "coming to aid MAROWAK's spirit.\p"
+	.string "Please take this.$"
 
 LavenderTown_VolunteerPokemonHouse_Text_ReceivedPokeFluteFromMrFuji::
 	.string "{PLAYER} received a POKé FLUTE\n"
@@ -132,7 +148,7 @@ LavenderTown_VolunteerPokemonHouse_Text_MustMakeRoomForThis::
 	.string "You must make room for this!$"
 
 LavenderTown_VolunteerPokemonHouse_Text_HasPokeFluteHelpedYou::
-	.string "MR. FUJI: Has my POKé FLUTE\n"
+	.string "MR. FUJI: Have my gifts\n"
 	.string "helped you?$"
 
 LavenderTown_VolunteerPokemonHouse_Text_GrandPrizeDrawingClipped::
@@ -147,3 +163,24 @@ LavenderTown_VolunteerPokemonHouse_Text_PokemonMagazinesLineShelf::
 	.string "POKéMON INSIDER…\p"
 	.string "POKéMON FAN…$"
 
+LavenderTown_VolunteerPokemonHouse_Text_MegaRing::
+	.string "MR. FUJI: {PLAYER}…\p"
+	.string "Your POKéDEX quest is one that\n"
+	.string "requires strong dedication.\p"
+	.string "Without deep love for POKéMON,\n"
+	.string "your quest may fail.\p"
+	.string "I'm not sure if this will help you,\n"
+	.string "but I'd like you to have it as well.$"
+
+LavenderTown_VolunteerPokemonHouse_Text_ReceivedMegaRing::
+	.string "{PLAYER} received a MEGA RING\n"
+	.string "from MR. FUJI.$"
+
+Text_ReceivedVenusaurite::
+	.string "{PLAYER} received the VENUSAURITE!$"
+
+Text_ReceivedCharizarditeY::
+	.string "{PLAYER} received the CHARIZARDITE Y!$"
+
+Text_ReceivedBlastoisinite::
+	.string "{PLAYER} received the BLASTOISINITE!$"
