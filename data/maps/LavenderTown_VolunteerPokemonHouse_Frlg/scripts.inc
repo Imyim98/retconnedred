@@ -129,7 +129,7 @@ LavenderTown_VolunteerPokemonHouse_Text_Psyduck::
 	.string "PSYDUCK: Gwappa!$"
 
 LavenderTown_VolunteerPokemonHouse_Text_IdLikeYouToHaveThis::
-	.string "MR. FUJI: {PLAYER}…\p"
+	.string "MR. FUJI: First of all,\p"
 	.string "I would like to thank you for\n"
 	.string "coming to aid MAROWAK's spirit.\p"
 	.string "Please take this.$"
@@ -169,6 +169,9 @@ LavenderTown_VolunteerPokemonHouse_Text_MegaRing::
 	.string "requires strong dedication.\p"
 	.string "Without deep love for POKéMON,\n"
 	.string "your quest may fail.\p"
+	.string "I believe the CHIMECHO you faced,\n"
+	.string "in the tower is just the first of\n"
+	.string "many such rogue MEGA POKéMON.\p"
 	.string "I'm not sure if this will help you,\n"
 	.string "but I'd like you to have it as well.$"
 
