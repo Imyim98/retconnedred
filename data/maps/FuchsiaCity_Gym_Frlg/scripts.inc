@@ -64,6 +64,11 @@ FuchsiaCity_Gym_EventScript_Nate::
 	msgbox FuchsiaCity_Gym_Text_NatePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+FuchsiaCity_Gym_EventScript_Janine::
+	trainerbattle_single TRAINER_COOLTRAINER_JANINE, FuchsiaCity_Gym_Text_JanineIntro, FuchsiaCity_Gym_Text_JanineDefeat
+	msgbox FuchsiaCity_Gym_Text_JaninePostBattle, MSGBOX_AUTOCLOSE
+	end
+
 FuchsiaCity_Gym_EventScript_GymGuy::
 	lock
 	faceplayer
@@ -135,6 +140,21 @@ FuchsiaCity_Gym_Text_KogaExplainTM06::
 
 FuchsiaCity_Gym_Text_MakeSpaceForThis::
 	.string "Make space for this, child!$"
+
+FuchsiaCity_Gym_Text_JanineIntro::
+	.string "I'm Janine! I'm a modern ninja!\p"
+	.string "Feel the horror of the Poison-type\n"
+	.string "Pokémon I use!$"
+
+FuchsiaCity_Gym_Text_JanineDefeat::
+	.string "You've got a great\n"
+	.string "battle technique!$"
+
+FuchsiaCity_Gym_Text_JaninePostBattle::
+	.string "I'm going to really apply myself\n"
+	.string "and improve my skills.\p" 
+	.string "I want to become much better than\n"
+	.string "both my father and you!$"
 
 FuchsiaCity_Gym_Text_KaydenIntro::
 	.string "Strength isn't the key for POKéMON.\n"
