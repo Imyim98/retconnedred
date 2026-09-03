@@ -627,25 +627,28 @@
 #define TRAINER_CHAMPION_REMATCH_BULBASAUR         621
 #define TRAINER_CHAMPION_REMATCH_CHARMANDER        622
 #define TRAINER_CUE_BALL_PAXTON                    623
+
 #define TRAINER_LASS_BRITTANY                      624
 #define TRAINER_CAMPER_JERRY                       625
 #define TRAINER_HIKER_BRUCE                        626
 #define TRAINER_HIKER_DWIGHT                       627
 #define TRAINER_COOL_COUPLE_ZAC_JEN                628
 #define TRAINER_COOLTRAINER_ALEXANDRIA             629
-#define TRAINER_COOLTRAINER_KEVIN                  630
-#define TRAINER_SAILOR_EDDIE                       631
-#define TRAINER_TWINS_DAY_DANI                     632
-#define TRAINER_PSYCHIC_HERMAN                     633
-#define TRAINER_ADMIN_ARCHER                       634
-#define TRAINER_COOLTRAINER_JANINE                 635
-
+#define TRAINER_PICNICKER_HOPE                     630
+#define TRAINER_BIRD_KEEPER_HANK                   631
+#define TRAINER_PICNICKER_SHARON                   632
+#define TRAINER_COOLTRAINER_KEVIN                  633
+#define TRAINER_SAILOR_EDDIE                       634
+#define TRAINER_TWINS_DAY_DANI                     635
+#define TRAINER_PSYCHIC_HERMAN                     636
+#define TRAINER_ADMIN_ARCHER                       637
+#define TRAINER_COOLTRAINER_JANINE                 638
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is
-//       only space for 13 additional trainers before trainer flag space overflows.
+//       only space for 10 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT_FRLG can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_FRLG                      636
+#define TRAINERS_COUNT_FRLG                      639
 #define MAX_TRAINERS_COUNT_FRLG                  768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_FRLG_H

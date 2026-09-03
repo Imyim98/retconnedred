@@ -107,15 +107,23 @@ Route3_EventScript_Jen::
 	msgbox Route3_Text_JenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route4_EventScript_Crissy::
-	trainerbattle_single TRAINER_LASS_CRISSY, Route4_Text_CrissyIntro, Route4_Text_CrissyDefeat
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route4_EventScript_CrissyRematch
-	msgbox Route4_Text_CrissyPostBattle, MSGBOX_AUTOCLOSE
+Route4_EventScript_Hope::
+	trainerbattle_single TRAINER_PICNICKER_HOPE, Route4_Text_HopeIntro, Route4_Text_HopeDefeat
+	msgbox Route4_Text_HopePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route4_EventScript_CrissyRematch::
-	trainerbattle_rematch TRAINER_LASS_CRISSY, Route4_Text_CrissyRematchIntro, Route4_Text_CrissyDefeat
+Route4_EventScript_Hank::
+	trainerbattle_single TRAINER_BIRD_KEEPER_HANK, Route4_Text_HankIntro, Route4_Text_HankDefeat
+	msgbox Route4_Text_HankPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route4_EventScript_Sharon::
+	trainerbattle_single TRAINER_PICNICKER_SHARON, Route4_Text_SharonIntro, Route4_Text_SharonDefeat
+	msgbox Route4_Text_SharonPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route4_EventScript_Crissy::
+	trainerbattle_single TRAINER_LASS_CRISSY, Route4_Text_CrissyIntro, Route4_Text_CrissyDefeat
 	msgbox Route4_Text_CrissyPostBattle, MSGBOX_AUTOCLOSE
 	end
 

@@ -125,8 +125,8 @@ Route3_Text_BrucePostBattle::
 
 Route3_Text_DwightIntro::
 	.string "Peace!\p"
-	.string "...\n"
-	.string "...Huh?\p"
+	.string "…\n"
+	.string "…Huh?\p"
 	.string "When you meet the unknown on a\n"
 	.string "mountain road, all you want is peace,\l"
 	.string "right?$"
@@ -136,7 +136,7 @@ Route3_Text_DwightDefeat::
 
 Route3_Text_DwightPostBattle::
 	.string "Exchanging lighthearted greetings with\n"
-	.string "someone you don't know...\p"
+	.string "someone you don't know…\p"
 	.string "That's the best thing about mountains!$"
 
 Route3_Text_ZacIntro::
@@ -145,7 +145,7 @@ Route3_Text_ZacIntro::
 	.string "so young.$"
 
 Route3_Text_ZacDefeat::
-	.string "ZAC: You weren't bluffing...$"
+	.string "ZAC: You weren't bluffing…$"
 
 Route3_Text_ZacPostBattle::
 	.string "ZAC: Your future looks promising.$"

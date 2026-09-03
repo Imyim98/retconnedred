@@ -116,13 +116,13 @@ Route11_Text_DavePostBattle::
 	.string "I better go find stronger ones!$"
 
 Route11_Text_HermanIntro::
-	.string "...$"
+	.string "…$"
 
 Route11_Text_HermanDefeat::
-	.string "...$"
+	.string "…$"
 
 Route11_Text_HermanPostBattle::
-	.string "... I lost while I had my eyes closed...$"
+	.string "… I lost while I had my eyes closed…$"
 	
 Route11_Text_DiglettsCave::
 	.string "DIGLETT'S CAVE$"

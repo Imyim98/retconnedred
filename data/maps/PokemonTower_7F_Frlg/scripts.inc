@@ -344,11 +344,11 @@ Text_EnterChimecho::
 
 Text_ChimechoDisappeared::
 	.string "The rogue MEGA CHIMECHO hovers\n" 
-	.string "in the fog outside your vision...$"
+	.string "in the fog outside your vision…$"
 
 Text_Chimecho::
 	.string "It was a rogue MEGA CHIMECHO!$"
 
 Text_ChimechoWasCalmed::
 	.string "The rogue CHIMECHO was calmed.\p"
-	.string "It's spirit is now free once more...$"
+	.string "It's spirit is now free once more…$"

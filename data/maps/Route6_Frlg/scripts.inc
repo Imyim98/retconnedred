@@ -95,7 +95,7 @@ Route6_Text_DaniDefeat::
 	.string "DANI: Eeeh!$"
 
 Route6_Text_DaniPostBattle::
-	.string "DANI: You beat us...$"
+	.string "DANI: You beat us…$"
 
 Route6_Text_DaniNotEnoughMons::
 	.string "DANI: If you want to battle with\n"

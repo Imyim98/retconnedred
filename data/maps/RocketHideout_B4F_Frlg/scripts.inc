@@ -136,8 +136,8 @@ RocketHideout_B4F_Text_ArcherDefeat::
 	.string "What a blunder!$"
 
 RocketHideout_B4F_Text_ArcherPostBattle::
-	.string "F-forgive me, Giovanni...\n"
-	.string "For me to be defeated by a simple child...$"
+	.string "F-forgive me, Giovanni…\n"
+	.string "For me to be defeated by a simple child…$"
 
 RocketHideout_B4F_Text_GiovanniIntro::
 	.string "So! I must say, I am impressed you\n"

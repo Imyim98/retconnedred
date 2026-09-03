@@ -636,6 +636,61 @@ Magikarp
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+=== TRAINER_PICNICKER_HOPE ===
+Name: HOPE
+Class: Picnicker Frlg
+Pic: Picnicker Frlg
+Gender: Male
+Music: Girl
+Double Battle: No
+AI: Check Bad Move
+
+Shinx
+Level: 14
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Bulbasaur
+Level: 15
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+=== TRAINER_BIRD_KEEPER_HANK ===
+Name: HANK
+Class: Bird Keeper Frlg
+Pic: Bird Keeper Frlg
+Gender: Male
+Music: Cool
+Double Battle: No
+AI: Check Bad Move
+
+Pidgey
+Level: 13
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Pidgeotto
+Level: 18
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+=== TRAINER_PICNICKER_SHARON ===
+Name: SHARON
+Class: Picnicker Frlg
+Pic: Picnicker Frlg
+Gender: Male
+Music: Girl
+Double Battle: No
+AI: Check Bad Move
+
+Sentret
+Level: 13
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Ponyta
+Level: 15
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Psyduck
+Level: 14
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
 === TRAINER_LASS_CRISSY ===
 Name: CRISSY
 Class: Lass Frlg
@@ -646,15 +701,15 @@ Double Battle: No
 AI: Check Bad Move
 
 Paras
-Level: 31
+Level: 13
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Paras
-Level: 31
+Ekans
+Level: 15
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Parasect
-Level: 31
+Ledyba
+Level: 14
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_LASS_MIRIAM ===

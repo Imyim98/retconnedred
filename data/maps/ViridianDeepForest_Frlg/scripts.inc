@@ -3,7 +3,7 @@ ViridianDeepForest_Frlg_MapScripts::
 	.byte 0
 
 ViridianDeepForest_Text_RestlessPikachu::
-	.string "This PIKACHU seems restless...\n" 
+	.string "This PIKACHU seems restless…\n" 
 	.string "like something dangerous is nearby.\p"
 	.string "Perhaps there's something you\n"
 	.string "can try to calm it with?$"
@@ -94,11 +94,11 @@ Text_EnterRaichuX::
 
 Text_RaichuXReturnedToForest::
 	.string "The rogue MEGA RAICHU disappeared\n" 
-	.string "into the forest...$"
+	.string "into the forest…$"
 
 Text_RaichuX::
 	.string "It was a rogue MEGA RAICHU!$"
 
 Text_RaichuXWasCalmed::
 	.string "The rogue RAICHU was calmed.\p"
-	.string "It's spirit is now free once more...$"
+	.string "It's spirit is now free once more…$"

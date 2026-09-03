@@ -20,6 +20,39 @@ Route4_Text_TrippedOverGeodude::
 	.string "Ouch! I tripped over a rocky\n"
 	.string "POKéMON, GEODUDE!$"
 
+Route4_Text_HopeIntro::
+	.string "I have a feeling that I can win.\n" 
+	.string "Let's see if I'm right!$"
+
+Route4_Text_HopeDefeat::
+	.string "Aww, you are too strong.$"
+
+Route4_Text_HopePostBattle::
+	.string "I heard CLEFAIRY appear at Mt. Moon.\p"
+	.string "But where could they be?$"
+
+Route4_Text_HankIntro::
+	.string "I'm raising my Pokemon.\n"
+	.string "Want to battle with me?$"
+
+Route4_Text_HankDefeat::
+	.string "Aw, I can't believe I lost…$"
+
+Route4_Text_HankPostBattle::
+	.string "If you have a specific Pokemon that\n"
+	.string "you want to raise, put it out first,\n"
+	.string "then switch it right away.\p" 
+	.string "That's how to do it.$"
+
+Route4_Text_SharonIntro::
+	.string "Um… I…$"
+	
+Route4_Text_SharonDefeat::
+	.string "…$"
+
+Route4_Text_SharonPostBattle::
+	.string "… … I'll go train some more…$"
+
 Route4_Text_CrissyIntro::
 	.string "I came to MT. MOON in search of\n"
 	.string "mushroom POKéMON.$"
