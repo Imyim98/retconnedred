@@ -1,0 +1,30 @@
+{
+  "id": "MAP_SAFARI_ZONE_UNDERGROUND",
+  "name": "SafariZone_Underground",
+  "layout": "LAYOUT_SAFARI_ZONE_UNDERGROUND",
+  "music": "MUS_EVOLUTION",
+  "region_map_section": "MAPSEC_KANTO_SAFARI_ZONE",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "floor_number": 0,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [],
+  "warp_events": [
+    {
+      "x": 16,
+      "y": 8,
+      "elevation": 3,
+      "dest_map": "MAP_SAFARI_ZONE_CENTER",
+      "dest_warp_id": "13"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": [],
+  "region": "REGION_KANTO"
+}

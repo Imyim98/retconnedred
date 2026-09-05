@@ -1744,3 +1744,6 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 	.include "data/maps/ViridianDeepForest_Frlg/scripts.inc"
 	.include "data/maps/ViridianDeepForest_Frlg/text.inc"
+
+	.include "data/maps/SafariZone_Underground/scripts.inc"
+	.include "data/maps/SafariZone_Underground/text.inc"

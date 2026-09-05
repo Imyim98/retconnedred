@@ -10231,6 +10231,19 @@
       "border_filepath": "data/layouts/ViridianDeepForest_Frlg/border.bin",
       "blockdata_filepath": "data/layouts/ViridianDeepForest_Frlg/map.bin",
       "layout_version": "frlg"
+    },
+    {
+      "id": "LAYOUT_SAFARI_ZONE_UNDERGROUND",
+      "name": "SafariZone_Underground_Layout",
+      "width": 51,
+      "height": 36,
+      "border_width": 3,
+      "border_height": 2,
+      "primary_tileset": "gTileset_General_Frlg",
+      "secondary_tileset": "gTileset_SeafoamIslands",
+      "border_filepath": "data/layouts/SafariZone_Underground/border.bin",
+      "blockdata_filepath": "data/layouts/SafariZone_Underground/map.bin",
+      "layout_version": "frlg"
     }
   ]
 }

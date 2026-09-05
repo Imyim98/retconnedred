@@ -28,4 +28,3 @@ SafariZone_Center_Text_PressStartToCheckTime::
 
 SafariZone_Center_Text_CenterArea::
 	.string "CENTER AREA$"
-
