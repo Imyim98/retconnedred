@@ -6587,7 +6587,7 @@
       "border_width": 2,
       "border_height": 2,
       "primary_tileset": "gTileset_General_Frlg",
-      "secondary_tileset": "gTileset_CeladonCity",
+      "secondary_tileset": "gTileset_SeviiIslands123",
       "border_filepath": "data/layouts/Route16_Frlg/border.bin",
       "blockdata_filepath": "data/layouts/Route16_Frlg/map.bin",
       "layout_version": "frlg"
@@ -10222,7 +10222,7 @@
     {
       "id": "LAYOUT_VIRIDIAN_DEEP_FOREST_FRLG",
       "name": "ViridianDeepForest_Frlg_Layout",
-      "width": 54,
+      "width": 81,
       "height": 69,
       "border_width": 3,
       "border_height": 2,

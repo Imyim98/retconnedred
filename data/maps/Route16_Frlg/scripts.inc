@@ -73,6 +73,10 @@ Route16_EventScript_RouteSign::
 	msgbox Route16_Text_RouteSign, MSGBOX_SIGN
 	end
 
+Route16_EventScript_ViridianForestSign::
+	msgbox Route16_Text_ViridianForestSign, MSGBOX_SIGN
+	end
+
 Route16_Text_LaoIntro::
 	.string "What do you want?$"
 
@@ -152,6 +156,9 @@ Route16_Text_CyclingRoadSign::
 Route16_Text_RouteSign::
 	.string "ROUTE 16\n"
 	.string "CELADON CITY - FUCHSIA CITY$"
+
+Route16_Text_ViridianForestSign::
+	.string "VIRIDIAN FOREST$"
 
 Route16_Text_JedIntro::
 	.string "JED: Our love knows no bounds.\n"

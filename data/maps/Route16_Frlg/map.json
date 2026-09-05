@@ -203,6 +203,20 @@
       "elevation": 3,
       "dest_map": "MAP_ROUTE16_NORTH_ENTRANCE_1F",
       "dest_warp_id": "3"
+    },
+    {
+      "x": 38,
+      "y": 3,
+      "elevation": 0,
+      "dest_map": "MAP_VIRIDIAN_DEEP_FOREST_FRLG",
+      "dest_warp_id": "1"
+    },
+    {
+      "x": 39,
+      "y": 3,
+      "elevation": 0,
+      "dest_map": "MAP_VIRIDIAN_DEEP_FOREST_FRLG",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [],
@@ -232,6 +246,14 @@
       "flag": "FLAG_HIDDEN_ITEM_ROUTE16_LEFTOVERS",
       "quantity": 1,
       "underfoot": true
+    },
+    {
+      "type": "sign",
+      "x": 40,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Route16_EventScript_ViridianForestSign"
     }
   ],
   "region": "REGION_KANTO"
