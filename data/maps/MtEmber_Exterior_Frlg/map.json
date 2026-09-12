@@ -303,15 +303,15 @@
       "x": 28,
       "y": 48,
       "elevation": 3,
-      "dest_map": "MAP_MT_EMBER_BASE",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_CINNABAR_ISLAND",
+      "dest_warp_id": "5"
     },
     {
       "x": 29,
       "y": 48,
       "elevation": 3,
-      "dest_map": "MAP_MT_EMBER_BASE",
-      "dest_warp_id": "1"
+      "dest_map": "MAP_CINNABAR_ISLAND",
+      "dest_warp_id": "6"
     },
     {
       "x": 14,

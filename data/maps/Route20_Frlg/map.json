@@ -16,26 +16,21 @@
   "connections": [
     {
       "map": "MAP_CINNABAR_ISLAND",
-      "offset": 0,
+      "offset": -20,
       "direction": "left"
     },
     {
       "map": "MAP_ROUTE19",
       "offset": -40,
       "direction": "right"
-    },
-    {
-      "map": "MAP_MT_EMBER_BASE",
-      "offset": 0,
-      "direction": "up"
     }
   ],
   "object_events": [
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F_WATER",
-      "x": 8,
-      "y": 11,
+      "x": 25,
+      "y": 12,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN_AND_UP",
       "movement_range_x": 1,
@@ -48,8 +43,8 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_PICNICKER_FRLG",
-      "x": 16,
-      "y": 14,
+      "x": 7,
+      "y": 13,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 1,
@@ -62,7 +57,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F_WATER",
-      "x": 34,
+      "x": 10,
       "y": 7,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -76,7 +71,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ROCKER",
-      "x": 43,
+      "x": 19,
       "y": 9,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
@@ -90,12 +85,12 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M_WATER",
-      "x": 23,
+      "x": 5,
       "y": 10,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_WALK_SEQUENCE_RIGHT_DOWN_LEFT_UP",
-      "movement_range_x": 5,
-      "movement_range_y": 4,
+      "movement_range_x": 6,
+      "movement_range_y": 5,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
       "script": "Route20_EventScript_Dean",
@@ -104,7 +99,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_PICNICKER_FRLG",
-      "x": 73,
+      "x": 49,
       "y": 16,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
@@ -118,7 +113,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M_WATER",
-      "x": 111,
+      "x": 87,
       "y": 9,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_WALK_SEQUENCE_UP_LEFT_DOWN_RIGHT",
@@ -132,7 +127,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M_WATER",
-      "x": 106,
+      "x": 82,
       "y": 11,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_WALK_SEQUENCE_DOWN_LEFT_UP_RIGHT",
@@ -146,7 +141,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F_WATER",
-      "x": 93,
+      "x": 69,
       "y": 10,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
@@ -160,7 +155,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F_WATER",
-      "x": 54,
+      "x": 30,
       "y": 11,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
@@ -174,7 +169,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_CAMPER_FRLG",
-      "x": 69,
+      "x": 45,
       "y": 3,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT",
@@ -188,14 +183,14 @@
   ],
   "warp_events": [
     {
-      "x": 60,
+      "x": 36,
       "y": 8,
       "elevation": 3,
       "dest_map": "MAP_SEAFOAM_ISLANDS_1F",
       "dest_warp_id": "3"
     },
     {
-      "x": 72,
+      "x": 48,
       "y": 14,
       "elevation": 3,
       "dest_map": "MAP_SEAFOAM_ISLANDS_1F",
@@ -206,7 +201,7 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 68,
+      "x": 44,
       "y": 14,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -214,7 +209,7 @@
     },
     {
       "type": "sign",
-      "x": 64,
+      "x": 40,
       "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -222,7 +217,7 @@
     },
     {
       "type": "hidden_item",
-      "x": 23,
+      "x": 1,
       "y": 6,
       "elevation": 3,
       "item": "ITEM_STARDUST",

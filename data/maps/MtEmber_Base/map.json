@@ -13,18 +13,7 @@
   "show_map_name": true,
   "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": [
-    {
-      "map": "MAP_ROUTE20",
-      "offset": 0,
-      "direction": "down"
-    },
-    {
-      "map": "MAP_ROUTE21_SOUTH",
-      "offset": -37,
-      "direction": "left"
-    }
-  ],
+  "connections": null,
   "object_events": [],
   "warp_events": [
     {

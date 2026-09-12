@@ -75,45 +75,31 @@
   "warp_events": [
     {
       "x": 8,
-      "y": 2,
-      "elevation": 3,
-      "dest_map": "MAP_SAFARI_ZONE_NORTH_FRLG",
-      "dest_warp_id": "6"
-    },
-    {
-      "x": 8,
       "y": 3,
       "elevation": 3,
       "dest_map": "MAP_SAFARI_ZONE_NORTH_FRLG",
-      "dest_warp_id": "7"
+      "dest_warp_id": "4"
     },
     {
       "x": 8,
       "y": 4,
       "elevation": 0,
       "dest_map": "MAP_SAFARI_ZONE_NORTH_FRLG",
-      "dest_warp_id": "8"
+      "dest_warp_id": "5"
     },
     {
       "x": 8,
       "y": 26,
       "elevation": 3,
       "dest_map": "MAP_SAFARI_ZONE_CENTER",
-      "dest_warp_id": "9"
+      "dest_warp_id": "6"
     },
     {
       "x": 8,
       "y": 27,
       "elevation": 3,
       "dest_map": "MAP_SAFARI_ZONE_CENTER",
-      "dest_warp_id": "10"
-    },
-    {
-      "x": 8,
-      "y": 28,
-      "elevation": 0,
-      "dest_map": "MAP_SAFARI_ZONE_CENTER",
-      "dest_warp_id": "11"
+      "dest_warp_id": "7"
     },
     {
       "x": 40,
