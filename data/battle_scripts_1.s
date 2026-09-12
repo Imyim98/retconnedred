@@ -2835,6 +2835,7 @@ BattleScript_HandleFaintedMonLoop::
 	trytrainerslidemsglaston BS_FAINTED
 	switchineffects BS_FAINTED_MULTIPLE_1
 	jumpifbytenotequal gBattlerFainted, gBattlersCount, BattleScript_HandleFaintedMonLoop
+	setbyte gBattlerFainted, 0
 BattleScript_HandleFaintedMonMultipleEnd::
 	switchinevents
 	trytrainerslidemsglaston BS_FAINTED_MULTIPLE_2
@@ -4236,7 +4237,7 @@ BattleScript_DoSelfConfusionDmg::
 	waitstate
 	tryselfconfusiondmgformchange
 	healthbarupdate BS_ATTACKER
-	datahpupdate BS_ATTACKER, ASSURANCE_IGNORE
+	datahpupdate BS_ATTACKER, ASSURANCE_DOUBLE
 	resultmessage
 	waitmessage B_WAIT_TIME_LONG
 	tryfaintmon BS_ATTACKER
