@@ -1747,3 +1747,6 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 	.include "data/maps/SafariZone_Underground/scripts.inc"
 	.include "data/maps/SafariZone_Underground/text.inc"
+
+	.include "data/maps/MtEmber_Base/scripts.inc"
+	.include "data/maps/MtEmber_Base/text.inc"

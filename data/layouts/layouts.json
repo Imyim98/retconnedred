@@ -10244,6 +10244,19 @@
       "border_filepath": "data/layouts/SafariZone_Underground/border.bin",
       "blockdata_filepath": "data/layouts/SafariZone_Underground/map.bin",
       "layout_version": "frlg"
+    },
+    {
+      "id": "LAYOUT_MT_EMBER_BASE",
+      "name": "MtEmber_Base_Layout",
+      "width": 21,
+      "height": 13,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_General_Frlg",
+      "secondary_tileset": "gTileset_CinnabarIsland",
+      "border_filepath": "data/layouts/MtEmber_Base/border.bin",
+      "blockdata_filepath": "data/layouts/MtEmber_Base/map.bin",
+      "layout_version": "frlg"
     }
   ]
 }

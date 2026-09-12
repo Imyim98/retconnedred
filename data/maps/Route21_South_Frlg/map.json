@@ -23,6 +23,11 @@
       "map": "MAP_CINNABAR_ISLAND",
       "offset": 0,
       "direction": "down"
+    },
+    {
+      "map": "MAP_MT_EMBER_BASE",
+      "offset": 37,
+      "direction": "right"
     }
   ],
   "object_events": [
