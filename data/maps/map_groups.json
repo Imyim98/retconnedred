@@ -671,6 +671,7 @@
   ],
   "gMapGroup_Dungeons_Frlg": [
     "ViridianForest_Frlg",
+    "ViridianDeepForest_Frlg",
     "MtMoon_1F_Frlg",
     "MtMoon_B1F_Frlg",
     "MtMoon_B2F_Frlg",
@@ -737,6 +738,7 @@
     "SafariZone_East_Frlg",
     "SafariZone_North_Frlg",
     "SafariZone_West_Frlg",
+    "SafariZone_Underground",
     "SafariZone_Center_RestHouse_Frlg",
     "SafariZone_East_RestHouse_Frlg",
     "SafariZone_North_RestHouse_Frlg",
@@ -792,9 +794,7 @@
     "SixIsland_DottedHole_B4F_Frlg",
     "SixIsland_DottedHole_SapphireRoom_Frlg",
     "SixIsland_PatternBush_Frlg",
-    "SixIsland_AlteringCave_Frlg",
-    "ViridianDeepForest_Frlg",
-    "SafariZone_Underground"
+    "SixIsland_AlteringCave_Frlg"
   ],
   "gMapGroup_SpecialArea_Frlg": [
     "NavelRock_Exterior_Frlg",
@@ -904,6 +904,7 @@
     "Route23_Frlg",
     "Route24_Frlg",
     "Route25_Frlg",
+    "Route25_Cape_Frlg",
     "OneIsland_KindleRoad_Frlg",
     "OneIsland_TreasureBeach_Frlg",
     "TwoIsland_CapeBrink_Frlg",
@@ -920,9 +921,7 @@
     "SevenIsland_TrainerTower_Frlg",
     "SevenIsland_SevaultCanyon_Entrance_Frlg",
     "SevenIsland_SevaultCanyon_Frlg",
-    "SevenIsland_TanobyRuins_Frlg",
-    "Route25_Cape_Frlg",
-    "MtEmber_Base"
+    "SevenIsland_TanobyRuins_Frlg"
   ],
   "gMapGroup_IndoorPallet_Frlg": [
     "PalletTown_PlayersHouse_1F_Frlg",
