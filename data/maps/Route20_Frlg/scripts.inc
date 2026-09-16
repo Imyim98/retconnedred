@@ -151,3 +151,32 @@ Route20_Text_MistyTrainsHere::
 	.string "are common sights in these parts.\p"
 	.string "They say that MISTY of the\n"
 	.string "CERULEAN GYM trains here.$"
+
+Route20_Text_NicoleIntro::
+	.string "I feel so much lighter in water.$"
+
+Route20_Text_NicoleDefeat::
+	.string "Oh, no!$"
+
+Route20_Text_NicolePostBattle::
+	.string "Swimming excersises your full body.\n"
+	.string "It's really good for you..$"
+
+Route20_Text_MartyIntro::
+	.string "What's cool and happening?\n"
+	.string "Trading POKéMON!$"
+
+Route20_Text_MartyDefeat::
+	.string "I said trade, not battle!$"
+
+Route20_Text_MartyPostBattle::
+	.string "'Cause POKéMON you get by trade grow faster!$"
+
+Route20_Text_ShaunIntro::
+	.string "Hey, hey, you're in my way! Right!$"
+
+Route20_Text_ShaunDefeat::
+	.string "I got kicked around…$"
+
+Route20_Text_ShaunPostBattle::
+	.string "All right, please pass through!$"

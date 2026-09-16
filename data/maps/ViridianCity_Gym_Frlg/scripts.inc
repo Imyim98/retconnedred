@@ -47,19 +47,18 @@ ViridianCity_Gym_EventScript_Cole::
 	trainerbattle_single TRAINER_TAMER_COLE, ViridianCity_Gym_Text_ColeIntro, ViridianCity_Gym_Text_ColeDefeat
 	msgbox ViridianCity_Gym_Text_ColePostBattle, MSGBOX_AUTOCLOSE
 	end
-
-ViridianCity_Gym_EventScript_Atsushi::
-	trainerbattle_single TRAINER_BLACK_BELT_ATSUSHI, ViridianCity_Gym_Text_AtsushiIntro, ViridianCity_Gym_Text_AtsushiDefeat
-	msgbox ViridianCity_Gym_Text_AtsushiPostBattle, MSGBOX_AUTOCLOSE
-	end
-
 ViridianCity_Gym_EventScript_Kiyo::
-	trainerbattle_single TRAINER_BLACK_BELT_KIYO, ViridianCity_Gym_Text_KiyoIntro, ViridianCity_Gym_Text_KiyoDefeat
+	trainerbattle_single TRAINER_ADMIN_KIYO, ViridianCity_Gym_Text_KiyoIntro, ViridianCity_Gym_Text_KiyoDefeat
 	msgbox ViridianCity_Gym_Text_KiyoPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+ViridianCity_Gym_EventScript_Atsushi::
+	trainerbattle_single TRAINER_ADMIN_ATSUSHI, ViridianCity_Gym_Text_AtsushiIntro, ViridianCity_Gym_Text_AtsushiDefeat
+	msgbox ViridianCity_Gym_Text_AtsushiPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 ViridianCity_Gym_EventScript_Takashi::
-	trainerbattle_single TRAINER_BLACK_BELT_TAKASHI, ViridianCity_Gym_Text_TakashiIntro, ViridianCity_Gym_Text_TakashiDefeat
+	trainerbattle_single TRAINER_ADMIN_TAKASHI, ViridianCity_Gym_Text_TakashiIntro, ViridianCity_Gym_Text_TakashiDefeat
 	msgbox ViridianCity_Gym_Text_TakashiPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -170,16 +169,6 @@ ViridianCity_Gym_Text_YujiPostBattle::
 	.string "You'll need power to keep up with\n"
 	.string "our GYM LEADER.$"
 
-ViridianCity_Gym_Text_AtsushiIntro::
-	.string "Rrrroar!\n"
-	.string "I'm working myself into a rage!$"
-
-ViridianCity_Gym_Text_AtsushiDefeat::
-	.string "Wargh!$"
-
-ViridianCity_Gym_Text_AtsushiPostBattle::
-	.string "I'm still not worthy!$"
-
 ViridianCity_Gym_Text_JasonIntro::
 	.string "POKéMON and I, we make wonderful\n"
 	.string "music together!$"
@@ -191,17 +180,6 @@ ViridianCity_Gym_Text_JasonPostBattle::
 	.string "Do you know the identity of our\n"
 	.string "GYM LEADER?$"
 
-ViridianCity_Gym_Text_KiyoIntro::
-	.string "Karate is the ultimate form of\n"
-	.string "martial arts!$"
-
-ViridianCity_Gym_Text_KiyoDefeat::
-	.string "Aiyah!$"
-
-ViridianCity_Gym_Text_KiyoPostBattle::
-	.string "If my POKéMON were as good at\n"
-	.string "karate as I…$"
-
 ViridianCity_Gym_Text_WarrenIntro::
 	.string "The truly talented win with style.$"
 
@@ -211,17 +189,6 @@ ViridianCity_Gym_Text_WarrenDefeat::
 ViridianCity_Gym_Text_WarrenPostBattle::
 	.string "The LEADER will scold me for\n"
 	.string "losing this way…$"
-
-ViridianCity_Gym_Text_TakashiIntro::
-	.string "I'm the KARATE KING!\n"
-	.string "Your fate rests with me!$"
-
-ViridianCity_Gym_Text_TakashiDefeat::
-	.string "Ayah!$"
-
-ViridianCity_Gym_Text_TakashiPostBattle::
-	.string "The POKéMON LEAGUE?\n"
-	.string "You? Don't get cocky!$"
 
 ViridianCity_Gym_Text_ColeIntro::
 	.string "Your POKéMON will cower at the\n"
@@ -247,6 +214,38 @@ ViridianCity_Gym_Text_SamuelPostBattle::
 	.string "You can go on to the POKéMON\n"
 	.string "LEAGUE only by defeating our GYM\l"
 	.string "LEADER!$"
+
+ViridianCity_Gym_Text_KiyoIntro::
+	.string "Here we train for the ultimate\n"
+	.string "form of battle!$"
+
+ViridianCity_Gym_Text_KiyoDefeat::
+	.string "Aiyah!$"
+
+ViridianCity_Gym_Text_KiyoPostBattle::
+	.string "If my POKéMON were as good at\n"
+	.string "fighting as I…$"
+
+ViridianCity_Gym_Text_AtsushiIntro::
+	.string "Rrrroar!\n"
+	.string "I'm working myself into a rage!$"
+
+ViridianCity_Gym_Text_AtsushiDefeat::
+	.string "Wargh!$"
+
+ViridianCity_Gym_Text_AtsushiPostBattle::
+	.string "I'm still not worthy!$"
+
+ViridianCity_Gym_Text_TakashiIntro::
+	.string "I'm the final challenge!\n"
+	.string "Your fate rests with me!$"
+
+ViridianCity_Gym_Text_TakashiDefeat::
+	.string "Ayah!$"
+
+ViridianCity_Gym_Text_TakashiPostBattle::
+	.string "Defeat our BOSS?\n"
+	.string "You? Don't get cocky!$"
 
 ViridianCity_Gym_Text_GymGuyAdvice::
 	.string "Yo!\n"

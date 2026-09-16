@@ -29,6 +29,11 @@ PokemonMansion_2F_EventScript_Arnie::
 	msgbox PokemonMansion_1F_Text_ArniePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+PokemonMansion_2F_EventScript_Louis::
+	trainerbattle_single TRAINER_COOLTRAINER_LOUIS, PokemonMansion_2F_Text_LouisIntro, PokemonMansion_2F_Text_LouisDefeat
+	msgbox PokemonMansion_2F_Text_LouisPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 PokemonMansion_Text_PressSecretSwitch::
 	.string "A secret switch!\p"
 	.string "Press it?$"
@@ -50,6 +55,16 @@ PokemonMansion_1F_Text_ArnieDefeat::
 PokemonMansion_1F_Text_ArniePostBattle::
 	.string "The switches here open and close\n"
 	.string "alternating sets of doors.$"
+
+PokemonMansion_2F_Text_LouisIntro::
+	.string "You're going to help me get stronger!$"
+
+PokemonMansion_2F_Text_LouisDefeat::
+	.string "Can this be real?$"
+
+PokemonMansion_2F_Text_LouisPostBattle::
+	.string "I couldn't beat BLAINE, so I've been\n"
+	.string "training here.$"
 
 PokemonMansion_1F_Text_NewMonDiscoveredInGuyanaJungle::
 	.string "Diary: July 5\n"

@@ -134,7 +134,7 @@
 #define TRAINER_FISHERMAN_HANK                     128
 #define TRAINER_FISHERMAN_ELLIOT                   129
 #define TRAINER_FISHERMAN_RONALD                   130
-#define TRAINER_FISHERMAN_CLAUDE                   131
+#define TRAINER_SAILOR_CLAUDE                      131
 #define TRAINER_FISHERMAN_WADE                     132
 #define TRAINER_FISHERMAN_NOLAN                    133
 #define TRAINER_FISHERMAN_ANDREW                   134
@@ -185,7 +185,7 @@
 #define TRAINER_SWIMMER_FEMALE_SHIRLEY             179
 #define TRAINER_PSYCHIC_JOHAN                      180
 #define TRAINER_PSYCHIC_TYRON                      181
-#define TRAINER_PSYCHIC_CAMERON                    182
+#define TRAINER_COOLTRAINER_CAMERON                182
 #define TRAINER_PSYCHIC_PRESTON                    183
 #define TRAINER_ROCKER_RANDALL                     184
 #define TRAINER_ROCKER_LUCA                        185
@@ -225,10 +225,10 @@
 #define TRAINER_BLACK_BELT_HIDEKI                  219
 #define TRAINER_BLACK_BELT_AARON                   220
 #define TRAINER_BLACK_BELT_HITOSHI                 221
-#define TRAINER_BLACK_BELT_ATSUSHI                 222
-#define TRAINER_BLACK_BELT_KIYO                    223
-#define TRAINER_BLACK_BELT_TAKASHI                 224
-#define TRAINER_BLACK_BELT_DAISUKE                 225
+#define TRAINER_BLACK_BELT_DAISUKE                 222
+#define TRAINER_ADMIN_KIYO                         223
+#define TRAINER_ADMIN_ATSUSHI                      224
+#define TRAINER_ADMIN_TAKASHI                      225
 #define TRAINER_RIVAL_OAKS_LAB_SQUIRTLE            226
 #define TRAINER_RIVAL_OAKS_LAB_BULBASAUR           227
 #define TRAINER_RIVAL_OAKS_LAB_CHARMANDER          228
@@ -357,7 +357,7 @@
 #define TRAINER_CHANNELER_ANGELICA                 351
 #define TRAINER_CHANNELER_EMILIA                   352
 #define TRAINER_CHANNELER_JENNIFER                 353
-#define TRAINER_CHANNELER_AMANDA                   354
+#define TRAINER_COOLTRAINER_AMANDA                 354
 #define TRAINER_CHANNELER_STACY                    355
 #define TRAINER_CHANNELER_TASHA                    356
 #define TRAINER_HIKER_JEREMY                       357
@@ -643,12 +643,15 @@
 #define TRAINER_PSYCHIC_HERMAN                     636
 #define TRAINER_ADMIN_ARCHER                       637
 #define TRAINER_COOLTRAINER_JANINE                 638
+#define TRAINER_COOLTRAINER_MARTY                  639
+#define TRAINER_COOLTRAINER_SHAUN                  640
+#define TRAINER_COOLTRAINER_LOUIS                  641
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is
-//       only space for 10 additional trainers before trainer flag space overflows.
+//       only space for 7 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT_FRLG can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_FRLG                      639
+#define TRAINERS_COUNT_FRLG                      642
 #define MAX_TRAINERS_COUNT_FRLG                  768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_FRLG_H

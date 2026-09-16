@@ -105,11 +105,13 @@ SootopolisCity_Gym_SetGymTrainers::
 
 EventScript_SetPewterGymTrainers::
 	settrainerflag TRAINER_CAMPER_LIAM
+	settrainerflag TRAINER_CAMPER_JERRY
 	return
 
 EventScript_SetCeruleanGymTrainers::
-	settrainerflag TRAINER_PICNICKER_DIANA
 	settrainerflag TRAINER_SWIMMER_MALE_LUIS
+	settrainerflag TRAINER_SAILOR_EDDIE
+	settrainerflag TRAINER_PICNICKER_DIANA
 	return
 
 EventScript_SetVermilionGymTrainers::
@@ -120,50 +122,51 @@ EventScript_SetVermilionGymTrainers::
 
 EventScript_SetCeladonGymTrainers::
 	settrainerflag TRAINER_LASS_KAY
-	settrainerflag TRAINER_LASS_LISA
-	settrainerflag TRAINER_PICNICKER_TINA
 	settrainerflag TRAINER_BEAUTY_BRIDGET
+	settrainerflag TRAINER_PICNICKER_TINA
 	settrainerflag TRAINER_BEAUTY_TAMIA
-	settrainerflag TRAINER_BEAUTY_LORI
 	settrainerflag TRAINER_COOLTRAINER_MARY
+	settrainerflag TRAINER_LASS_LISA
+	settrainerflag TRAINER_BEAUTY_LORI
 	return
 
 EventScript_SetFuchsiaGymTrainers::
-	settrainerflag TRAINER_TAMER_PHIL
-	settrainerflag TRAINER_TAMER_EDGAR
-	settrainerflag TRAINER_JUGGLER_KIRK
-	settrainerflag TRAINER_JUGGLER_SHAWN
-	settrainerflag TRAINER_JUGGLER_KAYDEN
 	settrainerflag TRAINER_JUGGLER_NATE
+	settrainerflag TRAINER_JUGGLER_KAYDEN
+	settrainerflag TRAINER_JUGGLER_KIRK
+	settrainerflag TRAINER_TAMER_EDGAR
+	settrainerflag TRAINER_TAMER_PHIL
+	settrainerflag TRAINER_JUGGLER_SHAWN
+	settrainerflag TRAINER_COOLTRAINER_JANINE
 	return
 
 EventScript_SetSaffronGymTrainers::
+	settrainerflag TRAINER_COOLTRAINER_CAMERON
+	settrainerflag TRAINER_CHANNELER_TASHA
 	settrainerflag TRAINER_PSYCHIC_JOHAN
 	settrainerflag TRAINER_PSYCHIC_TYRON
-	settrainerflag TRAINER_PSYCHIC_CAMERON
-	settrainerflag TRAINER_PSYCHIC_PRESTON
-	settrainerflag TRAINER_CHANNELER_AMANDA
 	settrainerflag TRAINER_CHANNELER_STACY
-	settrainerflag TRAINER_CHANNELER_TASHA
+	settrainerflag TRAINER_COOLTRAINER_AMANDA
+	settrainerflag TRAINER_PSYCHIC_PRESTON
 	return
 
 EventScript_SetCinnabarGymTrainers::
+	settrainerflag TRAINER_BURGLAR_QUINN
 	settrainerflag TRAINER_SUPER_NERD_ERIK
 	settrainerflag TRAINER_SUPER_NERD_AVERY
-	settrainerflag TRAINER_SUPER_NERD_DEREK
-	settrainerflag TRAINER_SUPER_NERD_ZAC
-	settrainerflag TRAINER_BURGLAR_QUINN
 	settrainerflag TRAINER_BURGLAR_RAMON
+	settrainerflag TRAINER_SUPER_NERD_DEREK
 	settrainerflag TRAINER_BURGLAR_DUSTY
+	settrainerflag TRAINER_SUPER_NERD_ZAC
 	return
 
 EventScript_SetViridianGymTrainers::
-	settrainerflag TRAINER_TAMER_JASON
 	settrainerflag TRAINER_TAMER_COLE
-	settrainerflag TRAINER_BLACK_BELT_ATSUSHI
-	settrainerflag TRAINER_BLACK_BELT_KIYO
-	settrainerflag TRAINER_BLACK_BELT_TAKASHI
+	settrainerflag TRAINER_ADMIN_KIYO
 	settrainerflag TRAINER_COOLTRAINER_SAMUEL
 	settrainerflag TRAINER_COOLTRAINER_YUJI
+	settrainerflag TRAINER_ADMIN_ATSUSHI
+	settrainerflag TRAINER_TAMER_JASON
 	settrainerflag TRAINER_COOLTRAINER_WARREN
+	settrainerflag TRAINER_ADMIN_TAKASHI
 	return

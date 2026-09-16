@@ -1852,6 +1852,21 @@ Route20_EventScript_IreneRematch::
 	msgbox Route20_Text_IrenePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route20_EventScript_Nicole::
+	trainerbattle_single TRAINER_SWIMMER_FEMALE_NICOLE, Route20_Text_NicoleIntro, Route20_Text_NicoleDefeat
+	msgbox Route20_Text_NicolePostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route20_EventScript_Marty::
+	trainerbattle_single TRAINER_COOLTRAINER_MARTY, Route20_Text_MartyIntro, Route20_Text_MartyDefeat
+	msgbox Route20_Text_MartyPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route20_EventScript_Shaun::
+	trainerbattle_single TRAINER_COOLTRAINER_SHAUN, Route20_Text_ShaunIntro, Route20_Text_ShaunDefeat
+	msgbox Route20_Text_ShaunPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 Route21_North_EventScript_Ronald::
 	trainerbattle_single TRAINER_FISHERMAN_RONALD, Route21_North_Text_RonaldIntro, Route21_North_Text_RonaldDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
@@ -1865,14 +1880,14 @@ Route21_North_EventScript_RonaldRematch::
 	end
 
 Route21_South_EventScript_Claude::
-	trainerbattle_single TRAINER_FISHERMAN_CLAUDE, Route21_South_Text_ClaudeIntro, Route21_South_Text_ClaudeDefeat
+	trainerbattle_single TRAINER_SAILOR_CLAUDE, Route21_South_Text_ClaudeIntro, Route21_South_Text_ClaudeDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route21_South_EventScript_ClaudeRematch
 	msgbox Route21_South_Text_ClaudePostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route21_South_EventScript_ClaudeRematch::
-	trainerbattle_rematch TRAINER_FISHERMAN_CLAUDE, Route21_South_Text_ClaudeRematchIntro, Route21_South_Text_ClaudeDefeat
+	trainerbattle_rematch TRAINER_SAILOR_CLAUDE, Route21_South_Text_ClaudeRematchIntro, Route21_South_Text_ClaudeDefeat
 	msgbox Route21_South_Text_ClaudePostBattle, MSGBOX_AUTOCLOSE
 	end
 

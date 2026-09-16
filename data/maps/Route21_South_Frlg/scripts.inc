@@ -34,14 +34,14 @@ Route21_South_Text_RolandPostBattle::
 	.string "I'm sunburnt to a crisp!$"
 
 Route21_South_Text_ClaudeIntro::
-	.string "Hey, don't scare away the fish!$"
+	.string "Hey, don't disturb the water!$"
 
 Route21_South_Text_ClaudeDefeat::
-	.string "Sorry! I'm just so frustrated from\n"
-	.string "not catching anything.$"
+	.string "Sorry! I thought you were disturbing\n" 
+	.string "the water.$"
 
 Route21_South_Text_ClaudePostBattle::
-	.string "Sheesh, I haven't caught a thing.\n"
+	.string "I can't fish like a Fisherman.\n"
 	.string "Could this place actually be a\l"
 	.string "giant pool or something?$"
 

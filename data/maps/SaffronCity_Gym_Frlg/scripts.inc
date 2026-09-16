@@ -46,7 +46,7 @@ SaffronCity_Gym_EventScript_Tyron::
 	end
 
 SaffronCity_Gym_EventScript_Cameron::
-	trainerbattle_single TRAINER_PSYCHIC_CAMERON, SaffronCity_Gym_Text_CameronIntro, SaffronCity_Gym_Text_CameronDefeat
+	trainerbattle_single TRAINER_COOLTRAINER_CAMERON, SaffronCity_Gym_Text_CameronIntro, SaffronCity_Gym_Text_CameronDefeat
 	msgbox SaffronCity_Gym_Text_CameronPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -56,7 +56,7 @@ SaffronCity_Gym_EventScript_Preston::
 	end
 
 SaffronCity_Gym_EventScript_Amanda::
-	trainerbattle_single TRAINER_CHANNELER_AMANDA, SaffronCity_Gym_Text_AmandaIntro, SaffronCity_Gym_Text_AmandaDefeat
+	trainerbattle_single TRAINER_COOLTRAINER_AMANDA, SaffronCity_Gym_Text_AmandaIntro, SaffronCity_Gym_Text_AmandaDefeat
 	msgbox SaffronCity_Gym_Text_AmandaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
