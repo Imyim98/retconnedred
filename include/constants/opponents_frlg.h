@@ -613,45 +613,44 @@
 #define TRAINER_COOLTRAINER_LEROY_2                607
 #define TRAINER_COOLTRAINER_MICHELLE_2             608
 #define TRAINER_COOL_COUPLE_LEX_NYA_2              609
-#define TRAINER_BUG_CATCHER_COLTON_2               610
-#define TRAINER_BUG_CATCHER_COLTON_3               611
-#define TRAINER_BUG_CATCHER_COLTON_4               612
-#define TRAINER_SWIMMER_MALE_MATTHEW_2             613
-#define TRAINER_SWIMMER_MALE_TONY_2                614
-#define TRAINER_SWIMMER_FEMALE_MELISSA_2           615
-#define TRAINER_ELITE_FOUR_LORELEI_2               616
-#define TRAINER_ELITE_FOUR_BRUNO_2                 617
-#define TRAINER_ELITE_FOUR_AGATHA_2                618
-#define TRAINER_ELITE_FOUR_LANCE_2                 619
-#define TRAINER_CHAMPION_REMATCH_SQUIRTLE          620
-#define TRAINER_CHAMPION_REMATCH_BULBASAUR         621
-#define TRAINER_CHAMPION_REMATCH_CHARMANDER        622
-#define TRAINER_CUE_BALL_PAXTON                    623
+#define TRAINER_SWIMMER_MALE_MATTHEW_2             610
+#define TRAINER_SWIMMER_MALE_TONY_2                611
+#define TRAINER_SWIMMER_FEMALE_MELISSA_2           612
+#define TRAINER_ELITE_FOUR_LORELEI_2               613
+#define TRAINER_ELITE_FOUR_BRUNO_2                 614
+#define TRAINER_ELITE_FOUR_AGATHA_2                615
+#define TRAINER_ELITE_FOUR_LANCE_2                 616
+#define TRAINER_CHAMPION_REMATCH_SQUIRTLE          617
+#define TRAINER_CHAMPION_REMATCH_BULBASAUR         618
+#define TRAINER_CHAMPION_REMATCH_CHARMANDER        619
+#define TRAINER_CUE_BALL_PAXTON                    620
 
-#define TRAINER_LASS_BRITTANY                      624
-#define TRAINER_CAMPER_JERRY                       625
-#define TRAINER_HIKER_BRUCE                        626
-#define TRAINER_HIKER_DWIGHT                       627
-#define TRAINER_COOL_COUPLE_ZAC_JEN                628
-#define TRAINER_COOLTRAINER_ALEXANDRIA             629
-#define TRAINER_PICNICKER_HOPE                     630
-#define TRAINER_BIRD_KEEPER_HANK                   631
-#define TRAINER_PICNICKER_SHARON                   632
-#define TRAINER_COOLTRAINER_KEVIN                  633
-#define TRAINER_SAILOR_EDDIE                       634
-#define TRAINER_TWINS_DAY_DANI                     635
-#define TRAINER_PSYCHIC_HERMAN                     636
-#define TRAINER_ADMIN_ARCHER                       637
-#define TRAINER_COOLTRAINER_JANINE                 638
-#define TRAINER_COOLTRAINER_MARTY                  639
-#define TRAINER_COOLTRAINER_SHAUN                  640
-#define TRAINER_COOLTRAINER_LOUIS                  641
+#define TRAINER_LASS_BRITTANY                      621
+#define TRAINER_CAMPER_JERRY                       622
+#define TRAINER_HIKER_BRUCE                        623
+#define TRAINER_HIKER_DWIGHT                       624
+#define TRAINER_COOL_COUPLE_ZAC_JEN                625
+#define TRAINER_COOLTRAINER_ALEXANDRIA             626
+#define TRAINER_PICNICKER_HOPE                     627
+#define TRAINER_BIRD_KEEPER_HANK                   628
+#define TRAINER_PICNICKER_SHARON                   629
+#define TRAINER_COOLTRAINER_KEVIN                  630
+#define TRAINER_SAILOR_EDDIE                       631
+#define TRAINER_TWINS_DAY_DANI                     632
+#define TRAINER_PSYCHIC_HERMAN                     633
+#define TRAINER_ADMIN_ARCHER                       634
+#define TRAINER_COOLTRAINER_JANINE                 635
+#define TRAINER_COOLTRAINER_MARTY                  636
+#define TRAINER_COOLTRAINER_SHAUN                  637
+#define TRAINER_COOLTRAINER_LOUIS                  638
+#define TRAINER_COOLTRAINER_RYAN                   639
+#define TRAINER_ADMINS_ARCHER_ARIANA               640
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is
-//       only space for 7 additional trainers before trainer flag space overflows.
+//       only space for 8 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT_FRLG can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_FRLG                      642
+#define TRAINERS_COUNT_FRLG                      641
 #define MAX_TRAINERS_COUNT_FRLG                  768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_FRLG_H

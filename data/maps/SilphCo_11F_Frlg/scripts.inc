@@ -132,6 +132,11 @@ SilphCo_11F_EventScript_Grunt2::
 	msgbox SilphCo_11F_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end
 
+SilphCo_11F_EventScript_Admins::
+	trainerbattle_double TRAINER_ADMINS_ARCHER_ARIANA, SilphCo_11F_Text_AdminsIntro, SilphCo_11F_Text_AdminsDefeat, SilphCo_11F_Text_AdminsNotEnoughMons
+	msgbox SilphCo_11F_Text_AdminsPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 SilphCo_11F_Text_ThanksForSavingMeDearBoy::
 	.string "PRESIDENT: Oh, dear boy!\n"
 	.string "Thank you for saving SILPH.\p"
@@ -174,6 +179,34 @@ SilphCo_11F_Text_ThanksForRescuingUs::
 	.string "all of us.\p"
 	.string "We, from the PRESIDENT down,\n"
 	.string "are indebted to you.$"
+
+SilphCo_11F_Text_AdminsIntro::
+	.string "ARCHER: You-!\p"
+	.string "So you're fool enough to get\n" 
+	.string "in our way, is that it?\p"
+	.string "What a brave child…\p"
+	.string "I'll teach you a good lesson!p"
+	.string "ARIANA: Hee hee hee.\p"
+	.string "It looks like you're really all alone.\n" 
+	.string "All alone…\p"
+	.string "So it should be quite easy! Bring it!$"
+
+SilphCo_11F_Text_AdminsDefeat::
+	.string "ARCHER: Gaaah… Again?!\p"
+	.string "ARIANA: Aaaieeeee!\n"
+	.string "This can't be happening!$"
+
+SilphCo_11F_Text_AdminsPostBattle::
+	.string "ARCHER: So it wasn't just a stroke of luck\n"
+	.string "that let you beat me last time…\p"
+	.string "ARIANA: What a waste…\p"
+	.string "not to use your strength to do\n"
+	.string "bad things!$"
+
+SilphCo_11F_Text_AdminsNotEnoughMons::
+	.string "ARCHER: You-!\p"
+	.string "You're not going anywhere until you\l"
+	.string "bring at least two POKéMON!$"
 
 SilphCo_11F_Text_GiovanniIntro::
 	.string "Ah, {PLAYER}!\n"

@@ -59,6 +59,11 @@ VictoryRoad_3F_EventScript_Tyra::
 	msgbox VictoryRoad_3F_Text_TyraPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+VictoryRoad_3F_EventScript_Ryan::
+	trainerbattle_single TRAINER_COOLTRAINER_RYAN, VictoryRoad_3F_Text_RyanIntro, VictoryRoad_3F_Text_RyanDefeat
+	msgbox VictoryRoad_3F_Text_RyanPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 Text_DoubleEdgeTeach::
 	.string "You should be proud of yourself,\n"
 	.string "having battled your way through\l"
@@ -159,3 +164,17 @@ VictoryRoad_3F_Text_TyraNotEnoughMons::
 	.string "TYRA: You can't battle with us if\n"
 	.string "you have only one POKéMON.$"
 
+VictoryRoad_3F_Text_RyanIntro::
+	.string "Wow, your POKéMON are so cute!\p"
+	.string "Come on, battle me!\n"
+	.string "It'll be a spectacle!$"
+
+VictoryRoad_3F_Text_RyanDefeat::
+	.string "That move you used at that point\n"
+	.string "in the battle…\p"
+	.string "I never saw it coming!$"
+
+VictoryRoad_3F_Text_RyanPostBattle::
+	.string "You know what they say about cheerful\n"
+	.string "folks like me…\p"
+	.string "You don't want to get us angry!$"

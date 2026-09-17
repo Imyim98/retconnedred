@@ -439,6 +439,9 @@ const u16 gTrainerPalette_ProfessorOakFrlg[] = INCGFX_U16("graphics/trainers/pal
 const u32 gTrainerFrontPic_RocketGruntFFrlg[] = INCGFX_U32("graphics/trainers/front_pics/rocket_grunt_f_frlg.png", ".4bpp.smol");
 const u16 gTrainerPalette_RocketGruntFFrlg[] = INCGFX_U16("graphics/trainers/palettes/rocket_grunt_f_frlg.pal", ".gbapal");
 
+const u32 gTrainerFrontPic_RocketAdminsFrlg[] = INCGFX_U32("graphics/trainers/front_pics/rocket_admins_frlg.png", ".4bpp.smol");
+const u16 gTrainerPalette_RocketAdminsFrlg[] = INCGFX_U16("graphics/trainers/palettes/rocket_admins_frlg.pal", ".gbapal");
+
 const u32 gTrainerFrontPic_PsychicFFrlg[] = INCGFX_U32("graphics/trainers/front_pics/psychic_f_frlg.png", ".4bpp.smol");
 const u16 gTrainerPalette_PsychicFFrlg[] = INCGFX_U16("graphics/trainers/palettes/psychic_f_frlg.pal", ".gbapal");
 
@@ -1185,6 +1188,10 @@ const struct TrainerPicInfo gTrainerPicInfo[TRAINER_PIC_COUNT] =
     [TRAINER_PIC_ROCKET_GRUNT_F_FRLG] =
     {
         .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_RocketGruntFFrlg, gTrainerPalette_RocketGruntFFrlg),
+    },
+     [TRAINER_PIC_ROCKET_ADMINS_FRLG] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_RocketAdminsFrlg, gTrainerPalette_RocketAdminsFrlg),
     },
     [TRAINER_PIC_PSYCHIC_F_FRLG] =
     {
