@@ -72,6 +72,8 @@ SilphCo_11F_EventScript_BattleGiovanni::
 	removeobject LOCALID_SILPH_CO_GIOVANNI
 	removeobject LOCALID_SILPH_CO_11F_GRUNT1
 	removeobject LOCALID_SILPH_CO_11F_GRUNT2
+	removeobject LOCALID_SILPH_CO_11F_ARCHER
+	removeobject LOCALID_SILPH_CO_11F_ARIANA
 	fadescreen FADE_FROM_BLACK
 	setvar VAR_MAP_SCENE_SILPH_CO_11F, 1
 	setflag FLAG_HIDE_SAFFRON_ROCKETS
@@ -185,7 +187,7 @@ SilphCo_11F_Text_AdminsIntro::
 	.string "So you're fool enough to get\n" 
 	.string "in our way, is that it?\p"
 	.string "What a brave child…\p"
-	.string "I'll teach you a good lesson!p"
+	.string "I'll teach you a good lesson!\p"
 	.string "ARIANA: Hee hee hee.\p"
 	.string "It looks like you're really all alone.\n" 
 	.string "All alone…\p"
@@ -197,8 +199,8 @@ SilphCo_11F_Text_AdminsDefeat::
 	.string "This can't be happening!$"
 
 SilphCo_11F_Text_AdminsPostBattle::
-	.string "ARCHER: So it wasn't just a stroke of luck\n"
-	.string "that let you beat me last time…\p"
+	.string "ARCHER: So it wasn't just a stroke of\n"
+	.string "luck that let you beat me last time…\p"
 	.string "ARIANA: What a waste…\p"
 	.string "not to use your strength to do\n"
 	.string "bad things!$"
