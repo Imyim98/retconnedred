@@ -1107,6 +1107,7 @@ const u8 gText_ExpShareOn[] = _("The Exp. Share has been turned on.{PAUSE_UNTIL_
 const u8 gText_ExpShareOff[] = _("The Exp. Share has been turned off.{PAUSE_UNTIL_PRESS}");
 ALIGNED(4) const u8 gText_Ghost[] = _("GHOST");
 ALIGNED(4) const u8 gText_RaichuX[] = _("M. Raichu");
+ALIGNED(4) const u8 gText_Clefable[] = _("M. Clefable");
 ALIGNED(4) const u8 gText_Chimecho[] = _("M. Chimecho");
 const u8 gText_Boulderbadge[] = _("BOULDERBADGE");
 const u8 gText_Cascadebadge[] = _("CASCADEBADGE");

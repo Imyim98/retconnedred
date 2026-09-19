@@ -78,6 +78,7 @@ static void CB2_EndScriptedWildBattle(void);
 static void CB2_EndMarowakBattle(void);
 static void CB2_EndChimechoBattle(void);
 static void CB2_EndRaichuXBattle(void);
+static void CB2_EndClefableBattle(void);
 static void TryUpdateGymLeaderRematchFromWild(void);
 static void TryUpdateGymLeaderRematchFromTrainer(void);
 static void CB2_GiveStarter(void);
@@ -626,6 +627,32 @@ if (CheckBagHasItem(ITEM_POKE_FLUTE, 1))
     SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_NICKNAME, gText_RaichuX);
 }
 
+void StartClefableBattle(void)
+{
+    LockPlayerFieldControls();
+    gMain.savedCallback = CB2_EndClefableBattle;
+    gBattleTypeFlags = BATTLE_TYPE_MEGAS;
+
+if (CheckBagHasItem(ITEM_POKE_FLUTE, 1))
+    {
+        u32 personality = GetMonPersonality(SPECIES_CLEFABLE_MEGA, MON_MALE, NATURE_SERIOUS, RANDOM_UNOWN_LETTER);
+        u16 monData;
+        CreateMonWithIVsPersonality(&gParties[B_TRAINER_OPPONENT_A][0], SPECIES_CLEFABLE_MEGA, 50, 31, personality);
+        monData = TRUE;
+        monData = MOVE_MOONBLAST;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE1, &monData);
+        monData = MOVE_AIR_SLASH;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE2, &monData);
+        monData = MOVE_METEOR_BEAM;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE3, &monData);
+        monData = MOVE_MOONLIGHT;
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE4, &monData);
+    }
+    
+    CreateBattleStartTask(B_TRANSITION_BLUR, MUS_RG_VS_LEGEND);
+    SetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_NICKNAME, gText_Clefable);
+}
+
 void BattleSetup_StartLatiBattle(void)
 {
     LockPlayerFieldControls();
@@ -809,6 +836,27 @@ static void CB2_EndMarowakBattle(void)
     }
 }
 
+static void CB2_EndChimechoBattle(void)
+{
+    CpuFill16(0, (void *)BG_PLTT, BG_PLTT_SIZE);
+    ResetOamRange(0, 128);
+
+    if (IsPlayerDefeated(gBattleOutcome))
+    {
+        SetMainCallback2(CB2_WhiteOut);
+    }
+    else
+    {
+        // If result is TRUE player didnt defeat Chimecho, force player down from the altar
+        if (gBattleOutcome == B_OUTCOME_WON)
+            gSpecialVar_Result = FALSE;
+        else
+            gSpecialVar_Result = TRUE;
+        DowngradeBadPoison();
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+    }
+}
+
 static void CB2_EndRaichuXBattle(void)
 {
     CpuFill16(0, (void *)BG_PLTT, BG_PLTT_SIZE);
@@ -829,7 +877,8 @@ static void CB2_EndRaichuXBattle(void)
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
     }
 }
-static void CB2_EndChimechoBattle(void)
+
+static void CB2_EndClefableBattle(void)
 {
     CpuFill16(0, (void *)BG_PLTT, BG_PLTT_SIZE);
     ResetOamRange(0, 128);
@@ -840,7 +889,7 @@ static void CB2_EndChimechoBattle(void)
     }
     else
     {
-        // If result is TRUE player didnt defeat Chimecho, force player down from the altar
+        // If result is TRUE player didnt defeat Clefable, force player down from the trees
         if (gBattleOutcome == B_OUTCOME_WON)
             gSpecialVar_Result = FALSE;
         else

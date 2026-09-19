@@ -29,3 +29,11 @@ EventScript_AwakenRaichuX::
 	waitfanfare
 	msgbox Text_EnterRaichuX
 	return
+
+EventScript_AwakenClefable::
+	message Text_PlayedPokeFlute
+	waitmessage
+	playfanfare MUS_RG_POKE_FLUTE
+	waitfanfare
+	msgbox Text_EnterClefable
+	return

@@ -1747,3 +1747,12 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 	.include "data/maps/SafariZone_Underground/scripts.inc"
 	.include "data/maps/SafariZone_Underground/text.inc"
+
+	.include "data/maps/MtMoon_Square_Frlg/scripts.inc"
+	.include "data/maps/MtMoon_Square_Frlg/text.inc"
+
+	.include "data/maps/MtMoon_House_Frlg/scripts.inc"
+	.include "data/maps/MtMoon_House_Frlg/text.inc"
+
+	.include "data/maps/MtMoon_2F_Frlg/scripts.inc"
+	.include "data/maps/MtMoon_2F_Frlg/text.inc"

@@ -2383,6 +2383,8 @@
 
 // Mega Stones
 #define FLAG_GOT_RAICHUNITEX                                        0
+#define FLAG_GOT_CLEFABLITE                                         0
+#define FLAG_GOT_CHIMECHITE                                         0
 
 // World Map Flags
 #define FLAG_WORLD_MAP_PALLET_TOWN                                  0

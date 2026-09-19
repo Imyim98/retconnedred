@@ -10257,6 +10257,32 @@
       "border_filepath": "data/layouts/MtEmber_Base/border.bin",
       "blockdata_filepath": "data/layouts/MtEmber_Base/map.bin",
       "layout_version": "frlg"
+    },
+    {
+      "id": "LAYOUT_MTMOON_SQUARE_FRLG",
+      "name": "MtMoon_Square_Frlg_Layout",
+      "width": 42,
+      "height": 20,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_General_Frlg",
+      "secondary_tileset": "gTileset_CeruleanCity",
+      "border_filepath": "data/layouts/MtMoon_Square_Frlg/border.bin",
+      "blockdata_filepath": "data/layouts/MtMoon_Square_Frlg/map.bin",
+      "layout_version": "frlg"
+    },
+    {
+      "id": "LAYOUT_MT_MOON_2F_FRLG",
+      "name": "MtMoon_2F_Frlg_Layout",
+      "width": 35,
+      "height": 9,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_General_Frlg",
+      "secondary_tileset": "gTileset_Cave_Frlg",
+      "border_filepath": "data/layouts/MtMoon_2F_Frlg/border.bin",
+      "blockdata_filepath": "data/layouts/MtMoon_2F_Frlg/map.bin",
+      "layout_version": "frlg"
     }
   ]
 }

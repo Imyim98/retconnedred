@@ -640,3 +640,4 @@ gSpecials::
 	def_special CheckAddCoins
 	def_special StartChimechoBattle
 	def_special StartRaichuXBattle
+	def_special StartClefableBattle
