@@ -754,10 +754,10 @@
 #define FLAG_GOT_CHIMECHITE                              0x300
 #define FLAG_GOT_RAICHUNITEX                             0x301
 #define FLAG_GOT_CLEFABLITE                              0x302
+#define FLAG_GOT_CAMERUPTITE                             0x303
 
 
 // Unused?
-#define FLAG_0x303               0x303
 #define FLAG_0x304               0x304
 #define FLAG_0x305               0x305
 #define FLAG_0x306               0x306

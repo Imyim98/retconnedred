@@ -1630,6 +1630,18 @@
     {
       "id": "MAPSEC_ROUTE_25_CAPE",
       "name": "CERULEAN CAPE"
+    },
+    {
+      "id": "MAPSEC_ROUTE_26",
+      "name": "ROUTE 26"
+    },
+    {
+      "id": "MAPSEC_ROUTE_27",
+      "name": "ROUTE 27"
+    },
+    {
+      "id": "MAPSEC_ROUTE_28",
+      "name": "ROUTE 28"
     }
   ]
 }

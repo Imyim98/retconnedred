@@ -641,3 +641,4 @@ gSpecials::
 	def_special StartChimechoBattle
 	def_special StartRaichuXBattle
 	def_special StartClefableBattle
+	def_special StartCameruptBattle

@@ -1756,3 +1756,15 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 	.include "data/maps/MtMoon_2F_Frlg/scripts.inc"
 	.include "data/maps/MtMoon_2F_Frlg/text.inc"
+
+	.include "data/maps/Route26_North_Frlg/scripts.inc"
+	.include "data/maps/Route26_North_Frlg/text.inc"
+
+	.include "data/maps/Route26_Sorth_Frlg/scripts.inc"
+	.include "data/maps/Route26_Sorth_Frlg/text.inc"
+
+	.include "data/maps/Route27_Frlg/scripts.inc"
+	.include "data/maps/Route27_Frlg/text.inc"
+
+	.include "data/maps/Route28_Frlg/scripts.inc"
+	.include "data/maps/Route28_Frlg/text.inc"

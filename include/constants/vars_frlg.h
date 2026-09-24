@@ -154,8 +154,8 @@
 #define VAR_MAP_SCENE_POKEMON_TOWER_7F                                         0x408C
 #define VAR_MAP_SCENE_DEEPFOREST                                               0x408D
 #define VAR_MAP_SCENE_MTMOONSQUARE                                             0x408E
+#define VAR_MAP_SCENE_MTEMBER_RUBY                                             0x408F
       
-#define VAR_0x408F                 0x408F
 #define VAR_0x4090                 0x4090
 #define VAR_0x4091                 0x4091
 #define VAR_0x4092                 0x4092

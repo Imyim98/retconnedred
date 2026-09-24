@@ -10283,6 +10283,58 @@
       "border_filepath": "data/layouts/MtMoon_2F_Frlg/border.bin",
       "blockdata_filepath": "data/layouts/MtMoon_2F_Frlg/map.bin",
       "layout_version": "frlg"
+    },
+    {
+      "id": "LAYOUT_ROUTE26_NORTH_FRLG",
+      "name": "Route26_North_Frlg_Layout",
+      "width": 24,
+      "height": 20,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_General_Frlg",
+      "secondary_tileset": "gTileset_ViridianCity",
+      "border_filepath": "data/layouts/Route26_North_Frlg/border.bin",
+      "blockdata_filepath": "data/layouts/Route26_North_Frlg/map.bin",
+      "layout_version": "frlg"
+    },
+    {
+      "id": "LAYOUT_ROUTE26_SOUTH_FRLG",
+      "name": "Route26_South_Frlg_Layout",
+      "width": 24,
+      "height": 92,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_General_Frlg",
+      "secondary_tileset": "gTileset_LavenderTown",
+      "border_filepath": "data/layouts/Route26_South_Frlg/border.bin",
+      "blockdata_filepath": "data/layouts/Route26_South_Frlg/map.bin",
+      "layout_version": "frlg"
+    },
+    {
+      "id": "LAYOUT_ROUTE27_FRLG",
+      "name": "Route27_Frlg_Layout",
+      "width": 80,
+      "height": 20,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_General_Frlg",
+      "secondary_tileset": "gTileset_LavenderTown",
+      "border_filepath": "data/layouts/Route27_Frlg/border.bin",
+      "blockdata_filepath": "data/layouts/Route27_Frlg/map.bin",
+      "layout_version": "frlg"
+    },
+    {
+      "id": "LAYOUT_ROUTE28_FRLG",
+      "name": "Route28_Frlg_Layout",
+      "width": 80,
+      "height": 28,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_General_Frlg",
+      "secondary_tileset": "gTileset_ViridianCity",
+      "border_filepath": "data/layouts/Route28_Frlg/border.bin",
+      "blockdata_filepath": "data/layouts/Route28_Frlg/map.bin",
+      "layout_version": "frlg"
     }
   ]
 }
