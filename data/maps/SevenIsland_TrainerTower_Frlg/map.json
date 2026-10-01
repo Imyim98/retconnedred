@@ -16,6 +16,21 @@
   "connections": [
     {
       "map": "MAP_SEVEN_ISLAND",
+      "offset": 24,
+      "direction": "down"
+    },
+    {
+      "map": "MAP_FOUR_ISLAND",
+      "offset": 0,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_ONE_ISLAND_KINDLE_ROAD",
+      "offset": -72,
+      "direction": "left"
+    },
+    {
+      "map": "MAP_TWO_ISLAND",
       "offset": 48,
       "direction": "down"
     }
@@ -24,7 +39,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_BOY",
-      "x": 56,
+      "x": 32,
       "y": 26,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
@@ -38,7 +53,7 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_1_FRLG",
-      "x": 56,
+      "x": 32,
       "y": 29,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -52,7 +67,7 @@
   ],
   "warp_events": [
     {
-      "x": 58,
+      "x": 34,
       "y": 7,
       "elevation": 3,
       "dest_map": "MAP_TRAINER_TOWER_LOBBY",
@@ -63,7 +78,7 @@
   "bg_events": [
     {
       "type": "hidden_item",
-      "x": 49,
+      "x": 25,
       "y": 27,
       "elevation": 3,
       "item": "ITEM_BIG_PEARL",
@@ -73,7 +88,7 @@
     },
     {
       "type": "hidden_item",
-      "x": 47,
+      "x": 23,
       "y": 30,
       "elevation": 3,
       "item": "ITEM_PEARL",
@@ -83,7 +98,7 @@
     },
     {
       "type": "hidden_item",
-      "x": 59,
+      "x": 35,
       "y": 32,
       "elevation": 3,
       "item": "ITEM_NANAB_BERRY",
@@ -93,7 +108,7 @@
     },
     {
       "type": "sign",
-      "x": 56,
+      "x": 32,
       "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -101,7 +116,7 @@
     },
     {
       "type": "sign",
-      "x": 50,
+      "x": 26,
       "y": 30,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",

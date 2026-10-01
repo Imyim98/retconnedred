@@ -23,6 +23,11 @@
       "map": "MAP_ROUTE20",
       "offset": 40,
       "direction": "left"
+    },
+    {
+      "map": "MAP_SIX_ISLAND_OUTCAST_ISLAND",
+      "offset": 12,
+      "direction": "right"
     }
   ],
   "object_events": [

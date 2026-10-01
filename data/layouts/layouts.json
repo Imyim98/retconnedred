@@ -8299,7 +8299,7 @@
       "id": "LAYOUT_ONE_ISLAND_KINDLE_ROAD",
       "name": "OneIsland_KindleRoad_Layout",
       "width": 24,
-      "height": 140,
+      "height": 120,
       "border_width": 2,
       "border_height": 2,
       "primary_tileset": "gTileset_General_Frlg",
@@ -8519,7 +8519,7 @@
     {
       "id": "LAYOUT_SEVEN_ISLAND_TRAINER_TOWER",
       "name": "SevenIsland_TrainerTower_Layout",
-      "width": 120,
+      "width": 56,
       "height": 40,
       "border_width": 2,
       "border_height": 2,
@@ -8558,7 +8558,7 @@
     {
       "id": "LAYOUT_SEVEN_ISLAND_TANOBY_RUINS",
       "name": "SevenIsland_TanobyRuins_Layout",
-      "width": 144,
+      "width": 132,
       "height": 20,
       "border_width": 2,
       "border_height": 2,

@@ -18,6 +18,11 @@
       "map": "MAP_SIX_ISLAND_GREEN_PATH",
       "offset": 0,
       "direction": "down"
+    },
+    {
+      "map": "MAP_ROUTE19",
+      "offset": -12,
+      "direction": "left"
     }
   ],
   "object_events": [

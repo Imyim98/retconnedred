@@ -23,6 +23,11 @@
       "map": "MAP_ROUTE20",
       "offset": 20,
       "direction": "right"
+    },
+    {
+      "map": "MAP_ONE_ISLAND_KINDLE_ROAD",
+      "offset": 21,
+      "direction": "down"
     }
   ],
   "object_events": [

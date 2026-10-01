@@ -21,7 +21,7 @@
     },
     {
       "map": "MAP_ONE_ISLAND_KINDLE_ROAD",
-      "offset": -120,
+      "offset": -100,
       "direction": "right"
     }
   ],
@@ -90,13 +90,6 @@
       "y": 11,
       "elevation": 0,
       "dest_map": "MAP_ONE_ISLAND_HOUSE2",
-      "dest_warp_id": "0"
-    },
-    {
-      "x": 12,
-      "y": 18,
-      "elevation": 3,
-      "dest_map": "MAP_ONE_ISLAND_HARBOR",
       "dest_warp_id": "0"
     }
   ],
