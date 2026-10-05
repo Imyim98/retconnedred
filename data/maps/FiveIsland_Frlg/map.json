@@ -23,6 +23,11 @@
       "map": "MAP_FIVE_ISLAND_MEADOW",
       "offset": 0,
       "direction": "right"
+    },
+    {
+      "map": "MAP_THREE_ISLAND",
+      "offset": 0,
+      "direction": "down"
     }
   ],
   "object_events": [

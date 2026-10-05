@@ -18,6 +18,11 @@
       "map": "MAP_SIX_ISLAND_WATER_PATH",
       "offset": -80,
       "direction": "right"
+    },
+    {
+      "map": "MAP_FIVE_ISLAND_RESORT_GORGEOUS",
+      "offset": 18,
+      "direction": "down"
     }
   ],
   "object_events": [

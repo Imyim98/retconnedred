@@ -1760,8 +1760,8 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/Route26_North_Frlg/scripts.inc"
 	.include "data/maps/Route26_North_Frlg/text.inc"
 
-	.include "data/maps/Route26_Sorth_Frlg/scripts.inc"
-	.include "data/maps/Route26_Sorth_Frlg/text.inc"
+	.include "data/maps/Route26_South_Frlg/scripts.inc"
+	.include "data/maps/Route26_South_Frlg/text.inc"
 
 	.include "data/maps/Route27_Frlg/scripts.inc"
 	.include "data/maps/Route27_Frlg/text.inc"

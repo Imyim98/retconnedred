@@ -3,7 +3,6 @@
   "name": "FarawayIsland_Entrance",
   "layout": "LAYOUT_FARAWAY_ISLAND_ENTRANCE",
   "music": "MUS_ABANDONED_SHIP",
-  "region": "REGION_HOENN",
   "region_map_section": "MAPSEC_FARAWAY_ISLAND",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -12,14 +11,22 @@
   "allow_escaping": false,
   "allow_running": true,
   "show_map_name": true,
+  "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": null,
+  "connections": [
+    {
+      "map": "MAP_SEVEN_ISLAND_TANOBY_RUINS",
+      "offset": 26,
+      "direction": "right"
+    }
+  ],
   "object_events": [
     {
       "local_id": "LOCALID_FARAWAY_ISLAND_SAILOR",
+      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SAILOR",
-      "x": 13,
-      "y": 39,
+      "x": -6,
+      "y": 47,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,
@@ -31,9 +38,10 @@
     },
     {
       "local_id": "LOCALID_FARAWAY_ISLAND_SS_TIDAL",
+      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SS_TIDAL",
-      "x": 13,
-      "y": 41,
+      "x": -4,
+      "y": 50,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
@@ -98,5 +106,6 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "FarawayIsland_Entrance_EventScript_Sign"
     }
-  ]
+  ],
+  "region": "REGION_HOENN"
 }

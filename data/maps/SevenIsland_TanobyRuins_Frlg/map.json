@@ -18,6 +18,16 @@
       "map": "MAP_SEVEN_ISLAND_SEVAULT_CANYON",
       "offset": 48,
       "direction": "up"
+    },
+    {
+      "map": "MAP_THREE_ISLAND_BOND_BRIDGE",
+      "offset": 72,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_FARAWAY_ISLAND_ENTRANCE",
+      "offset": -26,
+      "direction": "left"
     }
   ],
   "object_events": [

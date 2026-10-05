@@ -13,7 +13,13 @@
   "show_map_name": true,
   "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": null,
+  "connections": [
+    {
+      "map": "MAP_FIVE_ISLAND_MEMORIAL_PILLAR",
+      "offset": -22,
+      "direction": "left"
+    }
+  ],
   "object_events": [
     {
       "local_id": "LOCALID_BIRTH_ISLAND_EXTERIOR_ROCK",
@@ -46,15 +52,7 @@
       "flag": "FLAG_HIDE_DEOXYS"
     }
   ],
-  "warp_events": [
-    {
-      "x": 15,
-      "y": 24,
-      "elevation": 3,
-      "dest_map": "MAP_BIRTH_ISLAND_HARBOR_FRLG",
-      "dest_warp_id": "0"
-    }
-  ],
+  "warp_events": [],
   "coord_events": [],
   "bg_events": [],
   "region": "REGION_KANTO"

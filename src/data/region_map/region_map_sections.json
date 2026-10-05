@@ -1133,7 +1133,7 @@
     },
     {
       "id": "MAPSEC_ONE_ISLAND",
-      "name": "ONE ISLAND",
+      "name": "KNOT ISLAND",
       "x": 1,
       "y": 8,
       "width": 1,
@@ -1141,7 +1141,7 @@
     },
     {
       "id": "MAPSEC_TWO_ISLAND",
-      "name": "TWO ISLAND",
+      "name": "BOON ISLAND",
       "x": 9,
       "y": 9,
       "width": 1,
@@ -1149,7 +1149,7 @@
     },
     {
       "id": "MAPSEC_THREE_ISLAND",
-      "name": "THREE ISLAND",
+      "name": "KIN ISLAND",
       "x": 18,
       "y": 12,
       "width": 1,
@@ -1157,7 +1157,7 @@
     },
     {
       "id": "MAPSEC_FOUR_ISLAND",
-      "name": "FOUR ISLAND",
+      "name": "FLOE ISLAND",
       "x": 3,
       "y": 4,
       "width": 1,
@@ -1165,7 +1165,7 @@
     },
     {
       "id": "MAPSEC_FIVE_ISLAND",
-      "name": "FIVE ISLAND",
+      "name": "CHRONO ISLAND",
       "x": 16,
       "y": 11,
       "width": 1,
@@ -1173,7 +1173,7 @@
     },
     {
       "id": "MAPSEC_SEVEN_ISLAND",
-      "name": "SEVEN ISLAND",
+      "name": "QUEST ISLAND",
       "x": 5,
       "y": 8,
       "width": 1,
@@ -1181,7 +1181,7 @@
     },
     {
       "id": "MAPSEC_SIX_ISLAND",
-      "name": "SIX ISLAND",
+      "name": "FORTUNE ISLAND",
       "x": 17,
       "y": 5,
       "width": 1,
@@ -1221,7 +1221,7 @@
     },
     {
       "id": "MAPSEC_THREE_ISLE_PORT",
-      "name": "THREE ISLE PORT",
+      "name": "KIN ISLE PORT",
       "x": 18,
       "y": 13,
       "width": 2,
@@ -1245,7 +1245,7 @@
     },
     {
       "id": "MAPSEC_FIVE_ISLE_MEADOW",
-      "name": "FIVE ISLE MEADOW",
+      "name": "CHRONO ISLE MEADOW",
       "x": 17,
       "y": 10,
       "width": 1,

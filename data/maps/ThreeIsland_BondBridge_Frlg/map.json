@@ -18,6 +18,16 @@
       "map": "MAP_THREE_ISLAND",
       "offset": 0,
       "direction": "right"
+    },
+    {
+      "map": "MAP_SEVEN_ISLAND_TANOBY_RUINS",
+      "offset": -72,
+      "direction": "down"
+    },
+    {
+      "map": "MAP_SEVEN_ISLAND_SEVAULT_CANYON",
+      "offset": -60,
+      "direction": "left"
     }
   ],
   "object_events": [

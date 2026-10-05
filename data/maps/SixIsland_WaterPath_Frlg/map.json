@@ -28,6 +28,11 @@
       "map": "MAP_SIX_ISLAND_RUIN_VALLEY",
       "offset": 80,
       "direction": "left"
+    },
+    {
+      "map": "MAP_FIVE_ISLAND_RESORT_GORGEOUS",
+      "offset": -30,
+      "direction": "down"
     }
   ],
   "object_events": [
