@@ -797,7 +797,11 @@
     "SixIsland_DottedHole_B4F_Frlg",
     "SixIsland_DottedHole_SapphireRoom_Frlg",
     "SixIsland_PatternBush_Frlg",
-    "SixIsland_AlteringCave_Frlg"
+    "SixIsland_AlteringCave_Frlg",
+    "MtSilver_Entrance_Frlg",
+    "MtSilver_1F_Frlg",
+    "MtSilver_1F_Rooms_Frlg",
+    "MtSilver_2F_Frlg"
   ],
   "gMapGroup_SpecialArea_Frlg": [
     "NavelRock_Exterior_Frlg",

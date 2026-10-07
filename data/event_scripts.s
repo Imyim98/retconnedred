@@ -1768,3 +1768,15 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 	.include "data/maps/Route28_Frlg/scripts.inc"
 	.include "data/maps/Route28_Frlg/text.inc"
+
+	.include "data/maps/MtSilver_Entrance_Frlg/scripts.inc"
+	.include "data/maps/MtSilver_Entrance_Frlg/text.inc"
+
+	.include "data/maps/MtSilver_1F_Frlg/scripts.inc"
+	.include "data/maps/MtSilver_1F_Frlg/text.inc"
+
+	.include "data/maps/MtSilver_1F_Rooms_Frlg/scripts.inc"
+	.include "data/maps/MtSilver_1F_Rooms_Frlg/text.inc"
+
+	.include "data/maps/MtSilver_2F_Frlg/scripts.inc"
+	.include "data/maps/MtSilver_2F_Frlg/text.inc"

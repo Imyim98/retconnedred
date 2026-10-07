@@ -3,7 +3,6 @@
   "name": "SkyPillar_Top",
   "layout": "LAYOUT_SKY_PILLAR_TOP",
   "music": "MUS_MT_CHIMNEY",
-  "region": "REGION_HOENN",
   "region_map_section": "MAPSEC_SKY_PILLAR",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -12,11 +11,13 @@
   "allow_escaping": false,
   "allow_running": true,
   "show_map_name": true,
+  "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": null,
   "object_events": [
     {
       "local_id": "LOCALID_RAYQUAZA_SLEEPING",
+      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_RAYQUAZA",
       "x": 14,
       "y": 7,
@@ -30,6 +31,7 @@
       "flag": "FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA"
     },
     {
+      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_RAYQUAZA_STILL",
       "x": 14,
       "y": 6,
@@ -63,5 +65,6 @@
       "script": "SkyPillar_Top_EventScript_AwakenRayquaza"
     }
   ],
-  "bg_events": []
+  "bg_events": [],
+  "region": "REGION_HOENN"
 }

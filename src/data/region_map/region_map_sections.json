@@ -1642,6 +1642,10 @@
     {
       "id": "MAPSEC_ROUTE_28",
       "name": "ROUTE 28"
+    },
+    {
+      "id": "MAPSEC_MT_SILVER",
+      "name": "MT. SILVER"
     }
   ]
 }

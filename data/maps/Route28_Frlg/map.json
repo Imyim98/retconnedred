@@ -49,7 +49,7 @@
       "x": 18,
       "y": 3,
       "elevation": 0,
-      "dest_map": "MAP_ROUTE28_FRLG",
+      "dest_map": "MAP_MT_SILVER_ENTRANCE_FRLG",
       "dest_warp_id": "0"
     },
     {
@@ -70,8 +70,8 @@
       "x": 69,
       "y": 13,
       "elevation": 0,
-      "dest_map": "MAP_ROUTE28_FRLG",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_ROUTE22_NORTH_ENTRANCE",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [],
