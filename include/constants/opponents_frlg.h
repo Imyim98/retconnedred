@@ -645,12 +645,14 @@
 #define TRAINER_COOLTRAINER_LOUIS                  638
 #define TRAINER_COOLTRAINER_RYAN                   639
 #define TRAINER_ADMINS_ARCHER_ARIANA               640
+#define TRAINER_SWIMMER_FEMALE_NICHOLE             641
+#define TRAINER_SWIMMER_FEMALE_NICHOLE_2           642
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is
-//       only space for 8 additional trainers before trainer flag space overflows.
+//       only space for 6 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT_FRLG can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_FRLG                      641
-#define MAX_TRAINERS_COUNT_FRLG                  768
+#define TRAINERS_COUNT_FRLG                        643
+#define MAX_TRAINERS_COUNT_FRLG                    768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_FRLG_H

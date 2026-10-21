@@ -839,7 +839,7 @@ SixIsland_OutcastIsland_Text_MymoRematchIntro::
 	.string "I swam here from SIX ISLAND's port\n"
 	.string "in one go again.$"
 
-SixIsland_OutcastIsland_Text_NicoleRematchIntro::
+SixIsland_OutcastIsland_Text_NicholeRematchIntro::
 	.string "You always come along while I'm\n"
 	.string "swimming.$"
 

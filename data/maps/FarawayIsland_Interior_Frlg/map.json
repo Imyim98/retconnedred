@@ -1,7 +1,7 @@
 {
   "id": "MAP_FARAWAY_ISLAND_INTERIOR",
-  "name": "FarawayIsland_Interior",
-  "layout": "LAYOUT_FARAWAY_ISLAND_INTERIOR",
+  "name": "FarawayIsland_Interior_Frlg",
+  "layout": "LAYOUT_FARAWAY_ISLAND_INTERIOR_FRLG",
   "music": "MUS_ABANDONED_SHIP",
   "region_map_section": "MAPSEC_FARAWAY_ISLAND",
   "requires_flash": false,
@@ -27,28 +27,28 @@
       "movement_range_y": 15,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "FarawayIsland_Interior_EventScript_Mew",
+      "script": "FarawayIsland_Interior_Frlg_EventScript_Mew",
       "flag": "FLAG_HIDE_MEW"
     }
   ],
   "warp_events": [
     {
       "x": 12,
-      "y": 19,
+      "y": 20,
       "elevation": 0,
       "dest_map": "MAP_FARAWAY_ISLAND_ENTRANCE",
       "dest_warp_id": "0"
     },
     {
       "x": 13,
-      "y": 19,
+      "y": 20,
       "elevation": 0,
       "dest_map": "MAP_FARAWAY_ISLAND_ENTRANCE",
       "dest_warp_id": "0"
     },
     {
       "x": 14,
-      "y": 19,
+      "y": 20,
       "elevation": 0,
       "dest_map": "MAP_FARAWAY_ISLAND_ENTRANCE",
       "dest_warp_id": "1"
@@ -56,5 +56,5 @@
   ],
   "coord_events": [],
   "bg_events": [],
-  "region": "REGION_HOENN"
+  "region": "REGION_KANTO"
 }

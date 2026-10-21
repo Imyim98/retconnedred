@@ -33,6 +33,7 @@ ViridianCity_EventScript_TryUnlockGym::
 	goto_if_unset FLAG_BADGE05_GET, Common_EventScript_NopReturn
 	goto_if_unset FLAG_BADGE06_GET, Common_EventScript_NopReturn
 	goto_if_unset FLAG_BADGE07_GET, Common_EventScript_NopReturn
+	goto_if_unset FLAG_DEFEATED_ROCKETS_IN_WAREHOUSE, Common_EventScript_NopReturn
 	setvar VAR_MAP_SCENE_VIRIDIAN_CITY_GYM_DOOR, 1
 	return
 

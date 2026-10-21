@@ -43,15 +43,15 @@ SixIsland_OutcastIsland_Text_MymoPostBattle::
 	.string "I'm only at the halfway point…\n"
 	.string "I'm beat…$"
 
-SixIsland_OutcastIsland_Text_NicoleIntro::
+SixIsland_OutcastIsland_Text_NicholeIntro::
 	.string "It's not so easy sending POKéMON\n"
 	.string "out while swimming, you know?$"
 
-SixIsland_OutcastIsland_Text_NicoleDefeat::
+SixIsland_OutcastIsland_Text_NicholeDefeat::
 	.string "I didn't lose to you at swimming.\n"
 	.string "This doesn't bother me.$"
 
-SixIsland_OutcastIsland_Text_NicolePostBattle::
+SixIsland_OutcastIsland_Text_NicholePostBattle::
 	.string "Are you headed for the island up\n"
 	.string "past here?\p"
 	.string "I didn't see anything interesting\n"

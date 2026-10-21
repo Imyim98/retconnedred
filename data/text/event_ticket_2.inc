@@ -31,7 +31,7 @@ EventTicket_Text_OddTicketGetOnBoard:
 	.string "as a sailing man!\p"
 	.string "Get on board, youngster!$"
 
-FarawayIsland_Entrance_Text_SailorReturn:
+FarawayIsland_Entrance_Frlg_Text_SailorReturn:
 	.string "CAPT. BRINEY can be so maddeningly\n"
 	.string "fickle…\p"
 	.string "Do you want to return to LILYCOVE?$"
@@ -59,7 +59,7 @@ NavelRock_Harbor_Text_SailorReturn:
 	.string "Are you sure it's safe?\n"
 	.string "Do you think we should leave?$"
 
-FarawayIsland_Entrance_Text_Sign:
+FarawayIsland_Entrance_Frlg_Text_Sign:
 	.string "The writing is fading as if it was\n"
 	.string "written a long time ago…\p"
 	.string "“…ber, 6th day\n"
@@ -67,5 +67,5 @@ FarawayIsland_Entrance_Text_Sign:
 	.string "again…et it be a kindhearted pers…\l"
 	.string "…ith that hope, I depar…”$"
 
-FarawayIsland_Interior_Text_Mew:
+FarawayIsland_Interior_Frlg_Text_Mew:
 	.string "Myuu…$"

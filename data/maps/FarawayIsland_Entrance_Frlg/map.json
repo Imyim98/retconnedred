@@ -1,7 +1,7 @@
 {
   "id": "MAP_FARAWAY_ISLAND_ENTRANCE",
-  "name": "FarawayIsland_Entrance",
-  "layout": "LAYOUT_FARAWAY_ISLAND_ENTRANCE",
+  "name": "FarawayIsland_Entrance_Frlg",
+  "layout": "LAYOUT_FARAWAY_ISLAND_ENTRANCE_FRLG",
   "music": "MUS_ABANDONED_SHIP",
   "region_map_section": "MAPSEC_FARAWAY_ISLAND",
   "requires_flash": false,
@@ -33,7 +33,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "FarawayIsland_Entrance_EventScript_Sailor",
+      "script": "FarawayIsland_Entrance_Frlg_EventScript_Sailor",
       "flag": "0"
     },
     {
@@ -55,14 +55,14 @@
   "warp_events": [
     {
       "x": 22,
-      "y": 7,
+      "y": 8,
       "elevation": 3,
       "dest_map": "MAP_FARAWAY_ISLAND_INTERIOR",
       "dest_warp_id": "0"
     },
     {
       "x": 23,
-      "y": 7,
+      "y": 8,
       "elevation": 3,
       "dest_map": "MAP_FARAWAY_ISLAND_INTERIOR",
       "dest_warp_id": "1"
@@ -76,7 +76,7 @@
       "elevation": 3,
       "var": "TRIGGER_RUN_IMMEDIATELY",
       "var_value": "0",
-      "script": "FarawayIsland_Entrance_EventScript_SetCloudsWeather"
+      "script": "FarawayIsland_Entrance_Frlg_EventScript_SetCloudsWeather"
     },
     {
       "type": "trigger",
@@ -85,7 +85,7 @@
       "elevation": 3,
       "var": "TRIGGER_RUN_IMMEDIATELY",
       "var_value": "0",
-      "script": "FarawayIsland_Entrance_EventScript_ClearWeather"
+      "script": "FarawayIsland_Entrance_Frlg_EventScript_ClearWeather"
     },
     {
       "type": "trigger",
@@ -94,7 +94,7 @@
       "elevation": 3,
       "var": "TRIGGER_RUN_IMMEDIATELY",
       "var_value": "0",
-      "script": "FarawayIsland_Entrance_EventScript_SetCloudsWeather"
+      "script": "FarawayIsland_Entrance_Frlg_EventScript_SetCloudsWeather"
     }
   ],
   "bg_events": [
@@ -104,8 +104,8 @@
       "y": 32,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "FarawayIsland_Entrance_EventScript_Sign"
+      "script": "FarawayIsland_Entrance_Frlg_EventScript_Sign"
     }
   ],
-  "region": "REGION_HOENN"
+  "region": "REGION_KANTO"
 }
