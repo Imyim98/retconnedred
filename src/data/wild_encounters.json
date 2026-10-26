@@ -18629,7 +18629,7 @@
               {
                 "min_level": 35,
                 "max_level": 45,
-                "species": "SPECIES_FURRET"
+                "species": "SPECIES_MIGHTYENA"
               },
               {
                 "min_level": 36,
@@ -19773,9 +19773,9 @@
                 "species": "SPECIES_GYARADOS"
               },
               {
-                "min_level": 30,
-                "max_level": 40,
-                "species": "SPECIES_GYARADOS"
+                "min_level": 20,
+                "max_level": 30,
+                "species": "SPECIES_MANTYKE"
               },
               {
                 "min_level": 30,
@@ -19933,7 +19933,7 @@
               {
                 "min_level": 3,
                 "max_level": 5,
-                "species": "SPECIES_PIDGEY"
+                "species": "SPECIES_KRICKETOT"
               },
               {
                 "min_level": 4,
@@ -24392,9 +24392,9 @@
                 "species": "SPECIES_GYARADOS"
               },
               {
-                "min_level": 30,
-                "max_level": 40,
-                "species": "SPECIES_GYARADOS"
+                "min_level": 20,
+                "max_level": 30,
+                "species": "SPECIES_MANTYKE"
               },
               {
                 "min_level": 30,

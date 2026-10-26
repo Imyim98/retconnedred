@@ -1780,3 +1780,9 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 	.include "data/maps/MtSilver_2F_Frlg/scripts.inc"
 	.include "data/maps/MtSilver_2F_Frlg/text.inc"
+
+	.include "data/maps/TohjoFalls_1F_Frlg/scripts.inc"
+	.include "data/maps/TohjoFalls_1F_Frlg/text.inc"
+
+	.include "data/maps/TohjoFalls_2F_Frlg/scripts.inc"
+	.include "data/maps/TohjoFalls_2F_Frlg/text.inc"

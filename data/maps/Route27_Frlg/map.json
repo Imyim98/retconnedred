@@ -21,7 +21,22 @@
     }
   ],
   "object_events": [],
-  "warp_events": [],
+  "warp_events": [
+    {
+      "x": 26,
+      "y": 3,
+      "elevation": 0,
+      "dest_map": "MAP_TOHJOFALLS_1F_FRLG",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 36,
+      "y": 3,
+      "elevation": 0,
+      "dest_map": "MAP_TOHJOFALLS_1F_FRLG",
+      "dest_warp_id": "1"
+    }
+  ],
   "coord_events": [],
   "bg_events": [],
   "region": "REGION_KANTO"

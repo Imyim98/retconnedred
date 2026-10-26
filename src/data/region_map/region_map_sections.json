@@ -1646,6 +1646,10 @@
     {
       "id": "MAPSEC_MT_SILVER",
       "name": "MT. SILVER"
+    },
+    {
+      "id": "MAPSEC_TOHJO_FALLS",
+      "name": "TOHJO FALLS"
     }
   ]
 }

@@ -5136,6 +5136,8 @@ u16 GetBattleBGM(void)
         case TRAINER_CLASS_LEADER_FRLG:
         case TRAINER_CLASS_ELITE_FOUR_FRLG:
             return MUS_RG_VS_GYM_LEADER;
+        case TRAINER_CLASS_WANDERER:
+            return MUS_VS_RAYQUAZA;
         case TRAINER_CLASS_SALON_MAIDEN:
         case TRAINER_CLASS_DOME_ACE:
         case TRAINER_CLASS_PALACE_MAVEN:

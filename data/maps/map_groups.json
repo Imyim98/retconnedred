@@ -799,7 +799,9 @@
     "MtSilver_Entrance_Frlg",
     "MtSilver_1F_Frlg",
     "MtSilver_1F_Rooms_Frlg",
-    "MtSilver_2F_Frlg"
+    "MtSilver_2F_Frlg",
+    "TohjoFalls_1F_Frlg",
+    "TohjoFalls_2F_Frlg"
   ],
   "gMapGroup_SpecialArea_Frlg": [
     "OneIsland_KindleRoad_EmberSpa_Frlg",

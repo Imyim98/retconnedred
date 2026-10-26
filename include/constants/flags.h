@@ -1795,6 +1795,7 @@
 #define FLAG_HIDE_LORELEIS_HOUSE_LAPRAS_DOLL               0
 #define FLAG_HIDE_MISC_KANTO_ROCKETS                       0
 #define FLAG_HIDE_SAFFRON_CITY_POKECENTER_SABRINA_JOURNALS 0
+#define FLAG_HIDE_TOHJO_WANDERER                           0
 
 #define FLAG_HIDE_ROUTE2_ETHER                                  0
 #define FLAG_HIDE_ROUTE2_PARALYZE_HEAL                          0

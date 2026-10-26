@@ -14623,3 +14623,62 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Ice Beam
 - Earthquake
 - Rain Dance
+
+=== TRAINER_WANDERER ===
+Name: ???
+Class: Wanderer
+Pic: Red
+Gender: Male
+Music: Male
+Items: Full Restore / Full Restore / Full Restore / Full Restore
+Double Battle: No
+AI: Check Bad Move / Try To Faint / Check Viability
+Mugshot: Yellow
+
+Raichu @ Focus Sash
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Volt Switch
+- Surf
+- Thunder Wave
+- Charm
+
+Golem @ Weakness Policy
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Stone Edge
+- Earthquake
+- Thunder Punch
+- Rock Polish
+
+Poliwrath @ Assault Vest
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Liquidation
+- Drain Punch
+- Poison Jab
+- Ice Punch
+
+Gengar @ Life Orb
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Sludge Bomb
+- Shadow Ball
+- Dazzling Gleam
+- Giga Drain
+
+Articuno @ Leftovers
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Avalanche
+- Ice Shard
+- Reflect
+- Roost
+
+Charizard @ Charizardite X
+Level: 100
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fire Blast
+- Dragon Claw
+- Earthquake
+- Crunch
