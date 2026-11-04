@@ -1,2 +1,7 @@
 MtSilver_Entrance_Frlg_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, MtSilver_Entrance_Frlg_OnTransition
 	.byte 0
+
+MtSilver_Entrance_Frlg_OnTransition::
+	setworldmapflag FLAG_WORLD_MAP_MT_SILVER_ENTRANCE
+	end

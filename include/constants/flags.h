@@ -2440,6 +2440,8 @@
 #define FLAG_WORLD_MAP_THREE_ISLAND_DUNSPARCE_TUNNEL                0
 #define FLAG_WORLD_MAP_SEVEN_ISLAND_SEVAULT_CANYON_TANOBY_KEY       0
 #define FLAG_WORLD_MAP_BIRTH_ISLAND_EXTERIOR                        0
+#define FLAG_WORLD_MAP_MT_SILVER_ENTRANCE                           0
+#define FLAG_WORLD_MAP_TOHJO_FALLS_1F                               0
 
 #endif
 
